@@ -1,0 +1,31 @@
+print 80 205 48 255 255 255 180 Bush Stage
+print 30 245 32 255 0 0 180 Welcome to your Doom
+wait 200
+add AlexEnemy x y z t
+add AlexEnemy x y z t
+add AlexEnemy x y z t
+add AlexEnemy x y z t
+add AnnaEnemy 0 false
+add AnnaEnemy 0 true
+add AnnaEnemy 50 false
+add AnnaEnemy 50 true
+add PaulEnemy x y z t
+add PaulEnemy x y z t
+add PaulEnemy x y z t
+add PaulEnemy x y z t
+wait clear 6000
+
+print 100 220 24 255 255 255 180 Boss approaching!
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+add AlexBoss x y z t
+add AnnaBoss 200 false
+add AnnaBoss 0 true
+add PaulBoss x y z t
+wait clear

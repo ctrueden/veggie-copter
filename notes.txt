@@ -1,0 +1,67 @@
+Alex has a random, normalized pattern, except that every few seconds, she lunges toward the ship. (making the attack face)
+
+Alex fires bullets fairly slowly when not lunging. The bullets are typical, slow pellets that head in the general direction of the ship.
+
+Alex runs when being shot to the far side of the screen.
+
+40HP, regen 1 per 6 frames.
+
+------
+
+Paul alternates moving horizontally and vertically in line with the ship (but doesn't update its computations until after each movement).
+
+Each time it changes axis, fires a 60 degree spread of standard bullets toward the ship.
+
+When low in HP, stops moving and begins firing a spread of bullets in all directions frantically.
+
+80-100HP, regen 1 each time he stops.
+
+------
+
+Kelsey moves straight toward the ship until he reaches a fixed distance D, then
+begins circling the ship clockwise at that radius. He randomly fires a shot in
+a random direction. When the shot is vertically or horizontally in line with
+the ship, it splits, with one bullet going toward the ship, and one away from
+it.
+
+The Kels boss has a series of blobs that circle it and protect it from shots.
+The blobs are invincible, but remain at a fixed radius from the boss. The blobs
+are incorporeal (do no damage to anything) and thus do not destroy bullets, but
+they do distract homing bullets, just like the powerups do.
+
+The boss's shots split twice instead of just twice.
+
+------
+
+Keys.TRIGGER is secondary trigger
+part of attack style
+I added it, but it's really a hack... better to have a unified attack scheme
+that can handle both "shoot" and "trigger"
+
+------
+
+Maybe switch all thing movement over to vectors and points, and make a helper
+class for performing common motions, such as "move toward point X" (both a
+constant distance and a percentage of the distance) or "circle around point X." 
+
+------
+
+Get rid of the *Boss.java classes and instead just make the Enemies scalable,
+so that bosses can just be 100% normal size, whereas the mini enemies would be
+50% size or some such. This will also enable proper scaling of bounding box
+values, saving me some work.
+
+------
+
+Extend "good" and "evil" polarities to allow for any number of "channels" for
+things. Things that are on the same channel do not hurt each other. The DOOM
+attack is on its own channel and fills the entire screen, so that it hurts
+everything all the time.
+
+------
+
+Switch all positions to Points with doubles instead of ints, for more accurate
+motion. Also switch HP to doubles to allow for slower effects. This way, the
+healing effect can heal a nonzero amount of damage every tick, instead of
+delaying till every Nth tick. Also, the DOOM attack can do 0.2*power damage per
+tick or some such.

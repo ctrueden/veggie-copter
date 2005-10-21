@@ -1,0 +1,50 @@
+print 80 215 48 255 255 255 180 Paul Stage
+wait 200
+
+add Enemy 3 gates zigzag 100 -20 1 0 3 50 2 -2 80 0 3
+add Enemy 3 gates zigzag 300 -20 1 0 3 50 -2 -2 80 0 3
+wait 15
+add Enemy 3 gates zigzag 100 -20 1 0 3 50 2 -2 80 0 3
+add Enemy 3 gates zigzag 300 -20 1 0 3 50 -2 -2 80 0 3
+wait 15
+add Enemy 3 gates zigzag 100 -20 1 0 3 50 2 -2 80 0 3
+add Enemy 3 gates zigzag 300 -20 1 0 3 50 -2 -2 80 0 3
+wait 15
+add Enemy 3 gates zigzag 100 -20 1 0 3 50 2 -2 80 0 3
+add Enemy 3 gates zigzag 300 -20 1 0 3 50 -2 -2 80 0 3
+wait 15
+add Enemy 3 gates zigzag 100 -20 1 0 3 50 2 -2 80 0 3
+add Enemy 3 gates zigzag 300 -20 1 0 3 50 -2 -2 80 0 3
+wait 200
+
+add Enemy 3 gates zigzag -20 100 1 3 0 50 -2 -2 80 3 0
+add Enemy 3 gates zigzag 420 100 1 -3 0 50 2 -2 80 -3 0
+wait 15
+add Enemy 3 gates zigzag -20 100 1 3 0 50 -2 -2 80 3 0
+add Enemy 3 gates zigzag 420 100 1 -3 0 50 2 -2 80 -3 0
+wait 15
+add Enemy 3 gates zigzag -20 100 1 3 0 50 -2 -2 80 3 0
+add Enemy 3 gates zigzag 420 100 1 -3 0 50 2 -2 80 -3 0
+wait 15
+add Enemy 3 gates zigzag -20 100 1 3 0 50 -2 -2 80 3 0
+add Enemy 3 gates zigzag 420 100 1 -3 0 50 2 -2 80 -3 0
+wait 15
+add Enemy 3 gates zigzag -20 100 1 3 0 50 -2 -2 80 3 0
+add Enemy 3 gates zigzag 420 100 1 -3 0 50 2 -2 80 -3 0
+wait clear 500
+
+add PaulEnemy x y z t
+add PaulEnemy x y z t
+wait clear 600
+
+print 100 220 24 255 255 255 180 Boss approaching!
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+add PaulBoss x y z t
+wait clear

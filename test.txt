@@ -1,0 +1,2 @@
+add TestBoss 150 50
+wait clear

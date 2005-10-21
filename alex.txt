@@ -1,0 +1,18 @@
+print 80 215 48 255 255 255 180 Alex Stage
+wait 200
+
+add AlexEnemy x y z t
+add AlexEnemy x y z t
+wait clear 600
+
+print 100 220 24 255 255 255 180 Boss approaching!
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+add AlexBoss x y z t
+wait clear

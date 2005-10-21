@@ -1,0 +1,17 @@
+print 50 215 48 255 255 255 180 George Stage
+wait 200
+add GeorgeEnemy x y z t
+add GeorgeEnemy x y z t
+wait clear 600
+
+print 100 220 24 255 255 255 180 Boss approaching!
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+add GeorgeBoss x y z t
+wait clear

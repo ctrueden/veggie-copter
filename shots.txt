@@ -1,0 +1,18 @@
+Type		Color	Boss		Description
+----		-----	----		-----------
+Enemy		Red	N/A		enemy attacks
+
+Gun		Brown	N/A		standard shots
+Energy Field	Orange	Alex		invisible sword slashes
+Splitter	Yellow	Kelsey		splits when space bar is pressed
+Laser		Green	Curtis		focused beam
+Lightning	Cyan	Jon		branching attack
+Spread		Blue	Paul		spread of moderately strong bullets
+Homing		Magenta	JohnP		angles toward enemies
+Mines		D.gray	Nate		pulls enemies closer, then explodes
+Charge		White	Greg		charges up powerful shots
+Doom		Black	Special		does damage to all onscreen enemies over time
+Regen		Pink	Anna		heals you over time
+
+Teleport	Purple	Andy            teleports to a random safe location
+?		L.gray	?
