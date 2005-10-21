@@ -48,7 +48,7 @@ public class EnergyAttack extends ColoredAttack {
     int ndx = -1;
     float dist = Integer.MAX_VALUE;
     for (int i=0; i<t.length; i++) {
-      if (!t[i].isEvil()) continue;
+      if (t[i].getType() != Thing.EVIL) continue;
       float x1 = t[i].getX();
       float x2 = x1 + t[i].getWidth();
       float y = t[i].getCY();

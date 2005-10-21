@@ -36,7 +36,7 @@ public class CopterMine extends Thing {
 
   public CopterMine(Thing thing, int power) {
     super(thing.getGame());
-    setEvil(false);
+    type = GOOD_BULLET;
     setPower(power);
     move = new MineMovement(this);
     attack = new MineExplode(this);

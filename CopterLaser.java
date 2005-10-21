@@ -30,7 +30,7 @@ public class CopterLaser extends Thing {
 
   public CopterLaser(Thing thing, int size) {
     super(thing.getGame());
-    setEvil(false);
+    type = GOOD_BULLET;
     if (size < 0) size = 0;
     else if (size >= MAX_SIZE) size = MAX_SIZE - 1;
     setImage(images[size]);

@@ -22,7 +22,7 @@ public class CopterHoming extends Thing {
   public CopterHoming(Thing thing) {
     super(thing.getGame());
     setImage(image);
-    setEvil(false);
+    type = GOOD_BULLET;
     setPower(2);
     maxhp = 5;
     float x = thing.getCX() - getWidth() / 2f, y = thing.getY() - getHeight();

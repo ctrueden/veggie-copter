@@ -11,6 +11,26 @@ public abstract class Thing implements KeyListener {
 
   // -- Constants --
 
+  /** Type indicating evil entity. */
+  public static final int EVIL = 0;
+
+  /** Type indicating good entity. */
+  public static final int GOOD = 1;
+
+  /** Type indicating evil bullet. */
+  public static final int EVIL_BULLET = 2;
+
+  /** Type indicating good bullet. */
+  public static final int GOOD_BULLET = 3;
+
+  /** Type indicating power-up. */
+  public static final int POWER_UP = 4;
+
+  /** List of all possible types. */
+  public static final int[] TYPES = {
+    EVIL, GOOD, EVIL_BULLET, GOOD_BULLET, POWER_UP
+  };
+
   /** How far offscreen objects must be before being discarded. */
   protected static final int THRESHOLD = 50;
 
@@ -41,8 +61,8 @@ public abstract class Thing implements KeyListener {
   /** Amount of damage the object inflicts. */
   protected int power = 1;
 
-  /** Whether the object is evil. */
-  protected boolean evil = true;
+  /** The type of this object. */
+  protected int type = EVIL;
 
   /** Number of times the object has been hit. */
   protected int hit;
@@ -109,8 +129,15 @@ public abstract class Thing implements KeyListener {
   /** Assigns object's power. */
   public void setPower(int power) { this.power = power; }
 
-  /** Toggles whether the object is evil. */
-  public void setEvil(boolean evil) { this.evil = evil; }
+  /**
+   * Assigns object's type.
+   * Valid types are:
+   * <li>GOOD
+   * <li>EVIL
+   * <li>GOOD_BULLET
+   * <li>EVIL_BULLET
+   */
+  public void setType(int type) { this.type = type; }
 
   /** Draws the object onscreen. */
   public void draw(Graphics g) {
@@ -216,8 +243,8 @@ public abstract class Thing implements KeyListener {
   /** Gets object's power. */
   public int getPower() { return power; }
 
-  /** Gets whether object is evil. */
-  public boolean isEvil() { return evil; }
+  /** Gets object's type. */
+  public int getType() { return type; }
 
   /** Gets whether object has been hit. */
   public boolean isHit() { return hit > 0; }
@@ -229,7 +256,14 @@ public abstract class Thing implements KeyListener {
   public int getScore() { return maxhp; }
 
   /** Returns true if this object can harm the given one. */
-  public boolean harms(Thing t) { return isEvil() != t.isEvil(); }
+  public boolean harms(Thing t) {
+    return (type == GOOD && t.type == EVIL) ||
+      (type == EVIL && t.type == GOOD) ||
+      (type == GOOD_BULLET && t.type == EVIL) ||
+      (type == EVIL && t.type == GOOD_BULLET) ||
+      (type == GOOD && t.type == EVIL_BULLET) ||
+      (type == EVIL_BULLET && t.type == GOOD);
+  }
 
 
   // -- KeyListener API methods --

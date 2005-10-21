@@ -41,7 +41,7 @@ public class Copter extends Thing {
     setAttack(copterAttack);
 
     maxhp = hp = 100;
-    setEvil(false);
+    type = GOOD;
   }
 
 

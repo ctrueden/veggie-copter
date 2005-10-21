@@ -27,7 +27,7 @@ public class CopterSpread extends Thing {
 
   public CopterSpread(Thing thing, double angle) {
     super(thing.getGame());
-    evil = false;
+    type = GOOD_BULLET;
     setImage(image);
     float x = thing.getCX() - getWidth() / 2, y = thing.getY();
     float xd = -(float) (100 * Math.cos(angle)) + x;

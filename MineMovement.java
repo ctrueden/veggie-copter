@@ -67,7 +67,7 @@ public class MineMovement extends MovementStyle {
     // use distance squared function to drag in enemies
     Thing[] t = thing.getGame().getThings();
     for (int i=0; i<t.length; i++) {
-      if (!t[i].isEvil()) continue;
+      if (t[i].getType() != Thing.EVIL) continue;
       float tx = t[i].getCX(), ty = t[i].getCY();
       float xx = xpos - tx, yy = ypos - ty;
       float dist2 = xx * xx + yy * yy;

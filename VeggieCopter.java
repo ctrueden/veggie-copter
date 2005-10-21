@@ -199,7 +199,8 @@ public class VeggieCopter extends JPanel implements KeyListener {
     boolean clear = true;
     for (int i=0; i<things.size(); i++) {
       Thing t = (Thing) things.elementAt(i);
-      if (t.isEvil()) {
+      int type = t.getType();
+      if (type != Thing.GOOD && type != Thing.GOOD_BULLET) {
         clear = false;
         break;
       }
@@ -412,32 +413,28 @@ public class VeggieCopter extends JPanel implements KeyListener {
 
   /** Does collision detection between the given objects. */
   protected void checkCollisions(Thing[] t) {
-    int pups = 0;
-    int evil = 0;
+    // divide things into types, and build rectangle lists
+    Thing[][] tt = new Thing[Thing.TYPES.length][];
+    int[] counts = new int[Thing.TYPES.length];
     for (int i=0; i<t.length; i++) {
-      if (t[i] instanceof PowerUp) pups++;
-      else if (t[i].isEvil()) evil++;
+      int type = t[i].getType();
+      counts[type]++;
     }
-    PowerUp[] powerUps = new PowerUp[pups];
-    Thing[] t1 = new Thing[evil];
-    Thing[] t2 = new Thing[t.length - evil - pups];
-    int pu = 0, c1 = 0, c2 = 0;
+    Rectangle[][][] boxes = new Rectangle[Thing.TYPES.length][][];
+    for (int i=0; i<counts.length; i++) {
+      tt[i] = new Thing[counts[i]];
+      boxes[i] = new Rectangle[counts[i]][];
+    }
     for (int i=0; i<t.length; i++) {
-      if (t[i] instanceof PowerUp) powerUps[pu++] = (PowerUp) t[i];
-      else if (t[i].isEvil()) t1[c1++] = t[i];
-      else t2[c2++] = t[i];
+      int type = t[i].getType();
+      int ndx = --counts[type];
+      tt[type][ndx] = t[i];
+      boxes[type][ndx] = t[i].getBoxes();
     }
-
-    // build good and evil rectangle lists
-    Rectangle[][] r1 = new Rectangle[evil][];
-    Rectangle[][] r2 = new Rectangle[t.length - evil - pups][];
-    Rectangle[][] rups = new Rectangle[pups][];
-    for (int i=0; i<t1.length; i++) r1[i] = t1[i].getBoxes();
-    for (int i=0; i<t2.length; i++) r2[i] = t2[i].getBoxes();
-    for (int i=0; i<powerUps.length; i++) rups[i] = powerUps[i].getBoxes();
 
     // do collision detection between copter and power-ups
     Rectangle[] rcop = copter.getBoxes();
+    Rectangle[][] rups = boxes[Thing.POWER_UP];
     for (int i=0; i<rups.length; i++) {
       if (rups[i] == null) continue;
       boolean collision = false;
@@ -451,7 +448,8 @@ public class VeggieCopter extends JPanel implements KeyListener {
         if (collision) break;
       }
       if (collision) {
-        ColoredAttack attack = powerUps[i].getGrantedAttack();
+        PowerUp powerUp = (PowerUp) tt[Thing.POWER_UP][i];
+        ColoredAttack attack = powerUp.getGrantedAttack();
         if (attack == null) {
           // increase power of selected attack style by one
           int power = copter.getAttack().getPower();
@@ -462,12 +460,24 @@ public class VeggieCopter extends JPanel implements KeyListener {
           CopterAttack copterAttack = (CopterAttack) copter.getAttack();
           copterAttack.addAttackStyle(attack);
         }
-        powerUps[i].setHP(0);
+        tt[Thing.POWER_UP][i].setHP(0);
         rups[i] = null;
       }
     }
 
     // do collision detection between good and evil objects
+    checkCollisions(tt[Thing.GOOD], boxes[Thing.GOOD],
+      tt[Thing.EVIL], boxes[Thing.EVIL]);
+    checkCollisions(tt[Thing.GOOD_BULLET], boxes[Thing.GOOD_BULLET],
+      tt[Thing.EVIL], boxes[Thing.EVIL]);
+    checkCollisions(tt[Thing.GOOD], boxes[Thing.GOOD],
+      tt[Thing.EVIL_BULLET], boxes[Thing.EVIL_BULLET]);
+  }
+
+  /** Does collision detection between the given objects. */
+  protected void checkCollisions(Thing[] t1, Rectangle[][] r1,
+    Thing[] t2, Rectangle[][] r2)
+  {
     for (int i=0; i<r1.length; i++) {
       for (int j=0; j<r2.length; j++) {
         if (r1[i] == null) break;
@@ -496,11 +506,12 @@ public class VeggieCopter extends JPanel implements KeyListener {
   protected boolean smack(Thing attacker, Thing defender) {
     defender.hit(attacker.getPower());
     if (defender.isDead()) {
-      if (defender.isEvil()) score += defender.getScore();
+      if (defender.getType() == Thing.EVIL) score += defender.getScore();
       return true;
     }
     return false;
   }
+
 
 
   // -- Main --

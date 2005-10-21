@@ -35,7 +35,7 @@ public class CopterSplitter extends Thing {
     int xdir, int ydir, int count, int size)
   {
     super(game);
-    evil = false;
+    type = GOOD_BULLET;
     if (size < 0) size = 0;
     else if (size >= MAX_SIZE) size = MAX_SIZE - 1;
     setImage(images[size]);

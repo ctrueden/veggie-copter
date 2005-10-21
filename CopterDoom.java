@@ -23,7 +23,7 @@ public class CopterDoom extends Thing {
 
   public CopterDoom(Thing thing) {
     super(thing.getGame());
-    setEvil(false);
+    type = GOOD_BULLET;
     move = new DoomMovement(this, thing);
     maxhp = hp = Integer.MAX_VALUE;
   }

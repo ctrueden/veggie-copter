@@ -25,6 +25,7 @@ public class PowerUp extends Thing {
     float cx, float cy, int size, ColoredAttack attack)
   {
     super(game);
+    type = POWER_UP;
     att = attack;
 
     // create power-up images

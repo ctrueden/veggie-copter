@@ -48,7 +48,10 @@ public class HomingMovement extends MovementStyle {
       float mindist2 = Float.MAX_VALUE;
       float x = thing.getCX(), y = thing.getCY();
       for (int i=0; i<t.length; i++) {
-        if (!t[i].isEvil()) continue;
+        int type = t[i].getType();
+        boolean bigPowerUp = type == Thing.POWER_UP &&
+          ((PowerUp) t[i]).getGrantedAttack() != null;
+        if (type != Thing.EVIL && !bigPowerUp) continue;
         float cx = t[i].getCX(), cy = t[i].getCY();
         float xx = cx - x, yy = cy - y;
         float dist2 = xx * xx + yy * yy;

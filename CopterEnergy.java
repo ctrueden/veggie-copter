@@ -40,7 +40,7 @@ public class CopterEnergy extends Thing {
   public CopterEnergy(Thing thing) {
     super(thing.getGame());
     setImageList(images);
-    setEvil(false);
+    type = GOOD_BULLET;
     move = new EnergyMovement(this, thing);
     maxhp = hp = Integer.MAX_VALUE;
   }

@@ -40,7 +40,7 @@ public class CopterRegen extends Thing {
   public CopterRegen(Thing thing) {
     super(thing.getGame());
     setImageList(images);
-    setEvil(false);
+    type = GOOD_BULLET;
     move = new RegenMovement(this, thing);
   }
 

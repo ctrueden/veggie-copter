@@ -54,7 +54,7 @@ public class CopterLit extends Thing {
     super(thing.getGame());
     setImageList(images);
     setImageIndex(angle);
-    setEvil(false);
+    type = GOOD_BULLET;
     float x = thing.getCX() - getWidth() / 2, y = thing.getY() - getHeight();
     move = new LitMovement(this, x, y, path);
   }

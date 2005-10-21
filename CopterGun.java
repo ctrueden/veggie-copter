@@ -28,7 +28,7 @@ public class CopterGun extends Thing {
 
   public CopterGun(Thing thing, float x, float y, int power) {
     super(thing.getGame());
-    evil = false;
+    type = GOOD_BULLET;
     setImage(image);
     setPower(power);
     move = new BulletMovement(this, x, y + HEIGHT, x, -100, SPEED);

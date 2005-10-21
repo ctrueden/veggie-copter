@@ -38,7 +38,7 @@ public class CopterCharge extends Thing {
   public CopterCharge(Thing thing) {
     super(thing.getGame());
     setImageList(images);
-    evil = false;
+    type = GOOD_BULLET;
     size = -1;
     grow();
     float x = thing.getCX() - getWidth(), y = thing.getY();

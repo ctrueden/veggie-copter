@@ -26,6 +26,7 @@ public class EnemyBullet extends Thing {
 
   public EnemyBullet(Thing t) {
     super(t.getGame());
+    type = EVIL_BULLET;
     setImage(image);
     setPower(10 * t.getPower());
 
@@ -37,6 +38,7 @@ public class EnemyBullet extends Thing {
 
   public EnemyBullet(Thing t, int x2, int y2) {
     super(t.getGame());
+    type = EVIL_BULLET;
     setImage(image);
     setPower(10 * t.getPower());
 
