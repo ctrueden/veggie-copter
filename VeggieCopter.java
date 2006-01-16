@@ -373,11 +373,13 @@ public class VeggieCopter extends JPanel implements KeyListener {
           stage = selector.getSelectedStage();
           stage.resetScript();
           things.add(copter);
+          ((CopterAttack) copter.getAttack()).reactivateAttackStyle();
+          ((CopterAttack) copter.getAttack()).reactivateAttackStyle();
         }
         else if (copter.isDead()) resetGame();
       }
       else if (code == Keys.PAUSE) pause = !pause;
-      else if (code == 0) pause = true; // stupid Windows key
+      else if (code == 0 || code == 524) pause = true; // stupid Windows key
       else if (code == Keys.MOVE_LEFT) {
         if (stage == null) selector.adjustStage(false);
       }

@@ -15,13 +15,18 @@ public class CopterCharge extends Thing {
   static {
     images = new BoundedImage[MAX_SIZE];
     for (int i=0; i<MAX_SIZE; i++) {
-      int size = 2 * i + 3;
+      int size = 2 * i + 12;
       BufferedImage img =
         new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
       Graphics g = img.createGraphics();
       int bright = 127 + 128 * i / (MAX_SIZE - 1);
-      g.setColor(new Color(bright, bright, bright, bright));
-      g.fillOval(0, 0, size, size);
+      for (int j=size; j>0; j--) {
+        int l = (size - j) / 2;
+        //int r = (size + j) / 2;
+        int q = bright * (size - j) / size;
+        g.setColor(new Color(q, q, q, q));
+        g.fillOval(l, l, j, j);
+      }
       g.dispose();
       images[i] = new BoundedImage(img, size, size);
       images[i].addBox(new BoundingBox(1, 1, 1, 1));

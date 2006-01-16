@@ -1,0 +1,18 @@
+print 80 215 48 255 255 255 180 James Stage
+wait 200
+
+add JamesEnemy 0 true
+add JamesEnemy 0 false
+wait clear 600
+
+print 100 220 24 255 255 255 180 Boss approaching!
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+print 85 195 48 255 0 0 30 WARNING
+wait 50
+add JamesBoss 200 true
+wait clear

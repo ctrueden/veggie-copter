@@ -31,7 +31,7 @@ public class Copter extends Thing {
     copterAttack.addAttackStyle(new LaserAttack(this)); // green
     copterAttack.addAttackStyle(new LitAttack(this)); // cyan
     copterAttack.addAttackStyle(new SpreadAttack(this)); // blue
-    copterAttack.addAttackStyle(new PurpleAttack(this)); // purple
+    copterAttack.addAttackStyle(new ShieldAttack(this)); // purple
     copterAttack.addAttackStyle(new HomingAttack(this)); // magenta
     copterAttack.addAttackStyle(new RegenAttack(this)); // pink
     copterAttack.addAttackStyle(new ChargeAttack(this)); // white

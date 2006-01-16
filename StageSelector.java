@@ -8,6 +8,19 @@ import java.util.Vector;
 /** Implements logic for selecting a stage. */
 public class StageSelector {
 
+  // -- Constants --
+
+  /** Stage icon coordinates (X values). */
+  private static final int[] STAGE_X = {
+    10, 10, 10, 64, 119, 174, 229, 284, 338, 339, 339
+  };
+
+  /** Stage icon coordinates (Y values). */
+  private static final int[] STAGE_Y = {
+    341, 284, 227, 170, 170, 170, 170, 170, 227, 284, 341
+  };
+
+
   // -- Fields --
 
   private VeggieCopter game;
@@ -20,7 +33,8 @@ public class StageSelector {
   public StageSelector(VeggieCopter game) {
     this.game = game;
     addStage(new TestStage(game, "Shadow", "test", new String[] {
-      "A test enemy for gauging weapon strength.",
+      "A test enemy for gauging weapon",
+      "strength.",
     }));
     addStage(new Stage(game, "Alex", "alex", new String[] {
       "Fear the vicious Alex lunge!",
@@ -32,8 +46,12 @@ public class StageSelector {
       "Best girl ever!"
     }));
     addStage(new Stage(game, "Kels", "kels", new String[] {
-      "Defeat the mighty Kelsey, and the dreaded yellow shots shall",
-      "be yours!"
+      "Defeat the mighty Kelsey, and the",
+      "dreaded yellow shots shall be yours!"
+    }));
+    addStage(new Stage(game, "James", "james", new String[] {
+      "James is laughing at you -- they're",
+      "ALL laughing at you!"
     }));
     addStage(new Stage(game, "George", "george", new String[] {
       "Support our troops!"
@@ -55,15 +73,9 @@ public class StageSelector {
     int w = game.getWidth(), h = game.getHeight();
     int cols = w / Stage.ICON_SIZE;
     int rows = (size + cols - 1) / cols;
-    int x = 10, y = h - Stage.ICON_SIZE * rows - 32;
     for (int i=0; i<size; i++) {
       Stage s = (Stage) stages.elementAt(i);
-      s.drawIcon(g, x, y, i == current);
-      x += Stage.ICON_SIZE - 1; // one pixel overlap
-      if (x + Stage.ICON_SIZE + 10 >= w) {
-        x = 10;
-        y -= Stage.ICON_SIZE - 1; // one pixel overlap
-      }
+      s.drawIcon(g, STAGE_X[i], STAGE_Y[i], i == current);
     }
     getSelectedStage().drawSelectScreen(g);
   }

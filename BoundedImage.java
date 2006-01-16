@@ -55,6 +55,12 @@ public class BoundedImage {
   /** Adds a bounding box to the image. */
   public void addBox(BoundingBox box) { boxes.add(box); }
 
+  /** Removes the last bounding box from the image. */
+  public void removeBox() {
+    int ndx = boxes.size() - 1;
+    if (ndx >= 0) boxes.removeElementAt(ndx);
+  }
+
   /** Gets image. */
   public Image getImage() { return img; }
 

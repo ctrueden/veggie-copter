@@ -9,7 +9,7 @@ public class BoundingBox {
   // -- Fields --
 
   /** Bounding box insets. */
-  protected int x1, y1, x2, y2;
+  public int x1, y1, x2, y2;
 
 
   // -- Constructor --

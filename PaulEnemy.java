@@ -14,9 +14,11 @@ public class PaulEnemy extends EnemyHead {
       game.loadImage("paul3.png"));
     // CTR TODO set proper bounding box and offsets here
     BoundedImage normal = getBoundedImage(0);
-    normal.addBox(new BoundingBox());
+    normal.addBox(new BoundingBox(1, 5, 1, 10));
+    normal.addBox(new BoundingBox(8, 1, 8, 1));
     BoundedImage attacking = getBoundedImage(1);
-    attacking.addBox(new BoundingBox());
+    attacking.addBox(new BoundingBox(1, 5, 1, 10));
+    attacking.addBox(new BoundingBox(8, 1, 8, 1));
     BoundedImage hurting = getBoundedImage(2);
     hurting.addBox(new BoundingBox());
     setMovement(new PaulMovement(this));

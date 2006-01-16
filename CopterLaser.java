@@ -20,8 +20,13 @@ public class CopterLaser extends Thing {
       BufferedImage img =
         new BufferedImage(width, 13, BufferedImage.TYPE_INT_RGB);
       Graphics g = img.createGraphics();
-      g.setColor(new Color(0, 127 + 128 * i / (MAX_SIZE - 1), 0));
-      g.fillRect(0, 0, width, 12);
+      int qi = 64 * i / (MAX_SIZE - 1);
+      for (int j=0; j<width; j++) {
+        int jj = 2 * (j < width / 2 ? j : (width - 1 - j));
+        int qj = width <= 1 ? 0 : (64 * jj / (width - 1));
+        g.setColor(new Color(0, 127 + qi + qj, 0));
+        g.drawLine(j, 0, j, 12);
+      }
       g.dispose();
       images[i] = new BoundedImage(img, width, 13);
       images[i].addBox(new BoundingBox());

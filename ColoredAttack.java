@@ -48,6 +48,12 @@ public abstract class ColoredAttack extends AttackStyle {
   public Color getColor() { return color; }
 
   /**
+   * Indicates control has been transferred to from this attack style,
+   * and it is now active.
+   */
+  public void activate() { }
+
+  /**
    * Indicates control has been transferred away from this attack style, and it
    * should cease functioning regardless of key press states or other factors.
    */

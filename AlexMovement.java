@@ -21,6 +21,7 @@ public class AlexMovement extends MovementStyle {
   protected boolean xdir, ydir;
   protected long ticks;
   protected boolean needsToRun, running, lunging;
+  protected float lastX, lastY;
 
 
   // -- Constructors --
@@ -65,6 +66,7 @@ public class AlexMovement extends MovementStyle {
     ylen = (int) (thing.getHeight() * Math.random()) + 2 * Y_STEPS;
     xinc = 0; yinc = 0;
 
+    lastX = xpos; lastY = ypos;
     thing.setPos(xpos, ypos);
   }
 
@@ -81,12 +83,17 @@ public class AlexMovement extends MovementStyle {
   /** Moves the given thing according to the bouncing movement style. */
   public void move() {
     float xpos = thing.getX(), ypos = thing.getY();
-    ticks++;
+    VeggieCopter game = thing.getGame();
 
+    // adjust for external movement
+    xstart = xstart - lastX + xpos;
+    ystart = ystart - lastY + ypos;
+
+    ticks++;
     if (ticks % LUNGE_RATE == 0) {
       // lunge toward ship
       lunging = true;
-      Copter hero = thing.getGame().getCopter();
+      Copter hero = game.getCopter();
 
       xstart = xpos;
       float sx = hero.getX();
@@ -110,21 +117,24 @@ public class AlexMovement extends MovementStyle {
     else ypos = (float) (ystart - yp * ylen / SPEED);
 
     if (thing.isHit() && !running) needsToRun = true;
+    int w = game.getWindowWidth();
+    int h = game.getWindowHeight();
+    int width = thing.getWidth();
+    int height = thing.getHeight();
 
     if (xinc == X_STEPS) {
       if (needsToRun) {
         // run away when being shot
         running = true;
         xstart = xpos;
-        int w = thing.getGame().getWindowWidth();
         xdir = thing.getCX() < w / 2;
-        xlen = 2 * (xdir ? w - thing.getWidth() - xpos : xpos) - 10;
+        xlen = 2 * (xdir ? w - width - xpos : xpos) - 10;
         xinc = 0;
       }
       else {
         xstart = xpos;
         xdir = !xdir;
-        xlen = (float) (thing.getWidth() * Math.random()) + X_STEPS;
+        xlen = (float) (width * Math.random()) + X_STEPS;
         xinc = 0;
         running = false;
       }
@@ -135,11 +145,16 @@ public class AlexMovement extends MovementStyle {
     if (yinc == Y_STEPS) {
       ystart = ypos;
       ydir = !ydir;
-      ylen = (float) (thing.getHeight() * Math.random()) + Y_STEPS;
+      ylen = (float) (height * Math.random()) + Y_STEPS;
       yinc = 0;
       lunging = false;
     }
 
+    if (xpos < -width) xpos = -width;
+    if (ypos < -height) ypos = -height;
+    if (xpos > w + width) xpos = w + width;
+    if (ypos > h + height) ypos = h + height;
+    lastX = xpos; lastY = ypos;
     thing.setPos(xpos, ypos);
   }
 

@@ -57,7 +57,16 @@ public class CopterAttack extends AttackStyle {
     }
     else attack.clear();
     current = index;
+    attack = getAttackStyle();
+    if (attack == null) { // all attack styles
+      for (int i=0; i<attacks.size(); i++) {
+        ((ColoredAttack) attacks.elementAt(i)).activate();
+      }
+    }
+    else attack.activate();
   }
+
+  public void reactivateAttackStyle() { setAttackStyle(current); }
 
   public void drawWeaponStatus(Graphics g, int x, int y) {
     int size = attacks.size();

@@ -59,19 +59,20 @@ public class Stage {
     drawOutlinedRect(g, DARK_RED,
       TOP_LEFT, TOP_LEFT, IMAGE_SIZE, IMAGE_SIZE);
     int gameWidth = game.getWidth();
-    int textHeight = 14 * description.length + TOP_LEFT;
-    drawOutlinedRect(g, Color.darkGray,
-      TOP_LEFT, IMAGE_SIZE + 15, gameWidth - 20, textHeight);
+    int textHeight = 14 * description.length + 10;
+    drawOutlinedRect(g, Color.darkGray, TOP_LEFT + IMAGE_SIZE + 10,
+      TOP_LEFT + 45, gameWidth - TOP_LEFT - IMAGE_SIZE - 20, textHeight);
 
     int cx = TOP_LEFT + 1 + (IMAGE_SIZE - 2 - imageWidth) / 2;
     int cy = TOP_LEFT + 1 + (IMAGE_SIZE - 2 - imageHeight) / 2;
     g.drawImage(image, cx, cy, game);
     g.setFont(BIG);
     g.setColor(Color.white);
-    g.drawString(name, IMAGE_SIZE + 20, 65);
+    g.drawString(name, IMAGE_SIZE + TOP_LEFT + 10, TOP_LEFT + 35);
     g.setFont(SMALL);
     for (int i=0; i<description.length; i++) {
-      g.drawString(description[i], TOP_LEFT + 5, IMAGE_SIZE + 14 * i + 31);
+      g.drawString(description[i], TOP_LEFT + IMAGE_SIZE + 15,
+        14 * i + TOP_LEFT + 61);
     }
     g.setFont(origFont);
     g.setColor(origColor);
