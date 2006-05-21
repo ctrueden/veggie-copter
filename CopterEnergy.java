@@ -19,8 +19,7 @@ public class CopterEnergy extends Thing {
     images = new BoundedImage[MAX_SIZE];
     for (int i=0; i<MAX_SIZE; i++) {
       int size = 4 * i + 30;
-      BufferedImage img =
-        new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+      BufferedImage img = ImageTools.makeImage(size, size);
       Graphics g = img.createGraphics();
       int median = size / 2;
       for (int rad=median; rad>=1; rad--) {
@@ -29,7 +28,7 @@ public class CopterEnergy extends Thing {
         g.fillOval(median - rad, median - rad, 2 * rad, 2 * rad);
       }
       g.dispose();
-      images[i] = new BoundedImage(img, size, size);
+      images[i] = new BoundedImage(img);
       images[i].addBox(new BoundingBox(5, 5, 5, 5));
     }
   }

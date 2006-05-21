@@ -3,7 +3,7 @@
 //
 
 import java.awt.*;
-import java.awt.image.ImageObserver;
+import java.awt.image.BufferedImage;
 import java.util.Vector;
 
 /** An image with associated bounding box insets. */
@@ -12,7 +12,7 @@ public class BoundedImage {
   // -- Fields --
 
   /** Image. */
-  protected Image img;
+  protected BufferedImage img;
 
   /** Image dimensions. */
   protected int width, height;
@@ -27,22 +27,20 @@ public class BoundedImage {
   // -- Constructor --
 
   /** Constructs a bounded image with default parameters. */
-  public BoundedImage(ImageObserver obs, Image img) {
-    this(img, img.getWidth(obs), img.getHeight(obs), 0, 0);
+  public BoundedImage(BufferedImage img) {
+    this(img, img.getWidth(), img.getHeight(), 0, 0);
   }
 
-  /** Constructs a bounded image with default parameters. */
-  public BoundedImage(Image img, int width, int height) {
-    this(img, width, height, 0, 0);
+
+  /** Constructs an image with accompanying bounding box information. */
+  public BoundedImage(BufferedImage img, int xoff, int yoff) {
+    this(img, img.getWidth(), img.getHeight(), xoff, yoff);
   }
 
   /** Constructs an image with accompanying bounding box information. */
-  public BoundedImage(ImageObserver obs, Image img, int xoff, int yoff) {
-    this(img, img.getWidth(obs), img.getHeight(obs), xoff, yoff);
-  }
-
-  /** Constructs an image with accompanying bounding box information. */
-  public BoundedImage(Image img, int width, int height, int xoff, int yoff) {
+  public BoundedImage(BufferedImage img,
+    int width, int height, int xoff, int yoff)
+  {
     this.img = img;
     this.width = width;
     this.height = height;

@@ -3,6 +3,7 @@
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.util.*;
 import javax.swing.*;
 
@@ -58,8 +59,8 @@ public class BoxEditor extends JFrame
         continue;
       }
       System.out.println("Loading " + name);
-      Image img = loader.getImage(name);
-      BoundedImage bi = new BoundedImage(this, img);
+      BufferedImage img = loader.getImage(name);
+      BoundedImage bi = new BoundedImage(img);
       images.add(bi);
       names.add(name);
     }

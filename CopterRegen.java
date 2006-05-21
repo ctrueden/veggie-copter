@@ -19,8 +19,7 @@ public class CopterRegen extends Thing {
     images = new BoundedImage[MAX_SIZE];
     for (int i=0; i<MAX_SIZE; i++) {
       int width = i + 18;
-      BufferedImage img =
-        new BufferedImage(width, 2 * width, BufferedImage.TYPE_INT_ARGB);
+      BufferedImage img = ImageTools.makeImage(width, 2 * width);
       Graphics g = img.createGraphics();
       int median = width / 2;
       for (int rad=median; rad>=1; rad--) {
@@ -29,7 +28,7 @@ public class CopterRegen extends Thing {
         g.fillOval(median - rad, 2 * (median - rad), 2 * rad, 4 * rad);
       }
       g.dispose();
-      images[i] = new BoundedImage(img, width, 2 * width);
+      images[i] = new BoundedImage(img);
       images[i].addBox(new BoundingBox(5, 5, 5, 5));
     }
   }

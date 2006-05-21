@@ -28,15 +28,14 @@ public class MineBullet extends Thing {
   static {
     images = new BoundedImage[LIFE];
     for (int i=0; i<LIFE; i++) {
-      BufferedImage img =
-        new BufferedImage(SIZE, SIZE, BufferedImage.TYPE_INT_ARGB);
+      BufferedImage img = ImageTools.makeImage(SIZE, SIZE);
       Graphics g = img.createGraphics();
       int alpha = 255 * (LIFE - i) / LIFE;
       g.setColor(new Color(Color.gray.getRed(),
         Color.gray.getGreen(), Color.gray.getBlue(), alpha));
       g.fillRoundRect(0, 0, SIZE, SIZE, SIZE / 2, SIZE / 2);
       g.dispose();
-      images[i] = new BoundedImage(img, SIZE, SIZE);
+      images[i] = new BoundedImage(img);
       images[i].addBox(new BoundingBox());
     }
   }

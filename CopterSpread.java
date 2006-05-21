@@ -15,13 +15,12 @@ public class CopterSpread extends Thing {
 
   static {
     int size = 9;
-    BufferedImage img =
-      new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+    BufferedImage img = ImageTools.makeImage(size, size);
     Graphics g = img.createGraphics();
     g.setColor(Color.blue);
     g.fillRoundRect(0, 0, size, size, size / 2, size / 2);
     g.dispose();
-    image = new BoundedImage(img, size, size);
+    image = new BoundedImage(img);
     image.addBox(new BoundingBox());
   }
 

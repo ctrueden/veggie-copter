@@ -10,12 +10,12 @@ public class CopterHoming extends Thing {
   protected static BoundedImage image;
 
   static {
-    BufferedImage img = new BufferedImage(8, 8, BufferedImage.TYPE_INT_ARGB);
+    BufferedImage img = ImageTools.makeImage(8, 8);
     Graphics g = img.createGraphics();
     g.setColor(Color.magenta);
     g.fillRoundRect(0, 0, 8, 8, 4, 4);
     g.dispose();
-    image = new BoundedImage(img, 8, 8);
+    image = new BoundedImage(img);
     image.addBox(new BoundingBox());
   }
 

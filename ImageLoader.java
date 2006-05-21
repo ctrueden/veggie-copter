@@ -2,14 +2,13 @@
 // ImageLoader.java
 //
 
-import java.awt.Component;
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.Toolkit;
-
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Hashtable;
+import javax.imageio.ImageIO;
 
-public class ImageLoader extends Component {
+public class ImageLoader {
 
   protected static final String[] PRELOAD = {
     "alex1.png", "alex2.png", "alex3.png",
@@ -19,17 +18,15 @@ public class ImageLoader extends Component {
   };
 
   protected Hashtable imageHash;
-  protected MediaTracker tracker;
   protected int nextId;
 
   public ImageLoader() {
     imageHash = new Hashtable();
-    tracker = new MediaTracker(this);
     for (int i=0; i<PRELOAD.length; i++) loadImage(PRELOAD[i]);
   }
 
-  public Image getImage(String filename) {
-    Image image = (Image) imageHash.get(filename);
+  public BufferedImage getImage(String filename) {
+    BufferedImage image = (BufferedImage) imageHash.get(filename);
     if (image == null) {
       image = loadImage(filename);
       imageHash.put(filename, image);
@@ -37,13 +34,11 @@ public class ImageLoader extends Component {
     return image;
   }
 
-  protected Image loadImage(String filename) {
-    Image image = Toolkit.getDefaultToolkit().createImage(
-      getClass().getResource(filename));
-    tracker.addImage(image, ++nextId);
-    try { tracker.waitForID(nextId); }
-    catch (InterruptedException exc) { exc.printStackTrace(); }
-    return image;
+  protected BufferedImage loadImage(String filename) {
+    BufferedImage image = null;
+    try { image = ImageIO.read(new File(filename)); }
+    catch (IOException exc) { exc.printStackTrace(); }
+    return ImageTools.makeCompatible(image, null);
   }
 
 }

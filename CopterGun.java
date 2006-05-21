@@ -17,7 +17,7 @@ public class CopterGun extends Thing {
 
   static {
     int len = HEIGHT;
-    BufferedImage img = new BufferedImage(1, len, BufferedImage.TYPE_INT_RGB);
+    BufferedImage img = ImageTools.makeImage(1, len);
     Graphics g = img.createGraphics();
     g.setColor(BROWN);
     g.drawLine(0, 0, 0, len);

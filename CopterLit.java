@@ -32,12 +32,12 @@ public class CopterLit extends Thing {
       int y2 = MULTIPLIER * Y2[i];
       int w = (x1 > x2 ? x1 : x2) + 1;
       int h = (y1 > y2 ? y1 : y2) + 1;
-      BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+      BufferedImage img = ImageTools.makeImage(w, h);
       Graphics g = img.createGraphics();
       g.setColor(Color.cyan);
       g.drawLine(x1, y1, x2, y2);
       g.dispose();
-      images[i] = new BoundedImage(img, w, h);
+      images[i] = new BoundedImage(img);
       images[i].addBox(new BoundingBox());
     }
   }

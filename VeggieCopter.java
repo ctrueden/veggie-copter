@@ -95,8 +95,7 @@ public class VeggieCopter extends JPanel implements KeyListener {
     //SoundPlayer.playMidi(getClass().getResource("metblast.mid"), true);
 
     // graphics buffer
-    buf = new BufferedImage(GAME_WIDTH,
-      GAME_HEIGHT + STATUS, BufferedImage.TYPE_INT_RGB);
+    buf = ImageTools.makeImage(GAME_WIDTH, GAME_HEIGHT + STATUS);
 
     // image loader
     loader = new ImageLoader();
@@ -160,8 +159,8 @@ public class VeggieCopter extends JPanel implements KeyListener {
   public BoundedImage loadImage(String filename,
     int xoff, int yoff, BoundingBox[] boxes)
   {
-    Image img = loader.getImage(filename);
-    BoundedImage bi = new BoundedImage(this, img, xoff, yoff);
+    BufferedImage img = loader.getImage(filename);
+    BoundedImage bi = new BoundedImage(img, xoff, yoff);
     for (int i=0; i<boxes.length; i++) bi.addBox(boxes[i]);
     return bi;
   }

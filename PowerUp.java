@@ -38,8 +38,7 @@ public class PowerUp extends Thing {
       int red = r2 + r2 * (i + 1) / imgs.length;
       int green = g2 + g2 * (i + 1) / imgs.length;
       int blue = b2 + b2 * (i + 1) / imgs.length;
-      BufferedImage img =
-        new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+      BufferedImage img = ImageTools.makeImage(size, size);
       Graphics g = img.createGraphics();
       int median = size / 2;
       for (int rad=median; rad>=1; rad--) {
@@ -48,7 +47,7 @@ public class PowerUp extends Thing {
         g.fillOval(median - rad, median - rad, 2 * rad, 2 * rad);
       }
       g.dispose();
-      imgs[i] = new BoundedImage(img, size, size);
+      imgs[i] = new BoundedImage(img);
       imgs[i].addBox(new BoundingBox(1, 1, 1, 1));
     }
     setImageList(imgs);

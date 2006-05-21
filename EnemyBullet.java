@@ -14,13 +14,12 @@ public class EnemyBullet extends Thing {
   protected static BoundedImage image;
 
   static {
-    BufferedImage img =
-      new BufferedImage(SIZE, SIZE, BufferedImage.TYPE_INT_ARGB);
+    BufferedImage img = ImageTools.makeImage(SIZE, SIZE);
     Graphics g = img.createGraphics();
     g.setColor(Color.red);
     g.fillRoundRect(0, 0, SIZE, SIZE, SIZE / 2, SIZE / 2);
     g.dispose();
-    image = new BoundedImage(img, SIZE, SIZE);
+    image = new BoundedImage(img);
     image.addBox(new BoundingBox());
   }
 

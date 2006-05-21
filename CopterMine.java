@@ -17,8 +17,7 @@ public class CopterMine extends Thing {
     images = new BoundedImage[MAX_SIZE];
     for (int i=0; i<MAX_SIZE; i++) {
       int size = i + 10;
-      BufferedImage img =
-        new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+      BufferedImage img = ImageTools.makeImage(size, size);
       Graphics g = img.createGraphics();
       g.setColor(Color.gray);
       g.fillOval(0, 0, size, size);
@@ -26,7 +25,7 @@ public class CopterMine extends Thing {
       int q = size / 3 + 1;
       g.fillOval(q, q, q, q);
       g.dispose();
-      images[i] = new BoundedImage(img, size, size);
+      images[i] = new BoundedImage(img);
       images[i].addBox(new BoundingBox());
     }
   }

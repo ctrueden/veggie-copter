@@ -16,8 +16,7 @@ public class CopterCharge extends Thing {
     images = new BoundedImage[MAX_SIZE];
     for (int i=0; i<MAX_SIZE; i++) {
       int size = 2 * i + 12;
-      BufferedImage img =
-        new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+      BufferedImage img = ImageTools.makeImage(size, size);
       Graphics g = img.createGraphics();
       int bright = 127 + 128 * i / (MAX_SIZE - 1);
       for (int j=size; j>0; j--) {
@@ -28,10 +27,11 @@ public class CopterCharge extends Thing {
         g.fillOval(l, l, j, j);
       }
       g.dispose();
-      images[i] = new BoundedImage(img, size, size);
+      images[i] = new BoundedImage(img);
       images[i].addBox(new BoundingBox(1, 1, 1, 1));
     }
   }
+
 
   // -- Fields --
 

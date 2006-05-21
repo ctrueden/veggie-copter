@@ -17,13 +17,12 @@ public class CopterSplitter extends Thing {
     images = new BoundedImage[MAX_SIZE];
     for (int i=0; i<MAX_SIZE; i++) {
       int size = i + 4;
-      BufferedImage img =
-        new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+      BufferedImage img = ImageTools.makeImage(size, size);
       Graphics g = img.createGraphics();
       g.setColor(Color.yellow);
       g.fillRoundRect(0, 0, size, size, size / 2, size / 2);
       g.dispose();
-      images[i] = new BoundedImage(img, size, size);
+      images[i] = new BoundedImage(img);
       images[i].addBox(new BoundingBox());
     }
   }

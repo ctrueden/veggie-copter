@@ -17,8 +17,7 @@ public class CopterLaser extends Thing {
     images = new BoundedImage[MAX_SIZE];
     for (int i=0; i<MAX_SIZE; i++) {
       int width = 2 * i + 1;
-      BufferedImage img =
-        new BufferedImage(width, 13, BufferedImage.TYPE_INT_RGB);
+      BufferedImage img = ImageTools.makeImage(width, 13);
       Graphics g = img.createGraphics();
       int qi = 64 * i / (MAX_SIZE - 1);
       for (int j=0; j<width; j++) {
@@ -28,7 +27,7 @@ public class CopterLaser extends Thing {
         g.drawLine(j, 0, j, 12);
       }
       g.dispose();
-      images[i] = new BoundedImage(img, width, 13);
+      images[i] = new BoundedImage(img);
       images[i].addBox(new BoundingBox());
     }
   }
