@@ -90,7 +90,7 @@ public class VeggieCopter extends JPanel implements KeyListener {
       (screen.height - GAME_HEIGHT - STATUS) / 2);
 
     // background music
-    //SoundPlayer.playMidi(getClass().getResource("metblast.mid"), true);
+    SoundPlayer.playMidi(getClass().getResource("metblast.mid"), true);
 
     // graphics buffer
     buf = ImageTools.makeImage(GAME_WIDTH, GAME_HEIGHT + STATUS);
