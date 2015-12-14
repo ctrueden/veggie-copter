@@ -1,2 +1,2 @@
 #!/bin/sh
-java VeggieCopter
+mvn clean compile exec:java
