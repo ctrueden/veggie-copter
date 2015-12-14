@@ -103,7 +103,8 @@ public class ScriptingEngine {
     String[] p = new String[args.length - 1];
     System.arraycopy(args, 1, p, 0, p.length);
     try {
-      Class c = Class.forName(className);
+      String fqcn = getClass().getPackage().getName() + "." + className;
+      Class c = Class.forName(fqcn);
       Constructor con = c.getConstructor(SIG);
       game.addThing((Thing) con.newInstance(new Object[] {game, p}));
     }
