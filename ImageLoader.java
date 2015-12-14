@@ -3,7 +3,6 @@
 //
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
 import javax.imageio.ImageIO;
@@ -36,7 +35,7 @@ public class ImageLoader {
 
   protected BufferedImage loadImage(String filename) {
     BufferedImage image = null;
-    try { image = ImageIO.read(new File(filename)); }
+    try { image = ImageIO.read(getClass().getResource(filename)); }
     catch (IOException exc) { exc.printStackTrace(); }
     return ImageTools.makeCompatible(image, null);
   }

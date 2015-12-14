@@ -30,7 +30,8 @@ public class ScriptingEngine {
   public ScriptingEngine(VeggieCopter game, String scriptFile) {
     this.game = game;
     try {
-      BufferedReader fin = new BufferedReader(new FileReader(scriptFile));
+      BufferedReader fin = new BufferedReader(
+        new InputStreamReader(getClass().getResourceAsStream(scriptFile)));
       while (true) {
         String line = fin.readLine();
         if (line == null) break;
