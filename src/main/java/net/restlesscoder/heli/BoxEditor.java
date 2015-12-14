@@ -45,7 +45,8 @@ public class BoxEditor extends JFrame
     addMouseMotionListener(this);
     addWindowListener(this);
     setBounds(300, 300, 300, 300);
-    File[] files = new File(".").listFiles();
+    String pathPrefix = "src/main/resources/net/restlesscoder/heli";
+    File[] files = new File(pathPrefix).listFiles();
     images = new Vector();
     names = new Vector();
     ImageLoader loader = new ImageLoader();
