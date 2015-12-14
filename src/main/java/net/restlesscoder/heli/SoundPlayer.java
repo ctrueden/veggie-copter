@@ -27,7 +27,11 @@ import javax.sound.sampled.LineUnavailableException;
 
 public class SoundPlayer {
 
+  private static boolean mute = true;
+  public static void toggleMute() { mute = !mute; }
+
   public static boolean playSound(URL wave) {
+    if (mute) return false;
     AudioInputStream audioInputStream = null;
     try { audioInputStream = AudioSystem.getAudioInputStream(wave); }
     catch (Exception exc) { return false; }
@@ -50,6 +54,7 @@ public class SoundPlayer {
   }
 
   public static boolean playMidi(URL midi, boolean loop) {
+    if (mute) return false;
     Sequence sequence = null;
     try { sequence = MidiSystem.getSequence(midi); }
     catch (InvalidMidiDataException exc) { return false; }
