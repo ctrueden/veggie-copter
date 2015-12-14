@@ -385,6 +385,7 @@ public class VeggieCopter extends JPanel implements KeyListener {
       }
       else if (code == Keys.FAST_FORWARD) fast = true;
       else if (code == Keys.TOGGLE_DEBUG) debug = !debug;
+      else if (code == Keys.TOGGLE_MUTE) SoundPlayer.toggleMute();
     }
   }
 

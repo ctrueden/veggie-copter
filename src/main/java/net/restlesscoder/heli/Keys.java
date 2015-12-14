@@ -9,6 +9,7 @@ public abstract class Keys {
   public static final int MOVE_LEFT = KeyEvent.VK_LEFT;
   public static final int MOVE_RIGHT = KeyEvent.VK_RIGHT;
   public static final int FAST_FORWARD = KeyEvent.VK_BACK_QUOTE;
+  public static final int TOGGLE_MUTE = KeyEvent.VK_M;
   public static final int TOGGLE_DEBUG = KeyEvent.VK_SLASH;
   public static final int PAUSE = KeyEvent.VK_P;
   public static final int POWER_UP = KeyEvent.VK_Q;
