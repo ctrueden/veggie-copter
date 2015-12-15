@@ -45,7 +45,7 @@ public class MineBullet extends Thing {
     super(t.getGame());
     type = GOOD_BULLET;
     setImageList(images);
-    setPower((int) (LIFE / POWER) + 1);
+    setPower(LIFE / POWER + 1);
     float tx = (float) (sx + 10 * Math.sin(angle));
     float ty = (float) (sy + 10 * Math.cos(angle));
     move = new MineBulletMovement(this, sx, sy, tx, ty);

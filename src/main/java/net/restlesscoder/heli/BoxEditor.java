@@ -67,7 +67,7 @@ public class BoxEditor extends JFrame
     }
     updateTitle();
     load();
-    show();
+    setVisible(true);
   }
 
 

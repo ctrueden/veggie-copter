@@ -65,7 +65,7 @@ public class CopterEnergy extends Thing {
     int green = Color.orange.getGreen();
     int blue = Color.orange.getBlue();
     float maxDiff = (hero.getWidth() + getWidth()) / 2f;
-    float q = (float) (maxDiff - xdiff) / maxDiff;
+    float q = (maxDiff - xdiff) / maxDiff;
     if (q < 0) q = 0;
     red = (int) (q * red);
     green = (int) (q * green);

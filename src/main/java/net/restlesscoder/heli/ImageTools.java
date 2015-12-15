@@ -26,7 +26,7 @@ public class ImageTools {
       if (gc == null) gc = getDefaultConfiguration();
       return gc.createCompatibleImage(width, height, transparency);
     }
-    else return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
   }
 
   /** Creates an image with transparency. */

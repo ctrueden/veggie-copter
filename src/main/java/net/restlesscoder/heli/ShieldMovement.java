@@ -40,7 +40,7 @@ public class ShieldMovement extends MovementStyle {
 
   /** Moves the given thing according to the bullet movement style. */
   public void move() {
-    float speed = SPEED - (float) thing.getPower() * SPEED / 20;
+    float speed = SPEED - thing.getPower() * SPEED / 20;
     if (speed < 0) speed = 0;
     angle += speed;
     int targetRadius = extended ? MAX_RADIUS : MIN_RADIUS;

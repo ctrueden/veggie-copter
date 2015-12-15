@@ -91,7 +91,7 @@ public class CopterAttack extends AttackStyle {
       v.copyInto(shots);
       return shots;
     }
-    else return attack.shoot();
+    return attack.shoot();
   }
 
   public Thing[] trigger() {
