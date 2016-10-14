@@ -21,3 +21,5 @@
 * <kbd>End</kbd> - All attack styles simultaneously
 
 ## Enjoy!
+
+![screenshot](https://raw.githubusercontent.com/ctrueden/veggie-copter/master/screenshot.png)
