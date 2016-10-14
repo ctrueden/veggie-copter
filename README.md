@@ -1,5 +1,7 @@
 # Veggie Copter
 
+![screenshot](https://raw.githubusercontent.com/ctrueden/veggie-copter/master/screenshot.png)
+
 ## Controls
 
 ### Basics
@@ -21,5 +23,3 @@
 * <kbd>End</kbd> - All attack styles simultaneously
 
 ## Enjoy!
-
-![screenshot](https://raw.githubusercontent.com/ctrueden/veggie-copter/master/screenshot.png)
