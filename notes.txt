@@ -53,13 +53,6 @@ values, saving me some work.
 
 ------
 
-Extend "good" and "evil" polarities to allow for any number of "channels" for
-things. Things that are on the same channel do not hurt each other. The DOOM
-attack is on its own channel and fills the entire screen, so that it hurts
-everything all the time.
-
-------
-
 Switch all positions to Points with doubles instead of ints, for more accurate
 motion. Also switch HP to doubles to allow for slower effects. This way, the
 healing effect can heal a nonzero amount of damage every tick, instead of
