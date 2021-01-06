@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <style>
+      #canvas {
+        border: 1px solid red;
+        display: block;
+        height: 424px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 0;
+        padding-right: 0;
+        width: 400px;
+      }
+    </style>
+    <script>
+      function animate() {
+        requestAnimationFrame(animate);
+        update();
+        draw();
+      }
+      var x = 0;
+      var y = 0;
+      var w = 400;
+      var h = 400;
+      var xd = true;
+      var yd = true;
+      function update() {
+        if (xd) x++;
+        else x--;
+        if (x == 0) xd = true
+        if (x == 50) xd = false
+        if (yd) y++;
+        else y--;
+        if (y == 0) yd = true
+        if (y == 40) yd = false
+        w = 300 - 2*x;
+        h = 150 - 2*y;
+      }
+      function draw() {
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, 400, 400);
+        ctx.fillStyle = 'green';
+        ctx.fillRect(x, y, w, h);
+      }
+    </script>
+  </head>
+  <body onload='animate()'>
+    <canvas id="canvas"></canvas>
+  </body>
+</html>
