@@ -35,31 +35,17 @@ public class CopterSpread extends Thing {
 /** Defines veggie copter spread attack. */
 public class SpreadAttack extends ColoredAttack {
 
-  // -- Constants --
-
   protected static final int RECHARGE = 10;
   protected static final int POWER = 3;
 
-
-  // -- Fields --
-
   protected boolean space = false;
   protected int fired;
-
-
-  // -- Constructor --
 
   public SpreadAttack(Thing t) {
     super(t, Color.blue, t.getGame().loadImage("icon-spread.png").getImage());
   }
 
-
-  // -- ColoredAttack API methods --
-
   public void clear() { space = false; }
-
-
-  // -- AttackStyle API methods --
 
   /** Fires a shot if space bar is pressed. */
   public Thing[] shoot() {
@@ -89,9 +75,6 @@ public class SpreadAttack extends ColoredAttack {
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return shots;
   }
-
-
-  // -- KeyListener API methods --
 
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();

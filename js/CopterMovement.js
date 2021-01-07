@@ -5,37 +5,23 @@ import java.awt.event.KeyEvent;
 /** Defines veggie copter movement. */
 public class CopterMovement extends MovementStyle {
 
-  // -- Constants --
-
   protected static final int SPEED = 2;
-
-
-  // -- Fields --
 
   protected boolean left = false;
   protected boolean right = false;
   protected boolean up = false;
   protected boolean down = false;
 
-
-  // -- Constructor --
-
   public CopterMovement(Thing t) {
     super(t);
     reset();
   }
-
-
-  // -- CopterMovement API methods --
 
   public void reset() {
     left = right = up = down = false;
     VeggieCopter game = thing.getGame();
     thing.setPos(game.getWindowWidth() / 2, game.getWindowHeight() - 40);
   }
-
-
-  // -- MovementStyle API methods --
 
   /** Moves according to the keyboard presses. */
   public void move() {
@@ -52,9 +38,6 @@ public class CopterMovement extends MovementStyle {
     if (ypos < 1) ypos = 1; if (ypos + height >= h) ypos = h - height - 1;
     thing.setPos(xpos, ypos);
   }
-
-
-  // -- KeyListener API methods --
 
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();

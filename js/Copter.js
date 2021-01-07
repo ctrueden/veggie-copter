@@ -6,13 +6,8 @@ import java.awt.event.KeyEvent;
 /** Veggie copter object (the good guy!). */
 public class Copter extends Thing {
 
-  // -- Fields --
-
   /** Image of veggie copter. */
   protected Image img;
-
-
-  // -- Constructor --
 
   /** Constructs a copter object. */
   public Copter(VeggieCopter game) {
@@ -42,18 +37,12 @@ public class Copter extends Thing {
     type = GOOD;
   }
 
-
-  // -- Copter API methods --
-
   public void reset() { ((CopterMovement) move).reset(); }
 
   public void drawWeaponStatus(Graphics g, int x, int y) {
     CopterAttack copterAttack = (CopterAttack) attack;
     copterAttack.drawWeaponStatus(g, x, y);
   }
-
-
-  // -- KeyListener API methods --
 
   /** Handles keyboard presses. */
   public void keyPressed(KeyEvent e) {

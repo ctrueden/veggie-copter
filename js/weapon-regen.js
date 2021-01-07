@@ -5,19 +5,11 @@ import java.awt.event.KeyEvent;
 
 public class RegenMovement extends MovementStyle {
 
-  // -- Constants --
-
   public static final int FLUX_RADIUS = 5;
   protected static final int FLUX_RATE = 4;
 
-
-  // -- Fields --
-
   private Thing owner;
   private long ticks;
-
-
-  // -- Constructors --
 
   public RegenMovement(Thing t, Thing owner) {
     super(t);
@@ -25,17 +17,11 @@ public class RegenMovement extends MovementStyle {
     syncPos();
   }
 
-
-  // -- RegenMovement API methods --
-
   public void syncPos() {
     float xpos = owner.getCX();
     float ypos = owner.getCY();
     thing.setCPos(xpos, ypos);
   }
-
-
-  // -- MovementStyle API methods --
 
   /** Moves the given thing according to the regen movement style. */
   public void move() {
@@ -98,18 +84,12 @@ public class CopterRegen extends Thing {
     }
   }
 
-
-  // -- Constructor --
-
   public CopterRegen(Thing thing) {
     super(thing.getGame());
     setImageList(images);
     type = GOOD_BULLET;
     move = new RegenMovement(this, thing);
   }
-
-
-  // -- Thing API methods --
 
   public void setPower(int power) {
     super.setPower(power);
@@ -125,29 +105,18 @@ public class CopterRegen extends Thing {
 /** Defines veggie copter regen "attack" style. */
 public class RegenAttack extends ColoredAttack {
 
-  // -- Fields --
-
   protected boolean space;
   protected CopterRegen regen;
-
-
-  // -- Constructor --
 
   public RegenAttack(Thing t) {
     super(t, Color.pink, t.getGame().loadImage("icon-regen.png").getImage());
   }
-
-
-  // -- ColoredAttack API methods --
 
   public void clear() {
     space = false;
     if (regen != null) regen.setHP(0);
     regen = null;
   }
-
-
-  // -- AttackStyle API methods --
 
   /** Begins regeneration if space bar is pressed. */
   public Thing[] shoot() {
@@ -162,9 +131,6 @@ public class RegenAttack extends ColoredAttack {
     super.setPower(power);
     if (regen != null) regen.setPower(power);
   }
-
-
-  // -- KeyListener API methods --
 
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();

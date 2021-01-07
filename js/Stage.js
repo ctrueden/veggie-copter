@@ -5,8 +5,6 @@ import java.awt.*;
 /** Contains information regarding a specific stage of the game. */
 public class Stage {
 
-  // -- Constants --
-
   public static final int TOP_LEFT = 10;
   public static final int IMAGE_SIZE = 154;
   public static final int ICON_SIZE = 50;
@@ -16,9 +14,6 @@ public class Stage {
 
   private static final Color DARK_RED = new Color(48, 0, 0);
 
-
-  // -- Fields --
-
   protected VeggieCopter game;
   protected String name;
   protected ScriptingEngine script;
@@ -26,9 +21,6 @@ public class Stage {
   protected int imageWidth, imageHeight, iconWidth, iconHeight;
   protected String[] description;
   protected boolean completed;
-
-
-  // -- Constructor --
 
   /** Constructs a playable stage. */
   public Stage(VeggieCopter game, String name,
@@ -45,9 +37,6 @@ public class Stage {
     iconHeight = this.icon.getHeight(game);
     this.description = description;
   }
-
-
-  // -- Stage API methods --
 
   /** Draws a descriptive screen for use during stage select. */
   public void drawSelectScreen(Graphics g) {
@@ -103,9 +92,6 @@ public class Stage {
 
   /** Gets whether this stage has been completed. */
   public boolean isCompleted() { return completed; }
-
-
-  // -- Helper methods --
 
   private void drawOutlinedRect(Graphics g, Color color,
     int x, int y, int width, int height)

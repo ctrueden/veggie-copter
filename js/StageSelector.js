@@ -6,8 +6,6 @@ import java.util.Vector;
 /** Implements logic for selecting a stage. */
 public class StageSelector {
 
-  // -- Constants --
-
   /** Stage icon coordinates (X values). */
   private static final int[] STAGE_X = {
     10, 10, 10, 64, 119, 174, 229, 284, 338, 339, 339
@@ -18,15 +16,9 @@ public class StageSelector {
     341, 284, 227, 170, 170, 170, 170, 170, 227, 284, 341
   };
 
-
-  // -- Fields --
-
   private VeggieCopter game;
   private Vector stages = new Vector();
   private int current = 0;
-
-
-  // -- Constructor --
 
   public StageSelector(VeggieCopter game) {
     this.game = game;
@@ -58,9 +50,6 @@ public class StageSelector {
       "Looks like I misunderestimated you!"
     }));
   }
-
-
-  // -- StageSelector API methods --
 
   /** Adds a stage to the selector. */
   public void addStage(Stage s) { stages.add(s); }

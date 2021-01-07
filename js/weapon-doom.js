@@ -6,30 +6,19 @@ import java.awt.event.KeyEvent;
 /** Defines veggie copter doom attack style. */
 public class DoomAttack extends ColoredAttack {
 
-  // -- Fields --
-
   protected boolean space;
   protected CopterDoom doom;
-
-
-  // -- Constructor --
 
   public DoomAttack(Thing t) {
     super(t, Color.black,
       t.getGame().loadImage("icon-doom.png").getImage());
   }
 
-
-  // -- ColoredAttack API methods --
-
   public void clear() {
     space = false;
     if (doom != null) doom.setHP(0);
     doom = null;
   }
-
-
-  // -- AttackStyle API methods --
 
   /** Fires a shot if space bar is pressed. */
   public Thing[] shoot() {
@@ -39,9 +28,6 @@ public class DoomAttack extends ColoredAttack {
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return new Thing[] {doom};
   }
-
-
-  // -- KeyListener API methods --
 
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();

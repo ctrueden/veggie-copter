@@ -34,31 +34,17 @@ public class CopterGun extends Thing {
 /** Defines veggie copter gun attack. */
 public class GunAttack extends ColoredAttack {
 
-  // -- Constants --
-
   protected static final int RECHARGE = 2;
-
-
-  // -- Fields --
 
   protected boolean space = false;
   protected int fired;
-
-
-  // -- Constructor --
 
   public GunAttack(Thing t) {
     super(t, CopterGun.BROWN,
       t.getGame().loadImage("icon-gun.png").getImage());
   }
 
-
-  // -- ColoredAttack API methods --
-
   public void clear() { space = false; }
-
-
-  // -- AttackStyle API methods --
 
   /** Fires two shots if space bar is pressed. */
   public Thing[] shoot() {
@@ -93,9 +79,6 @@ public class GunAttack extends ColoredAttack {
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return shots;
   }
-
-
-  // -- KeyListener API methods --
 
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();

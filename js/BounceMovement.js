@@ -2,21 +2,13 @@ package net.restlesscoder.heli;
 
 public class BounceMovement extends MovementStyle {
 
-  // -- Constants --
-
   protected static final int X_STEPS = 40;
   protected static final int Y_STEPS = 30;
-
-
-  // -- Fields --
 
   protected float xstart, ystart;
   protected float xlen, ylen;
   protected int xinc, yinc;
   protected boolean xdir, ydir;
-
-
-  // -- Constructors --
 
   public BounceMovement(Thing t) {
     super(t);
@@ -61,9 +53,6 @@ public class BounceMovement extends MovementStyle {
     thing.setPos(xpos, ypos);
   }
 
-
-  // -- MovementStyle API methods --
-
   /** Moves the given thing according to the bouncing movement style. */
   public void move() {
     float xpos = thing.getX(), ypos = thing.getY();
@@ -92,9 +81,6 @@ public class BounceMovement extends MovementStyle {
 
     thing.setPos(xpos, ypos);
   }
-
-
-  // -- Helper methods --
 
   /** Converts linear movement into curved movement with a sine function. */
   protected double smooth(double p) {

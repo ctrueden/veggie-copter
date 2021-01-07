@@ -4,8 +4,6 @@ import java.awt.*;
 
 public class TestBoss extends BossHead {
 
-  // -- Constructor --
-
   public TestBoss(VeggieCopter game, String[] args) {
     super(game, 1000,
       game.loadImage("test-boss2.png"),
@@ -37,16 +35,10 @@ public class TestBoss extends BossHead {
     setMovement(new TestMovement(this, x, y));
   }
 
-
-  // -- BossHead API methods --
-
   /** Gets the attack form left behind by this boss upon defeat. */
   public ColoredAttack getColoredAttack() {
     return new GunAttack(game.getCopter());
   }
-
-
-  // -- Thing API methods --
 
   /** Draws the object onscreen. */
   public void draw(Graphics g) {

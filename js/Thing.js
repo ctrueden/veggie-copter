@@ -7,8 +7,6 @@ import java.util.Vector;
 /** Thing is an object on the screen that moves around and has hit points. */
 public abstract class Thing implements KeyListener {
 
-  // -- Constants --
-
   /** Type indicating evil entity. */
   public static final int EVIL = 0;
 
@@ -31,9 +29,6 @@ public abstract class Thing implements KeyListener {
 
   /** How far offscreen objects must be before being discarded. */
   protected static final int THRESHOLD = 50;
-
-
-  // -- Fields --
 
   /** Game to which this object belongs. */
   protected VeggieCopter game;
@@ -65,14 +60,8 @@ public abstract class Thing implements KeyListener {
   /** Number of times the object has been hit. */
   protected int hit;
 
-
-  // -- Constructor --
-
   /** Constructs a new object. */
   public Thing(VeggieCopter game) { this.game = game; }
-
-
-  // -- Thing API methods --
 
   /** Assigns object's movement style. */
   public void setMovement(MovementStyle ms) { move = ms; }
@@ -263,9 +252,6 @@ public abstract class Thing implements KeyListener {
       (type == EVIL_BULLET && t.type == GOOD);
   }
 
-
-  // -- KeyListener API methods --
-
   public void keyPressed(KeyEvent e) {
     if (move != null) move.keyPressed(e);
     if (attack != null) attack.keyPressed(e);
@@ -280,9 +266,6 @@ public abstract class Thing implements KeyListener {
     if (move != null) move.keyTyped(e);
     if (attack != null) attack.keyTyped(e);
   }
-
-
-  // -- Helper methods --
 
   protected BoundedImage getBoundedImage() {
     return getBoundedImage(imageIndex);

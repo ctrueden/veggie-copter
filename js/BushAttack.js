@@ -7,8 +7,6 @@ import java.util.Vector;
 /** Defines Bush's attack style. */
 public class BushAttack extends AttackStyle {
 
-  // -- Constants --
-
   /** Number of bullets to fire per spread. */
   protected static final int BULLETS = 5;
 
@@ -18,22 +16,13 @@ public class BushAttack extends AttackStyle {
   /** Number of frames to wait between firing bullets in frantic mode. */
   protected static final int FRANTIC_RATE = 5;
 
-
-  // -- Fields --
-
   /** List of bullets left to fire. */
   protected Vector toFire = new Vector();
 
   /** Frames to wait until adding another bullet (frantic mode only). */
   protected int waitTicks = FRANTIC_RATE;
 
-
-  // -- Constructor --
-
   public BushAttack(Thing t) { super(t); }
-
-
-  // -- AttackStyle API methods --
 
   /** Fires a shot according to Bush's attack pattern. */
   public Thing[] shoot() {

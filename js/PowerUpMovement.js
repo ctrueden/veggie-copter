@@ -2,28 +2,17 @@ package net.restlesscoder.heli;
 
 public class PowerUpMovement extends MovementStyle {
 
-  // -- Constants --
-
   protected static final int PERIOD = 3;
-
-
-  // -- Fields --
 
   protected boolean center;
   protected long ticks;
   protected boolean dir;
-
-
-  // -- Constructors --
 
   public PowerUpMovement(Thing t, float x, float y, boolean center) {
     super(t);
     thing.setPos(x, y);
     this.center = center;
   }
-
-
-  // -- MovementStyle API methods --
 
   /** Moves the given thing according to the laser movement style. */
   public void move() {

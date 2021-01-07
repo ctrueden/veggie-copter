@@ -6,8 +6,6 @@ import java.awt.event.KeyEvent;
 /** Defines veggie copter lightning attack style. */
 public class LitAttack extends ColoredAttack {
 
-  // -- Constants --
-
   public static final double LEFT_CHANCE = 0.2;
   public static final double RIGHT_CHANCE = 0.2;
 
@@ -18,15 +16,9 @@ public class LitAttack extends ColoredAttack {
   protected static final int DELAY = 10;
   protected static final int PERIOD = ARC_LENGTH + DELAY;
 
-
-  // -- Fields --
-
   protected int ticks;
   protected boolean space = false;
   protected int[][] paths;
-
-
-  // -- Constructor --
 
   public LitAttack(Thing t) {
     super(t, Color.cyan, t.getGame().loadImage("icon-lit.png").getImage());
@@ -35,13 +27,7 @@ public class LitAttack extends ColoredAttack {
     generatePath(0);
   }
 
-
-  // -- ColoredAttack API methods --
-
   public void clear() { space = false; }
-
-
-  // -- AttackStyle API methods --
 
   /** Fires a shot if space bar is pressed. */
   public Thing[] shoot() {
@@ -66,9 +52,6 @@ public class LitAttack extends ColoredAttack {
     return lits;
   }
 
-
-  // -- KeyListener API methods --
-
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) {
@@ -81,9 +64,6 @@ public class LitAttack extends ColoredAttack {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }
-
-
-  // -- Helper methods --
 
   protected void generatePath(int index) {
     paths[index] = new int[PATH_LENGTH];

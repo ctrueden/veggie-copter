@@ -5,21 +5,13 @@ import java.awt.event.*;
 /** Encapsulates an attack pattern. */
 public abstract class AttackStyle implements KeyListener {
 
-  // -- Fields --
-
   /** Thing upon which this attack style object operates. */
   protected Thing thing;
 
   /** Amount of damage the attack style inflicts. */
   protected int power = 1;
 
-
-  // -- Constructor --
-
   public AttackStyle(Thing t) { thing = t; }
-
-
-  // -- AttackStyle API methods --
 
   /** Instructs the thing to fire a shot (but only if it wants to). */
   public abstract Thing[] shoot();
@@ -35,9 +27,6 @@ public abstract class AttackStyle implements KeyListener {
 
   /** Gets power level of this attack style. */
   public int getPower() { return power; }
-
-
-  // -- KeyListener API methods --
 
   public void keyPressed(KeyEvent e) { }
   public void keyReleased(KeyEvent e) { }

@@ -6,31 +6,17 @@ import java.awt.event.KeyEvent;
 /** Defines veggie copter homing missile attack style. */
 public class HomingAttack extends ColoredAttack {
 
-  // -- Constants --
-
   protected static final int RECHARGE = 12;
-
-
-  // -- Fields --
 
   protected boolean space = false;
   protected int fired;
-
-
-  // -- Constructor --
 
   public HomingAttack(Thing t) {
     super(t, Color.magenta,
       t.getGame().loadImage("icon-homing.png").getImage());
   }
 
-
-  // -- ColoredAttack API methods --
-
   public void clear() { space = false; }
-
-
-  // -- AttackStyle API methods --
 
   /** Fires a shot if space bar is pressed. */
   public Thing[] shoot() {
@@ -47,9 +33,6 @@ public class HomingAttack extends ColoredAttack {
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return new Thing[] {homing};
   }
-
-
-  // -- KeyListener API methods --
 
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();

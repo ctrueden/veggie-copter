@@ -3,18 +3,10 @@ package net.restlesscoder.heli;
 /** Defines random enemy bullet attack. */
 public class AlexAttack extends AttackStyle {
 
-  // -- Constants --
-
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
   protected static final int FREQUENCY = 1;
 
-
-  // -- Constructor --
-
   public AlexAttack(Thing t) { super(t); }
-
-
-  // -- AttackStyle API methods --
 
   /** Fires a shot randomly. */
   public Thing[] shoot() {
@@ -26,16 +18,11 @@ public class AlexAttack extends AttackStyle {
 
 public class AlexMovement extends MovementStyle {
 
-  // -- Constants --
-
   protected static final int X_STEPS = 40;
   protected static final int Y_STEPS = 30;
 
   protected static final int SPEED = 2;
   protected static final int LUNGE_RATE = 300;
-
-
-  // -- Fields --
 
   protected float xstart, ystart;
   protected float xlen, ylen;
@@ -44,9 +31,6 @@ public class AlexMovement extends MovementStyle {
   protected long ticks;
   protected boolean needsToRun, running, lunging;
   protected float lastX, lastY;
-
-
-  // -- Constructors --
 
   public AlexMovement(Thing t) {
     super(t);
@@ -92,15 +76,9 @@ public class AlexMovement extends MovementStyle {
     thing.setPos(xpos, ypos);
   }
 
-
-  // -- AlexMovement API methods --
-
   public boolean isRunning() { return running; }
 
   public boolean isLunging() { return lunging; }
-
-
-  // -- MovementStyle API methods --
 
   /** Moves the given thing according to the bouncing movement style. */
   public void move() {
@@ -180,9 +158,6 @@ public class AlexMovement extends MovementStyle {
     thing.setPos(xpos, ypos);
   }
 
-
-  // -- Helper methods --
-
   /** Converts linear movement into curved movement with a sine function. */
   protected double smooth(double p) {
     p = Math.PI * (p - 0.5); // [0, 1] -> [-PI/2, PI/2]
@@ -194,8 +169,6 @@ public class AlexMovement extends MovementStyle {
 }
 
 public class AlexEnemy extends EnemyHead {
-
-  // -- Constructor --
 
   public AlexEnemy(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize Alex with proper parameters
@@ -217,9 +190,6 @@ public class AlexEnemy extends EnemyHead {
     setAttack(new AlexAttack(this));
   }
 
-
-  // -- Thing API methods --
-
   public int getScore() { return 3 * super.getScore(); }
 
   public void move() {
@@ -238,8 +208,6 @@ public class AlexEnemy extends EnemyHead {
 }
 
 public class AlexBoss extends BossHead {
-
-  // -- Constructor --
 
   public AlexBoss(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize Alex with proper parameters
@@ -261,16 +229,10 @@ public class AlexBoss extends BossHead {
     setAttack(new AlexAttack(this));
   }
 
-
-  // -- BossHead API methods --
-
   /** Gets the attack form left behind by this boss upon defeat. */
   public ColoredAttack getColoredAttack() {
     return new EnergyAttack(game.getCopter());
   }
-
-
-  // -- Thing API methods --
 
   public int getScore() { return 30 * super.getScore(); }
 

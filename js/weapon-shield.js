@@ -5,23 +5,15 @@ import java.awt.event.KeyEvent;
 
 public class ShieldMovement extends MovementStyle {
 
-  // -- Constants --
-
   protected static final float SPEED = 0.1f;
   protected static final int MIN_RADIUS = 30;
   protected static final int MAX_RADIUS = 63;
   protected static final int RADIUS_INC = 3;
 
-
-  // -- Fields --
-
   protected Thing owner;
   protected float angle;
   protected int radius;
   protected boolean extended;
-
-
-  // -- Constructors --
 
   public ShieldMovement(Thing t, Thing owner, float angle) {
     super(t);
@@ -33,13 +25,7 @@ public class ShieldMovement extends MovementStyle {
     thing.setCPos(xpos, ypos);
   }
 
-
-  // -- CopterMovement API methods --
-
   public void setExtended(boolean extended) { this.extended = extended; }
-
-
-  // -- MovementStyle API methods --
 
   /** Moves the given thing according to the bullet movement style. */
   public void move() {
@@ -55,7 +41,6 @@ public class ShieldMovement extends MovementStyle {
     thing.setCPos(xpos, ypos);
   }
 
-
 }
 
 public class CopterShield extends Thing {
@@ -64,9 +49,6 @@ public class CopterShield extends Thing {
 
   protected static BoundedImage[] images;
   protected static int count = 0;
-
-
-  // -- Constructor --
 
   public CopterShield(Thing thing, float angle) {
     super(thing.getGame());
@@ -85,15 +67,9 @@ public class CopterShield extends Thing {
     count++;
   }
 
-
-  // -- CopterShield API methods --
-
   public void setExtended(boolean extended) {
     ((ShieldMovement) move).setExtended(extended);
   }
-
-
-  // -- Thing API methods --
 
   /** Shields cannot be destroyed. */
   public void hit(int damage) { }
@@ -103,24 +79,14 @@ public class CopterShield extends Thing {
 /** Defines veggie copter shield attack style. */
 public class ShieldAttack extends ColoredAttack {
 
-  // -- Constants --
-
   protected static final Color PURPLE = new Color(0.7f, 0, 0.7f);
-
-
-  // -- Fields --
 
   protected CopterShield[] shields;
   protected boolean extended;
 
-
-  // -- Constructor --
-
   public ShieldAttack(Thing t) {
     super(t, PURPLE, t.getGame().loadImage("icon-shield.png").getImage());
   }
-
-  // -- ShieldAttack API methods --
 
   public void setExtended(boolean extended) {
     this.extended = extended;
@@ -128,9 +94,6 @@ public class ShieldAttack extends ColoredAttack {
       for (int i=0; i<shields.length; i++) shields[i].setExtended(extended);
     }
   }
-
-
-  // -- ColoredAttack API methods --
 
   public void activate() {
     int num = power + 1;
@@ -152,9 +115,6 @@ public class ShieldAttack extends ColoredAttack {
     }
   }
 
-
-  // -- AttackStyle API methods --
-
   public Thing[] shoot() {
     return null;
   }
@@ -166,9 +126,6 @@ public class ShieldAttack extends ColoredAttack {
     }
     activate();
   }
-
-
-  // -- KeyListener API methods --
 
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();

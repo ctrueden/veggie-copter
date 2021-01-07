@@ -2,23 +2,15 @@ package net.restlesscoder.heli;
 
 public class BushMovement extends MovementStyle {
 
-  // -- Constants --
-
   /** Movement speed per frame. */
   protected static final int SPEED = 1;
 
   /** Number of HP considered low enough to enter frantic mode. */
   protected static final int LOW_HP = 25;
 
-
-  // -- Fields --
-
   protected float target;
   protected boolean dir;
   protected boolean turning;
-
-
-  // -- Constructors --
 
   public BushMovement(Thing t) {
     super(t);
@@ -32,9 +24,6 @@ public class BushMovement extends MovementStyle {
     doSwitch();
     thing.setPos(xpos, ypos);
   }
-
-
-  // -- MovementStyle API methods --
 
   /** Moves the given thing according to the Bush movement style. */
   public void move() {
@@ -64,9 +53,6 @@ public class BushMovement extends MovementStyle {
 
   /** Gets movement direction of this thing. */
   public boolean getDirection() { return dir; }
-
-
-  // -- Helper methods --
 
   /** Switches between horizontal and vertical movement modes. */
   protected void doSwitch() {

@@ -4,16 +4,11 @@ import java.awt.*;
 
 public class Message {
 
-  // -- Fields --
-
   private String msg;
   private int x, y;
   private Color color;
   private Font font;
   private int remain;
-
-
-  // -- Constructor --
 
   public Message(String msg, int x, int y,
     int size, Color color, int duration)

@@ -3,18 +3,10 @@ package net.restlesscoder.heli;
 /** Defines Jamesey's attack style. */
 public class JamesAttack extends AttackStyle {
 
-  // -- Constants --
-
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
   protected static final int FREQUENCY = 1;
 
-
-  // -- Constructor --
-
   public JamesAttack(Thing t) { super(t); }
-
-
-  // -- AttackStyle API methods --
 
   /** Fires a shot randomly. */
   public Thing[] shoot() {
@@ -26,13 +18,8 @@ public class JamesAttack extends AttackStyle {
 
 public class JamesMovement extends MovementStyle {
 
-  // -- Constants --
-
   protected static final int RADIUS2 = 200;
   protected static final int SPEED = 2;
-
-
-  // -- Constructors --
 
   public JamesMovement(Thing t, int y, boolean dir) {
     super(t);
@@ -56,9 +43,6 @@ public class JamesMovement extends MovementStyle {
     thing.setPos(xpos, ypos);
   }
 
-
-  // -- MovementStyle API methods --
-
   /** Moves the given thing according to the bouncing movement style. */
   public void move() {
     float xpos = thing.getCX(), ypos = thing.getCY();
@@ -81,8 +65,6 @@ public class JamesMovement extends MovementStyle {
 }
 
 public class JamesEnemy extends EnemyHead {
-
-  // -- Constructor --
 
   public JamesEnemy(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize James with proper parameters
@@ -110,16 +92,11 @@ public class JamesEnemy extends EnemyHead {
     setAttack(new JamesAttack(this));
   }
 
-
-  // -- Thing API methods --
-
   public int getScore() { return 3 * super.getScore(); }
 
 }
 
 public class JamesBoss extends BossHead {
-
-  // -- Constructor --
 
   public JamesBoss(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize James with proper parameters
@@ -147,16 +124,10 @@ public class JamesBoss extends BossHead {
     setAttack(new JamesAttack(this));
   }
 
-
-  // -- BossHead API methods --
-
   /** Gets the attack form left behind by this boss upon defeat. */
   public ColoredAttack getColoredAttack() {
     return new SplitterAttack(game.getCopter());
   }
-
-
-  // -- Thing API methods --
 
   public int getScore() { return 30 * super.getScore(); }
 

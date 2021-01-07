@@ -7,18 +7,10 @@ import java.util.Vector;
 /** Defines veggie copter attack. */
 public class CopterAttack extends AttackStyle {
 
-  // -- Fields --
-
   protected Vector attacks = new Vector();
   protected int current = 0;
 
-
-  // -- Constructor --
-
   public CopterAttack(Thing t) { super(t); }
-
-
-  // -- CopterAttack API methods --
 
   /** Gets current attack style. */
   public ColoredAttack getAttackStyle() {
@@ -75,9 +67,6 @@ public class CopterAttack extends AttackStyle {
     }
   }
 
-
-  // -- AttackStyle API methods --
-
   public Thing[] shoot() {
     ColoredAttack attack = getAttackStyle();
     if (attack == null) { // all attack styles
@@ -128,9 +117,6 @@ public class CopterAttack extends AttackStyle {
     }
     return attack.getPower();
   }
-
-
-  // -- KeyListener API methods --
 
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();

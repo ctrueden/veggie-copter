@@ -7,8 +7,6 @@ import java.util.Vector;
 /** Defines George's attack style. */
 public class GeorgeAttack extends AttackStyle {
 
-  // -- Constants --
-
   /** Number of bullets to fire per spread. */
   protected static final int BULLETS = 5;
 
@@ -18,22 +16,13 @@ public class GeorgeAttack extends AttackStyle {
   /** Number of frames to wait between firing bullets in frantic mode. */
   protected static final int FRANTIC_RATE = 5;
 
-
-  // -- Fields --
-
   /** List of bullets left to fire. */
   protected Vector toFire = new Vector();
 
   /** Frames to wait until adding another bullet (frantic mode only). */
   protected int waitTicks = FRANTIC_RATE;
 
-
-  // -- Constructor --
-
   public GeorgeAttack(Thing t) { super(t); }
-
-
-  // -- AttackStyle API methods --
 
   /** Fires a shot according to George's attack pattern. */
   public Thing[] shoot() {
@@ -74,23 +63,15 @@ public class GeorgeAttack extends AttackStyle {
 
 public class GeorgeMovement extends MovementStyle {
 
-  // -- Constants --
-
   /** Movement speed per frame. */
   protected static final int SPEED = 1;
 
   /** Number of HP considered low enough to enter frantic mode. */
   protected static final int LOW_HP = 30;
 
-
-  // -- Fields --
-
   protected float target;
   protected boolean dir;
   protected boolean turning;
-
-
-  // -- Constructors --
 
   public GeorgeMovement(Thing t) {
     super(t);
@@ -105,9 +86,6 @@ public class GeorgeMovement extends MovementStyle {
     doSwitch();
   }
 
-
-  // -- GeorgeMovement API methods --
-
   /** Gets whether thing is currently changing directions. */
   public boolean isTurning() { return turning; }
 
@@ -115,9 +93,6 @@ public class GeorgeMovement extends MovementStyle {
 
   /** Gets movement direction of this thing. */
   public boolean getDirection() { return dir; }
-
-
-  // -- MovementStyle API methods --
 
   /** Moves the given thing according to the George movement style. */
   public void move() {
@@ -152,9 +127,6 @@ public class GeorgeMovement extends MovementStyle {
     thing.setCPos(cx, cy);
   }
 
-
-  // -- Helper methods --
-
   /** Switches between horizontal and vertical movement modes. */
   protected void doSwitch() {
     Copter hero = thing.getGame().getCopter();
@@ -166,8 +138,6 @@ public class GeorgeMovement extends MovementStyle {
 }
 
 public class GeorgeEnemy extends EnemyHead {
-
-  // -- Constructor --
 
   public GeorgeEnemy(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize George with proper parameters
@@ -186,9 +156,6 @@ public class GeorgeEnemy extends EnemyHead {
     setAttack(new GeorgeAttack(this));
   }
 
-
-  // -- Thing API methods --
-
   public int getScore() { return 5 * super.getScore(); }
 
   public void move() {
@@ -201,8 +168,6 @@ public class GeorgeEnemy extends EnemyHead {
 }
 
 public class GeorgeBoss extends BossHead {
-
-  // -- Constructor --
 
   public GeorgeBoss(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize George with proper parameters
@@ -221,16 +186,10 @@ public class GeorgeBoss extends BossHead {
     setAttack(new GeorgeAttack(this));
   }
 
-
-  // -- BossHead API methods --
-
   /** Gets the attack form left behind by this boss upon defeat. */
   public ColoredAttack getColoredAttack() {
     return new SpreadAttack(game.getCopter());
   }
-
-
-  // -- Thing API methods --
 
   public int getScore() { return 50 * super.getScore(); }
 

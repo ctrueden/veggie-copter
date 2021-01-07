@@ -7,8 +7,6 @@ import java.util.Vector;
 /** An image with associated bounding box insets. */
 public class BoundedImage {
 
-  // -- Fields --
-
   /** Image. */
   protected BufferedImage img;
 
@@ -21,14 +19,10 @@ public class BoundedImage {
   /** Bounding boxes. */
   protected Vector boxes = new Vector();
 
-
-  // -- Constructor --
-
   /** Constructs a bounded image with default parameters. */
   public BoundedImage(BufferedImage img) {
     this(img, img.getWidth(), img.getHeight(), 0, 0);
   }
-
 
   /** Constructs an image with accompanying bounding box information. */
   public BoundedImage(BufferedImage img, int xoff, int yoff) {
@@ -44,9 +38,6 @@ public class BoundedImage {
     this.height = height;
     this.xoff = xoff; this.yoff = yoff;
   }
-
-
-  // -- BoundedImage API methods --
 
   /** Adds a bounding box to the image. */
   public void addBox(BoundingBox box) { boxes.add(box); }

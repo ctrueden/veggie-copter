@@ -4,13 +4,8 @@ import java.awt.Rectangle;
 
 public class BoundingBox {
 
-  // -- Fields --
-
   /** Bounding box insets. */
   public int x1, y1, x2, y2;
-
-
-  // -- Constructor --
 
   /** Constructs a bounding box of default size. */
   public BoundingBox() { this(0, 0, 0, 0); }
@@ -20,9 +15,6 @@ public class BoundingBox {
     this.x1 = x1; this.y1 = y1;
     this.x2 = x2; this.y2 = y2;
   }
-
-
-  // -- BoundingBox API methods --
 
   /** Gets bounding box given the coordinates, width and height. */
   public Rectangle getBox(int x, int y, int width, int height) {

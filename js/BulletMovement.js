@@ -2,20 +2,12 @@ package net.restlesscoder.heli;
 
 public class BulletMovement extends MovementStyle {
 
-  // -- Constants --
-
   protected static final float SPEED = 2.2f;
-
-
-  // -- Fields --
 
   protected float xstart, ystart;
   protected float xtraj, ytraj;
   protected float speed;
   protected int tick;
-
-
-  // -- Constructors --
 
   public BulletMovement(Thing t, float x, float y) {
     this(t, x, y, t.getGame().getCopter().getX(),
@@ -43,9 +35,6 @@ public class BulletMovement extends MovementStyle {
     ytraj = yy / c;
     tick = 0;
   }
-
-
-  // -- MovementStyle API methods --
 
   /** Moves the given thing according to the bullet movement style. */
   public void move() {

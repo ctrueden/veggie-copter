@@ -2,8 +2,6 @@ package net.restlesscoder.heli;
 
 public class Enemy extends EnemyHead {
 
-  // -- Constructor --
-
   /**
    * Constructs a new enemy head.
    * args[0] = number of hit points

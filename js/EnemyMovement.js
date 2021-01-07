@@ -2,23 +2,15 @@ package net.restlesscoder.heli;
 
 public class EnemyMovement extends MovementStyle {
 
-  // -- Constants --
-
   protected static final int ZIGZAG = 1;
   protected static final int SPIRAL = 2;
   protected static final int WAVE = 3;
-
-
-  // -- Fields --
 
   protected long ticks;
   protected int style;
   protected float[] params;
 
   protected float xmod = 0, ymod = 1; // for zigzag
-
-
-  // -- Constructors --
 
   /**
    * Constructs a new enemy movement handler.
@@ -52,9 +44,6 @@ public class EnemyMovement extends MovementStyle {
     VeggieCopter game = thing.getGame();
     thing.setPos(xpos, ypos);
   }
-
-
-  // -- MovementStyle API methods --
 
   /** Moves the given thing according to the enemy type A movement style. */
   public void move() {

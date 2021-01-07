@@ -5,12 +5,7 @@ import java.awt.event.*;
 
 public class SplitterMovement extends MovementStyle {
 
-  // -- Fields --
-
   protected int xdir, ydir;
-
-
-  // -- Constructors --
 
   public SplitterMovement(Thing t, float x, float y, int xdir, int ydir) {
     super(t);
@@ -18,9 +13,6 @@ public class SplitterMovement extends MovementStyle {
     this.xdir = xdir;
     this.ydir = ydir;
   }
-
-
-  // -- MovementStyle API methods --
 
   /** Moves the given thing according to the splitter movement style. */
   public void move() {
@@ -49,9 +41,6 @@ public class CopterSplitter extends Thing {
     }
   }
 
-
-  // -- Constructor --
-
   public CopterSplitter(VeggieCopter game, float x, float y,
     int xdir, int ydir, int count, int size)
   {
@@ -65,9 +54,6 @@ public class CopterSplitter extends Thing {
     attack = new SplitterAttack(this, xdir, ydir, count);
   }
 
-
-  // -- Thing API methods --
-
   /** Assigns object's power. */
   public void setPower(int power) {
     super.setPower(power);
@@ -79,23 +65,15 @@ public class CopterSplitter extends Thing {
 /** Defines splitter attack. */
 public class SplitterAttack extends ColoredAttack {
 
-  // -- Constants --
-
   protected static final int RECHARGE = 10;
   public static final int MAX_SPLIT = 6;
   protected static final int SPEED = 5;
   protected static final int MULTIPLIER = 4;
 
-
-  // -- Fields --
-
   protected boolean space, trigger;
   protected int fired;
   protected int xdir, ydir;
   protected int count;
-
-
-  // -- Constructor --
 
   public SplitterAttack(Thing t) { this(t, 0, 0, 0); }
 
@@ -112,13 +90,7 @@ public class SplitterAttack extends ColoredAttack {
     this.count = count;
   }
 
-
-  // -- ColoredAttack API methods --
-
   public void clear() { space = trigger = false; }
-
-
-  // -- AttackStyle API methods --
 
   /** Fires a splitter shot. */
   public Thing[] shoot() {
@@ -162,9 +134,6 @@ public class SplitterAttack extends ColoredAttack {
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return cs;
   }
-
-
-  // -- KeyListener API methods --
 
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();

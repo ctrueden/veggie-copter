@@ -6,17 +6,9 @@ import java.awt.image.BufferedImage;
 /** Power-up object increases copter's weapon power. */
 public class PowerUp extends Thing {
 
-  // -- Constants --
-
   protected static final int PULSE = 10;
 
-
-  // -- Fields --
-
   protected ColoredAttack att;
-
-
-  // -- Constructor --
 
   /** Constructs a power-up object. */
   public PowerUp(VeggieCopter game,
@@ -53,9 +45,6 @@ public class PowerUp extends Thing {
     setPos(cx - size / 2f, cy - size / 2f);
     setMovement(new PowerUpMovement(this, xpos, ypos, att != null));
   }
-
-
-  // -- PowerUp API methods --
 
   /** Gets attack style granted by this power-up, if any. */
   public ColoredAttack getGrantedAttack() { return att; }

@@ -7,12 +7,7 @@ import java.util.*;
 
 public class ScriptingEngine {
 
-  // -- Constants --
-
   private static final Class[] SIG = {VeggieCopter.class, String[].class};
-
-
-  // -- Fields --
 
   private VeggieCopter game;
   private Vector commands = new Vector();
@@ -20,9 +15,6 @@ public class ScriptingEngine {
   private int cmdIndex;
   private int waiting;
   private boolean waitClear;
-
-
-  // -- Constructor --
 
   /** Constructs an object for parsing the game script. */
   public ScriptingEngine(VeggieCopter game, String scriptFile) {
@@ -53,9 +45,6 @@ public class ScriptingEngine {
     commands.add("wait");
     params.add(new String[] {"0"});
   }
-
-
-  // -- ScriptingEngine API methods --
 
   /**
    * Executes the game script.
@@ -166,9 +155,6 @@ public class ScriptingEngine {
       }
     }
   }
-
-
-  // -- Helper methods --
 
   protected void ignoreCommand(String cmd, String[] args) {
     System.err.print("Ignoring command: " + cmd);

@@ -6,26 +6,15 @@ import java.awt.event.KeyEvent;
 /** Defines veggie copter charge attack style. */
 public class ChargeAttack extends ColoredAttack {
 
-  // -- Constants --
-
   private static final int GROW_SPEED = 11;
-
-
-  // -- Fields --
 
   protected CopterCharge charge;
   protected boolean space;
   protected int ticks;
 
-
-  // -- Constructor --
-
   public ChargeAttack(Thing t) {
     super(t, Color.white, t.getGame().loadImage("icon-charge.png").getImage());
   }
-
-
-  // -- ChargeAttack API methods --
 
   public void launch() {
     if (charge == null) return;
@@ -33,16 +22,10 @@ public class ChargeAttack extends ColoredAttack {
     charge = null;
   }
 
-
-  // -- ColoredAttack API methods --
-
   public void clear() {
     space = false;
     launch();
   }
-
-
-  // -- AttackStyle API methods --
 
   /** Fires a shot if space bar is pressed. */
   public Thing[] shoot() {
@@ -61,9 +44,6 @@ public class ChargeAttack extends ColoredAttack {
     }
     return null;
   }
-
-
-  // -- KeyListener API methods --
 
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();

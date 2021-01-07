@@ -5,28 +5,17 @@ import java.awt.*;
 /** Encapsulates an attack pattern with icon and color. */
 public abstract class ColoredAttack extends AttackStyle {
 
-  // -- Constants --
-
   protected static final Color DARK_RED = new Color(95, 0, 0);
   protected static final int ICON_SIZE = 21;
 
-
-  // -- Fields --
-
   protected Image image;
   protected Color color;
-
-
-  // -- Constructor --
 
   public ColoredAttack(Thing t, Color c, Image img) {
     super(t);
     color = c;
     image = img;
   }
-
-
-  // -- ColoredAttack API methods --
 
   /** Draws an icon representing this attack style in the given position. */
   public void drawIcon(Graphics g, int x, int y, boolean selected) {

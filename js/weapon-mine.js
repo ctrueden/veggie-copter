@@ -3,20 +3,12 @@ import java.awt.event.KeyEvent;
 
 public class MineBulletMovement extends MovementStyle {
 
-  // -- Constants --
-
   protected static final float SPEED = 2.2f;
-
-
-  // -- Fields --
 
   protected float xstart, ystart;
   protected float xtraj, ytraj;
   protected float speed;
   protected int tick;
-
-
-  // -- Constructors --
 
   public MineBulletMovement(Thing t, float x, float y,
     float xtarget, float ytarget)
@@ -40,9 +32,6 @@ public class MineBulletMovement extends MovementStyle {
     tick = 0;
   }
 
-
-  // -- MovementStyle API methods --
-
   /** Moves the given thing according to the bullet movement style. */
   public void move() {
     float xpos = xstart + tick * xtraj;
@@ -56,8 +45,6 @@ public class MineBulletMovement extends MovementStyle {
 
 public class MineBullet extends Thing {
 
-  // -- Constants --
-
   /** Size of bullet. */
   protected static final int SIZE = 7;
 
@@ -66,9 +53,6 @@ public class MineBullet extends Thing {
 
   /** Power divisor for each bullet. */
   protected static final int POWER = 4;
-
-
-  // -- Fields --
 
   protected static BoundedImage[] images;
 
@@ -87,9 +71,6 @@ public class MineBullet extends Thing {
     }
   }
 
-
-  // -- Constructor --
-
   public MineBullet(Thing t, float angle, float sx, float sy) {
     super(t.getGame());
     type = GOOD_BULLET;
@@ -99,9 +80,6 @@ public class MineBullet extends Thing {
     float ty = (float) (sy + 10 * Math.cos(angle));
     move = new MineBulletMovement(this, sx, sy, tx, ty);
   }
-
-
-  // -- Thing API methods --
 
   public void setImageIndex(int index) {
     if (index == LIFE) setHP(0); // bullets die when they fade away
@@ -116,23 +94,12 @@ public class MineBullet extends Thing {
 /** Defines veggie copter gravity mine explosion behavior. */
 public class MineExplode extends AttackStyle {
 
-  // -- Fields --
-
   protected boolean explode;
-
-
-  // -- Constructor --
 
   public MineExplode(Thing t) { super(t); }
 
-
-  // -- MineExplode API methods --
-
   /** Causes the mine to explode. */
   public void explode() { explode = true; }
-
-
-  // -- AttackStyle API methods --
 
   public Thing[] shoot() { return null; }
 
@@ -153,9 +120,6 @@ public class MineExplode extends AttackStyle {
     return bullets;
   }
 
-
-  // -- KeyListener API methods --
-
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.TRIGGER) explode();
@@ -164,8 +128,6 @@ public class MineExplode extends AttackStyle {
 }
 
 public class MineMovement extends MovementStyle {
-
-  // -- Constants --
 
   /** Number of ticks to initially throw mine forward. */
   protected static final int THROW_DURATION = 20;
@@ -185,19 +147,10 @@ public class MineMovement extends MovementStyle {
   /** Strength of drag pulling in enemies. */
   protected static final int DRAG_STRENGTH = 20;
 
-
-  // -- Fields --
-
   protected long ticks;
   protected float adjX, adjY;
 
-
-  // -- Constructor --
-
   public MineMovement(Thing t) { super(t); }
-
-
-  // -- MovementStyle API methods --
 
   /** Drags nearby enemies closer to the mine. */
   public void move() {
@@ -268,9 +221,6 @@ public class CopterMine extends Thing {
     }
   }
 
-
-  // -- Constructor --
-
   public CopterMine(Thing thing, int power) {
     super(thing.getGame());
     type = GOOD_BULLET;
@@ -280,14 +230,8 @@ public class CopterMine extends Thing {
     setCPos(thing.getCX(), thing.getCY());
   }
 
-
-  // -- CopterMine API methods --
-
   /** Gets strength (power) of the mine. */
   public int getStrength() { return power; }
-
-
-  // -- Thing API methods --
 
   /** Changes mine size based on power value. */
   public void setPower(int power) {
@@ -310,31 +254,17 @@ public class CopterMine extends Thing {
 /** Defines veggie copter gravity mine attack style. */
 public class MineAttack extends ColoredAttack {
 
-  // -- Constants --
-
   protected static final int RECHARGE = 24;
-
-
-  // -- Fields --
 
   protected boolean space;
   protected int fired;
-
-
-  // -- Constructor --
 
   public MineAttack(Thing t) {
     super(t, Color.darkGray,
       t.getGame().loadImage("icon-mine.png").getImage());
   }
 
-
-  // -- ColoredAttack API methods --
-
   public void clear() { space = false; }
-
-
-  // -- AttackStyle API methods --
 
   /** Drops mines while space bar is being pressed. */
   public Thing[] shoot() {
@@ -349,9 +279,6 @@ public class MineAttack extends ColoredAttack {
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return new Thing[] {mine};
   }
-
-
-  // -- KeyListener API methods --
 
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();

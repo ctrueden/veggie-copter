@@ -2,8 +2,6 @@ package net.restlesscoder.heli;
 
 public class BushEnemy extends EnemyHead {
 
-  // -- Constructor --
-
   public BushEnemy(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize Bush with proper parameters
     super(game, 80 + (int) (Math.random() * 20),
@@ -20,9 +18,6 @@ public class BushEnemy extends EnemyHead {
     setMovement(new BushMovement(this));
     setAttack(new BushAttack(this));
   }
-
-
-  // -- Thing API methods --
 
   public int getScore() { return 5 * super.getScore(); }
 

@@ -24,7 +24,6 @@ import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 
-
 public class SoundPlayer {
 
   private static boolean mute = true;

@@ -7,8 +7,6 @@ import java.util.Vector;
 /** Defines Paul's attack style. */
 public class PaulAttack extends AttackStyle {
 
-  // -- Constants --
-
   /** Number of bullets to fire per spread. */
   protected static final int BULLETS = 5;
 
@@ -18,21 +16,13 @@ public class PaulAttack extends AttackStyle {
   /** Number of frames to wait between firing bullets in frantic mode. */
   protected static final int FRANTIC_RATE = 5;
 
-
-  // -- Fields --
-
   /** List of bullets left to fire. */
   protected Vector toFire = new Vector();
 
   /** Frames to wait until adding another bullet (frantic mode only). */
   protected int waitTicks = FRANTIC_RATE;
 
-
-  // -- Constructor --
-
   public PaulAttack(Thing t) { super(t); }
-
-  // -- AttackStyle API methods --
 
   /** Fires a shot according to Paul's attack pattern. */
   public Thing[] shoot() {
@@ -73,23 +63,15 @@ public class PaulAttack extends AttackStyle {
 
 public class PaulMovement extends MovementStyle {
 
-  // -- Constants --
-
   /** Movement speed per frame. */
   protected static final int SPEED = 1;
 
   /** Number of HP considered low enough to enter frantic mode. */
   protected static final int LOW_HP = 30;
 
-
-  // -- Fields --
-
   protected float target;
   protected boolean dir;
   protected boolean turning;
-
-
-  // -- Constructors --
 
   public PaulMovement(Thing t) {
     super(t);
@@ -104,9 +86,6 @@ public class PaulMovement extends MovementStyle {
     doSwitch();
   }
 
-
-  // -- PaulMovement API methods --
-
   /** Gets whether thing is currently changing directions. */
   public boolean isTurning() { return turning; }
 
@@ -114,9 +93,6 @@ public class PaulMovement extends MovementStyle {
 
   /** Gets movement direction of this thing. */
   public boolean getDirection() { return dir; }
-
-
-  // -- MovementStyle API methods --
 
   /** Moves the given thing according to the Paul movement style. */
   public void move() {
@@ -151,9 +127,6 @@ public class PaulMovement extends MovementStyle {
     thing.setCPos(cx, cy);
   }
 
-
-  // -- Helper methods --
-
   /** Switches between horizontal and vertical movement modes. */
   protected void doSwitch() {
     Copter hero = thing.getGame().getCopter();
@@ -165,8 +138,6 @@ public class PaulMovement extends MovementStyle {
 }
 
 public class PaulEnemy extends EnemyHead {
-
-  // -- Constructor --
 
   public PaulEnemy(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize Paul with proper parameters
@@ -187,9 +158,6 @@ public class PaulEnemy extends EnemyHead {
     setAttack(new PaulAttack(this));
   }
 
-
-  // -- Thing API methods --
-
   public int getScore() { return 5 * super.getScore(); }
 
   public void move() {
@@ -202,8 +170,6 @@ public class PaulEnemy extends EnemyHead {
 }
 
 public class PaulBoss extends BossHead {
-
-  // -- Constructor --
 
   public PaulBoss(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize Paul with proper parameters
@@ -222,16 +188,10 @@ public class PaulBoss extends BossHead {
     setAttack(new PaulAttack(this));
   }
 
-
-  // -- BossHead API methods --
-
   /** Gets the attack form left behind by this boss upon defeat. */
   public ColoredAttack getColoredAttack() {
     return new SpreadAttack(game.getCopter());
   }
-
-
-  // -- Thing API methods --
 
   public int getScore() { return 50 * super.getScore(); }
 

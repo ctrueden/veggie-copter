@@ -10,15 +10,11 @@ import javax.swing.*;
 public class BoxEditor extends JFrame
   implements KeyListener, MouseListener, MouseMotionListener, WindowListener {
 
-  // -- Constants --
-
   public static final Color[] COLORS = {
     Color.red, Color.blue, Color.green, Color.cyan,
     Color.magenta, Color.yellow, Color.white
   };
  
-
-  // -- Fields --
 
   /** Index of current image. */
   private int ndx = 0;
@@ -34,9 +30,6 @@ public class BoxEditor extends JFrame
 
   /** Bounding box currently being drawn. */
   private BoundingBox bb;
-
-
-  // -- Constructor --
 
   public BoxEditor() throws IOException {
     super();
@@ -69,9 +62,6 @@ public class BoxEditor extends JFrame
     load();
     setVisible(true);
   }
-
-
-  // -- BoxEditor methods --
 
   public void updateTitle() { setTitle((String) names.elementAt(ndx)); }
 
@@ -124,9 +114,6 @@ public class BoxEditor extends JFrame
     }
   }
 
-
-  // -- Component methods --
-
   public void paint(Graphics g) {
     Dimension size = getSize();
     BoundedImage bi = (BoundedImage) images.elementAt(ndx);
@@ -142,9 +129,6 @@ public class BoxEditor extends JFrame
       g.drawRect(x + r[b].x, y + r[b].y, r[b].width, r[b].height);
     }
   }
-
-
-  // -- KeyListener methods --
 
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
@@ -179,9 +163,6 @@ public class BoxEditor extends JFrame
   public void keyTyped(KeyEvent e) { }
   public void keyReleased(KeyEvent e) { }
 
-
-  // -- MouseListener methods --
-
   public void mousePressed(MouseEvent e) {
     Dimension size = getSize();
     BoundedImage bi = (BoundedImage) images.elementAt(ndx);
@@ -204,9 +185,6 @@ public class BoxEditor extends JFrame
   public void mouseEntered(MouseEvent e) { }
   public void mouseExited(MouseEvent e) { }
 
-
-  // -- MouseMotionListener methods --
-
   public void mouseDragged(MouseEvent e) {
     if (bb != null) {
       Dimension size = getSize();
@@ -226,9 +204,6 @@ public class BoxEditor extends JFrame
   }
   public void mouseMoved(MouseEvent e) { }
 
-
-  // -- WindowListener methods --
-
   public void windowClosed(WindowEvent e) { }
   public void windowClosing(WindowEvent e) {
     try { save(); }
@@ -240,9 +215,6 @@ public class BoxEditor extends JFrame
   public void windowDeiconified(WindowEvent e) { }
   public void windowIconified(WindowEvent e) { }
   public void windowOpened(WindowEvent e) { }
-
-
-  // -- Main method --
 
   public static void main(String[] args) throws Exception { new BoxEditor(); }
 
