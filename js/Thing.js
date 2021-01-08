@@ -256,11 +256,6 @@ class Thing implements KeyListener {
     if (attack != null) attack.keyReleased(e);
   }
 
-  keyTyped(KeyEvent e) {
-    if (move != null) move.keyTyped(e);
-    if (attack != null) attack.keyTyped(e);
-  }
-
   BoundedImage getBoundedImage() {
     return getBoundedImage(imageIndex);
   }

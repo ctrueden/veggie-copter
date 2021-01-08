@@ -26,6 +26,5 @@ class AttackStyle implements KeyListener {
 
   keyPressed(KeyEvent e) { }
   keyReleased(KeyEvent e) { }
-  keyTyped(KeyEvent e) { }
 
 }

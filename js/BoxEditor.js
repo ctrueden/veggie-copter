@@ -151,7 +151,6 @@ class BoxEditor extends JFrame
     }
     repaint();
   }
-  keyTyped(KeyEvent e) { }
   keyReleased(KeyEvent e) { }
 
   mousePressed(MouseEvent e) {

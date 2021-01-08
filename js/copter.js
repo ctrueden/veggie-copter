@@ -213,16 +213,6 @@ class CopterAttack extends AttackStyle {
     }
     else attack.keyReleased(e);
   }
-
-  keyTyped(KeyEvent e) {
-    ColoredAttack attack = getAttackStyle();
-    if (attack == null) { // all attack styles
-      for (int i=0; i<attacks.size(); i++) {
-        ((ColoredAttack) attacks.elementAt(i)).keyReleased(e);
-      }
-    }
-    else attack.keyTyped(e);
-  }
 }
 
 /** Veggie copter object (the good guy!). */
