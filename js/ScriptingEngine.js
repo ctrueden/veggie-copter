@@ -1,9 +1,4 @@
-package net.restlesscoder.heli;
 
-import java.awt.Color;
-import java.io.*;
-import java.lang.reflect.*;
-import java.util.*;
 
 public class ScriptingEngine {
 

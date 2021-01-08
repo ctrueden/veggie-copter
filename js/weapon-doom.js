@@ -1,7 +1,4 @@
-package net.restlesscoder.heli;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 
 /** Defines veggie copter doom attack style. */
 public class DoomAttack extends ColoredAttack {

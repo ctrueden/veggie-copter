@@ -1,6 +1,4 @@
-package net.restlesscoder.heli;
 
-import java.awt.event.*;
 
 public class CopterGun extends Thing {
 

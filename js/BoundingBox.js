@@ -1,6 +1,4 @@
-package net.restlesscoder.heli;
 
-import java.awt.Rectangle;
 
 public class BoundingBox {
 

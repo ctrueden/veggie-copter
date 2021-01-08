@@ -1,7 +1,4 @@
-package net.restlesscoder.heli;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 
 /** Defines veggie copter lightning attack style. */
 public class LitAttack extends ColoredAttack {

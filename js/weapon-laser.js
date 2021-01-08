@@ -1,7 +1,4 @@
-package net.restlesscoder.heli;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 
 /** Defines veggie copter laser attack style. */
 public class LaserAttack extends ColoredAttack {

@@ -1,7 +1,4 @@
-package net.restlesscoder.heli;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /** Power-up object increases copter's weapon power. */
 public class PowerUp extends Thing {

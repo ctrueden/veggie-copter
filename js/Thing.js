@@ -1,8 +1,4 @@
-package net.restlesscoder.heli;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Vector;
 
 /** Thing is an object on the screen that moves around and has hit points. */
 public abstract class Thing implements KeyListener {

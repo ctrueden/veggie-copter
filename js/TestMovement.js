@@ -1,4 +1,3 @@
-package net.restlesscoder.heli;
 
 public class TestMovement extends MovementStyle {
 

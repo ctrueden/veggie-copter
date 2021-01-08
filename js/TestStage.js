@@ -1,4 +1,3 @@
-package net.restlesscoder.heli;
 
 public class TestStage extends Stage {
 

@@ -1,7 +1,4 @@
-package net.restlesscoder.heli;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 /** Encapsulates a movement pattern. */
 public abstract class MovementStyle implements KeyListener {

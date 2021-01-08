@@ -1,7 +1,4 @@
-package net.restlesscoder.heli;
 
-import java.awt.Graphics;
-import java.util.Vector;
 
 /** Implements logic for selecting a stage. */
 public class StageSelector {

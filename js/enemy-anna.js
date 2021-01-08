@@ -1,4 +1,3 @@
-package net.restlesscoder.heli;
 
 /** Defines random enemy bullet attack. */
 public class AnnaAttack extends AttackStyle {

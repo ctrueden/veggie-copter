@@ -1,7 +1,4 @@
-package net.restlesscoder.heli;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 
 /** Defines veggie copter energy field attack style. */
 public class EnergyAttack extends ColoredAttack {

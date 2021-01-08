@@ -1,7 +1,4 @@
-package net.restlesscoder.heli;
 
-import java.awt.*;
-import java.awt.event.*;
 
 public class CopterSpread extends Thing {
 

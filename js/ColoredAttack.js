@@ -1,6 +1,4 @@
-package net.restlesscoder.heli;
 
-import java.awt.*;
 
 /** Encapsulates an attack pattern with icon and color. */
 public abstract class ColoredAttack extends AttackStyle {

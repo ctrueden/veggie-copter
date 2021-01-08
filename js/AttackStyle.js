@@ -1,6 +1,4 @@
-package net.restlesscoder.heli;
 
-import java.awt.event.*;
 
 /** Encapsulates an attack pattern. */
 public abstract class AttackStyle implements KeyListener {

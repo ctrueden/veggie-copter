@@ -1,8 +1,4 @@
-package net.restlesscoder.heli;
 
-import java.awt.Point;
-
-import java.util.Vector;
 
 /** Defines George's attack style. */
 public class GeorgeAttack extends AttackStyle {

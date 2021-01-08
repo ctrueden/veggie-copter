@@ -1,8 +1,4 @@
-package net.restlesscoder.heli;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.Vector;
 
 /** An image with associated bounding box insets. */
 public class BoundedImage {
