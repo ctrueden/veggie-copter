@@ -1,4 +1,3 @@
-
 public class TestMovement extends MovementStyle {
 
   private boolean timing;

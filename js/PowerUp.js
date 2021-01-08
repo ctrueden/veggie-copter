@@ -1,5 +1,3 @@
-
-
 /** Power-up object increases copter's weapon power. */
 public class PowerUp extends Thing {
 

@@ -1,5 +1,3 @@
-
-
 /** Defines veggie copter laser attack style. */
 public class LaserAttack extends ColoredAttack {
 

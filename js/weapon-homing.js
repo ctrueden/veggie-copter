@@ -1,5 +1,3 @@
-
-
 /** Defines veggie copter homing missile attack style. */
 public class HomingAttack extends ColoredAttack {
 

@@ -1,5 +1,3 @@
-
-
 /** Encapsulates an attack pattern. */
 public abstract class AttackStyle implements KeyListener {
 

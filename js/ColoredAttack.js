@@ -1,5 +1,3 @@
-
-
 /** Encapsulates an attack pattern with icon and color. */
 public abstract class ColoredAttack extends AttackStyle {
 

@@ -1,5 +1,3 @@
-
-
 /** Defines veggie copter energy field attack style. */
 public class EnergyAttack extends ColoredAttack {
 

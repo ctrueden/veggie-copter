@@ -1,5 +1,3 @@
-
-
 public class SplitterMovement extends MovementStyle {
 
   protected int xdir, ydir;

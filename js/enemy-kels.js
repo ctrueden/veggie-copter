@@ -1,4 +1,3 @@
-
 /** Defines Kelsey's attack style. */
 public class KelsAttack extends AttackStyle {
 

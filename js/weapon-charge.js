@@ -1,5 +1,3 @@
-
-
 /** Defines veggie copter charge attack style. */
 public class ChargeAttack extends ColoredAttack {
 

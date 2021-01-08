@@ -1,5 +1,3 @@
-
-
 /** An image with associated bounding box insets. */
 public class BoundedImage {
 

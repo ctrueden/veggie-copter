@@ -1,5 +1,3 @@
-
-
 public class CopterSpread extends Thing {
 
   protected static final double SPREAD_SPEED = 10;

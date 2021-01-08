@@ -1,5 +1,3 @@
-
-
 /** Defines veggie copter gray attack style. */
 public class GrayAttack extends ColoredAttack {
 

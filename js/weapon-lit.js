@@ -1,5 +1,3 @@
-
-
 /** Defines veggie copter lightning attack style. */
 public class LitAttack extends ColoredAttack {
 

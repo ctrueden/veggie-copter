@@ -1,4 +1,3 @@
-
 public class BulletMovement extends MovementStyle {
 
   protected static final float SPEED = 2.2f;

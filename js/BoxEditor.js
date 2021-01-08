@@ -1,5 +1,3 @@
-
-
 public class BoxEditor extends JFrame
   implements KeyListener, MouseListener, MouseMotionListener, WindowListener {
 

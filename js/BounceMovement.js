@@ -1,4 +1,3 @@
-
 public class BounceMovement extends MovementStyle {
 
   protected static final int X_STEPS = 40;

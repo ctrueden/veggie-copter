@@ -1,4 +1,3 @@
-
 /** Defines Jamesey's attack style. */
 public class JamesAttack extends AttackStyle {
 

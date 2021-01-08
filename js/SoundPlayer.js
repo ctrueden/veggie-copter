@@ -1,5 +1,3 @@
-
-
 public class SoundPlayer {
 
   private static boolean mute = true;

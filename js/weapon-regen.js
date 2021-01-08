@@ -1,5 +1,3 @@
-
-
 public class RegenMovement extends MovementStyle {
 
   public static final int FLUX_RADIUS = 5;

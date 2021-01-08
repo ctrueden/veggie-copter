@@ -1,5 +1,3 @@
-
-
 public class ScriptingEngine {
 
   private static final Class[] SIG = {VeggieCopter.class, String[].class};

@@ -1,5 +1,3 @@
-
-
 public class ImageTools {
 
   public static final boolean HARDWARE_ACCEL = true;

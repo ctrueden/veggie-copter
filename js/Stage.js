@@ -1,5 +1,3 @@
-
-
 /** Contains information regarding a specific stage of the game. */
 public class Stage {
 

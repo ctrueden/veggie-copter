@@ -1,4 +1,3 @@
-
 /** Defines random enemy bullet attack. */
 public class RandomBulletAttack extends AttackStyle {
 

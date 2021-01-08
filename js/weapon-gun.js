@@ -1,5 +1,3 @@
-
-
 public class CopterGun extends Thing {
 
   protected static final int SPEED = 5;

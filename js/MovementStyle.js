@@ -1,5 +1,3 @@
-
-
 /** Encapsulates a movement pattern. */
 public abstract class MovementStyle implements KeyListener {
 

@@ -1,4 +1,3 @@
-
 public class TestStage extends Stage {
 
   /** Constructs a stage for debugging. */

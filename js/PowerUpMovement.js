@@ -1,4 +1,3 @@
-
 public class PowerUpMovement extends MovementStyle {
 
   protected static final int PERIOD = 3;

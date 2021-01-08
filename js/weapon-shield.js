@@ -1,5 +1,3 @@
-
-
 public class ShieldMovement extends MovementStyle {
 
   protected static final float SPEED = 0.1f;

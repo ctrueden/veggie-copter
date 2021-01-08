@@ -1,5 +1,3 @@
-
-
 public class TestBoss extends BossHead {
 
   public TestBoss(VeggieCopter game, String[] args) {

@@ -1,5 +1,3 @@
-
-
 /** Implements logic for selecting a stage. */
 public class StageSelector {
 

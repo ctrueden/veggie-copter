@@ -1,5 +1,3 @@
-
-
 /** Defines George's attack style. */
 public class GeorgeAttack extends AttackStyle {
 

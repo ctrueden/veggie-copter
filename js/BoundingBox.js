@@ -1,5 +1,3 @@
-
-
 public class BoundingBox {
 
   /** Bounding box insets. */
