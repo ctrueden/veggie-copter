@@ -3,17 +3,17 @@ class BounceMovement extends MovementStyle {
   const int X_STEPS = 40;
   const int Y_STEPS = 30;
 
-  float xstart, ystart;
-  float xlen, ylen;
-  int xinc, yinc;
-  boolean xdir, ydir;
+  xstart, ystart;
+  xlen, ylen;
+  xinc, yinc;
+  xdir, ydir;
 
-  BounceMovement(Thing t) {
+  BounceMovement(t) {
     super(t);
     VeggieCopter game = thing.getGame();
 
     // compute starting position
-    int xpos, ypos;
+    xpos, ypos;
     int w = game.getWindowWidth(), h = game.getWindowHeight();
 
     double r = Math.random();
@@ -81,7 +81,7 @@ class BounceMovement extends MovementStyle {
   }
 
   /** Converts linear movement into curved movement with a sine function. */
-  double smooth(double p) {
+  double smooth(p) {
     p = Math.PI * (p - 0.5); // [0, 1] -> [-PI/2, PI/2]
     p = Math.sin(p); // [-PI/2, PI/2] -> [-1, 1] smooth sine
     p = (p + 1) / 2; // [-1, 1] -> [0, 1]

@@ -5,27 +5,27 @@ class BoundedImage {
   BufferedImage img;
 
   /** Image dimensions. */
-  int width, height;
+  width, height;
 
   /** X and Y offsets. */
-  int xoff, yoff;
+  xoff, yoff;
 
   /** Bounding boxes. */
   Vector boxes = new Vector();
 
   /** Constructs a bounded image with default parameters. */
-  BoundedImage(BufferedImage img) {
+  BoundedImage(img) {
     this(img, img.getWidth(), img.getHeight(), 0, 0);
   }
 
   /** Constructs an image with accompanying bounding box information. */
-  BoundedImage(BufferedImage img, int xoff, int yoff) {
+  BoundedImage(img, xoff, yoff) {
     this(img, img.getWidth(), img.getHeight(), xoff, yoff);
   }
 
   /** Constructs an image with accompanying bounding box information. */
-  BoundedImage(BufferedImage img,
-    int width, int height, int xoff, int yoff)
+  BoundedImage(img,
+    width, height, xoff, yoff)
   {
     this.img = img;
     this.width = width;
@@ -34,7 +34,7 @@ class BoundedImage {
   }
 
   /** Adds a bounding box to the image. */
-  addBox(BoundingBox box) { boxes.add(box); }
+  addBox(box) { boxes.add(box); }
 
   /** Removes the last bounding box from the image. */
   removeBox() {
@@ -58,7 +58,7 @@ class BoundedImage {
   int getOffsetY() { return yoff; }
 
   /** Gets bounding boxes given the image's top left coordinate. */
-  Rectangle[] getBoxes(int x, int y) {
+  Rectangle[] getBoxes(x, y) {
     int len = boxes.size();
     Rectangle[] r = new Rectangle[len];
     for (int i=0; i<len; i++) {

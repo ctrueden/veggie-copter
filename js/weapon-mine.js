@@ -2,19 +2,19 @@ class MineBulletMovement extends MovementStyle {
 
   const float SPEED = 2.2f;
 
-  float xstart, ystart;
-  float xtraj, ytraj;
+  xstart, ystart;
+  xtraj, ytraj;
   float speed;
   int tick;
 
-  MineBulletMovement(Thing t, float x, float y,
-    float xtarget, float ytarget)
+  MineBulletMovement(t, x, y,
+    xtarget, ytarget)
   {
     this(t, x, y, xtarget, ytarget, SPEED);
   }
 
-  MineBulletMovement(Thing t, float x, float y,
-    float xtarget, float ytarget, float speed)
+  MineBulletMovement(t, x, y,
+    xtarget, ytarget, speed)
   {
     super(t);
     thing.setCPos(x, y);
@@ -68,7 +68,7 @@ class MineBullet extends Thing {
     }
   }
 
-  MineBullet(Thing t, float angle, float sx, float sy) {
+  MineBullet(t, angle, sx, sy) {
     super(t.getGame());
     type = GOOD_BULLET;
     setImageList(images);
@@ -78,7 +78,7 @@ class MineBullet extends Thing {
     move = new MineBulletMovement(this, sx, sy, tx, ty);
   }
 
-  setImageIndex(int index) {
+  setImageIndex(index) {
     if (index == LIFE) setHP(0); // bullets die when they fade away
     else {
       setPower((LIFE - index) / POWER + 1);
@@ -93,7 +93,7 @@ class MineExplode extends AttackStyle {
 
   boolean explode;
 
-  MineExplode(Thing t) { super(t); }
+  MineExplode(t) { super(t); }
 
   /** Causes the mine to explode. */
   explode() { explode = true; }
@@ -117,7 +117,7 @@ class MineExplode extends AttackStyle {
     return bullets;
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     if (code == Keys.TRIGGER) explode();
   }
@@ -145,9 +145,9 @@ class MineMovement extends MovementStyle {
   const int DRAG_STRENGTH = 20;
 
   long ticks;
-  float adjX, adjY;
+  adjX, adjY;
 
-  MineMovement(Thing t) { super(t); }
+  MineMovement(t) { super(t); }
 
   /** Drags nearby enemies closer to the mine. */
   move() {
@@ -218,7 +218,7 @@ class CopterMine extends Thing {
     }
   }
 
-  CopterMine(Thing thing, int power) {
+  CopterMine(thing, power) {
     super(thing.getGame());
     type = GOOD_BULLET;
     setPower(power);
@@ -231,7 +231,7 @@ class CopterMine extends Thing {
   int getStrength() { return power; }
 
   /** Changes mine size based on power value. */
-  setPower(int power) {
+  setPower(power) {
     super.setPower(power);
     maxhp = hp = POWER_MULTIPLIER * power;
 
@@ -245,7 +245,7 @@ class CopterMine extends Thing {
   int getPower() { return 0; }
 
   /** Mines cannot be destroyed. */
-  hit(int damage) { }
+  hit(damage) { }
 }
 
 /** Defines veggie copter gravity mine attack style. */
@@ -256,7 +256,7 @@ class MineAttack extends ColoredAttack {
   boolean space;
   int fired;
 
-  MineAttack(Thing t) {
+  MineAttack(t) {
     super(t, Color.darkGray,
       t.getGame().loadImage("icon-mine.png").getImage());
   }
@@ -277,12 +277,12 @@ class MineAttack extends ColoredAttack {
     return new Thing[] {mine};
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  keyReleased(KeyEvent e) {
+  keyReleased(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }

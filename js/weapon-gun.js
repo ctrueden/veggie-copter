@@ -17,7 +17,7 @@ class CopterGun extends Thing {
     image.addBox(new BoundingBox());
   }
 
-  CopterGun(Thing thing, float x, float y, int power) {
+  CopterGun(thing, x, y, power) {
     super(thing.getGame());
     type = GOOD_BULLET;
     setImage(image);
@@ -35,7 +35,7 @@ class GunAttack extends ColoredAttack {
   boolean space = false;
   int fired;
 
-  GunAttack(Thing t) {
+  GunAttack(t) {
     super(t, CopterGun.BROWN,
       t.getGame().loadImage("icon-gun.png").getImage());
   }
@@ -76,12 +76,12 @@ class GunAttack extends ColoredAttack {
     return shots;
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  keyReleased(KeyEvent e) {
+  keyReleased(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }

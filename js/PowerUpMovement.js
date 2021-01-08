@@ -6,7 +6,7 @@ class PowerUpMovement extends MovementStyle {
   long ticks;
   boolean dir;
 
-  PowerUpMovement(Thing t, float x, float y, boolean center) {
+  PowerUpMovement(t, x, y, center) {
     super(t);
     thing.setPos(x, y);
     this.center = center;

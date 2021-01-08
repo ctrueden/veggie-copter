@@ -4,7 +4,7 @@ class DoomAttack extends ColoredAttack {
   boolean space;
   CopterDoom doom;
 
-  DoomAttack(Thing t) {
+  DoomAttack(t) {
     super(t, Color.black,
       t.getGame().loadImage("icon-doom.png").getImage());
   }
@@ -24,12 +24,12 @@ class DoomAttack extends ColoredAttack {
     return new Thing[] {doom};
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  keyReleased(KeyEvent e) {
+  keyReleased(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) clear();
   }

@@ -6,7 +6,7 @@ class RegenMovement extends MovementStyle {
   private Thing owner;
   private long ticks;
 
-  RegenMovement(Thing t, Thing owner) {
+  RegenMovement(t, owner) {
     super(t);
     this.owner = owner;
     syncPos();
@@ -79,14 +79,14 @@ class CopterRegen extends Thing {
     }
   }
 
-  CopterRegen(Thing thing) {
+  CopterRegen(thing) {
     super(thing.getGame());
     setImageList(images);
     type = GOOD_BULLET;
     move = new RegenMovement(this, thing);
   }
 
-  setPower(int power) {
+  setPower(power) {
     super.setPower(power);
     int size = power - 1;
     if (size < 0) size = 0;
@@ -103,7 +103,7 @@ class RegenAttack extends ColoredAttack {
   boolean space;
   CopterRegen regen;
 
-  RegenAttack(Thing t) {
+  RegenAttack(t) {
     super(t, Color.pink, t.getGame().loadImage("icon-regen.png").getImage());
   }
 
@@ -122,17 +122,17 @@ class RegenAttack extends ColoredAttack {
     return new Thing[] {regen};
   }
 
-  setPower(int power) {
+  setPower(power) {
     super.setPower(power);
     if (regen != null) regen.setPower(power);
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  keyReleased(KeyEvent e) {
+  keyReleased(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) clear();
   }

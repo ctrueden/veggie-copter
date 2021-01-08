@@ -3,7 +3,7 @@ class TestMovement extends MovementStyle {
   private boolean timing;
   private long ticks;
 
-  TestMovement(Thing t, int x, int y) {
+  TestMovement(t, x, y) {
     super(t);
     thing.setPos(x, y);
   }

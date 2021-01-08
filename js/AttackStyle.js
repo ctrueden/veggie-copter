@@ -7,7 +7,7 @@ class AttackStyle implements KeyListener {
   /** Amount of damage the attack style inflicts. */
   int power = 1;
 
-  AttackStyle(Thing t) { thing = t; }
+  AttackStyle(t) { thing = t; }
 
   /** Instructs the thing to fire a shot (but only if it wants to). */
   Thing[] shoot();
@@ -19,12 +19,12 @@ class AttackStyle implements KeyListener {
   Thing[] trigger() { return null; }
 
   /** Sets power level of this attack style. */
-  setPower(int power) { this.power = power; }
+  setPower(power) { this.power = power; }
 
   /** Gets power level of this attack style. */
   int getPower() { return power; }
 
-  keyPressed(KeyEvent e) { }
-  keyReleased(KeyEvent e) { }
+  keyPressed(e) { }
+  keyReleased(e) { }
 
 }

@@ -6,7 +6,7 @@ class HomingAttack extends ColoredAttack {
   boolean space = false;
   int fired;
 
-  HomingAttack(Thing t) {
+  HomingAttack(t) {
     super(t, Color.magenta,
       t.getGame().loadImage("icon-homing.png").getImage());
   }
@@ -29,12 +29,12 @@ class HomingAttack extends ColoredAttack {
     return new Thing[] {homing};
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  keyReleased(KeyEvent e) {
+  keyReleased(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }

@@ -7,14 +7,14 @@ class ColoredAttack extends AttackStyle {
   Image image;
   Color color;
 
-  ColoredAttack(Thing t, Color c, Image img) {
+  ColoredAttack(t, c, img) {
     super(t);
     color = c;
     image = img;
   }
 
   /** Draws an icon representing this attack style in the given position. */
-  drawIcon(Graphics g, int x, int y, boolean selected) {
+  drawIcon(g, x, y, selected) {
     Color origColor = g.getColor();
     g.setColor(Color.white);
     g.drawRect(x, y, ICON_SIZE - 1, ICON_SIZE - 1);

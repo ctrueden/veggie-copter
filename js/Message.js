@@ -6,8 +6,8 @@ class Message {
   private Font font;
   private int remain;
 
-  Message(String msg, int x, int y,
-    int size, Color color, int duration)
+  Message(msg, x, y,
+    size, color, duration)
   {
     this.msg = msg;
     this.x = x;
@@ -17,7 +17,7 @@ class Message {
     remain = duration;
   }
 
-  draw(Graphics g) {
+  draw(g) {
     Font origFont = g.getFont();
     Color origColor = g.getColor();
     g.setFont(font);

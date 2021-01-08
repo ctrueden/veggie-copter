@@ -34,7 +34,7 @@ class Thing implements KeyListener {
   AttackStyle attack;
 
   /** Position of the object. */
-  float xpos, ypos;
+  xpos, ypos;
 
   /** List of images representing the object. */
   Vector images = new Vector();
@@ -55,13 +55,13 @@ class Thing implements KeyListener {
   int hit;
 
   /** Constructs a new object. */
-  Thing(VeggieCopter game) { this.game = game; }
+  Thing(game) { this.game = game; }
 
   /** Assigns object's movement style. */
-  setMovement(MovementStyle ms) { move = ms; }
+  setMovement(ms) { move = ms; }
 
   /** Assigns object's attack style. */
-  setAttack(AttackStyle as) { attack = as; }
+  setAttack(as) { attack = as; }
 
   /** Assigns object's image list. */
   setImageList(BoundedImage[] images) {
@@ -74,17 +74,17 @@ class Thing implements KeyListener {
   }
 
   /** Changes the image representing the object. */
-  setImageIndex(int index) {
+  setImageIndex(index) {
     if (index >= 0 && index < images.size()) imageIndex = index;
   }
 
   /** Assigns object's image. */
-  setImage(BoundedImage image) {
+  setImage(image) {
     setImageList(new BoundedImage[] {image});
   }
 
   /** Assigns object's position. */
-  setPos(float x, float y) {
+  setPos(x, y) {
     xpos = x;
     ypos = y;
     int width = getWidth(), height = getHeight();
@@ -96,19 +96,19 @@ class Thing implements KeyListener {
     }
   }
 
-  /** Assigns object's position (centered coordinates). */
-  setCPos(float cx, float cy) {
+  /** Assigns object's position (coordinates). */
+  setCPos(cx, cy) {
     setPos(cx - getWidth() / 2f, cy - getHeight() / 2f);
   }
 
   /** Assigns object's hit points. */
-  setHP(int hp) {
+  setHP(hp) {
     if (hp > maxhp) hp = maxhp;
     this.hp = hp;
   }
 
   /** Assigns object's power. */
-  setPower(int power) { this.power = power; }
+  setPower(power) { this.power = power; }
 
   /**
    * Assigns object's type.
@@ -118,10 +118,10 @@ class Thing implements KeyListener {
    * <li>GOOD_BULLET
    * <li>EVIL_BULLET
    */
-  setType(int type) { this.type = type; }
+  setType(type) { this.type = type; }
 
   /** Draws the object onscreen. */
-  draw(Graphics g) {
+  draw(g) {
     BoundedImage img = getBoundedImage();
     if (img == null) return;
     int x = (int) (getX() + img.getOffsetX());
@@ -130,7 +130,7 @@ class Thing implements KeyListener {
   }
 
   /** Hits this object for the given amount of damage. */
-  hit(int damage) {
+  hit(damage) {
     setHP(hp - damage);
     hit = 2 * damage;
   }
@@ -237,7 +237,7 @@ class Thing implements KeyListener {
   int getScore() { return maxhp; }
 
   /** Returns true if this object can harm the given one. */
-  boolean harms(Thing t) {
+  boolean harms(t) {
     return (type == GOOD && t.type == EVIL) ||
       (type == EVIL && t.type == GOOD) ||
       (type == GOOD_BULLET && t.type == EVIL) ||
@@ -246,12 +246,12 @@ class Thing implements KeyListener {
       (type == EVIL_BULLET && t.type == GOOD);
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     if (move != null) move.keyPressed(e);
     if (attack != null) attack.keyPressed(e);
   }
 
-  keyReleased(KeyEvent e) {
+  keyReleased(e) {
     if (move != null) move.keyReleased(e);
     if (attack != null) attack.keyReleased(e);
   }
@@ -260,7 +260,7 @@ class Thing implements KeyListener {
     return getBoundedImage(imageIndex);
   }
 
-  BoundedImage getBoundedImage(int index) {
+  BoundedImage getBoundedImage(index) {
     if (index < 0) return null;
     return (BoundedImage) images.elementAt(index);
   }

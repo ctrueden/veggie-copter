@@ -15,7 +15,7 @@ class CopterSpread extends Thing {
     image.addBox(new BoundingBox());
   }
 
-  CopterSpread(Thing thing, double angle) {
+  CopterSpread(thing, angle) {
     super(thing.getGame());
     type = GOOD_BULLET;
     setImage(image);
@@ -36,7 +36,7 @@ class SpreadAttack extends ColoredAttack {
   boolean space = false;
   int fired;
 
-  SpreadAttack(Thing t) {
+  SpreadAttack(t) {
     super(t, Color.blue, t.getGame().loadImage("icon-spread.png").getImage());
   }
 
@@ -71,12 +71,12 @@ class SpreadAttack extends ColoredAttack {
     return shots;
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  keyReleased(KeyEvent e) {
+  keyReleased(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }

@@ -10,7 +10,7 @@ class ScriptingEngine {
   private boolean waitClear;
 
   /** Constructs an object for parsing the game script. */
-  ScriptingEngine(VeggieCopter game, String scriptFile) {
+  ScriptingEngine(game, scriptFile) {
     this.game = game;
     try {
       BufferedReader fin = new BufferedReader(
@@ -28,7 +28,7 @@ class ScriptingEngine {
       }
       fin.close();
     }
-    catch (IOException exc) { exc.printStackTrace(); }
+    catch (exc) { exc.printStackTrace(); }
 
     // append 1/2 pause at the end of each stage
     commands.add("wait");
@@ -90,11 +90,11 @@ class ScriptingEngine {
       Constructor con = c.getConstructor(SIG);
       game.addThing((Thing) con.newInstance(new Object[] {game, p}));
     }
-    catch (ClassNotFoundException exc) { ignoreCommand("add", args); }
-    catch (NoSuchMethodException exc) { ignoreCommand("add", args); }
-    catch (InstantiationException exc) { ignoreCommand("add", args); }
-    catch (IllegalAccessException exc) { ignoreCommand("add", args); }
-    catch (InvocationTargetException exc) { ignoreCommand("add", args); }
+    catch (exc) { ignoreCommand("add", args); }
+    catch (exc) { ignoreCommand("add", args); }
+    catch (exc) { ignoreCommand("add", args); }
+    catch (exc) { ignoreCommand("add", args); }
+    catch (exc) { ignoreCommand("add", args); }
   }
 
   print(String[] args) {
@@ -103,7 +103,7 @@ class ScriptingEngine {
       ignoreCommand("print", args);
       return;
     }
-    int x, y, size, r, g, b, time;
+    x, y, size, r, g, b, time;
     try {
       x = Integer.parseInt(args[0]);
       y = Integer.parseInt(args[1]);
@@ -113,7 +113,7 @@ class ScriptingEngine {
       b = Integer.parseInt(args[5]);
       time = Integer.parseInt(args[6]);
     }
-    catch (NumberFormatException exc) {
+    catch (exc) {
       ignoreCommand("print", args);
       return;
     }
@@ -134,7 +134,7 @@ class ScriptingEngine {
         return;
       }
       try { waiting = Integer.parseInt(args[1]); }
-      catch (NumberFormatException exc) { ignoreCommand("wait", args); }
+      catch (exc) { ignoreCommand("wait", args); }
       waitClear = true;
     }
     else {
@@ -144,12 +144,12 @@ class ScriptingEngine {
       }
       else {
         try { waiting = Integer.parseInt(args[0]); }
-        catch (NumberFormatException exc) { ignoreCommand("wait", args); }
+        catch (exc) { ignoreCommand("wait", args); }
       }
     }
   }
 
-  ignoreCommand(String cmd, String[] args) {
+  ignoreCommand(cmd, String[] args) {
     System.err.print("Ignoring command: " + cmd);
     for (int i=0; i<args.length; i++) System.err.print(" " + args[i]);
     System.err.println();

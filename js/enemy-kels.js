@@ -4,7 +4,7 @@ class KelsAttack extends AttackStyle {
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
   const int FREQUENCY = 1;
 
-  KelsAttack(Thing t) { super(t); }
+  KelsAttack(t) { super(t); }
 
   /** Fires a shot randomly. */
   Thing[] shoot() {
@@ -19,12 +19,12 @@ class KelsMovement extends MovementStyle {
   const int RADIUS2 = 200;
   const int SPEED = 2;
 
-  KelsMovement(Thing t, int y, boolean dir) {
+  KelsMovement(t, y, dir) {
     super(t);
     VeggieCopter game = thing.getGame();
 
     // compute starting position
-    int xpos, ypos;
+    xpos, ypos;
     int w = game.getWindowWidth(), h = game.getWindowHeight();
 
     if (dir) {
@@ -64,7 +64,7 @@ class KelsMovement extends MovementStyle {
 
 class KelsEnemy extends EnemyHead {
 
-  KelsEnemy(VeggieCopter game, String[] args) {
+  KelsEnemy(game, String[] args) {
     // CTR TODO parse args and initialize Kels with proper parameters
     super(game, 25,
       game.loadImage("kels1.png"),
@@ -82,7 +82,7 @@ class KelsEnemy extends EnemyHead {
     boolean dir = false;
     if (args.length >= 1) {
       try { y = Integer.parseInt(args[0]); }
-      catch (NumberFormatException exc) { y = 0; }
+      catch (exc) { y = 0; }
     }
     if (args.length >= 2) dir = args[1].equals("true");
 
@@ -96,7 +96,7 @@ class KelsEnemy extends EnemyHead {
 
 class KelsBoss extends BossHead {
 
-  KelsBoss(VeggieCopter game, String[] args) {
+  KelsBoss(game, String[] args) {
     // CTR TODO parse args and initialize Kels with proper parameters
     super(game, 250,
       game.loadImage("kels-boss1.png"),
@@ -114,7 +114,7 @@ class KelsBoss extends BossHead {
     boolean dir = false;
     if (args.length >= 1) {
       try { y = Integer.parseInt(args[0]); }
-      catch (NumberFormatException exc) { y = 0; }
+      catch (exc) { y = 0; }
     }
     if (args.length >= 2) dir = args[1].equals("true");
 

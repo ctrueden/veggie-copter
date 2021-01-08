@@ -15,7 +15,7 @@ class LitAttack extends ColoredAttack {
   boolean space = false;
   int[][] paths;
 
-  LitAttack(Thing t) {
+  LitAttack(t) {
     super(t, Color.cyan, t.getGame().loadImage("icon-lit.png").getImage());
 
     paths = new int[1000][];
@@ -47,7 +47,7 @@ class LitAttack extends ColoredAttack {
     return lits;
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) {
       space = true;
@@ -55,12 +55,12 @@ class LitAttack extends ColoredAttack {
     }
   }
 
-  keyReleased(KeyEvent e) {
+  keyReleased(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }
 
-  generatePath(int index) {
+  generatePath(index) {
     paths[index] = new int[PATH_LENGTH];
     for (int i=0; i<paths[index].length; i++) {
       double chance = Math.random();

@@ -2,24 +2,24 @@ class BulletMovement extends MovementStyle {
 
   const float SPEED = 2.2f;
 
-  float xstart, ystart;
-  float xtraj, ytraj;
+  xstart, ystart;
+  xtraj, ytraj;
   float speed;
   int tick;
 
-  BulletMovement(Thing t, float x, float y) {
+  BulletMovement(t, x, y) {
     this(t, x, y, t.getGame().getCopter().getX(),
       t.getGame().getCopter().getY(), SPEED);
   }
 
-  BulletMovement(Thing t, float x, float y,
-    float xtarget, float ytarget)
+  BulletMovement(t, x, y,
+    xtarget, ytarget)
   {
     this(t, x, y, xtarget, ytarget, SPEED);
   }
 
-  BulletMovement(Thing t, float x, float y,
-    float xtarget, float ytarget, double speed)
+  BulletMovement(t, x, y,
+    xtarget, ytarget, speed)
   {
     super(t);
     thing.setPos(x, y);

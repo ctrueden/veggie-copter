@@ -7,7 +7,7 @@ class LaserAttack extends ColoredAttack {
   boolean space;
   int flux;
 
-  LaserAttack(Thing t) {
+  LaserAttack(t) {
     super(t, Color.green, t.getGame().loadImage("icon-laser.png").getImage());
   }
 
@@ -26,12 +26,12 @@ class LaserAttack extends ColoredAttack {
     return new Thing[] {laser};
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  keyReleased(KeyEvent e) {
+  keyReleased(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }

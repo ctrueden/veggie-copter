@@ -4,7 +4,7 @@ class RandomBulletAttack extends AttackStyle {
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
   const int FREQUENCY = 3;
 
-  RandomBulletAttack(Thing t) { super(t); }
+  RandomBulletAttack(t) { super(t); }
 
   /** Fires a shot randomly. */
   Thing[] shoot() {

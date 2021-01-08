@@ -4,7 +4,7 @@ class JamesAttack extends AttackStyle {
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
   const int FREQUENCY = 1;
 
-  JamesAttack(Thing t) { super(t); }
+  JamesAttack(t) { super(t); }
 
   /** Fires a shot randomly. */
   Thing[] shoot() {
@@ -19,12 +19,12 @@ class JamesMovement extends MovementStyle {
   const int RADIUS2 = 200;
   const int SPEED = 2;
 
-  JamesMovement(Thing t, int y, boolean dir) {
+  JamesMovement(t, y, dir) {
     super(t);
     VeggieCopter game = thing.getGame();
 
     // compute starting position
-    int xpos, ypos;
+    xpos, ypos;
     int w = game.getWindowWidth(), h = game.getWindowHeight();
 
     if (dir) {
@@ -64,7 +64,7 @@ class JamesMovement extends MovementStyle {
 
 class JamesEnemy extends EnemyHead {
 
-  JamesEnemy(VeggieCopter game, String[] args) {
+  JamesEnemy(game, String[] args) {
     // CTR TODO parse args and initialize James with proper parameters
     super(game, 25,
       game.loadImage("james1.png"),
@@ -82,7 +82,7 @@ class JamesEnemy extends EnemyHead {
     boolean dir = false;
     if (args.length >= 1) {
       try { y = Integer.parseInt(args[0]); }
-      catch (NumberFormatException exc) { y = 0; }
+      catch (exc) { y = 0; }
     }
     if (args.length >= 2) dir = args[1].equals("true");
 
@@ -96,7 +96,7 @@ class JamesEnemy extends EnemyHead {
 
 class JamesBoss extends BossHead {
 
-  JamesBoss(VeggieCopter game, String[] args) {
+  JamesBoss(game, String[] args) {
     // CTR TODO parse args and initialize James with proper parameters
     super(game, 250,
       game.loadImage("james-boss1.png"),
@@ -114,7 +114,7 @@ class JamesBoss extends BossHead {
     boolean dir = false;
     if (args.length >= 1) {
       try { y = Integer.parseInt(args[0]); }
-      catch (NumberFormatException exc) { y = 0; }
+      catch (exc) { y = 0; }
     }
     if (args.length >= 2) dir = args[1].equals("true");
 

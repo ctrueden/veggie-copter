@@ -1,5 +1,5 @@
 class BoxEditor extends JFrame
-  implements KeyListener, MouseListener, MouseMotionListener, WindowListener {
+  KeyListener, MouseListener, MouseMotionListener, WindowListener {
 
   const Color[] COLORS = {
     Color.red, Color.blue, Color.green, Color.cyan,
@@ -64,7 +64,7 @@ class BoxEditor extends JFrame
       System.out.println("Loading " + boxName);
       BufferedReader in = null;
       try { in = new BufferedReader(new FileReader(boxName)); }
-      catch (IOException exc) { continue; }
+      catch (exc) { continue; }
       while (true) {
         String line = in.readLine();
         if (line == null) break;
@@ -105,7 +105,7 @@ class BoxEditor extends JFrame
     }
   }
 
-  paint(Graphics g) {
+  paint(g) {
     Dimension size = getSize();
     BoundedImage bi = (BoundedImage) images.elementAt(ndx);
     int w = bi.getWidth();
@@ -121,7 +121,7 @@ class BoxEditor extends JFrame
     }
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     switch (code) {
       case KeyEvent.VK_UP:
@@ -151,9 +151,9 @@ class BoxEditor extends JFrame
     }
     repaint();
   }
-  keyReleased(KeyEvent e) { }
+  keyReleased(e) { }
 
-  mousePressed(MouseEvent e) {
+  mousePressed(e) {
     Dimension size = getSize();
     BoundedImage bi = (BoundedImage) images.elementAt(ndx);
     int w = bi.getWidth();
@@ -168,14 +168,14 @@ class BoxEditor extends JFrame
     bi.addBox(bb);
     repaint();
   }
-  mouseReleased(MouseEvent e) {
+  mouseReleased(e) {
     bb = null;
   }
-  mouseClicked(MouseEvent e) { }
-  mouseEntered(MouseEvent e) { }
-  mouseExited(MouseEvent e) { }
+  mouseClicked(e) { }
+  mouseEntered(e) { }
+  mouseExited(e) { }
 
-  mouseDragged(MouseEvent e) {
+  mouseDragged(e) {
     if (bb != null) {
       Dimension size = getSize();
       BoundedImage bi = (BoundedImage) images.elementAt(ndx);
@@ -192,19 +192,19 @@ class BoxEditor extends JFrame
       repaint();
     }
   }
-  mouseMoved(MouseEvent e) { }
+  mouseMoved(e) { }
 
-  windowClosed(WindowEvent e) { }
-  windowClosing(WindowEvent e) {
+  windowClosed(e) { }
+  windowClosing(e) {
     try { save(); }
-    catch (IOException exc) { exc.printStackTrace(); }
+    catch (exc) { exc.printStackTrace(); }
     System.exit(0);
   }
-  windowActivated(WindowEvent e) { }
-  windowDeactivated(WindowEvent e) { }
-  windowDeiconified(WindowEvent e) { }
-  windowIconified(WindowEvent e) { }
-  windowOpened(WindowEvent e) { }
+  windowActivated(e) { }
+  windowDeactivated(e) { }
+  windowDeiconified(e) { }
+  windowIconified(e) { }
+  windowOpened(e) { }
 
   static main(String[] args) throws Exception { new BoxEditor(); }
 

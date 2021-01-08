@@ -7,7 +7,7 @@ class ChargeAttack extends ColoredAttack {
   boolean space;
   int ticks;
 
-  ChargeAttack(Thing t) {
+  ChargeAttack(t) {
     super(t, Color.white, t.getGame().loadImage("icon-charge.png").getImage());
   }
 
@@ -40,12 +40,12 @@ class ChargeAttack extends ColoredAttack {
     return null;
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  keyReleased(KeyEvent e) {
+  keyReleased(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) clear();
   }

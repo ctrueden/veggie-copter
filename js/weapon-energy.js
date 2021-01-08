@@ -1,10 +1,10 @@
 /** Defines veggie copter energy field attack style. */
 class EnergyAttack extends ColoredAttack {
 
-  boolean space, fired;
+  space, fired;
   CopterEnergy energy;
 
-  EnergyAttack(Thing t) {
+  EnergyAttack(t) {
     super(t, Color.orange,
       t.getGame().loadImage("icon-energy.png").getImage());
   }
@@ -46,17 +46,17 @@ class EnergyAttack extends ColoredAttack {
     return new Thing[] {energy};
   }
 
-  setPower(int power) {
+  setPower(power) {
     super.setPower(power);
     if (energy != null) energy.setPower(power);
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  keyReleased(KeyEvent e) {
+  keyReleased(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) clear();
   }

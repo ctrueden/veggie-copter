@@ -1,6 +1,6 @@
 class TestBoss extends BossHead {
 
-  TestBoss(VeggieCopter game, String[] args) {
+  TestBoss(game, String[] args) {
     super(game, 1000,
       game.loadImage("test-boss2.png"),
       game.loadImage("test-boss2.png"),
@@ -21,11 +21,11 @@ class TestBoss extends BossHead {
     int x = 0, y = 0;
     if (args.length >= 1) {
       try { x = Integer.parseInt(args[0]); }
-      catch (NumberFormatException exc) { x = 0; }
+      catch (exc) { x = 0; }
     }
     if (args.length >= 2) {
       try { y = Integer.parseInt(args[1]); }
-      catch (NumberFormatException exc) { y = 0; }
+      catch (exc) { y = 0; }
     }
 
     setMovement(new TestMovement(this, x, y));
@@ -37,14 +37,14 @@ class TestBoss extends BossHead {
   }
 
   /** Draws the object onscreen. */
-  draw(Graphics g) {
+  draw(g) {
     super.draw(g);
     g.setColor(Color.yellow);
     g.drawString("" + hp, (int) getCX() - 15, (int) getCY() + 20);
   }
 
   /** Hits this object for the given amount of damage. */
-  hit(int damage) {
+  hit(damage) {
     if (damage > 0) ((TestMovement) move).startTimer();
     super.hit(damage);
   }

@@ -10,7 +10,7 @@ class ShieldMovement extends MovementStyle {
   int radius;
   boolean extended;
 
-  ShieldMovement(Thing t, Thing owner, float angle) {
+  ShieldMovement(t, owner, angle) {
     super(t);
     this.owner = owner;
     this.angle = angle;
@@ -20,7 +20,7 @@ class ShieldMovement extends MovementStyle {
     thing.setCPos(xpos, ypos);
   }
 
-  setExtended(boolean extended) { this.extended = extended; }
+  setExtended(extended) { this.extended = extended; }
 
   /** Moves the given thing according to the bullet movement style. */
   move() {
@@ -45,7 +45,7 @@ class CopterShield extends Thing {
   static BoundedImage[] images;
   static int count = 0;
 
-  CopterShield(Thing thing, float angle) {
+  CopterShield(thing, angle) {
     super(thing.getGame());
     type = GOOD;
     move = new ShieldMovement(this, thing, angle);
@@ -62,12 +62,12 @@ class CopterShield extends Thing {
     count++;
   }
 
-  setExtended(boolean extended) {
+  setExtended(extended) {
     ((ShieldMovement) move).setExtended(extended);
   }
 
   /** Shields cannot be destroyed. */
-  hit(int damage) { }
+  hit(damage) { }
 
 }
 
@@ -79,11 +79,11 @@ class ShieldAttack extends ColoredAttack {
   CopterShield[] shields;
   boolean extended;
 
-  ShieldAttack(Thing t) {
+  ShieldAttack(t) {
     super(t, PURPLE, t.getGame().loadImage("icon-shield.png").getImage());
   }
 
-  setExtended(boolean extended) {
+  setExtended(extended) {
     this.extended = extended;
     if (shields != null) {
       for (int i=0; i<shields.length; i++) shields[i].setExtended(extended);
@@ -114,7 +114,7 @@ class ShieldAttack extends ColoredAttack {
     return null;
   }
 
-  setPower(int power) {
+  setPower(power) {
     super.setPower(power);
     if (shields != null) {
       for (int i=0; i<shields.length; i++) shields[i].setHP(0);
@@ -122,12 +122,12 @@ class ShieldAttack extends ColoredAttack {
     activate();
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) setExtended(true);
   }
 
-  keyReleased(KeyEvent e) {
+  keyReleased(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) setExtended(false);
   }

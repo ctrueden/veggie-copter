@@ -13,14 +13,14 @@ class Stage {
   VeggieCopter game;
   String name;
   ScriptingEngine script;
-  Image image, icon;
-  int imageWidth, imageHeight, iconWidth, iconHeight;
+  image, icon;
+  imageWidth, imageHeight, iconWidth, iconHeight;
   String[] description;
   boolean completed;
 
   /** Constructs a playable stage. */
-  Stage(VeggieCopter game, String name,
-    String prefix, String[] description)
+  Stage(game, name,
+    prefix, String[] description)
   {
     this.game = game;
     this.name = name;
@@ -35,7 +35,7 @@ class Stage {
   }
 
   /** Draws a descriptive screen for use during stage select. */
-  drawSelectScreen(Graphics g) {
+  drawSelectScreen(g) {
     Font origFont = g.getFont();
     Color origColor = g.getColor();
 
@@ -62,7 +62,7 @@ class Stage {
   }
 
   /** Draws the icon for this stage at the given position. */
-  drawIcon(Graphics g, int x, int y, boolean selected) {
+  drawIcon(g, x, y, selected) {
     drawOutlinedRect(g, completed ? Color.gray :
       (selected ? Color.red : DARK_RED), x, y, ICON_SIZE, ICON_SIZE);
     int cx = x + 2 + (ICON_SIZE - 2 - iconWidth) / 2;
@@ -84,13 +84,13 @@ class Stage {
   resetScript() { script.reset(); }
 
   /** Marks whether this stage has been completed. */
-  setCompleted(boolean completed) { this.completed = completed; }
+  setCompleted(completed) { this.completed = completed; }
 
   /** Gets whether this stage has been completed. */
   boolean isCompleted() { return completed; }
 
-  private drawOutlinedRect(Graphics g, Color color,
-    int x, int y, int width, int height)
+  private drawOutlinedRect(g, color,
+    x, y, width, height)
   {
     Color origColor = g.getColor();
     g.setColor(Color.white);

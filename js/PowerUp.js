@@ -6,8 +6,8 @@ class PowerUp extends Thing {
   ColoredAttack att;
 
   /** Constructs a power-up object. */
-  PowerUp(VeggieCopter game,
-    float cx, float cy, int size, ColoredAttack attack)
+  PowerUp(game,
+    cx, cy, size, attack)
   {
     super(game);
     type = POWER_UP;

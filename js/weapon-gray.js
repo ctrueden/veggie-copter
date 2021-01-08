@@ -3,7 +3,7 @@ class GrayAttack extends ColoredAttack {
 
   boolean space;
 
-  GrayAttack(Thing t) {
+  GrayAttack(t) {
     super(t, Color.lightGray,
       t.getGame().loadImage("icon-gray.png").getImage());
   }
@@ -16,12 +16,12 @@ class GrayAttack extends ColoredAttack {
     return null;
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  keyReleased(KeyEvent e) {
+  keyReleased(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }

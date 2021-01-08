@@ -14,8 +14,8 @@ class ImageTools {
    * Creates an image using the given graphics configuration.
    * If gc is null, the default configuration is used.
    */
-  static BufferedImage makeImage(int width, int height,
-    int transparency, GraphicsConfiguration gc)
+  static BufferedImage makeImage(width, height,
+    transparency, gc)
   {
     if (HARDWARE_ACCEL) {
       if (gc == null) gc = getDefaultConfiguration();
@@ -25,7 +25,7 @@ class ImageTools {
   }
 
   /** Creates an image with transparency. */
-  static BufferedImage makeImage(int width, int height) {
+  static BufferedImage makeImage(width, height) {
     return makeImage(width, height, Transparency.TRANSLUCENT, null);
   }
 
@@ -33,8 +33,8 @@ class ImageTools {
    * Creates a copy of the given buffered image that is
    * optimized for the given graphics configuration.
    */
-  static BufferedImage makeCompatible(Image image,
-    GraphicsConfiguration gc)
+  static BufferedImage makeCompatible(image,
+    gc)
   {
     if (!HARDWARE_ACCEL && image instanceof BufferedImage) {
       return (BufferedImage) image;

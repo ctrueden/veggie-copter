@@ -8,7 +8,7 @@ class CopterMovement extends MovementStyle {
   boolean up = false;
   boolean down = false;
 
-  CopterMovement(Thing t) {
+  CopterMovement(t) {
     super(t);
     reset();
   }
@@ -35,7 +35,7 @@ class CopterMovement extends MovementStyle {
     this.thing.setPos(xpos, ypos);
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     if (code == KeyEvent.VK_LEFT ||
       code == KeyEvent.VK_KP_LEFT) left = true;
@@ -47,7 +47,7 @@ class CopterMovement extends MovementStyle {
       code == KeyEvent.VK_KP_DOWN) down = true;
   }
 
-  keyReleased(KeyEvent e) {
+  keyReleased(e) {
     int code = e.getKeyCode();
     if (code == KeyEvent.VK_LEFT ||
       code == KeyEvent.VK_KP_LEFT) left = false;
@@ -67,7 +67,7 @@ class CopterAttack extends AttackStyle {
   Vector attacks = new Vector();
   int current = 0;
 
-  constructor(Thing t) { super(t); }
+  constructor(t) { super(t); }
 
   /** Gets current attack style. */
   getAttackStyle() {
@@ -83,7 +83,7 @@ class CopterAttack extends AttackStyle {
   }
 
   /** Adds an attack style to the list of choices. */
-  addAttackStyle(ColoredAttack attack) {
+  addAttackStyle(attack) {
     // check whether copter already has this type of attack
     Class c = attack.getClass();
     int size = attacks.size();
@@ -94,7 +94,7 @@ class CopterAttack extends AttackStyle {
   }
 
   /** Sets attack style to the given list index. */
-  setAttackStyle(int index) {
+  setAttackStyle(index) {
     if (index < -1 || index >= attacks.size()) return;
     ColoredAttack attack = getAttackStyle();
     if (attack == null) { // all attack styles
@@ -115,7 +115,7 @@ class CopterAttack extends AttackStyle {
 
   reactivateAttackStyle() { setAttackStyle(current); }
 
-  drawWeaponStatus(Graphics g, int x, int y) {
+  drawWeaponStatus(g, x, y) {
     int size = attacks.size();
     for (int i=0; i<size; i++) {
       ColoredAttack attack = (ColoredAttack) attacks.elementAt(i);
@@ -156,7 +156,7 @@ class CopterAttack extends AttackStyle {
     return attack.trigger();
   }
 
-  setPower(int power) {
+  setPower(power) {
     ColoredAttack attack = getAttackStyle();
     if (attack == null) { // all attack styles
       Vector v = new Vector();
@@ -175,7 +175,7 @@ class CopterAttack extends AttackStyle {
     return attack.getPower();
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     int size = attacks.size();
     if (code == Keys.ATTACK_STYLE_CYCLE) setAttackStyle((current + 1) % size);
@@ -204,7 +204,7 @@ class CopterAttack extends AttackStyle {
     }
   }
 
-  keyReleased(KeyEvent e) {
+  keyReleased(e) {
     ColoredAttack attack = getAttackStyle();
     if (attack == null) { // all attack styles
       for (int i=0; i<attacks.size(); i++) {

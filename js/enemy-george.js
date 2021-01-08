@@ -16,7 +16,7 @@ class GeorgeAttack extends AttackStyle {
   /** Frames to wait until adding another bullet (frantic mode only). */
   int waitTicks = FRANTIC_RATE;
 
-  GeorgeAttack(Thing t) { super(t); }
+  GeorgeAttack(t) { super(t); }
 
   /** Fires a shot according to George's attack pattern. */
   Thing[] shoot() {
@@ -67,7 +67,7 @@ class GeorgeMovement extends MovementStyle {
   boolean dir;
   boolean turning;
 
-  GeorgeMovement(Thing t) {
+  GeorgeMovement(t) {
     super(t);
     VeggieCopter game = thing.getGame();
     int w = game.getWindowWidth();
@@ -133,7 +133,7 @@ class GeorgeMovement extends MovementStyle {
 
 class GeorgeEnemy extends EnemyHead {
 
-  GeorgeEnemy(VeggieCopter game, String[] args) {
+  GeorgeEnemy(game, String[] args) {
     // CTR TODO parse args and initialize George with proper parameters
     super(game, 80 + (int) (Math.random() * 20),
       game.loadImage("george1.png"),
@@ -163,7 +163,7 @@ class GeorgeEnemy extends EnemyHead {
 
 class GeorgeBoss extends BossHead {
 
-  GeorgeBoss(VeggieCopter game, String[] args) {
+  GeorgeBoss(game, String[] args) {
     // CTR TODO parse args and initialize George with proper parameters
     super(game, 800 + (int) (Math.random() * 200),
       game.loadImage("george-boss1.png"),

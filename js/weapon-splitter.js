@@ -1,8 +1,8 @@
 class SplitterMovement extends MovementStyle {
 
-  int xdir, ydir;
+  xdir, ydir;
 
-  SplitterMovement(Thing t, float x, float y, int xdir, int ydir) {
+  SplitterMovement(t, x, y, xdir, ydir) {
     super(t);
     thing.setPos(x, y);
     this.xdir = xdir;
@@ -36,8 +36,8 @@ class CopterSplitter extends Thing {
     }
   }
 
-  CopterSplitter(VeggieCopter game, float x, float y,
-    int xdir, int ydir, int count, int size)
+  CopterSplitter(game, x, y,
+    xdir, ydir, count, size)
   {
     super(game);
     type = GOOD_BULLET;
@@ -50,7 +50,7 @@ class CopterSplitter extends Thing {
   }
 
   /** Assigns object's power. */
-  setPower(int power) {
+  setPower(power) {
     super.setPower(power);
     attack.setPower(power);
   }
@@ -65,14 +65,14 @@ class SplitterAttack extends ColoredAttack {
   const int SPEED = 5;
   const int MULTIPLIER = 4;
 
-  boolean space, trigger;
+  space, trigger;
   int fired;
-  int xdir, ydir;
+  xdir, ydir;
   int count;
 
-  SplitterAttack(Thing t) { this(t, 0, 0, 0); }
+  SplitterAttack(t) { this(t, 0, 0, 0); }
 
-  SplitterAttack(Thing t, int xdir, int ydir, int count) {
+  SplitterAttack(t, xdir, ydir, count) {
     super(t, Color.yellow, t.getGame().loadImage("icon-split.png").getImage());
     if (xdir == 0 && ydir == 0) {
       this.xdir = SPEED;
@@ -130,13 +130,13 @@ class SplitterAttack extends ColoredAttack {
     return cs;
   }
 
-  keyPressed(KeyEvent e) {
+  keyPressed(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
     else if (code == Keys.TRIGGER) trigger = true;
   }
 
-  keyReleased(KeyEvent e) {
+  keyReleased(e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
     else if (code == Keys.TRIGGER) trigger = false;

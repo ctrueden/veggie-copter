@@ -20,7 +20,7 @@ class EnemyMovement extends MovementStyle {
    *   spiral: TODO
    *   wave: TODO
    */
-  EnemyMovement(Thing t, String[] params) {
+  EnemyMovement(t, String[] params) {
     super(t);
 
     // determine movement style
@@ -89,7 +89,7 @@ class EnemyBullet extends Thing {
     image.addBox(new BoundingBox());
   }
 
-  EnemyBullet(Thing t) {
+  EnemyBullet(t) {
     super(t.getGame());
     type = EVIL_BULLET;
     setImage(image);
@@ -101,7 +101,7 @@ class EnemyBullet extends Thing {
     //attack = new RandomBulletAttack(this); // MWAHAHA!
   }
 
-  EnemyBullet(Thing t, int x2, int y2) {
+  EnemyBullet(t, x2, y2) {
     super(t.getGame());
     type = EVIL_BULLET;
     setImage(image);
@@ -121,7 +121,7 @@ class RandomBulletAttack extends AttackStyle {
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
   const int FREQUENCY = 3;
 
-  RandomBulletAttack(Thing t) { super(t); }
+  RandomBulletAttack(t) { super(t); }
 
   /** Fires a shot randomly. */
   Thing[] shoot() {
@@ -141,8 +141,8 @@ class EnemyHead extends Thing {
 
   int shooting;
 
-  EnemyHead(VeggieCopter game, int max,
-    BoundedImage normal, BoundedImage attacking, BoundedImage hurting)
+  EnemyHead(game, max,
+    normal, attacking, hurting)
   {
     super(game);
     setImageList(new BoundedImage[] {normal, attacking, hurting});
@@ -182,9 +182,9 @@ class Enemy extends EnemyHead {
    * Constructs a new enemy head.
    * args[0] = number of hit points
    * args[1] = name of graphic to use
-   * args[2+] = movement parameters (see EnemyMovement)
+   * args[2+] = movement parameters (EnemyMovement)
    */
-  Enemy(VeggieCopter game, String[] args) {
+  Enemy(game, String[] args) {
     super(game, Integer.parseInt(args[0]),
       game.loadImage(args[1] + "1.png"),
       game.loadImage(args[1] + "2.png"),
@@ -208,8 +208,8 @@ class Enemy extends EnemyHead {
 
 class BossHead extends EnemyHead {
 
-  BossHead(VeggieCopter game, int max,
-    BoundedImage normal, BoundedImage attacking, BoundedImage hurting)
+  BossHead(game, max,
+    normal, attacking, hurting)
   {
     super(game, max, normal, attacking, hurting);
   }

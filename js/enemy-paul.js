@@ -16,7 +16,7 @@ class PaulAttack extends AttackStyle {
   /** Frames to wait until adding another bullet (frantic mode only). */
   int waitTicks = FRANTIC_RATE;
 
-  PaulAttack(Thing t) { super(t); }
+  PaulAttack(t) { super(t); }
 
   /** Fires a shot according to Paul's attack pattern. */
   Thing[] shoot() {
@@ -67,7 +67,7 @@ class PaulMovement extends MovementStyle {
   boolean dir;
   boolean turning;
 
-  PaulMovement(Thing t) {
+  PaulMovement(t) {
     super(t);
     VeggieCopter game = thing.getGame();
     int w = game.getWindowWidth();
@@ -133,7 +133,7 @@ class PaulMovement extends MovementStyle {
 
 class PaulEnemy extends EnemyHead {
 
-  PaulEnemy(VeggieCopter game, String[] args) {
+  PaulEnemy(game, String[] args) {
     // CTR TODO parse args and initialize Paul with proper parameters
     super(game, 80 + (int) (Math.random() * 20),
       game.loadImage("paul1.png"),
@@ -165,7 +165,7 @@ class PaulEnemy extends EnemyHead {
 
 class PaulBoss extends BossHead {
 
-  PaulBoss(VeggieCopter game, String[] args) {
+  PaulBoss(game, String[] args) {
     // CTR TODO parse args and initialize Paul with proper parameters
     super(game, 800 + (int) (Math.random() * 200),
       game.loadImage("paul-boss1.png"),

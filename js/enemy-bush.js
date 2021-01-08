@@ -10,7 +10,7 @@ class BushMovement extends MovementStyle {
   boolean dir;
   boolean turning;
 
-  BushMovement(Thing t) {
+  BushMovement(t) {
     super(t);
     VeggieCopter game = thing.getGame();
     int w = game.getWindowWidth();
@@ -80,7 +80,7 @@ class BushAttack extends AttackStyle {
   /** Frames to wait until adding another bullet (frantic mode only). */
   int waitTicks = FRANTIC_RATE;
 
-  BushAttack(Thing t) { super(t); }
+  BushAttack(t) { super(t); }
 
   /** Fires a shot according to Bush's attack pattern. */
   Thing[] shoot() {
@@ -121,7 +121,7 @@ class BushAttack extends AttackStyle {
 
 class BushEnemy extends EnemyHead {
 
-  BushEnemy(VeggieCopter game, String[] args) {
+  BushEnemy(game, String[] args) {
     // CTR TODO parse args and initialize Bush with proper parameters
     super(game, 80 + (int) (Math.random() * 20),
       game.loadImage("bush1.png"),

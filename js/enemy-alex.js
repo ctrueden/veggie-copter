@@ -4,7 +4,7 @@ class AlexAttack extends AttackStyle {
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
   const int FREQUENCY = 1;
 
-  AlexAttack(Thing t) { super(t); }
+  AlexAttack(t) { super(t); }
 
   /** Fires a shot randomly. */
   Thing[] shoot() {
@@ -22,20 +22,20 @@ class AlexMovement extends MovementStyle {
   const int SPEED = 2;
   const int LUNGE_RATE = 300;
 
-  float xstart, ystart;
-  float xlen, ylen;
-  int xinc, yinc;
-  boolean xdir, ydir;
+  xstart, ystart;
+  xlen, ylen;
+  xinc, yinc;
+  xdir, ydir;
   long ticks;
-  boolean needsToRun, running, lunging;
-  float lastX, lastY;
+  needsToRun, running, lunging;
+  lastX, lastY;
 
-  AlexMovement(Thing t) {
+  AlexMovement(t) {
     super(t);
     VeggieCopter game = thing.getGame();
 
     // compute starting position
-    int xpos, ypos;
+    xpos, ypos;
     int w = game.getWindowWidth(), h = game.getWindowHeight();
 
     double r = Math.random();
@@ -157,7 +157,7 @@ class AlexMovement extends MovementStyle {
   }
 
   /** Converts linear movement into curved movement with a sine function. */
-  double smooth(double p) {
+  double smooth(p) {
     p = Math.PI * (p - 0.5); // [0, 1] -> [-PI/2, PI/2]
     p = Math.sin(p); // [-PI/2, PI/2] -> [-1, 1] smooth sine
     p = (p + 1) / 2; // [-1, 1] -> [0, 1]
@@ -168,7 +168,7 @@ class AlexMovement extends MovementStyle {
 
 class AlexEnemy extends EnemyHead {
 
-  AlexEnemy(VeggieCopter game, String[] args) {
+  AlexEnemy(game, String[] args) {
     // CTR TODO parse args and initialize Alex with proper parameters
     super(game, 25,
       game.loadImage("alex1.png"),
@@ -207,7 +207,7 @@ class AlexEnemy extends EnemyHead {
 
 class AlexBoss extends BossHead {
 
-  AlexBoss(VeggieCopter game, String[] args) {
+  AlexBoss(game, String[] args) {
     // CTR TODO parse args and initialize Alex with proper parameters
     super(game, 250,
       game.loadImage("alex-boss1.png"),
