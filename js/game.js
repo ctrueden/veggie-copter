@@ -11,7 +11,8 @@ class Game {
 
   constructor(canvas) {
     // Start the music.
-    //SoundPlayer.playMidi(getClass().getResource("metblast.mid"), true);
+    this.player = new SoundPlayer();
+    this.player.playMusic("../assets/metblast.mid");
 
     this.offscreen = canvas;                              // Offscreen canvas.
     this.buf = canvas.getContext('2d');                   // Offscreen canvas context.
