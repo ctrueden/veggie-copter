@@ -23,9 +23,9 @@ class EnemyMovement extends MovementStyle {
     super(t);
 
     // determine movement style
-    if (params[0].equalsIgnoreCase("zigzag")) style = ZIGZAG;
-    else if (params[0].equalsIgnoreCase("spiral")) style = SPIRAL;
-    else if (params[0].equalsIgnoreCase("wave")) style = WAVE;
+    if (equalsIgnoreCase(params[0], "zigzag")) style = ZIGZAG;
+    else if (equalsIgnoreCase(params[0], "spiral")) style = SPIRAL;
+    else if (equalsIgnoreCase(params[0], "wave")) style = WAVE;
 
     // set starting position
     var xpos = Float.parseFloat(params[1]);

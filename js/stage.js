@@ -13,7 +13,7 @@ class Stage {
   constructor(game, name, prefix, description) {
     this.game = game;
     this.name = name;
-    this.script = new ScriptingEngine(game, prefix + ".txt");
+    this.script = new GameScript(game, prefix + ".txt");
     this.image = game.loadImage(prefix + "-boss2.png").getImage();
     this.imageWidth = this.image.getWidth(game);
     this.imageHeight = this.image.getHeight(game);
