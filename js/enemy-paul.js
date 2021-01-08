@@ -1,25 +1,25 @@
 /** Defines Paul's attack style. */
-public class PaulAttack extends AttackStyle {
+class PaulAttack extends AttackStyle {
 
   /** Number of bullets to fire per spread. */
-  protected static final int BULLETS = 5;
+  const int BULLETS = 5;
 
   /** Spread factor for controlling bullet spread width. */
-  protected static final int SPREAD = 24;
+  const int SPREAD = 24;
 
   /** Number of frames to wait between firing bullets in frantic mode. */
-  protected static final int FRANTIC_RATE = 5;
+  const int FRANTIC_RATE = 5;
 
   /** List of bullets left to fire. */
-  protected Vector toFire = new Vector();
+  Vector toFire = new Vector();
 
   /** Frames to wait until adding another bullet (frantic mode only). */
-  protected int waitTicks = FRANTIC_RATE;
+  int waitTicks = FRANTIC_RATE;
 
-  public PaulAttack(Thing t) { super(t); }
+  PaulAttack(Thing t) { super(t); }
 
   /** Fires a shot according to Paul's attack pattern. */
-  public Thing[] shoot() {
+  Thing[] shoot() {
     PaulMovement pm = (PaulMovement) thing.getMovement();
 
     if (pm.isFrantic()) {
@@ -55,19 +55,19 @@ public class PaulAttack extends AttackStyle {
 
 }
 
-public class PaulMovement extends MovementStyle {
+class PaulMovement extends MovementStyle {
 
   /** Movement speed per frame. */
-  protected static final int SPEED = 1;
+  const int SPEED = 1;
 
   /** Number of HP considered low enough to enter frantic mode. */
-  protected static final int LOW_HP = 30;
+  const int LOW_HP = 30;
 
-  protected float target;
-  protected boolean dir;
-  protected boolean turning;
+  float target;
+  boolean dir;
+  boolean turning;
 
-  public PaulMovement(Thing t) {
+  PaulMovement(Thing t) {
     super(t);
     VeggieCopter game = thing.getGame();
     int w = game.getWindowWidth();
@@ -81,15 +81,15 @@ public class PaulMovement extends MovementStyle {
   }
 
   /** Gets whether thing is currently changing directions. */
-  public boolean isTurning() { return turning; }
+  boolean isTurning() { return turning; }
 
-  public boolean isFrantic() { return thing.getHP() <= LOW_HP; }
+  boolean isFrantic() { return thing.getHP() <= LOW_HP; }
 
   /** Gets movement direction of this thing. */
-  public boolean getDirection() { return dir; }
+  boolean getDirection() { return dir; }
 
   /** Moves the given thing according to the Paul movement style. */
-  public void move() {
+  move() {
     if (isFrantic()) return;
 
     float cx = thing.getCX(), cy = thing.getCY();
@@ -122,7 +122,7 @@ public class PaulMovement extends MovementStyle {
   }
 
   /** Switches between horizontal and vertical movement modes. */
-  protected void doSwitch() {
+  doSwitch() {
     Copter hero = thing.getGame().getCopter();
     dir = !dir;
     target = dir ? hero.getCY() : hero.getCX();
@@ -131,9 +131,9 @@ public class PaulMovement extends MovementStyle {
 
 }
 
-public class PaulEnemy extends EnemyHead {
+class PaulEnemy extends EnemyHead {
 
-  public PaulEnemy(VeggieCopter game, String[] args) {
+  PaulEnemy(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize Paul with proper parameters
     super(game, 80 + (int) (Math.random() * 20),
       game.loadImage("paul1.png"),
@@ -152,9 +152,9 @@ public class PaulEnemy extends EnemyHead {
     setAttack(new PaulAttack(this));
   }
 
-  public int getScore() { return 5 * super.getScore(); }
+  int getScore() { return 5 * super.getScore(); }
 
-  public void move() {
+  move() {
     super.move();
 
     // regen
@@ -163,9 +163,9 @@ public class PaulEnemy extends EnemyHead {
 
 }
 
-public class PaulBoss extends BossHead {
+class PaulBoss extends BossHead {
 
-  public PaulBoss(VeggieCopter game, String[] args) {
+  PaulBoss(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize Paul with proper parameters
     super(game, 800 + (int) (Math.random() * 200),
       game.loadImage("paul-boss1.png"),
@@ -183,13 +183,13 @@ public class PaulBoss extends BossHead {
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */
-  public ColoredAttack getColoredAttack() {
+  ColoredAttack getColoredAttack() {
     return new SpreadAttack(game.getCopter());
   }
 
-  public int getScore() { return 50 * super.getScore(); }
+  int getScore() { return 50 * super.getScore(); }
 
-  public void move() {
+  move() {
     super.move();
 
     // regen

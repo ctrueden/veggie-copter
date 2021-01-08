@@ -1,10 +1,10 @@
-public class ImageTools {
+class ImageTools {
 
-  public static final boolean HARDWARE_ACCEL = true;
-  public static final Container OBS = new Container();
+  const boolean HARDWARE_ACCEL = true;
+  const Container OBS = new Container();
 
   /** Gets the default graphics configuration for the environment. */
-  public static GraphicsConfiguration getDefaultConfiguration() {
+  static GraphicsConfiguration getDefaultConfiguration() {
     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
     GraphicsDevice gd = ge.getDefaultScreenDevice();
     return gd.getDefaultConfiguration();
@@ -14,7 +14,7 @@ public class ImageTools {
    * Creates an image using the given graphics configuration.
    * If gc is null, the default configuration is used.
    */
-  public static BufferedImage makeImage(int width, int height,
+  static BufferedImage makeImage(int width, int height,
     int transparency, GraphicsConfiguration gc)
   {
     if (HARDWARE_ACCEL) {
@@ -25,7 +25,7 @@ public class ImageTools {
   }
 
   /** Creates an image with transparency. */
-  public static BufferedImage makeImage(int width, int height) {
+  static BufferedImage makeImage(int width, int height) {
     return makeImage(width, height, Transparency.TRANSLUCENT, null);
   }
 
@@ -33,7 +33,7 @@ public class ImageTools {
    * Creates a copy of the given buffered image that is
    * optimized for the given graphics configuration.
    */
-  public static BufferedImage makeCompatible(Image image,
+  static BufferedImage makeCompatible(Image image,
     GraphicsConfiguration gc)
   {
     if (!HARDWARE_ACCEL && image instanceof BufferedImage) {

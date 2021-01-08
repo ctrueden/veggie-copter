@@ -1,8 +1,8 @@
-public class CopterSpread extends Thing {
+class CopterSpread extends Thing {
 
-  protected static final double SPREAD_SPEED = 10;
+  const double SPREAD_SPEED = 10;
 
-  protected static BoundedImage image;
+  static BoundedImage image;
 
   static {
     int size = 9;
@@ -15,7 +15,7 @@ public class CopterSpread extends Thing {
     image.addBox(new BoundingBox());
   }
 
-  public CopterSpread(Thing thing, double angle) {
+  CopterSpread(Thing thing, double angle) {
     super(thing.getGame());
     type = GOOD_BULLET;
     setImage(image);
@@ -28,22 +28,22 @@ public class CopterSpread extends Thing {
 }
 
 /** Defines veggie copter spread attack. */
-public class SpreadAttack extends ColoredAttack {
+class SpreadAttack extends ColoredAttack {
 
-  protected static final int RECHARGE = 10;
-  protected static final int POWER = 3;
+  const int RECHARGE = 10;
+  const int POWER = 3;
 
-  protected boolean space = false;
-  protected int fired;
+  boolean space = false;
+  int fired;
 
-  public SpreadAttack(Thing t) {
+  SpreadAttack(Thing t) {
     super(t, Color.blue, t.getGame().loadImage("icon-spread.png").getImage());
   }
 
-  public void clear() { space = false; }
+  clear() { space = false; }
 
   /** Fires a shot if space bar is pressed. */
-  public Thing[] shoot() {
+  Thing[] shoot() {
     if (fired > 0) {
       fired--;
       return null;
@@ -71,12 +71,12 @@ public class SpreadAttack extends ColoredAttack {
     return shots;
   }
 
-  public void keyPressed(KeyEvent e) {
+  keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  public void keyReleased(KeyEvent e) {
+  keyReleased(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }

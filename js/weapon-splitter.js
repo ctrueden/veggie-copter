@@ -1,8 +1,8 @@
-public class SplitterMovement extends MovementStyle {
+class SplitterMovement extends MovementStyle {
 
-  protected int xdir, ydir;
+  int xdir, ydir;
 
-  public SplitterMovement(Thing t, float x, float y, int xdir, int ydir) {
+  SplitterMovement(Thing t, float x, float y, int xdir, int ydir) {
     super(t);
     thing.setPos(x, y);
     this.xdir = xdir;
@@ -10,17 +10,17 @@ public class SplitterMovement extends MovementStyle {
   }
 
   /** Moves the given thing according to the splitter movement style. */
-  public void move() {
+  move() {
     thing.setPos(thing.getX() + xdir, thing.getY() + ydir);
   }
 
 }
 
-public class CopterSplitter extends Thing {
+class CopterSplitter extends Thing {
 
-  protected static final int MAX_SIZE = 12;
+  const int MAX_SIZE = 12;
 
-  protected static BoundedImage[] images;
+  static BoundedImage[] images;
 
   static {
     images = new BoundedImage[MAX_SIZE];
@@ -36,7 +36,7 @@ public class CopterSplitter extends Thing {
     }
   }
 
-  public CopterSplitter(VeggieCopter game, float x, float y,
+  CopterSplitter(VeggieCopter game, float x, float y,
     int xdir, int ydir, int count, int size)
   {
     super(game);
@@ -50,7 +50,7 @@ public class CopterSplitter extends Thing {
   }
 
   /** Assigns object's power. */
-  public void setPower(int power) {
+  setPower(int power) {
     super.setPower(power);
     attack.setPower(power);
   }
@@ -58,21 +58,21 @@ public class CopterSplitter extends Thing {
 }
 
 /** Defines splitter attack. */
-public class SplitterAttack extends ColoredAttack {
+class SplitterAttack extends ColoredAttack {
 
-  protected static final int RECHARGE = 10;
-  public static final int MAX_SPLIT = 6;
-  protected static final int SPEED = 5;
-  protected static final int MULTIPLIER = 4;
+  const int RECHARGE = 10;
+  const int MAX_SPLIT = 6;
+  const int SPEED = 5;
+  const int MULTIPLIER = 4;
 
-  protected boolean space, trigger;
-  protected int fired;
-  protected int xdir, ydir;
-  protected int count;
+  boolean space, trigger;
+  int fired;
+  int xdir, ydir;
+  int count;
 
-  public SplitterAttack(Thing t) { this(t, 0, 0, 0); }
+  SplitterAttack(Thing t) { this(t, 0, 0, 0); }
 
-  public SplitterAttack(Thing t, int xdir, int ydir, int count) {
+  SplitterAttack(Thing t, int xdir, int ydir, int count) {
     super(t, Color.yellow, t.getGame().loadImage("icon-split.png").getImage());
     if (xdir == 0 && ydir == 0) {
       this.xdir = SPEED;
@@ -85,10 +85,10 @@ public class SplitterAttack extends ColoredAttack {
     this.count = count;
   }
 
-  public void clear() { space = trigger = false; }
+  clear() { space = trigger = false; }
 
   /** Fires a splitter shot. */
-  public Thing[] shoot() {
+  Thing[] shoot() {
     if (fired > 0) {
       fired--;
       return null;
@@ -104,7 +104,7 @@ public class SplitterAttack extends ColoredAttack {
   }
 
   /** Splits existing splitter shots. */
-  public Thing[] trigger() {
+  Thing[] trigger() {
     if (!trigger) return null;
     if (count == 0 || power <= 2 * MULTIPLIER) return null;
     thing.setHP(0);
@@ -130,13 +130,13 @@ public class SplitterAttack extends ColoredAttack {
     return cs;
   }
 
-  public void keyPressed(KeyEvent e) {
+  keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
     else if (code == Keys.TRIGGER) trigger = true;
   }
 
-  public void keyReleased(KeyEvent e) {
+  keyReleased(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
     else if (code == Keys.TRIGGER) trigger = false;

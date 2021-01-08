@@ -1,4 +1,4 @@
-public class Message {
+class Message {
 
   private String msg;
   private int x, y;
@@ -6,7 +6,7 @@ public class Message {
   private Font font;
   private int remain;
 
-  public Message(String msg, int x, int y,
+  Message(String msg, int x, int y,
     int size, Color color, int duration)
   {
     this.msg = msg;
@@ -17,7 +17,7 @@ public class Message {
     remain = duration;
   }
 
-  public void draw(Graphics g) {
+  draw(Graphics g) {
     Font origFont = g.getFont();
     Color origColor = g.getColor();
     g.setFont(font);
@@ -27,6 +27,6 @@ public class Message {
     g.setColor(origColor);
   }
 
-  public boolean checkFinished() { return --remain <= 0; }
+  boolean checkFinished() { return --remain <= 0; }
 
 }

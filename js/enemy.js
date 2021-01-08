@@ -1,14 +1,14 @@
-public class EnemyMovement extends MovementStyle {
+class EnemyMovement extends MovementStyle {
 
-  protected static final int ZIGZAG = 1;
-  protected static final int SPIRAL = 2;
-  protected static final int WAVE = 3;
+  const int ZIGZAG = 1;
+  const int SPIRAL = 2;
+  const int WAVE = 3;
 
-  protected long ticks;
-  protected int style;
-  protected float[] params;
+  long ticks;
+  int style;
+  float[] params;
 
-  protected float xmod = 0, ymod = 1; // for zigzag
+  float xmod = 0, ymod = 1; // for zigzag
 
   /**
    * Constructs a new enemy movement handler.
@@ -20,7 +20,7 @@ public class EnemyMovement extends MovementStyle {
    *   spiral: TODO
    *   wave: TODO
    */
-  public EnemyMovement(Thing t, String[] params) {
+  EnemyMovement(Thing t, String[] params) {
     super(t);
 
     // determine movement style
@@ -44,7 +44,7 @@ public class EnemyMovement extends MovementStyle {
   }
 
   /** Moves the given thing according to the enemy type A movement style. */
-  public void move() {
+  move() {
     ticks++;
     float cx = thing.getCX(), cy = thing.getCY();
 
@@ -73,11 +73,11 @@ public class EnemyMovement extends MovementStyle {
 
 }
 
-public class EnemyBullet extends Thing {
+class EnemyBullet extends Thing {
 
-  protected static final int SIZE = 7;
+  const int SIZE = 7;
 
-  protected static BoundedImage image;
+  static BoundedImage image;
 
   static {
     BufferedImage img = ImageTools.makeImage(SIZE, SIZE);
@@ -89,7 +89,7 @@ public class EnemyBullet extends Thing {
     image.addBox(new BoundingBox());
   }
 
-  public EnemyBullet(Thing t) {
+  EnemyBullet(Thing t) {
     super(t.getGame());
     type = EVIL_BULLET;
     setImage(image);
@@ -101,7 +101,7 @@ public class EnemyBullet extends Thing {
     //attack = new RandomBulletAttack(this); // MWAHAHA!
   }
 
-  public EnemyBullet(Thing t, int x2, int y2) {
+  EnemyBullet(Thing t, int x2, int y2) {
     super(t.getGame());
     type = EVIL_BULLET;
     setImage(image);
@@ -116,32 +116,32 @@ public class EnemyBullet extends Thing {
 }
 
 /** Defines random enemy bullet attack. */
-public class RandomBulletAttack extends AttackStyle {
+class RandomBulletAttack extends AttackStyle {
 
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-  protected static final int FREQUENCY = 3;
+  const int FREQUENCY = 3;
 
-  public RandomBulletAttack(Thing t) { super(t); }
+  RandomBulletAttack(Thing t) { super(t); }
 
   /** Fires a shot randomly. */
-  public Thing[] shoot() {
+  Thing[] shoot() {
     if (Math.random() >= 1.0 / (60 - FREQUENCY)) return null;
     return new Thing[] {new EnemyBullet(thing)};
   }
 
 }
 
-public class EnemyHead extends Thing {
+class EnemyHead extends Thing {
 
-  public static final int NORMAL = 0;
-  public static final int ATTACKING = 1;
-  public static final int HURTING = 2;
+  const int NORMAL = 0;
+  const int ATTACKING = 1;
+  const int HURTING = 2;
 
-  protected static final int SHOT_DELAY = 18;
+  const int SHOT_DELAY = 18;
 
-  protected int shooting;
+  int shooting;
 
-  public EnemyHead(VeggieCopter game, int max,
+  EnemyHead(VeggieCopter game, int max,
     BoundedImage normal, BoundedImage attacking, BoundedImage hurting)
   {
     super(game);
@@ -150,16 +150,16 @@ public class EnemyHead extends Thing {
     //power = 10;
   }
 
-  public boolean isShooting() { return shooting > 0; }
+  boolean isShooting() { return shooting > 0; }
 
-  public void move() {
+  move() {
     super.move();
     if (isHit()) setImageIndex(HURTING);
     else if (isShooting()) setImageIndex(ATTACKING);
     else setImageIndex(NORMAL);
   }
 
-  public Thing[] shoot() {
+  Thing[] shoot() {
     Thing[] t = super.shoot();
     if (t != null) shooting = SHOT_DELAY;
     else if (shooting > 0) shooting--;
@@ -170,13 +170,13 @@ public class EnemyHead extends Thing {
     return t;
   }
 
-  public Thing[] getPowerUp() {
+  Thing[] getPowerUp() {
     return new Thing[] {new PowerUp(game, getCX(), getCY(), 20, null)};
   }
 
 }
 
-public class Enemy extends EnemyHead {
+class Enemy extends EnemyHead {
 
   /**
    * Constructs a new enemy head.
@@ -184,7 +184,7 @@ public class Enemy extends EnemyHead {
    * args[1] = name of graphic to use
    * args[2+] = movement parameters (see EnemyMovement)
    */
-  public Enemy(VeggieCopter game, String[] args) {
+  Enemy(VeggieCopter game, String[] args) {
     super(game, Integer.parseInt(args[0]),
       game.loadImage(args[1] + "1.png"),
       game.loadImage(args[1] + "2.png"),
@@ -202,22 +202,22 @@ public class Enemy extends EnemyHead {
     setAttack(new RandomBulletAttack(this));
   }
 
-  public Thing[] getPowerUp() { return null; }
+  Thing[] getPowerUp() { return null; }
 
 }
 
-public abstract class BossHead extends EnemyHead {
+class BossHead extends EnemyHead {
 
-  public BossHead(VeggieCopter game, int max,
+  BossHead(VeggieCopter game, int max,
     BoundedImage normal, BoundedImage attacking, BoundedImage hurting)
   {
     super(game, max, normal, attacking, hurting);
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */
-  public abstract ColoredAttack getColoredAttack();
+  ColoredAttack getColoredAttack();
 
-  public Thing[] getPowerUp() {
+  Thing[] getPowerUp() {
     return new Thing[] {
       new PowerUp(game, getCX(), getCY(), 50, getColoredAttack())
     };

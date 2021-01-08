@@ -1,14 +1,14 @@
-public class BounceMovement extends MovementStyle {
+class BounceMovement extends MovementStyle {
 
-  protected static final int X_STEPS = 40;
-  protected static final int Y_STEPS = 30;
+  const int X_STEPS = 40;
+  const int Y_STEPS = 30;
 
-  protected float xstart, ystart;
-  protected float xlen, ylen;
-  protected int xinc, yinc;
-  protected boolean xdir, ydir;
+  float xstart, ystart;
+  float xlen, ylen;
+  int xinc, yinc;
+  boolean xdir, ydir;
 
-  public BounceMovement(Thing t) {
+  BounceMovement(Thing t) {
     super(t);
     VeggieCopter game = thing.getGame();
 
@@ -52,7 +52,7 @@ public class BounceMovement extends MovementStyle {
   }
 
   /** Moves the given thing according to the bouncing movement style. */
-  public void move() {
+  move() {
     float xpos = thing.getX(), ypos = thing.getY();
 
     float xp = (float) smooth((double) xinc++ / X_STEPS);
@@ -81,7 +81,7 @@ public class BounceMovement extends MovementStyle {
   }
 
   /** Converts linear movement into curved movement with a sine function. */
-  protected double smooth(double p) {
+  double smooth(double p) {
     p = Math.PI * (p - 0.5); // [0, 1] -> [-PI/2, PI/2]
     p = Math.sin(p); // [-PI/2, PI/2] -> [-1, 1] smooth sine
     p = (p + 1) / 2; // [-1, 1] -> [0, 1]

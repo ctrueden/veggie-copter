@@ -1,20 +1,20 @@
 /** Defines veggie copter homing missile attack style. */
-public class HomingAttack extends ColoredAttack {
+class HomingAttack extends ColoredAttack {
 
-  protected static final int RECHARGE = 12;
+  const int RECHARGE = 12;
 
-  protected boolean space = false;
-  protected int fired;
+  boolean space = false;
+  int fired;
 
-  public HomingAttack(Thing t) {
+  HomingAttack(Thing t) {
     super(t, Color.magenta,
       t.getGame().loadImage("icon-homing.png").getImage());
   }
 
-  public void clear() { space = false; }
+  clear() { space = false; }
 
   /** Fires a shot if space bar is pressed. */
-  public Thing[] shoot() {
+  Thing[] shoot() {
     if (fired > 0) {
       fired--;
       return null;
@@ -29,12 +29,12 @@ public class HomingAttack extends ColoredAttack {
     return new Thing[] {homing};
   }
 
-  public void keyPressed(KeyEvent e) {
+  keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  public void keyReleased(KeyEvent e) {
+  keyReleased(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }

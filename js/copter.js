@@ -1,14 +1,14 @@
 /** Defines veggie copter movement. */
 class CopterMovement extends MovementStyle {
 
-  protected static final int SPEED = 2;
+  const int SPEED = 2;
 
-  protected boolean left = false;
-  protected boolean right = false;
-  protected boolean up = false;
-  protected boolean down = false;
+  boolean left = false;
+  boolean right = false;
+  boolean up = false;
+  boolean down = false;
 
-  public CopterMovement(Thing t) {
+  CopterMovement(Thing t) {
     super(t);
     reset();
   }
@@ -64,8 +64,8 @@ class CopterMovement extends MovementStyle {
 /** Defines veggie copter attack. */
 class CopterAttack extends AttackStyle {
 
-  protected Vector attacks = new Vector();
-  protected int current = 0;
+  Vector attacks = new Vector();
+  int current = 0;
 
   constructor(Thing t) { super(t); }
 
@@ -226,7 +226,7 @@ class CopterAttack extends AttackStyle {
 }
 
 /** Veggie copter object (the good guy!). */
-public class Copter extends Thing {
+class Copter extends Thing {
 
   /** Constructs a copter object. */
   constructor(game) {

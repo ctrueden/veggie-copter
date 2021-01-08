@@ -1,19 +1,19 @@
-public class MineBulletMovement extends MovementStyle {
+class MineBulletMovement extends MovementStyle {
 
-  protected static final float SPEED = 2.2f;
+  const float SPEED = 2.2f;
 
-  protected float xstart, ystart;
-  protected float xtraj, ytraj;
-  protected float speed;
-  protected int tick;
+  float xstart, ystart;
+  float xtraj, ytraj;
+  float speed;
+  int tick;
 
-  public MineBulletMovement(Thing t, float x, float y,
+  MineBulletMovement(Thing t, float x, float y,
     float xtarget, float ytarget)
   {
     this(t, x, y, xtarget, ytarget, SPEED);
   }
 
-  public MineBulletMovement(Thing t, float x, float y,
+  MineBulletMovement(Thing t, float x, float y,
     float xtarget, float ytarget, float speed)
   {
     super(t);
@@ -30,7 +30,7 @@ public class MineBulletMovement extends MovementStyle {
   }
 
   /** Moves the given thing according to the bullet movement style. */
-  public void move() {
+  move() {
     float xpos = xstart + tick * xtraj;
     float ypos = ystart + tick * ytraj;
     tick++;
@@ -40,18 +40,18 @@ public class MineBulletMovement extends MovementStyle {
 
 }
 
-public class MineBullet extends Thing {
+class MineBullet extends Thing {
 
   /** Size of bullet. */
-  protected static final int SIZE = 7;
+  const int SIZE = 7;
 
   /** Number of ticks until bullet disappears. */
-  protected static final int LIFE = 20;
+  const int LIFE = 20;
 
   /** Power divisor for each bullet. */
-  protected static final int POWER = 4;
+  const int POWER = 4;
 
-  protected static BoundedImage[] images;
+  static BoundedImage[] images;
 
   static {
     images = new BoundedImage[LIFE];
@@ -68,7 +68,7 @@ public class MineBullet extends Thing {
     }
   }
 
-  public MineBullet(Thing t, float angle, float sx, float sy) {
+  MineBullet(Thing t, float angle, float sx, float sy) {
     super(t.getGame());
     type = GOOD_BULLET;
     setImageList(images);
@@ -78,7 +78,7 @@ public class MineBullet extends Thing {
     move = new MineBulletMovement(this, sx, sy, tx, ty);
   }
 
-  public void setImageIndex(int index) {
+  setImageIndex(int index) {
     if (index == LIFE) setHP(0); // bullets die when they fade away
     else {
       setPower((LIFE - index) / POWER + 1);
@@ -89,19 +89,19 @@ public class MineBullet extends Thing {
 }
 
 /** Defines veggie copter gravity mine explosion behavior. */
-public class MineExplode extends AttackStyle {
+class MineExplode extends AttackStyle {
 
-  protected boolean explode;
+  boolean explode;
 
-  public MineExplode(Thing t) { super(t); }
+  MineExplode(Thing t) { super(t); }
 
   /** Causes the mine to explode. */
-  public void explode() { explode = true; }
+  explode() { explode = true; }
 
-  public Thing[] shoot() { return null; }
+  Thing[] shoot() { return null; }
 
   /** Explodes mine when trigger is pressed. */
-  public Thing[] trigger() {
+  Thing[] trigger() {
     if (!explode) return null;
 
     // explode in power+2 bullets evenly space around a circle
@@ -117,40 +117,40 @@ public class MineExplode extends AttackStyle {
     return bullets;
   }
 
-  public void keyPressed(KeyEvent e) {
+  keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.TRIGGER) explode();
   }
 
 }
 
-public class MineMovement extends MovementStyle {
+class MineMovement extends MovementStyle {
 
   /** Number of ticks to initially throw mine forward. */
-  protected static final int THROW_DURATION = 20;
+  const int THROW_DURATION = 20;
 
   /** Speed at which mine is thrown forward. */
-  protected static final int THROW_SPEED = 8;
+  const int THROW_SPEED = 8;
 
   /** Number of ticks until mine blows up automatically. */
-  protected static final int EXPLODE_DELAY = 180;
+  const int EXPLODE_DELAY = 180;
 
   /** Rate at which shaking occurs (lower increases shaking more quickly). */
-  protected static final int SHAKE_RATE = 16;
+  const int SHAKE_RATE = 16;
 
   /** Speed at which mine moves downward after being thrown. */
-  protected static final float SPEED = 1;
+  const float SPEED = 1;
 
   /** Strength of drag pulling in enemies. */
-  protected static final int DRAG_STRENGTH = 20;
+  const int DRAG_STRENGTH = 20;
 
-  protected long ticks;
-  protected float adjX, adjY;
+  long ticks;
+  float adjX, adjY;
 
-  public MineMovement(Thing t) { super(t); }
+  MineMovement(Thing t) { super(t); }
 
   /** Drags nearby enemies closer to the mine. */
-  public void move() {
+  move() {
     float xpos = thing.getX(), ypos = thing.getY();
     ticks++;
 
@@ -194,12 +194,12 @@ public class MineMovement extends MovementStyle {
 
 }
 
-public class CopterMine extends Thing {
+class CopterMine extends Thing {
 
-  protected static final int POWER_MULTIPLIER = 10;
-  protected static final int MAX_SIZE = 11;
+  const int POWER_MULTIPLIER = 10;
+  const int MAX_SIZE = 11;
 
-  protected static BoundedImage[] images;
+  static BoundedImage[] images;
 
   static {
     images = new BoundedImage[MAX_SIZE];
@@ -218,7 +218,7 @@ public class CopterMine extends Thing {
     }
   }
 
-  public CopterMine(Thing thing, int power) {
+  CopterMine(Thing thing, int power) {
     super(thing.getGame());
     type = GOOD_BULLET;
     setPower(power);
@@ -228,10 +228,10 @@ public class CopterMine extends Thing {
   }
 
   /** Gets strength (power) of the mine. */
-  public int getStrength() { return power; }
+  int getStrength() { return power; }
 
   /** Changes mine size based on power value. */
-  public void setPower(int power) {
+  setPower(int power) {
     super.setPower(power);
     maxhp = hp = POWER_MULTIPLIER * power;
 
@@ -242,29 +242,29 @@ public class CopterMine extends Thing {
   }
 
   /** Mines do not directly damage enemies. */
-  public int getPower() { return 0; }
+  int getPower() { return 0; }
 
   /** Mines cannot be destroyed. */
-  public void hit(int damage) { }
+  hit(int damage) { }
 }
 
 /** Defines veggie copter gravity mine attack style. */
-public class MineAttack extends ColoredAttack {
+class MineAttack extends ColoredAttack {
 
-  protected static final int RECHARGE = 24;
+  const int RECHARGE = 24;
 
-  protected boolean space;
-  protected int fired;
+  boolean space;
+  int fired;
 
-  public MineAttack(Thing t) {
+  MineAttack(Thing t) {
     super(t, Color.darkGray,
       t.getGame().loadImage("icon-mine.png").getImage());
   }
 
-  public void clear() { space = false; }
+  clear() { space = false; }
 
   /** Drops mines while space bar is being pressed. */
-  public Thing[] shoot() {
+  Thing[] shoot() {
     if (fired > 0) {
       fired--;
       return null;
@@ -277,12 +277,12 @@ public class MineAttack extends ColoredAttack {
     return new Thing[] {mine};
   }
 
-  public void keyPressed(KeyEvent e) {
+  keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  public void keyReleased(KeyEvent e) {
+  keyReleased(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }

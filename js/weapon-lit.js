@@ -1,31 +1,31 @@
 /** Defines veggie copter lightning attack style. */
-public class LitAttack extends ColoredAttack {
+class LitAttack extends ColoredAttack {
 
-  public static final double LEFT_CHANCE = 0.2;
-  public static final double RIGHT_CHANCE = 0.2;
+  const double LEFT_CHANCE = 0.2;
+  const double RIGHT_CHANCE = 0.2;
 
-  protected static final int POWER = 1;
-  protected static final int PATH_LENGTH = 200;
+  const int POWER = 1;
+  const int PATH_LENGTH = 200;
 
-  protected static final int ARC_LENGTH = 10;
-  protected static final int DELAY = 10;
-  protected static final int PERIOD = ARC_LENGTH + DELAY;
+  const int ARC_LENGTH = 10;
+  const int DELAY = 10;
+  const int PERIOD = ARC_LENGTH + DELAY;
 
-  protected int ticks;
-  protected boolean space = false;
-  protected int[][] paths;
+  int ticks;
+  boolean space = false;
+  int[][] paths;
 
-  public LitAttack(Thing t) {
+  LitAttack(Thing t) {
     super(t, Color.cyan, t.getGame().loadImage("icon-lit.png").getImage());
 
     paths = new int[1000][];
     generatePath(0);
   }
 
-  public void clear() { space = false; }
+  clear() { space = false; }
 
   /** Fires a shot if space bar is pressed. */
-  public Thing[] shoot() {
+  Thing[] shoot() {
     if (!space) return null;
     ticks++;
     int pow = getPower();
@@ -47,7 +47,7 @@ public class LitAttack extends ColoredAttack {
     return lits;
   }
 
-  public void keyPressed(KeyEvent e) {
+  keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) {
       space = true;
@@ -55,12 +55,12 @@ public class LitAttack extends ColoredAttack {
     }
   }
 
-  public void keyReleased(KeyEvent e) {
+  keyReleased(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }
 
-  protected void generatePath(int index) {
+  generatePath(int index) {
     paths[index] = new int[PATH_LENGTH];
     for (int i=0; i<paths[index].length; i++) {
       double chance = Math.random();

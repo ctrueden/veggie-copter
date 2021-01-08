@@ -1,16 +1,16 @@
-public class BushMovement extends MovementStyle {
+class BushMovement extends MovementStyle {
 
   /** Movement speed per frame. */
-  protected static final int SPEED = 1;
+  const int SPEED = 1;
 
   /** Number of HP considered low enough to enter frantic mode. */
-  protected static final int LOW_HP = 25;
+  const int LOW_HP = 25;
 
-  protected float target;
-  protected boolean dir;
-  protected boolean turning;
+  float target;
+  boolean dir;
+  boolean turning;
 
-  public BushMovement(Thing t) {
+  BushMovement(Thing t) {
     super(t);
     VeggieCopter game = thing.getGame();
     int w = game.getWindowWidth();
@@ -24,7 +24,7 @@ public class BushMovement extends MovementStyle {
   }
 
   /** Moves the given thing according to the Bush movement style. */
-  public void move() {
+  move() {
     if (isFrantic()) return;
 
     float cx = thing.getCX(), cy = thing.getCY();
@@ -45,15 +45,15 @@ public class BushMovement extends MovementStyle {
   }
 
   /** Gets whether thing is currently changing directions. */
-  public boolean isTurning() { return turning; }
+  boolean isTurning() { return turning; }
 
-  public boolean isFrantic() { return thing.getHP() <= LOW_HP; }
+  boolean isFrantic() { return thing.getHP() <= LOW_HP; }
 
   /** Gets movement direction of this thing. */
-  public boolean getDirection() { return dir; }
+  boolean getDirection() { return dir; }
 
   /** Switches between horizontal and vertical movement modes. */
-  protected void doSwitch() {
+  doSwitch() {
     Copter hero = thing.getGame().getCopter();
     dir = !dir;
     target = dir ? hero.getCY() : hero.getCX();
@@ -63,27 +63,27 @@ public class BushMovement extends MovementStyle {
 }
 
 /** Defines Bush's attack style. */
-public class BushAttack extends AttackStyle {
+class BushAttack extends AttackStyle {
 
   /** Number of bullets to fire per spread. */
-  protected static final int BULLETS = 5;
+  const int BULLETS = 5;
 
   /** Spread factor for controlling bullet spread width. */
-  protected static final int SPREAD = 24;
+  const int SPREAD = 24;
 
   /** Number of frames to wait between firing bullets in frantic mode. */
-  protected static final int FRANTIC_RATE = 5;
+  const int FRANTIC_RATE = 5;
 
   /** List of bullets left to fire. */
-  protected Vector toFire = new Vector();
+  Vector toFire = new Vector();
 
   /** Frames to wait until adding another bullet (frantic mode only). */
-  protected int waitTicks = FRANTIC_RATE;
+  int waitTicks = FRANTIC_RATE;
 
-  public BushAttack(Thing t) { super(t); }
+  BushAttack(Thing t) { super(t); }
 
   /** Fires a shot according to Bush's attack pattern. */
-  public Thing[] shoot() {
+  Thing[] shoot() {
     BushMovement pm = (BushMovement) thing.getMovement();
 
     if (pm.isFrantic()) {
@@ -119,9 +119,9 @@ public class BushAttack extends AttackStyle {
 
 }
 
-public class BushEnemy extends EnemyHead {
+class BushEnemy extends EnemyHead {
 
-  public BushEnemy(VeggieCopter game, String[] args) {
+  BushEnemy(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize Bush with proper parameters
     super(game, 80 + (int) (Math.random() * 20),
       game.loadImage("bush1.png"),
@@ -138,9 +138,9 @@ public class BushEnemy extends EnemyHead {
     setAttack(new BushAttack(this));
   }
 
-  public int getScore() { return 5 * super.getScore(); }
+  int getScore() { return 5 * super.getScore(); }
 
-  public void move() {
+  move() {
     super.move();
 
     // regen

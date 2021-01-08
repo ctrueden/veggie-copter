@@ -1,36 +1,36 @@
 /** Defines random enemy bullet attack. */
-public class AlexAttack extends AttackStyle {
+class AlexAttack extends AttackStyle {
 
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-  protected static final int FREQUENCY = 1;
+  const int FREQUENCY = 1;
 
-  public AlexAttack(Thing t) { super(t); }
+  AlexAttack(Thing t) { super(t); }
 
   /** Fires a shot randomly. */
-  public Thing[] shoot() {
+  Thing[] shoot() {
     if (Math.random() >= 1.0 / (60 - FREQUENCY)) return null;
     return new Thing[] {new EnemyBullet(thing)};
   }
 
 }
 
-public class AlexMovement extends MovementStyle {
+class AlexMovement extends MovementStyle {
 
-  protected static final int X_STEPS = 40;
-  protected static final int Y_STEPS = 30;
+  const int X_STEPS = 40;
+  const int Y_STEPS = 30;
 
-  protected static final int SPEED = 2;
-  protected static final int LUNGE_RATE = 300;
+  const int SPEED = 2;
+  const int LUNGE_RATE = 300;
 
-  protected float xstart, ystart;
-  protected float xlen, ylen;
-  protected int xinc, yinc;
-  protected boolean xdir, ydir;
-  protected long ticks;
-  protected boolean needsToRun, running, lunging;
-  protected float lastX, lastY;
+  float xstart, ystart;
+  float xlen, ylen;
+  int xinc, yinc;
+  boolean xdir, ydir;
+  long ticks;
+  boolean needsToRun, running, lunging;
+  float lastX, lastY;
 
-  public AlexMovement(Thing t) {
+  AlexMovement(Thing t) {
     super(t);
     VeggieCopter game = thing.getGame();
 
@@ -74,12 +74,12 @@ public class AlexMovement extends MovementStyle {
     thing.setPos(xpos, ypos);
   }
 
-  public boolean isRunning() { return running; }
+  boolean isRunning() { return running; }
 
-  public boolean isLunging() { return lunging; }
+  boolean isLunging() { return lunging; }
 
   /** Moves the given thing according to the bouncing movement style. */
-  public void move() {
+  move() {
     float xpos = thing.getX(), ypos = thing.getY();
     VeggieCopter game = thing.getGame();
 
@@ -157,7 +157,7 @@ public class AlexMovement extends MovementStyle {
   }
 
   /** Converts linear movement into curved movement with a sine function. */
-  protected double smooth(double p) {
+  double smooth(double p) {
     p = Math.PI * (p - 0.5); // [0, 1] -> [-PI/2, PI/2]
     p = Math.sin(p); // [-PI/2, PI/2] -> [-1, 1] smooth sine
     p = (p + 1) / 2; // [-1, 1] -> [0, 1]
@@ -166,9 +166,9 @@ public class AlexMovement extends MovementStyle {
 
 }
 
-public class AlexEnemy extends EnemyHead {
+class AlexEnemy extends EnemyHead {
 
-  public AlexEnemy(VeggieCopter game, String[] args) {
+  AlexEnemy(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize Alex with proper parameters
     super(game, 25,
       game.loadImage("alex1.png"),
@@ -188,9 +188,9 @@ public class AlexEnemy extends EnemyHead {
     setAttack(new AlexAttack(this));
   }
 
-  public int getScore() { return 3 * super.getScore(); }
+  int getScore() { return 3 * super.getScore(); }
 
-  public void move() {
+  move() {
     super.move();
 
     // set proper expression
@@ -205,9 +205,9 @@ public class AlexEnemy extends EnemyHead {
 
 }
 
-public class AlexBoss extends BossHead {
+class AlexBoss extends BossHead {
 
-  public AlexBoss(VeggieCopter game, String[] args) {
+  AlexBoss(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize Alex with proper parameters
     super(game, 250,
       game.loadImage("alex-boss1.png"),
@@ -228,13 +228,13 @@ public class AlexBoss extends BossHead {
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */
-  public ColoredAttack getColoredAttack() {
+  ColoredAttack getColoredAttack() {
     return new EnergyAttack(game.getCopter());
   }
 
-  public int getScore() { return 30 * super.getScore(); }
+  int getScore() { return 30 * super.getScore(); }
 
-  public void move() {
+  move() {
     super.move();
 
     // set proper expression

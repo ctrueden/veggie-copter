@@ -1,19 +1,19 @@
-public class PowerUpMovement extends MovementStyle {
+class PowerUpMovement extends MovementStyle {
 
-  protected static final int PERIOD = 3;
+  const int PERIOD = 3;
 
-  protected boolean center;
-  protected long ticks;
-  protected boolean dir;
+  boolean center;
+  long ticks;
+  boolean dir;
 
-  public PowerUpMovement(Thing t, float x, float y, boolean center) {
+  PowerUpMovement(Thing t, float x, float y, boolean center) {
     super(t);
     thing.setPos(x, y);
     this.center = center;
   }
 
   /** Moves the given thing according to the laser movement style. */
-  public void move() {
+  move() {
     ticks++;
 
     if (ticks % PERIOD == 0) {

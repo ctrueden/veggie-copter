@@ -1,6 +1,6 @@
-public class TestBoss extends BossHead {
+class TestBoss extends BossHead {
 
-  public TestBoss(VeggieCopter game, String[] args) {
+  TestBoss(VeggieCopter game, String[] args) {
     super(game, 1000,
       game.loadImage("test-boss2.png"),
       game.loadImage("test-boss2.png"),
@@ -32,24 +32,24 @@ public class TestBoss extends BossHead {
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */
-  public ColoredAttack getColoredAttack() {
+  ColoredAttack getColoredAttack() {
     return new GunAttack(game.getCopter());
   }
 
   /** Draws the object onscreen. */
-  public void draw(Graphics g) {
+  draw(Graphics g) {
     super.draw(g);
     g.setColor(Color.yellow);
     g.drawString("" + hp, (int) getCX() - 15, (int) getCY() + 20);
   }
 
   /** Hits this object for the given amount of damage. */
-  public void hit(int damage) {
+  hit(int damage) {
     if (damage > 0) ((TestMovement) move).startTimer();
     super.hit(damage);
   }
 
-  public int getScore() {
+  int getScore() {
     ((TestMovement) move).printStats();
     return 0;
   }

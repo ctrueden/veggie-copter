@@ -1,9 +1,9 @@
-public class SoundPlayer {
+class SoundPlayer {
 
   private static boolean mute = true;
-  public static void toggleMute() { mute = !mute; }
+  static toggleMute() { mute = !mute; }
 
-  public static boolean playSound(URL wave) {
+  static boolean playSound(URL wave) {
     if (mute) return false;
     AudioInputStream audioInputStream = null;
     try { audioInputStream = AudioSystem.getAudioInputStream(wave); }
@@ -14,7 +14,7 @@ public class SoundPlayer {
     try {
       final Clip mClip = (Clip) AudioSystem.getLine(info);
       mClip.addLineListener(new LineListener() {
-        public void update(LineEvent event) {
+        update(LineEvent event) {
           if (event.getType().equals(LineEvent.Type.STOP)) mClip.close();
         }
       });
@@ -26,7 +26,7 @@ public class SoundPlayer {
     return true;
   }
 
-  public static boolean playMidi(URL midi, boolean loop) {
+  static boolean playMidi(URL midi, boolean loop) {
     if (mute) return false;
     Sequence sequence = null;
     try { sequence = MidiSystem.getSequence(midi); }
@@ -60,7 +60,7 @@ public class SoundPlayer {
     final Sequencer fSequencer = smSequencer;
     final Synthesizer fSynthesizer = smSynthesizer;
     smSequencer.addMetaEventListener(new MetaEventListener() {
-      public void meta(MetaMessage event) {
+      meta(MetaMessage event) {
         if (event.getType() == 47) { // end of track
           fSequencer.close();
           if (fSynthesizer != null) fSynthesizer.close();

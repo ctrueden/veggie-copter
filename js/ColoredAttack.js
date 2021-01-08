@@ -1,20 +1,20 @@
 /** Encapsulates an attack pattern with icon and color. */
-public abstract class ColoredAttack extends AttackStyle {
+class ColoredAttack extends AttackStyle {
 
-  protected static final Color DARK_RED = new Color(95, 0, 0);
-  protected static final int ICON_SIZE = 21;
+  const Color DARK_RED = new Color(95, 0, 0);
+  const int ICON_SIZE = 21;
 
-  protected Image image;
-  protected Color color;
+  Image image;
+  Color color;
 
-  public ColoredAttack(Thing t, Color c, Image img) {
+  ColoredAttack(Thing t, Color c, Image img) {
     super(t);
     color = c;
     image = img;
   }
 
   /** Draws an icon representing this attack style in the given position. */
-  public void drawIcon(Graphics g, int x, int y, boolean selected) {
+  drawIcon(Graphics g, int x, int y, boolean selected) {
     Color origColor = g.getColor();
     g.setColor(Color.white);
     g.drawRect(x, y, ICON_SIZE - 1, ICON_SIZE - 1);
@@ -28,18 +28,18 @@ public abstract class ColoredAttack extends AttackStyle {
   }
 
   /** Gets color associated with this attack style. */
-  public Color getColor() { return color; }
+  Color getColor() { return color; }
 
   /**
    * Indicates control has been transferred to from this attack style,
    * and it is now active.
    */
-  public void activate() { }
+  activate() { }
 
   /**
    * Indicates control has been transferred away from this attack style, and it
    * should cease functioning regardless of key press states or other factors.
    */
-  public void clear() { }
+  clear() { }
 
 }

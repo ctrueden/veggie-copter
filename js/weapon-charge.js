@@ -1,29 +1,29 @@
 /** Defines veggie copter charge attack style. */
-public class ChargeAttack extends ColoredAttack {
+class ChargeAttack extends ColoredAttack {
 
-  private static final int GROW_SPEED = 11;
+  private const int GROW_SPEED = 11;
 
-  protected CopterCharge charge;
-  protected boolean space;
-  protected int ticks;
+  CopterCharge charge;
+  boolean space;
+  int ticks;
 
-  public ChargeAttack(Thing t) {
+  ChargeAttack(Thing t) {
     super(t, Color.white, t.getGame().loadImage("icon-charge.png").getImage());
   }
 
-  public void launch() {
+  launch() {
     if (charge == null) return;
     charge.launch();
     charge = null;
   }
 
-  public void clear() {
+  clear() {
     space = false;
     launch();
   }
 
   /** Fires a shot if space bar is pressed. */
-  public Thing[] shoot() {
+  Thing[] shoot() {
     if (!space) return null;
 
     if (charge == null) {
@@ -40,12 +40,12 @@ public class ChargeAttack extends ColoredAttack {
     return null;
   }
 
-  public void keyPressed(KeyEvent e) {
+  keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  public void keyReleased(KeyEvent e) {
+  keyReleased(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) clear();
   }

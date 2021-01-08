@@ -1,25 +1,25 @@
 /** Contains information regarding a specific stage of the game. */
-public class Stage {
+class Stage {
 
-  public static final int TOP_LEFT = 10;
-  public static final int IMAGE_SIZE = 154;
-  public static final int ICON_SIZE = 50;
+  const int TOP_LEFT = 10;
+  const int IMAGE_SIZE = 154;
+  const int ICON_SIZE = 50;
 
-  private static final Font BIG = new Font("SansSerif", Font.BOLD, 36);
-  private static final Font SMALL = new Font("SansSerif", Font.PLAIN, 12);
+  private const Font BIG = new Font("SansSerif", Font.BOLD, 36);
+  private const Font SMALL = new Font("SansSerif", Font.PLAIN, 12);
 
-  private static final Color DARK_RED = new Color(48, 0, 0);
+  private const Color DARK_RED = new Color(48, 0, 0);
 
-  protected VeggieCopter game;
-  protected String name;
-  protected ScriptingEngine script;
-  protected Image image, icon;
-  protected int imageWidth, imageHeight, iconWidth, iconHeight;
-  protected String[] description;
-  protected boolean completed;
+  VeggieCopter game;
+  String name;
+  ScriptingEngine script;
+  Image image, icon;
+  int imageWidth, imageHeight, iconWidth, iconHeight;
+  String[] description;
+  boolean completed;
 
   /** Constructs a playable stage. */
-  public Stage(VeggieCopter game, String name,
+  Stage(VeggieCopter game, String name,
     String prefix, String[] description)
   {
     this.game = game;
@@ -35,7 +35,7 @@ public class Stage {
   }
 
   /** Draws a descriptive screen for use during stage select. */
-  public void drawSelectScreen(Graphics g) {
+  drawSelectScreen(Graphics g) {
     Font origFont = g.getFont();
     Color origColor = g.getColor();
 
@@ -62,7 +62,7 @@ public class Stage {
   }
 
   /** Draws the icon for this stage at the given position. */
-  public void drawIcon(Graphics g, int x, int y, boolean selected) {
+  drawIcon(Graphics g, int x, int y, boolean selected) {
     drawOutlinedRect(g, completed ? Color.gray :
       (selected ? Color.red : DARK_RED), x, y, ICON_SIZE, ICON_SIZE);
     int cx = x + 2 + (ICON_SIZE - 2 - iconWidth) / 2;
@@ -74,22 +74,22 @@ public class Stage {
    * Executes the script for this stage.
    * @return true if the script is complete
    */
-  public boolean executeScript() {
+  boolean executeScript() {
     boolean done = script.execute();
     if (done) resetScript();
     return done;
   }
 
   /** Resets the script for this stage. */
-  public void resetScript() { script.reset(); }
+  resetScript() { script.reset(); }
 
   /** Marks whether this stage has been completed. */
-  public void setCompleted(boolean completed) { this.completed = completed; }
+  setCompleted(boolean completed) { this.completed = completed; }
 
   /** Gets whether this stage has been completed. */
-  public boolean isCompleted() { return completed; }
+  boolean isCompleted() { return completed; }
 
-  private void drawOutlinedRect(Graphics g, Color color,
+  private drawOutlinedRect(Graphics g, Color color,
     int x, int y, int width, int height)
   {
     Color origColor = g.getColor();

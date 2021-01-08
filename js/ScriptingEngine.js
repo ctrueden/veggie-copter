@@ -1,6 +1,6 @@
-public class ScriptingEngine {
+class ScriptingEngine {
 
-  private static final Class[] SIG = {VeggieCopter.class, String[].class};
+  private const Class[] SIG = {VeggieCopter.class, String[].class};
 
   private VeggieCopter game;
   private Vector commands = new Vector();
@@ -10,7 +10,7 @@ public class ScriptingEngine {
   private boolean waitClear;
 
   /** Constructs an object for parsing the game script. */
-  public ScriptingEngine(VeggieCopter game, String scriptFile) {
+  ScriptingEngine(VeggieCopter game, String scriptFile) {
     this.game = game;
     try {
       BufferedReader fin = new BufferedReader(
@@ -43,7 +43,7 @@ public class ScriptingEngine {
    * Executes the game script.
    * @return true if the script is complete
    */
-  public boolean execute() {
+  boolean execute() {
     while (cmdIndex < commands.size()) {
       if (waitClear) {
         if (game.isClear()) {
@@ -69,13 +69,13 @@ public class ScriptingEngine {
     return cmdIndex >= commands.size();
   }
 
-  public void reset() {
+  reset() {
     waitClear = false;
     waiting = 0;
     cmdIndex = 0;
   }
 
-  public void add(String[] args) {
+  add(String[] args) {
     // syntax: add ObjectType P1 P2 ... Pn
     if (args.length < 1) {
       ignoreCommand("add", args);
@@ -97,7 +97,7 @@ public class ScriptingEngine {
     catch (InvocationTargetException exc) { ignoreCommand("add", args); }
   }
 
-  public void print(String[] args) {
+  print(String[] args) {
     // syntax: print X Y size R G B duration Message to be printed
     if (args.length < 8) {
       ignoreCommand("print", args);
@@ -122,7 +122,7 @@ public class ScriptingEngine {
     game.printMessage(new Message(msg, x, y, size, new Color(r, g, b), time));
   }
 
-  public void wait(String[] args) {
+  wait(String[] args) {
     // syntax: wait clear  OR  wait clear X  OR  wait X
     if (args.length < 1) {
       ignoreCommand("wait", args);
@@ -149,7 +149,7 @@ public class ScriptingEngine {
     }
   }
 
-  protected void ignoreCommand(String cmd, String[] args) {
+  ignoreCommand(String cmd, String[] args) {
     System.err.print("Ignoring command: " + cmd);
     for (int i=0; i<args.length; i++) System.err.print(" " + args[i]);
     System.err.println();

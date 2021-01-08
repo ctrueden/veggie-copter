@@ -1,25 +1,25 @@
 /** Defines Kelsey's attack style. */
-public class KelsAttack extends AttackStyle {
+class KelsAttack extends AttackStyle {
 
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-  protected static final int FREQUENCY = 1;
+  const int FREQUENCY = 1;
 
-  public KelsAttack(Thing t) { super(t); }
+  KelsAttack(Thing t) { super(t); }
 
   /** Fires a shot randomly. */
-  public Thing[] shoot() {
+  Thing[] shoot() {
     if (Math.random() >= 1.0 / (60 - FREQUENCY)) return null;
     return new Thing[] {new EnemyBullet(thing)};
   }
 
 }
 
-public class KelsMovement extends MovementStyle {
+class KelsMovement extends MovementStyle {
 
-  protected static final int RADIUS2 = 200;
-  protected static final int SPEED = 2;
+  const int RADIUS2 = 200;
+  const int SPEED = 2;
 
-  public KelsMovement(Thing t, int y, boolean dir) {
+  KelsMovement(Thing t, int y, boolean dir) {
     super(t);
     VeggieCopter game = thing.getGame();
 
@@ -42,7 +42,7 @@ public class KelsMovement extends MovementStyle {
   }
 
   /** Moves the given thing according to the bouncing movement style. */
-  public void move() {
+  move() {
     float xpos = thing.getCX(), ypos = thing.getCY();
 
     Copter hero = thing.getGame().getCopter();
@@ -62,9 +62,9 @@ public class KelsMovement extends MovementStyle {
 
 }
 
-public class KelsEnemy extends EnemyHead {
+class KelsEnemy extends EnemyHead {
 
-  public KelsEnemy(VeggieCopter game, String[] args) {
+  KelsEnemy(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize Kels with proper parameters
     super(game, 25,
       game.loadImage("kels1.png"),
@@ -90,13 +90,13 @@ public class KelsEnemy extends EnemyHead {
     setAttack(new KelsAttack(this));
   }
 
-  public int getScore() { return 3 * super.getScore(); }
+  int getScore() { return 3 * super.getScore(); }
 
 }
 
-public class KelsBoss extends BossHead {
+class KelsBoss extends BossHead {
 
-  public KelsBoss(VeggieCopter game, String[] args) {
+  KelsBoss(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize Kels with proper parameters
     super(game, 250,
       game.loadImage("kels-boss1.png"),
@@ -123,10 +123,10 @@ public class KelsBoss extends BossHead {
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */
-  public ColoredAttack getColoredAttack() {
+  ColoredAttack getColoredAttack() {
     return new SplitterAttack(game.getCopter());
   }
 
-  public int getScore() { return 30 * super.getScore(); }
+  int getScore() { return 30 * super.getScore(); }
 
 }

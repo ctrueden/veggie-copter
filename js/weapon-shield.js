@@ -1,16 +1,16 @@
-public class ShieldMovement extends MovementStyle {
+class ShieldMovement extends MovementStyle {
 
-  protected static final float SPEED = 0.1f;
-  protected static final int MIN_RADIUS = 30;
-  protected static final int MAX_RADIUS = 63;
-  protected static final int RADIUS_INC = 3;
+  const float SPEED = 0.1f;
+  const int MIN_RADIUS = 30;
+  const int MAX_RADIUS = 63;
+  const int RADIUS_INC = 3;
 
-  protected Thing owner;
-  protected float angle;
-  protected int radius;
-  protected boolean extended;
+  Thing owner;
+  float angle;
+  int radius;
+  boolean extended;
 
-  public ShieldMovement(Thing t, Thing owner, float angle) {
+  ShieldMovement(Thing t, Thing owner, float angle) {
     super(t);
     this.owner = owner;
     this.angle = angle;
@@ -20,10 +20,10 @@ public class ShieldMovement extends MovementStyle {
     thing.setCPos(xpos, ypos);
   }
 
-  public void setExtended(boolean extended) { this.extended = extended; }
+  setExtended(boolean extended) { this.extended = extended; }
 
   /** Moves the given thing according to the bullet movement style. */
-  public void move() {
+  move() {
     float speed = SPEED - thing.getPower() * SPEED / 20;
     if (speed < 0) speed = 0;
     angle += speed;
@@ -38,14 +38,14 @@ public class ShieldMovement extends MovementStyle {
 
 }
 
-public class CopterShield extends Thing {
+class CopterShield extends Thing {
 
-  protected static final int SIZE = 7;
+  const int SIZE = 7;
 
-  protected static BoundedImage[] images;
-  protected static int count = 0;
+  static BoundedImage[] images;
+  static int count = 0;
 
-  public CopterShield(Thing thing, float angle) {
+  CopterShield(Thing thing, float angle) {
     super(thing.getGame());
     type = GOOD;
     move = new ShieldMovement(this, thing, angle);
@@ -62,35 +62,35 @@ public class CopterShield extends Thing {
     count++;
   }
 
-  public void setExtended(boolean extended) {
+  setExtended(boolean extended) {
     ((ShieldMovement) move).setExtended(extended);
   }
 
   /** Shields cannot be destroyed. */
-  public void hit(int damage) { }
+  hit(int damage) { }
 
 }
 
 /** Defines veggie copter shield attack style. */
-public class ShieldAttack extends ColoredAttack {
+class ShieldAttack extends ColoredAttack {
 
-  protected static final Color PURPLE = new Color(0.7f, 0, 0.7f);
+  const Color PURPLE = new Color(0.7f, 0, 0.7f);
 
-  protected CopterShield[] shields;
-  protected boolean extended;
+  CopterShield[] shields;
+  boolean extended;
 
-  public ShieldAttack(Thing t) {
+  ShieldAttack(Thing t) {
     super(t, PURPLE, t.getGame().loadImage("icon-shield.png").getImage());
   }
 
-  public void setExtended(boolean extended) {
+  setExtended(boolean extended) {
     this.extended = extended;
     if (shields != null) {
       for (int i=0; i<shields.length; i++) shields[i].setExtended(extended);
     }
   }
 
-  public void activate() {
+  activate() {
     int num = power + 1;
     shields = new CopterShield[num];
     VeggieCopter game = thing.getGame();
@@ -102,7 +102,7 @@ public class ShieldAttack extends ColoredAttack {
     setExtended(extended);
   }
 
-  public void clear() {
+  clear() {
     if (shields != null) {
       for (int i=0; i<shields.length; i++) shields[i].setHP(0);
       shields = null;
@@ -110,11 +110,11 @@ public class ShieldAttack extends ColoredAttack {
     }
   }
 
-  public Thing[] shoot() {
+  Thing[] shoot() {
     return null;
   }
 
-  public void setPower(int power) {
+  setPower(int power) {
     super.setPower(power);
     if (shields != null) {
       for (int i=0; i<shields.length; i++) shields[i].setHP(0);
@@ -122,12 +122,12 @@ public class ShieldAttack extends ColoredAttack {
     activate();
   }
 
-  public void keyPressed(KeyEvent e) {
+  keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) setExtended(true);
   }
 
-  public void keyReleased(KeyEvent e) {
+  keyReleased(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) setExtended(false);
   }

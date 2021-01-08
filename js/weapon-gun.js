@@ -1,10 +1,10 @@
-public class CopterGun extends Thing {
+class CopterGun extends Thing {
 
-  protected static final int SPEED = 5;
-  protected static final int HEIGHT = 7;
-  protected static final Color BROWN = Color.yellow.darker();
+  const int SPEED = 5;
+  const int HEIGHT = 7;
+  const Color BROWN = Color.yellow.darker();
 
-  protected static BoundedImage image;
+  static BoundedImage image;
 
   static {
     int len = HEIGHT;
@@ -17,7 +17,7 @@ public class CopterGun extends Thing {
     image.addBox(new BoundingBox());
   }
 
-  public CopterGun(Thing thing, float x, float y, int power) {
+  CopterGun(Thing thing, float x, float y, int power) {
     super(thing.getGame());
     type = GOOD_BULLET;
     setImage(image);
@@ -28,22 +28,22 @@ public class CopterGun extends Thing {
 }
 
 /** Defines veggie copter gun attack. */
-public class GunAttack extends ColoredAttack {
+class GunAttack extends ColoredAttack {
 
-  protected static final int RECHARGE = 2;
+  const int RECHARGE = 2;
 
-  protected boolean space = false;
-  protected int fired;
+  boolean space = false;
+  int fired;
 
-  public GunAttack(Thing t) {
+  GunAttack(Thing t) {
     super(t, CopterGun.BROWN,
       t.getGame().loadImage("icon-gun.png").getImage());
   }
 
-  public void clear() { space = false; }
+  clear() { space = false; }
 
   /** Fires two shots if space bar is pressed. */
-  public Thing[] shoot() {
+  Thing[] shoot() {
     if (fired > 0) {
       fired--;
       return null;
@@ -76,12 +76,12 @@ public class GunAttack extends ColoredAttack {
     return shots;
   }
 
-  public void keyPressed(KeyEvent e) {
+  keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  public void keyReleased(KeyEvent e) {
+  keyReleased(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }

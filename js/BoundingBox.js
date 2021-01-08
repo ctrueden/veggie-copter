@@ -1,19 +1,19 @@
-public class BoundingBox {
+class BoundingBox {
 
   /** Bounding box insets. */
-  public int x1, y1, x2, y2;
+  int x1, y1, x2, y2;
 
   /** Constructs a bounding box of default size. */
-  public BoundingBox() { this(0, 0, 0, 0); }
+  BoundingBox() { this(0, 0, 0, 0); }
 
   /** Constructs a bounding box with the given insets. */
-  public BoundingBox(int x1, int y1, int x2, int y2) {
+  BoundingBox(int x1, int y1, int x2, int y2) {
     this.x1 = x1; this.y1 = y1;
     this.x2 = x2; this.y2 = y2;
   }
 
   /** Gets bounding box given the coordinates, width and height. */
-  public Rectangle getBox(int x, int y, int width, int height) {
+  Rectangle getBox(int x, int y, int width, int height) {
     int w = width - x1 - x2 - 1;
     int h = height - y1 - y2 - 1;
     if (w < 1) w = 1;

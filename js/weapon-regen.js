@@ -1,25 +1,25 @@
-public class RegenMovement extends MovementStyle {
+class RegenMovement extends MovementStyle {
 
-  public static final int FLUX_RADIUS = 5;
-  protected static final int FLUX_RATE = 4;
+  const int FLUX_RADIUS = 5;
+  const int FLUX_RATE = 4;
 
   private Thing owner;
   private long ticks;
 
-  public RegenMovement(Thing t, Thing owner) {
+  RegenMovement(Thing t, Thing owner) {
     super(t);
     this.owner = owner;
     syncPos();
   }
 
-  public void syncPos() {
+  syncPos() {
     float xpos = owner.getCX();
     float ypos = owner.getCY();
     thing.setCPos(xpos, ypos);
   }
 
   /** Moves the given thing according to the regen movement style. */
-  public void move() {
+  move() {
     syncPos();
     ticks++;
 
@@ -51,11 +51,11 @@ public class RegenMovement extends MovementStyle {
 
 }
 
-public class CopterRegen extends Thing {
+class CopterRegen extends Thing {
 
-  protected static final int MAX_SIZE = 10 + RegenMovement.FLUX_RADIUS;
+  const int MAX_SIZE = 10 + RegenMovement.FLUX_RADIUS;
 
-  protected static BoundedImage[] images;
+  static BoundedImage[] images;
 
   static {
     int red = Color.pink.getRed();
@@ -79,14 +79,14 @@ public class CopterRegen extends Thing {
     }
   }
 
-  public CopterRegen(Thing thing) {
+  CopterRegen(Thing thing) {
     super(thing.getGame());
     setImageList(images);
     type = GOOD_BULLET;
     move = new RegenMovement(this, thing);
   }
 
-  public void setPower(int power) {
+  setPower(int power) {
     super.setPower(power);
     int size = power - 1;
     if (size < 0) size = 0;
@@ -98,23 +98,23 @@ public class CopterRegen extends Thing {
 }
 
 /** Defines veggie copter regen "attack" style. */
-public class RegenAttack extends ColoredAttack {
+class RegenAttack extends ColoredAttack {
 
-  protected boolean space;
-  protected CopterRegen regen;
+  boolean space;
+  CopterRegen regen;
 
-  public RegenAttack(Thing t) {
+  RegenAttack(Thing t) {
     super(t, Color.pink, t.getGame().loadImage("icon-regen.png").getImage());
   }
 
-  public void clear() {
+  clear() {
     space = false;
     if (regen != null) regen.setHP(0);
     regen = null;
   }
 
   /** Begins regeneration if space bar is pressed. */
-  public Thing[] shoot() {
+  Thing[] shoot() {
     if (!space || regen != null) return null;
     regen = new CopterRegen(thing);
     regen.setPower(power);
@@ -122,17 +122,17 @@ public class RegenAttack extends ColoredAttack {
     return new Thing[] {regen};
   }
 
-  public void setPower(int power) {
+  setPower(int power) {
     super.setPower(power);
     if (regen != null) regen.setPower(power);
   }
 
-  public void keyPressed(KeyEvent e) {
+  keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  public void keyReleased(KeyEvent e) {
+  keyReleased(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) clear();
   }

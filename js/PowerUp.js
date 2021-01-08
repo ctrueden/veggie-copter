@@ -1,12 +1,12 @@
 /** Power-up object increases copter's weapon power. */
-public class PowerUp extends Thing {
+class PowerUp extends Thing {
 
-  protected static final int PULSE = 10;
+  const int PULSE = 10;
 
-  protected ColoredAttack att;
+  ColoredAttack att;
 
   /** Constructs a power-up object. */
-  public PowerUp(VeggieCopter game,
+  PowerUp(VeggieCopter game,
     float cx, float cy, int size, ColoredAttack attack)
   {
     super(game);
@@ -42,6 +42,6 @@ public class PowerUp extends Thing {
   }
 
   /** Gets attack style granted by this power-up, if any. */
-  public ColoredAttack getGrantedAttack() { return att; }
+  ColoredAttack getGrantedAttack() { return att; }
 
 }

@@ -1,7 +1,7 @@
-public class BoxEditor extends JFrame
+class BoxEditor extends JFrame
   implements KeyListener, MouseListener, MouseMotionListener, WindowListener {
 
-  public static final Color[] COLORS = {
+  const Color[] COLORS = {
     Color.red, Color.blue, Color.green, Color.cyan,
     Color.magenta, Color.yellow, Color.white
   };
@@ -22,7 +22,7 @@ public class BoxEditor extends JFrame
   /** Bounding box currently being drawn. */
   private BoundingBox bb;
 
-  public BoxEditor() throws IOException {
+  BoxEditor() throws IOException {
     super();
     addKeyListener(this);
     addMouseListener(this);
@@ -54,9 +54,9 @@ public class BoxEditor extends JFrame
     setVisible(true);
   }
 
-  public void updateTitle() { setTitle((String) names.elementAt(ndx)); }
+  updateTitle() { setTitle((String) names.elementAt(ndx)); }
 
-  public void load() throws IOException {
+  load() throws IOException {
     for (int i=0; i<images.size(); i++) {
       BoundedImage bi = (BoundedImage) images.elementAt(i);
       String name = (String) names.elementAt(i);
@@ -86,7 +86,7 @@ public class BoxEditor extends JFrame
     }
   }
 
-  public void save() throws IOException {
+  save() throws IOException {
     for (int i=0; i<images.size(); i++) {
       BoundedImage bi = (BoundedImage) images.elementAt(i);
       String name = (String) names.elementAt(i);
@@ -105,7 +105,7 @@ public class BoxEditor extends JFrame
     }
   }
 
-  public void paint(Graphics g) {
+  paint(Graphics g) {
     Dimension size = getSize();
     BoundedImage bi = (BoundedImage) images.elementAt(ndx);
     int w = bi.getWidth();
@@ -121,7 +121,7 @@ public class BoxEditor extends JFrame
     }
   }
 
-  public void keyPressed(KeyEvent e) {
+  keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
     switch (code) {
       case KeyEvent.VK_UP:
@@ -151,10 +151,10 @@ public class BoxEditor extends JFrame
     }
     repaint();
   }
-  public void keyTyped(KeyEvent e) { }
-  public void keyReleased(KeyEvent e) { }
+  keyTyped(KeyEvent e) { }
+  keyReleased(KeyEvent e) { }
 
-  public void mousePressed(MouseEvent e) {
+  mousePressed(MouseEvent e) {
     Dimension size = getSize();
     BoundedImage bi = (BoundedImage) images.elementAt(ndx);
     int w = bi.getWidth();
@@ -169,14 +169,14 @@ public class BoxEditor extends JFrame
     bi.addBox(bb);
     repaint();
   }
-  public void mouseReleased(MouseEvent e) {
+  mouseReleased(MouseEvent e) {
     bb = null;
   }
-  public void mouseClicked(MouseEvent e) { }
-  public void mouseEntered(MouseEvent e) { }
-  public void mouseExited(MouseEvent e) { }
+  mouseClicked(MouseEvent e) { }
+  mouseEntered(MouseEvent e) { }
+  mouseExited(MouseEvent e) { }
 
-  public void mouseDragged(MouseEvent e) {
+  mouseDragged(MouseEvent e) {
     if (bb != null) {
       Dimension size = getSize();
       BoundedImage bi = (BoundedImage) images.elementAt(ndx);
@@ -193,20 +193,20 @@ public class BoxEditor extends JFrame
       repaint();
     }
   }
-  public void mouseMoved(MouseEvent e) { }
+  mouseMoved(MouseEvent e) { }
 
-  public void windowClosed(WindowEvent e) { }
-  public void windowClosing(WindowEvent e) {
+  windowClosed(WindowEvent e) { }
+  windowClosing(WindowEvent e) {
     try { save(); }
     catch (IOException exc) { exc.printStackTrace(); }
     System.exit(0);
   }
-  public void windowActivated(WindowEvent e) { }
-  public void windowDeactivated(WindowEvent e) { }
-  public void windowDeiconified(WindowEvent e) { }
-  public void windowIconified(WindowEvent e) { }
-  public void windowOpened(WindowEvent e) { }
+  windowActivated(WindowEvent e) { }
+  windowDeactivated(WindowEvent e) { }
+  windowDeiconified(WindowEvent e) { }
+  windowIconified(WindowEvent e) { }
+  windowOpened(WindowEvent e) { }
 
-  public static void main(String[] args) throws Exception { new BoxEditor(); }
+  static main(String[] args) throws Exception { new BoxEditor(); }
 
 }

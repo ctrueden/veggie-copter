@@ -1,25 +1,25 @@
 /** Defines Jamesey's attack style. */
-public class JamesAttack extends AttackStyle {
+class JamesAttack extends AttackStyle {
 
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-  protected static final int FREQUENCY = 1;
+  const int FREQUENCY = 1;
 
-  public JamesAttack(Thing t) { super(t); }
+  JamesAttack(Thing t) { super(t); }
 
   /** Fires a shot randomly. */
-  public Thing[] shoot() {
+  Thing[] shoot() {
     if (Math.random() >= 1.0 / (60 - FREQUENCY)) return null;
     return new Thing[] {new EnemyBullet(thing)};
   }
 
 }
 
-public class JamesMovement extends MovementStyle {
+class JamesMovement extends MovementStyle {
 
-  protected static final int RADIUS2 = 200;
-  protected static final int SPEED = 2;
+  const int RADIUS2 = 200;
+  const int SPEED = 2;
 
-  public JamesMovement(Thing t, int y, boolean dir) {
+  JamesMovement(Thing t, int y, boolean dir) {
     super(t);
     VeggieCopter game = thing.getGame();
 
@@ -42,7 +42,7 @@ public class JamesMovement extends MovementStyle {
   }
 
   /** Moves the given thing according to the bouncing movement style. */
-  public void move() {
+  move() {
     float xpos = thing.getCX(), ypos = thing.getCY();
 
     Copter hero = thing.getGame().getCopter();
@@ -62,9 +62,9 @@ public class JamesMovement extends MovementStyle {
 
 }
 
-public class JamesEnemy extends EnemyHead {
+class JamesEnemy extends EnemyHead {
 
-  public JamesEnemy(VeggieCopter game, String[] args) {
+  JamesEnemy(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize James with proper parameters
     super(game, 25,
       game.loadImage("james1.png"),
@@ -90,13 +90,13 @@ public class JamesEnemy extends EnemyHead {
     setAttack(new JamesAttack(this));
   }
 
-  public int getScore() { return 3 * super.getScore(); }
+  int getScore() { return 3 * super.getScore(); }
 
 }
 
-public class JamesBoss extends BossHead {
+class JamesBoss extends BossHead {
 
-  public JamesBoss(VeggieCopter game, String[] args) {
+  JamesBoss(VeggieCopter game, String[] args) {
     // CTR TODO parse args and initialize James with proper parameters
     super(game, 250,
       game.loadImage("james-boss1.png"),
@@ -123,10 +123,10 @@ public class JamesBoss extends BossHead {
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */
-  public ColoredAttack getColoredAttack() {
+  ColoredAttack getColoredAttack() {
     return new SplitterAttack(game.getCopter());
   }
 
-  public int getScore() { return 30 * super.getScore(); }
+  int getScore() { return 30 * super.getScore(); }
 
 }

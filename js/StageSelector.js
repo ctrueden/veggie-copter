@@ -1,13 +1,13 @@
 /** Implements logic for selecting a stage. */
-public class StageSelector {
+class StageSelector {
 
   /** Stage icon coordinates (X values). */
-  private static final int[] STAGE_X = {
+  private const int[] STAGE_X = {
     10, 10, 10, 64, 119, 174, 229, 284, 338, 339, 339
   };
 
   /** Stage icon coordinates (Y values). */
-  private static final int[] STAGE_Y = {
+  private const int[] STAGE_Y = {
     341, 284, 227, 170, 170, 170, 170, 170, 227, 284, 341
   };
 
@@ -15,7 +15,7 @@ public class StageSelector {
   private Vector stages = new Vector();
   private int current = 0;
 
-  public StageSelector(VeggieCopter game) {
+  StageSelector(VeggieCopter game) {
     this.game = game;
     addStage(new TestStage(game, "Shadow", "test", new String[] {
       "A test enemy for gauging weapon",
@@ -47,10 +47,10 @@ public class StageSelector {
   }
 
   /** Adds a stage to the selector. */
-  public void addStage(Stage s) { stages.add(s); }
+  addStage(Stage s) { stages.add(s); }
 
   /** Draws stage select screen. */
-  public void draw(Graphics g) {
+  draw(Graphics g) {
     int size = stages.size();
     int w = game.getWidth(), h = game.getHeight();
     int cols = w / Stage.ICON_SIZE;
@@ -63,7 +63,7 @@ public class StageSelector {
   }
 
   /** Adjusts currently selected stage forward or backward. */
-  public void adjustStage(boolean dir) {
+  adjustStage(boolean dir) {
     int start = current;
     do {
       current += dir ? 1 : -1;
@@ -76,10 +76,10 @@ public class StageSelector {
   }
 
   /** Gets currently selected stage. */
-  public Stage getSelectedStage() { return (Stage) stages.elementAt(current); }
+  Stage getSelectedStage() { return (Stage) stages.elementAt(current); }
 
   /** Resets stage selector to its initial state. */
-  public void reset() {
+  reset() {
     for (int i=0; i<stages.size(); i++) {
       Stage s = (Stage) stages.elementAt(i);
       s.setCompleted(false);

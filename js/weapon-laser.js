@@ -1,20 +1,20 @@
 /** Defines veggie copter laser attack style. */
-public class LaserAttack extends ColoredAttack {
+class LaserAttack extends ColoredAttack {
 
-  protected static final int[] FLUX =
+  const int[] FLUX =
     {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1};
 
-  protected boolean space;
-  protected int flux;
+  boolean space;
+  int flux;
 
-  public LaserAttack(Thing t) {
+  LaserAttack(Thing t) {
     super(t, Color.green, t.getGame().loadImage("icon-laser.png").getImage());
   }
 
-  public void clear() { space = false; }
+  clear() { space = false; }
 
   /** Fires a shot if space bar is pressed. */
-  public Thing[] shoot() {
+  Thing[] shoot() {
     if (!space) return null;
     int size = power - 1;
     if (size > CopterLaser.MAX_SIZE - 3) size = CopterLaser.MAX_SIZE - 3;
@@ -26,12 +26,12 @@ public class LaserAttack extends ColoredAttack {
     return new Thing[] {laser};
   }
 
-  public void keyPressed(KeyEvent e) {
+  keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
-  public void keyReleased(KeyEvent e) {
+  keyReleased(KeyEvent e) {
     int code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }
