@@ -79,7 +79,7 @@ class Game {
     /*
     boolean clear = true;
     for (var i=0; i<things.length; i++) {
-      Thing t = (Thing) things.elementAt(i);
+      var t = things[i];
       var type = t.getType();
       if (type != Thing.GOOD && type != Thing.GOOD_BULLET) {
         clear = false;
@@ -212,7 +212,7 @@ class Game {
 
     // purge dead things
     for (var i=0; i<things.length; i++) {
-      Thing thing = (Thing) things.elementAt(i);
+      var thing = things[i];
       if (thing.isDead()) {
         things.removeElementAt(i);
         if (thing == copter) {

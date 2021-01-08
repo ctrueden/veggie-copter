@@ -48,7 +48,7 @@ class GeorgeAttack extends AttackStyle {
     }
 
     if (toFire.isEmpty()) return null;
-    Point p = (Point) toFire.elementAt(0);
+    var p = toFire[0];
     toFire.removeElementAt(0);
     return new Thing[] {new EnemyBullet(thing, p.x, p.y)};
   }

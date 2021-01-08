@@ -54,8 +54,8 @@ class ScriptingEngine {
         waiting--;
         break;
       }
-      String cmd = (String) commands.elementAt(cmdIndex);
-      String[] args = (String[]) params.elementAt(cmdIndex);
+      cmd = commands[cmdIndex];
+      args = params[cmdIndex];
       if (cmd.equalsIgnoreCase("add")) add(args);
       else if (cmd.equalsIgnoreCase("print")) print(args);
       else if (cmd.equalsIgnoreCase("wait")) wait(args);

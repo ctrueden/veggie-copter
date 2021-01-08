@@ -261,8 +261,7 @@ class Thing implements KeyListener {
   }
 
   BoundedImage getBoundedImage(index) {
-    if (index < 0) return null;
-    return (BoundedImage) images.elementAt(index);
+    return index < 0 ? null : images[index];
   }
 
 }

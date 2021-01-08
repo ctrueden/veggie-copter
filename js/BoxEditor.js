@@ -54,12 +54,12 @@ class BoxEditor extends JFrame
     setVisible(true);
   }
 
-  updateTitle() { setTitle((String) names.elementAt(ndx)); }
+  updateTitle() { setTitle(names[ndx]); }
 
   load() throws IOException {
     for (var i=0; i<images.length; i++) {
-      var bi = (BoundedImage) images.elementAt(i);
-      var name = (String) names.elementAt(i);
+      var bi = images[i];
+      var name = names[i];
       var boxName = name.substring(0, name.length() - 3) + "box";
       System.out.println("Loading " + boxName);
       var in = null;
@@ -88,8 +88,8 @@ class BoxEditor extends JFrame
 
   save() throws IOException {
     for (var i=0; i<images.length; i++) {
-      var bi = (BoundedImage) images.elementAt(i);
-      var name = (String) names.elementAt(i);
+      var bi = images[i];
+      var name = names[i];
       var boxName = name.substring(0, name.length() - 3) + "box";
       System.out.println("Saving " + boxName);
       var out = new PrintWriter(new FileWriter(boxName));
@@ -107,7 +107,7 @@ class BoxEditor extends JFrame
 
   paint(g) {
     var size = getSize();
-    var bi = (BoundedImage) images.elementAt(ndx);
+    var bi = images[ndx];
     var w = bi.getWidth();
     var h = bi.getHeight();
     var x = (size.width - w) / 2;
@@ -145,7 +145,7 @@ class BoxEditor extends JFrame
         updateTitle();
         break;
       case KeyEvent.VK_DELETE:
-        BoundedImage bi = (BoundedImage) images.elementAt(ndx);
+        BoundedImage bi = (BoundedImage) images[ndx];
         bi.removeBox();
         break;
     }
@@ -155,7 +155,7 @@ class BoxEditor extends JFrame
 
   mousePressed(e) {
     var size = getSize();
-    var bi = (BoundedImage) images.elementAt(ndx);
+    var bi = images[ndx];
     var w = bi.getWidth();
     var h = bi.getHeight();
     var x = (size.width - w) / 2;
@@ -178,7 +178,7 @@ class BoxEditor extends JFrame
   mouseDragged(e) {
     if (bb != null) {
       var size = getSize();
-      var bi = (BoundedImage) images.elementAt(ndx);
+      var bi = images[ndx];
       var w = bi.getWidth();
       var h = bi.getHeight();
       var x = (size.width - w) / 2;
