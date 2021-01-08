@@ -43,7 +43,7 @@ class GunAttack extends ColoredAttack {
   clear() { space = false; }
 
   /** Fires two shots if space bar is pressed. */
-  Thing[] shoot() {
+  shoot() {
     if (fired > 0) {
       fired--;
       return null;
@@ -52,25 +52,25 @@ class GunAttack extends ColoredAttack {
     var num = getPower() + 1;
     fired = RECHARGE;
 
-    var x = (int) thing.getCX(), y = (int) thing.getY() - 14;
+    var xint = thing.getCX(), yint = thing.getY() - 14;
 
     CopterGun[] shots = new CopterGun[num];
     if (num % 2 == 0) {
       var len = num / 2;
       for (var i=0; i<len; i++) {
         var q = 2 * i;
-        shots[q] = new CopterGun(thing, x - q - 1, y, 1);
-        shots[q + 1] = new CopterGun(thing, x + q + 1, y, 1);
+        shots[q] = new CopterGun(thing, xint - q - 1, yint, 1);
+        shots[q + 1] = new CopterGun(thing, xint + q + 1, yint, 1);
       }
     }
     else {
       var len = num / 2;
       for (var i=0; i<len; i++) {
         var q = 2 * i;
-        shots[q] = new CopterGun(thing, x - q - 2, y, 1);
-        shots[q + 1] = new CopterGun(thing, x + q + 2, y, 1);
+        shots[q] = new CopterGun(thing, xint - q - 2, yint, 1);
+        shots[q + 1] = new CopterGun(thing, xint + q + 2, yint, 1);
       }
-      shots[num - 1] = new CopterGun(thing, x, y, 1);
+      shots[num - 1] = new CopterGun(thing, xint, yint, 1);
     }
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return shots;

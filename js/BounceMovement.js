@@ -1,11 +1,10 @@
 class BounceMovement extends MovementStyle {
-
   static X_STEPS = 40;
   static Y_STEPS = 30;
 
-  BounceMovement(t) {
+  constructor(t) {
     super(t);
-    var game = thing.getGame();
+    var game = this.thing.getGame();
 
     // compute starting position
     var xpos, ypos;
@@ -15,7 +14,7 @@ class BounceMovement extends MovementStyle {
     if (r < 1.0 / 3) {
       // appear from top
       var xpad = X_STEPS / 2;
-      xpos = (int) ((w - xpad) * Math.random()) + xpad;
+      xpos = ((w - xpad) * Math.random()) + xpad;
       ypos = 0;
       this.xdir = Math.random() < 0.5;
       this.ydir = true;
@@ -24,7 +23,7 @@ class BounceMovement extends MovementStyle {
       // appear from left
       var ypad = Y_STEPS / 2;
       xpos = 0;
-      ypos = (int) ((h / 2 - ypad) * Math.random()) + ypad;
+      ypos = (h / 2 - ypad) * Math.random() + ypad;
       this.xdir = true;
       this.ydir = true;
     }
@@ -32,7 +31,7 @@ class BounceMovement extends MovementStyle {
       // appear from right
       var ypad = Y_STEPS / 2;
       xpos = w - 1;
-      ypos = (int) ((h / 2 - ypad) * Math.random()) + ypad;
+      ypos = (h / 2 - ypad) * Math.random() + ypad;
       this.xdir = false;
       this.ydir = true;
     }
@@ -40,41 +39,41 @@ class BounceMovement extends MovementStyle {
     // compute random starting trajectory
     this.xstart = xpos;
     this.ystart = ypos;
-    this.xlen = (int) (thing.getWidth() * Math.random()) + 2 * X_STEPS;
-    this.ylen = (int) (thing.getHeight() * Math.random()) + 2 * Y_STEPS;
+    this.xlen = this.thing.getWidth() * Math.random() + 2 * X_STEPS;
+    this.ylen = this.thing.getHeight() * Math.random() + 2 * Y_STEPS;
     this.xinc = 0;
     this.yinc = 0;
 
-    thing.setPos(xpos, ypos);
+    this.thing.setPos(xpos, ypos);
   }
 
-  /** Moves the given thing according to the bouncing movement style. */
+  /** Moves the thing according to the bouncing movement style. */
   move() {
-    var xpos = thing.getX(), ypos = thing.getY();
+    var xpos = this.thing.getX(), ypos = this.thing.getY();
 
-    var xp = (float) smooth((double) xinc++ / X_STEPS);
+    var xp = smooth(xinc++ / X_STEPS);
     if (xdir) xpos = xstart + xp * xlen;
     else xpos = xstart - xp * xlen;
 
-    var yp = (float) smooth((double) yinc++ / Y_STEPS);
+    var yp = smooth(yinc++ / Y_STEPS);
     if (ydir) ypos = ystart + yp * ylen;
     else ypos = ystart - yp * ylen;
 
-    if (xinc == X_STEPS) {
-      xstart = xpos;
-      xdir = !xdir;
-      xlen = (int) (thing.getWidth() * Math.random()) + X_STEPS;
-      xinc = 0;
+    if (this.xinc == X_STEPS) {
+      this.xstart = xpos;
+      this.xdir = !this.xdir;
+      this.xlen = this.thing.getWidth() * Math.random() + X_STEPS;
+      this.xinc = 0;
     }
 
-    if (yinc == Y_STEPS) {
-      ystart = ypos;
-      ydir = !ydir;
-      ylen = (int) (thing.getHeight() * Math.random()) + Y_STEPS;
-      yinc = 0;
+    if (this.yinc == Y_STEPS) {
+      this.ystart = ypos;
+      this.ydir = !this.ydir;
+      this.ylen = this.thing.getHeight() * Math.random() + Y_STEPS;
+      this.yinc = 0;
     }
 
-    thing.setPos(xpos, ypos);
+    this.thing.setPos(xpos, ypos);
   }
 
   /** Converts linear movement into curved movement with a sine function. */
@@ -84,5 +83,4 @@ class BounceMovement extends MovementStyle {
     p = (p + 1) / 2; // [-1, 1] -> [0, 1]
     return p;
   }
-
 }

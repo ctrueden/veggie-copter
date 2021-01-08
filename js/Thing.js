@@ -124,8 +124,8 @@ class Thing implements KeyListener {
   draw(g) {
     BoundedImage img = getBoundedImage();
     if (img == null) return;
-    var x = (int) (getX() + img.getOffsetX());
-    var y = (int) (getY() + img.getOffsetY());
+    var x = Math.trunc(getX() + img.getOffsetX());
+    var y = Math.trunc(getY() + img.getOffsetY());
     g.drawImage(img.getImage(), x, y, game);
   }
 
@@ -212,7 +212,7 @@ class Thing implements KeyListener {
   Rectangle[] getBoxes() {
     BoundedImage img = getBoundedImage();
     if (img == null) return null;
-    return img.getBoxes((int) xpos, (int) ypos);
+    return img.getBoxes(xpos, ypos);
   }
 
   /** Gets object's current HP. */

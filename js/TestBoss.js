@@ -40,7 +40,7 @@ class TestBoss extends BossHead {
   draw(g) {
     super.draw(g);
     g.setColor(Color.yellow);
-    g.drawString("" + hp, (int) getCX() - 15, (int) getCY() + 20);
+    g.drawString("" + hp, Math.trunc(getCX()) - 15, Math.trunc(getCY()) + 20);
   }
 
   /** Hits this object for the given amount of damage. */

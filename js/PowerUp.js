@@ -28,7 +28,7 @@ class PowerUp extends Thing {
       var median = size / 2;
       for (int rad=median; rad>=1; rad--) {
         var q = (double) (median - rad) / median;
-        g.setColor(new Color(red, green, blue, (int) (255 * q)));
+        g.setColor(new Color(red, green, blue, Math.trunc(255 * q)));
         g.fillOval(median - rad, median - rad, 2 * rad, 2 * rad);
       }
       g.dispose();

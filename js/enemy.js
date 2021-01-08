@@ -1,8 +1,7 @@
 class EnemyMovement extends MovementStyle {
-
-  const ZIGZAG = 1;
-  const SPIRAL = 2;
-  const WAVE = 3;
+  static const ZIGZAG = 1;
+  static const SPIRAL = 2;
+  static const WAVE = 3;
 
   ticks;
   style;
@@ -20,7 +19,7 @@ class EnemyMovement extends MovementStyle {
    *   spiral: TODO
    *   wave: TODO
    */
-  EnemyMovement(t, params) {
+  constructor(t, params) {
     super(t);
 
     // determine movement style
@@ -70,7 +69,6 @@ class EnemyMovement extends MovementStyle {
 
     thing.setCPos(cx, cy);
   }
-
 }
 
 class EnemyBullet extends Thing {

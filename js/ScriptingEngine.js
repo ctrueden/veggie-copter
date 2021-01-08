@@ -1,17 +1,12 @@
+/** An object for parsing a game script. */
 class ScriptingEngine {
-
-  private const Class[] SIG = {VeggieCopter.class, String[].class};
-
-  private VeggieCopter game;
-  private Vector commands = new Vector();
-  private Vector params = new Vector();
-  private var cmdIndex;
-  private var waiting;
-  private boolean waitClear;
-
-  /** Constructs an object for parsing the game script. */
-  ScriptingEngine(game, scriptFile) {
+  constructor(game, scriptFile) {
     this.game = game;
+    this.commands = [];
+    this.params = [];
+    this.cmdIndex = 0;
+    this.waiting = 0;
+    this.waitClear = false;
     try {
       BufferedReader fin = new BufferedReader(
         new InputStreamReader(getClass().getResourceAsStream(scriptFile)));
@@ -87,7 +82,7 @@ class ScriptingEngine {
     try {
       String fqcn = getClass().getPackage().getName() + "." + className;
       Class c = Class.forName(fqcn);
-      Constructor con = c.getConstructor(SIG);
+      Constructor con = c.getConstructor(SIG); // game, args
       game.addThing((Thing) con.newInstance(new Object[] {game, p}));
     }
     catch (exc) { ignoreCommand("add", args); }

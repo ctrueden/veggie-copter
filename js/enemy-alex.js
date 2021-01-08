@@ -42,7 +42,7 @@ class AlexMovement extends MovementStyle {
     if (r < 1.0 / 3) {
       // appear from top
       var xpad = X_STEPS / 2;
-      xpos = (int) ((w - xpad) * Math.random()) + xpad;
+      xpos = (w - xpad) * Math.random() + xpad;
       ypos = 0;
       xdir = Math.random() < 0.5;
       ydir = true;
@@ -51,7 +51,7 @@ class AlexMovement extends MovementStyle {
       // appear from left
       var ypad = Y_STEPS / 2;
       xpos = 0;
-      ypos = (int) ((h / 2 - ypad) * Math.random()) + ypad;
+      ypos = (h / 2 - ypad) * Math.random() + ypad;
       xdir = true;
       ydir = true;
     }
@@ -59,24 +59,26 @@ class AlexMovement extends MovementStyle {
       // appear from right
       var ypad = Y_STEPS / 2;
       xpos = w - 1;
-      ypos = (int) ((h / 2 - ypad) * Math.random()) + ypad;
+      ypos = (h / 2 - ypad) * Math.random() + ypad;
       xdir = false;
       ydir = true;
     }
 
     // compute random starting trajectory
-    xstart = xpos; ystart = ypos;
-    xlen = (int) (thing.getWidth() * Math.random()) + 2 * X_STEPS;
-    ylen = (int) (thing.getHeight() * Math.random()) + 2 * Y_STEPS;
-    xinc = 0; yinc = 0;
+    this.xstart = xpos;
+    this.ystart = ypos;
+    this.xlen = this.thing.getWidth() * Math.random() + 2 * X_STEPS;
+    this.ylen = this.thing.getHeight() * Math.random() + 2 * Y_STEPS;
+    this.xinc = 0;
+    this.yinc = 0;
 
     lastX = xpos; lastY = ypos;
-    thing.setPos(xpos, ypos);
+    this.thing.setPos(xpos, ypos);
   }
 
-  boolean isRunning() { return running; }
+  boolean isRunning() { return this.running; }
 
-  boolean isLunging() { return lunging; }
+  boolean isLunging() { return this.lunging; }
 
   /** Moves the given thing according to the bouncing movement style. */
   move() {

@@ -1,14 +1,8 @@
 /** Defines veggie copter movement. */
 class CopterMovement extends MovementStyle {
+  static const SPEED = 2;
 
-  const SPEED = 2;
-
-  left = false;
-  right = false;
-  up = false;
-  down = false;
-
-  CopterMovement(t) {
+  constructor(t) {
     super(t);
     reset();
   }
@@ -58,7 +52,6 @@ class CopterMovement extends MovementStyle {
     else if (code == KeyEvent.VK_DOWN ||
       code == KeyEvent.VK_KP_DOWN) down = false;
   }
-
 }
 
 /** Defines veggie copter attack. */

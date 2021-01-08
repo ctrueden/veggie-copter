@@ -128,9 +128,9 @@ class Game {
 
         // draw power level
         this.buf.setColor(Color.white);
-        var x = (int) t[i].getCX() - 3;
-        var y = (int) t[i].getCY() + 6;
-        this.buf.drawString("" + t[i].getPower(), x, y);
+        var xint = Math.trunc(t[i].getCX()) - 3;
+        var yint = Math.trunc(t[i].getCY()) + 6;
+        this.buf.drawString("" + t[i].getPower(), xint, yint);
       }
     }
 
@@ -156,8 +156,8 @@ class Game {
     var hp = copter.getHP();
     for (var i=0; i<hp; i++) {
       var q = (double) i / 99;
-      var red = (int) (255 * (1 - q));
-      var green = (int) (255 * q);
+      var red = Math.trunc(255 * (1 - q));
+      var green = Math.trunc(255 * q);
       this.buf.setColor(new Color(red, green, 0));
       this.buf.drawLine(x + 2 + i, GAME_HEIGHT + 4, x + 2 + i, GAME_HEIGHT + 20);
     }
