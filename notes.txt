@@ -1,6 +1,8 @@
-Alex has a random, normalized pattern, except that every few seconds, she lunges toward the ship. (making the attack face)
+Alex has a random, normalized pattern, except that every few seconds,
+she lunges toward the ship. (making the attack face)
 
-Alex fires bullets fairly slowly when not lunging. The bullets are typical, slow pellets that head in the general direction of the ship.
+Alex fires bullets fairly slowly when not lunging. The bullets are typical,
+slow pellets that head in the general direction of the ship.
 
 Alex runs when being shot to the far side of the screen.
 
@@ -8,11 +10,14 @@ Alex runs when being shot to the far side of the screen.
 
 ------
 
-Paul alternates moving horizontally and vertically in line with the ship (but doesn't update its computations until after each movement).
+Paul alternates moving horizontally and vertically in line with the ship
+(but doesn't update its computations until after each movement).
 
-Each time it changes axis, fires a 60 degree spread of standard bullets toward the ship.
+Each time it changes axis, fires a 60 degree spread of standard bullets
+toward the ship.
 
-When low in HP, stops moving and begins firing a spread of bullets in all directions frantically.
+When low in HP, stops moving and begins firing a spread of bullets in all
+directions frantically.
 
 80-100HP, regen 1 each time he stops.
 
