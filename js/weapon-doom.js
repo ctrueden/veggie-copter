@@ -25,12 +25,12 @@ class DoomAttack extends ColoredAttack {
   }
 
   keyPressed(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
   keyReleased(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) clear();
   }
 

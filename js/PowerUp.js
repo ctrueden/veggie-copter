@@ -1,7 +1,7 @@
 /** Power-up object increases copter's weapon power. */
 class PowerUp extends Thing {
 
-  const int PULSE = 10;
+  const PULSE = 10;
 
   ColoredAttack att;
 
@@ -16,18 +16,18 @@ class PowerUp extends Thing {
     // create power-up images
     BoundedImage[] imgs = new BoundedImage[PULSE];
     Color color = att == null ? Color.white : att.getColor();
-    int r2 = color.getRed() / 2;
-    int g2 = color.getGreen() / 2;
-    int b2 = color.getBlue() / 2;
-    for (int i=0; i<imgs.length; i++) {
-      int red = r2 + r2 * (i + 1) / imgs.length;
-      int green = g2 + g2 * (i + 1) / imgs.length;
-      int blue = b2 + b2 * (i + 1) / imgs.length;
+    var r2 = color.getRed() / 2;
+    var g2 = color.getGreen() / 2;
+    var b2 = color.getBlue() / 2;
+    for (var i=0; i<imgs.length; i++) {
+      var red = r2 + r2 * (i + 1) / imgs.length;
+      var green = g2 + g2 * (i + 1) / imgs.length;
+      var blue = b2 + b2 * (i + 1) / imgs.length;
       BufferedImage img = ImageTools.makeImage(size, size);
       Graphics g = img.createGraphics();
-      int median = size / 2;
+      var median = size / 2;
       for (int rad=median; rad>=1; rad--) {
-        double q = (double) (median - rad) / median;
+        var q = (double) (median - rad) / median;
         g.setColor(new Color(red, green, blue, (int) (255 * q)));
         g.fillOval(median - rad, median - rad, 2 * rad, 2 * rad);
       }

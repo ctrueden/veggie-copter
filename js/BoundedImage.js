@@ -2,7 +2,7 @@
 class BoundedImage {
 
   /** Image. */
-  BufferedImage img;
+  img;
 
   /** Image dimensions. */
   width, height;
@@ -11,7 +11,7 @@ class BoundedImage {
   xoff, yoff;
 
   /** Bounding boxes. */
-  Vector boxes = new Vector();
+  boxes = [];
 
   /** Constructs a bounded image with default parameters. */
   BoundedImage(img) {
@@ -34,36 +34,34 @@ class BoundedImage {
   }
 
   /** Adds a bounding box to the image. */
-  addBox(box) { boxes.add(box); }
+  addBox(box) { boxes.push(box); }
 
   /** Removes the last bounding box from the image. */
   removeBox() {
-    int ndx = boxes.size() - 1;
-    if (ndx >= 0) boxes.removeElementAt(ndx);
+    boxes.pop();
   }
 
   /** Gets image. */
-  Image getImage() { return img; }
+  getImage() { return this.img; }
 
   /** Gets image width. */
-  int getWidth() { return width; }
+  getWidth() { return this.width; }
 
   /** Gets image height. */
-  int getHeight() { return height; }
+  getHeight() { return this.height; }
 
   /** Gets X offset. */
-  int getOffsetX() { return xoff; }
+  getOffsetX() { return this.xoff; }
 
   /** Gets Y offset. */
-  int getOffsetY() { return yoff; }
+  getOffsetY() { return this.yoff; }
 
   /** Gets bounding boxes given the image's top left coordinate. */
-  Rectangle[] getBoxes(x, y) {
-    int len = boxes.size();
-    Rectangle[] r = new Rectangle[len];
-    for (int i=0; i<len; i++) {
-      BoundingBox box = (BoundingBox) boxes.elementAt(i);
-      r[i] = box.getBox(x, y, width, height);
+  getBoxes(x, y) {
+    var len = this.boxes.length;
+    var r = new Rectangle[len];
+    for (var i=0; i<len; i++) {
+      r[i] = boxes[i].getBox(x, y, width, height);
     }
     return r;
   }

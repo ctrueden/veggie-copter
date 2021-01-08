@@ -5,8 +5,8 @@ class ScriptingEngine {
   private VeggieCopter game;
   private Vector commands = new Vector();
   private Vector params = new Vector();
-  private int cmdIndex;
-  private int waiting;
+  private var cmdIndex;
+  private var waiting;
   private boolean waitClear;
 
   /** Constructs an object for parsing the game script. */
@@ -19,11 +19,11 @@ class ScriptingEngine {
         String line = fin.readLine();
         if (line == null) break;
         StringTokenizer st = new StringTokenizer(line);
-        int len = st.countTokens();
+        var len = st.countTokens();
         if (len == 0) continue;
         commands.add(st.nextToken());
         String[] tokens = new String[len - 1];
-        for (int i=0; i<tokens.length; i++) tokens[i] = st.nextToken();
+        for (var i=0; i<tokens.length; i++) tokens[i] = st.nextToken();
         params.add(tokens);
       }
       fin.close();
@@ -44,7 +44,7 @@ class ScriptingEngine {
    * @return true if the script is complete
    */
   boolean execute() {
-    while (cmdIndex < commands.size()) {
+    while (cmdIndex < commands.length) {
       if (waitClear) {
         if (game.isClear()) {
           waitClear = false;
@@ -66,7 +66,7 @@ class ScriptingEngine {
       else if (cmd.equalsIgnoreCase("wait")) wait(args);
       cmdIndex++;
     }
-    return cmdIndex >= commands.size();
+    return cmdIndex >= commands.length;
   }
 
   reset() {
@@ -105,20 +105,20 @@ class ScriptingEngine {
     }
     x, y, size, r, g, b, time;
     try {
-      x = Integer.parseInt(args[0]);
-      y = Integer.parseInt(args[1]);
-      size = Integer.parseInt(args[2]);
-      r = Integer.parseInt(args[3]);
-      g = Integer.parseInt(args[4]);
-      b = Integer.parseInt(args[5]);
-      time = Integer.parseInt(args[6]);
+      x = parseInt(args[0]);
+      y = parseInt(args[1]);
+      size = parseInt(args[2]);
+      r = parseInt(args[3]);
+      g = parseInt(args[4]);
+      b = parseInt(args[5]);
+      time = parseInt(args[6]);
     }
     catch (exc) {
       ignoreCommand("print", args);
       return;
     }
     String msg = "";
-    for (int i=7; i<args.length; i++) msg += args[i] + " ";
+    for (var i=7; i<args.length; i++) msg += args[i] + " ";
     game.printMessage(new Message(msg, x, y, size, new Color(r, g, b), time));
   }
 
@@ -133,7 +133,7 @@ class ScriptingEngine {
         ignoreCommand("wait", args);
         return;
       }
-      try { waiting = Integer.parseInt(args[1]); }
+      try { waiting = parseInt(args[1]); }
       catch (exc) { ignoreCommand("wait", args); }
       waitClear = true;
     }
@@ -143,7 +143,7 @@ class ScriptingEngine {
         waiting = Integer.MAX_VALUE;
       }
       else {
-        try { waiting = Integer.parseInt(args[0]); }
+        try { waiting = parseInt(args[0]); }
         catch (exc) { ignoreCommand("wait", args); }
       }
     }
@@ -151,7 +151,7 @@ class ScriptingEngine {
 
   ignoreCommand(cmd, String[] args) {
     System.err.print("Ignoring command: " + cmd);
-    for (int i=0; i<args.length; i++) System.err.print(" " + args[i]);
+    for (var i=0; i<args.length; i++) System.err.print(" " + args[i]);
     System.err.println();
   }
 

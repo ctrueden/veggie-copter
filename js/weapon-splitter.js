@@ -18,14 +18,14 @@ class SplitterMovement extends MovementStyle {
 
 class CopterSplitter extends Thing {
 
-  const int MAX_SIZE = 12;
+  const MAX_SIZE = 12;
 
   static BoundedImage[] images;
 
   static {
     images = new BoundedImage[MAX_SIZE];
-    for (int i=0; i<MAX_SIZE; i++) {
-      int size = i + 4;
+    for (var i=0; i<MAX_SIZE; i++) {
+      var size = i + 4;
       BufferedImage img = ImageTools.makeImage(size, size);
       Graphics g = img.createGraphics();
       g.setColor(Color.yellow);
@@ -60,15 +60,15 @@ class CopterSplitter extends Thing {
 /** Defines splitter attack. */
 class SplitterAttack extends ColoredAttack {
 
-  const int RECHARGE = 10;
-  const int MAX_SPLIT = 6;
-  const int SPEED = 5;
-  const int MULTIPLIER = 4;
+  const RECHARGE = 10;
+  const MAX_SPLIT = 6;
+  const SPEED = 5;
+  const MULTIPLIER = 4;
 
   space, trigger;
-  int fired;
+  var fired;
   xdir, ydir;
-  int count;
+  var count;
 
   SplitterAttack(t) { this(t, 0, 0, 0); }
 
@@ -110,9 +110,9 @@ class SplitterAttack extends ColoredAttack {
     thing.setHP(0);
 
     VeggieCopter game = thing.getGame();
-    float x = thing.getCX(), y = thing.getCY();
-    int xd = ydir, yd = xdir;
-    int size = power / MULTIPLIER - 3;
+    var x = thing.getCX(), y = thing.getCY();
+    var xd = ydir, yd = xdir;
+    var size = power / MULTIPLIER - 3;
 
     CopterSplitter[] cs = {
       new CopterSplitter(game, x, y, xd, yd, count + 1, size),
@@ -125,19 +125,19 @@ class SplitterAttack extends ColoredAttack {
       //new CopterSplitter(game, x, y, -SPEED, SPEED, count + 1, size),
       //new CopterSplitter(game, x, y, SPEED, -SPEED, count + 1, size)
     };
-    for (int i=0; i<cs.length; i++) cs[i].setPower(power - 2 * MULTIPLIER);
+    for (var i=0; i<cs.length; i++) cs[i].setPower(power - 2 * MULTIPLIER);
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return cs;
   }
 
   keyPressed(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
     else if (code == Keys.TRIGGER) trigger = true;
   }
 
   keyReleased(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
     else if (code == Keys.TRIGGER) trigger = false;
   }

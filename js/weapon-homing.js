@@ -1,10 +1,10 @@
 /** Defines veggie copter homing missile attack style. */
 class HomingAttack extends ColoredAttack {
 
-  const int RECHARGE = 12;
+  const RECHARGE = 12;
 
   boolean space = false;
-  int fired;
+  var fired;
 
   HomingAttack(t) {
     super(t, Color.magenta,
@@ -20,7 +20,7 @@ class HomingAttack extends ColoredAttack {
       return null;
     }
     if (!space) return null;
-    int pow = getPower();
+    var pow = getPower();
     fired = RECHARGE - pow;
 
     CopterHoming homing = new CopterHoming(thing);
@@ -30,12 +30,12 @@ class HomingAttack extends ColoredAttack {
   }
 
   keyPressed(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
   keyReleased(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }
 

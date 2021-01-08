@@ -1,17 +1,17 @@
 /** Defines veggie copter lightning attack style. */
 class LitAttack extends ColoredAttack {
 
-  const double LEFT_CHANCE = 0.2;
-  const double RIGHT_CHANCE = 0.2;
+  const var LEFT_CHANCE = 0.2;
+  const var RIGHT_CHANCE = 0.2;
 
-  const int POWER = 1;
-  const int PATH_LENGTH = 200;
+  const POWER = 1;
+  const PATH_LENGTH = 200;
 
-  const int ARC_LENGTH = 10;
-  const int DELAY = 10;
-  const int PERIOD = ARC_LENGTH + DELAY;
+  const ARC_LENGTH = 10;
+  const DELAY = 10;
+  const PERIOD = ARC_LENGTH + DELAY;
 
-  int ticks;
+  var ticks;
   boolean space = false;
   int[][] paths;
 
@@ -28,13 +28,13 @@ class LitAttack extends ColoredAttack {
   Thing[] shoot() {
     if (!space) return null;
     ticks++;
-    int pow = getPower();
-    int q = ticks % PERIOD;
+    var pow = getPower();
+    var q = ticks % PERIOD;
     CopterLit[] lits = new CopterLit[pow];
-    for (int i=0; i<pow; i++) {
-      int genTick = i * PERIOD / pow;
+    for (var i=0; i<pow; i++) {
+      var genTick = i * PERIOD / pow;
       if (q < genTick) q += PERIOD;
-      int haltTick = genTick + ARC_LENGTH;
+      var haltTick = genTick + ARC_LENGTH;
 
       if (q == genTick) generatePath(i);
       else if (q >= haltTick) continue;
@@ -48,7 +48,7 @@ class LitAttack extends ColoredAttack {
   }
 
   keyPressed(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) {
       space = true;
       ticks = 0;
@@ -56,14 +56,14 @@ class LitAttack extends ColoredAttack {
   }
 
   keyReleased(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }
 
   generatePath(index) {
     paths[index] = new int[PATH_LENGTH];
-    for (int i=0; i<paths[index].length; i++) {
-      double chance = Math.random();
+    for (var i=0; i<paths[index].length; i++) {
+      var chance = Math.random();
       if (chance < LEFT_CHANCE) paths[index][i] = -1;
       else if (chance > 1 - RIGHT_CHANCE) paths[index][i] = 1;
       else paths[index][i] = 0;

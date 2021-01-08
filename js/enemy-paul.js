@@ -2,19 +2,19 @@
 class PaulAttack extends AttackStyle {
 
   /** Number of bullets to fire per spread. */
-  const int BULLETS = 5;
+  const BULLETS = 5;
 
   /** Spread factor for controlling bullet spread width. */
-  const int SPREAD = 24;
+  const SPREAD = 24;
 
   /** Number of frames to wait between firing bullets in frantic mode. */
-  const int FRANTIC_RATE = 5;
+  const FRANTIC_RATE = 5;
 
   /** List of bullets left to fire. */
   Vector toFire = new Vector();
 
   /** Frames to wait until adding another bullet (frantic mode only). */
-  int waitTicks = FRANTIC_RATE;
+  var waitTicks = FRANTIC_RATE;
 
   PaulAttack(t) { super(t); }
 
@@ -27,8 +27,8 @@ class PaulAttack extends AttackStyle {
         waitTicks--;
         return null;
       }
-      int x = (int) (thing.getGame().getWidth() * Math.random());
-      int y = (int) (thing.getGame().getHeight() * Math.random());
+      var x = (int) (thing.getGame().getWidth() * Math.random());
+      var y = (int) (thing.getGame().getHeight() * Math.random());
       toFire.add(new Point(x, y));
       waitTicks = FRANTIC_RATE;
     }
@@ -36,12 +36,12 @@ class PaulAttack extends AttackStyle {
       if (pm.isTurning()) {
         // initialize new bullet spread when changing directions
         Copter hero = thing.getGame().getCopter();
-        float hx = hero.getX(), hy = hero.getY();
+        var hx = hero.getX(), hy = hero.getY();
         boolean dir = pm.getDirection();
-        for (int i=0; i<BULLETS; i++) {
-          float mod = i - BULLETS / 2f;
-          float x = dir ? (hx + SPREAD * mod) : hx;
-          float y = dir ? hy : (hy + SPREAD * mod);
+        for (var i=0; i<BULLETS; i++) {
+          var mod = i - BULLETS / 2f;
+          var x = dir ? (hx + SPREAD * mod) : hx;
+          var y = dir ? hy : (hy + SPREAD * mod);
           toFire.add(new Point((int) x, (int) y));
         }
       }
@@ -58,24 +58,24 @@ class PaulAttack extends AttackStyle {
 class PaulMovement extends MovementStyle {
 
   /** Movement speed per frame. */
-  const int SPEED = 1;
+  const SPEED = 1;
 
   /** Number of HP considered low enough to enter frantic mode. */
-  const int LOW_HP = 30;
+  const LOW_HP = 30;
 
-  float target;
+  var target;
   boolean dir;
   boolean turning;
 
   PaulMovement(t) {
     super(t);
     VeggieCopter game = thing.getGame();
-    int w = game.getWindowWidth();
+    var w = game.getWindowWidth();
 
     // compute starting position
-    int width = thing.getWidth();
-    float xpos = (float) ((w - 2 * width) * Math.random()) + width;
-    float ypos = -thing.getHeight();
+    var width = thing.getWidth();
+    var xpos = (float) ((w - 2 * width) * Math.random()) + width;
+    var ypos = -thing.getHeight();
     thing.setPos(xpos, ypos);
     doSwitch();
   }
@@ -92,7 +92,7 @@ class PaulMovement extends MovementStyle {
   move() {
     if (isFrantic()) return;
 
-    float cx = thing.getCX(), cy = thing.getCY();
+    var cx = thing.getCX(), cy = thing.getCY();
     turning = false;
 
     if (dir) {
@@ -152,7 +152,7 @@ class PaulEnemy extends EnemyHead {
     setAttack(new PaulAttack(this));
   }
 
-  int getScore() { return 5 * super.getScore(); }
+  var getScore() { return 5 * super.getScore(); }
 
   move() {
     super.move();
@@ -187,7 +187,7 @@ class PaulBoss extends BossHead {
     return new SpreadAttack(game.getCopter());
   }
 
-  int getScore() { return 50 * super.getScore(); }
+  var getScore() { return 50 * super.getScore(); }
 
   move() {
     super.move();

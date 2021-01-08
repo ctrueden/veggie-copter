@@ -1,13 +1,13 @@
 class ShieldMovement extends MovementStyle {
 
-  const float SPEED = 0.1f;
-  const int MIN_RADIUS = 30;
-  const int MAX_RADIUS = 63;
-  const int RADIUS_INC = 3;
+  const var SPEED = 0.1f;
+  const MIN_RADIUS = 30;
+  const MAX_RADIUS = 63;
+  const RADIUS_INC = 3;
 
   Thing owner;
-  float angle;
-  int radius;
+  var angle;
+  var radius;
   boolean extended;
 
   ShieldMovement(t, owner, angle) {
@@ -15,8 +15,8 @@ class ShieldMovement extends MovementStyle {
     this.owner = owner;
     this.angle = angle;
     radius = 0;
-    float xpos = owner.getCX() + radius * (float) Math.cos(angle);
-    float ypos = owner.getCY() + radius * (float) Math.sin(angle);
+    var xpos = owner.getCX() + radius * (float) Math.cos(angle);
+    var ypos = owner.getCY() + radius * (float) Math.sin(angle);
     thing.setCPos(xpos, ypos);
   }
 
@@ -24,15 +24,15 @@ class ShieldMovement extends MovementStyle {
 
   /** Moves the given thing according to the bullet movement style. */
   move() {
-    float speed = SPEED - thing.getPower() * SPEED / 20;
+    var speed = SPEED - thing.getPower() * SPEED / 20;
     if (speed < 0) speed = 0;
     angle += speed;
-    int targetRadius = extended ? MAX_RADIUS : MIN_RADIUS;
+    var targetRadius = extended ? MAX_RADIUS : MIN_RADIUS;
     if (radius < targetRadius) radius += RADIUS_INC;
     else if (radius > targetRadius) radius -= RADIUS_INC;
     while (angle > 2 * Math.PI) angle -= 2 * Math.PI;
-    float xpos = owner.getCX() + radius * (float) Math.cos(angle);
-    float ypos = owner.getCY() + radius * (float) Math.sin(angle);
+    var xpos = owner.getCX() + radius * (float) Math.cos(angle);
+    var ypos = owner.getCY() + radius * (float) Math.sin(angle);
     thing.setCPos(xpos, ypos);
   }
 
@@ -40,10 +40,10 @@ class ShieldMovement extends MovementStyle {
 
 class CopterShield extends Thing {
 
-  const int SIZE = 7;
+  const SIZE = 7;
 
   static BoundedImage[] images;
-  static int count = 0;
+  static var count = 0;
 
   CopterShield(thing, angle) {
     super(thing.getGame());
@@ -56,7 +56,7 @@ class CopterShield extends Thing {
         game.loadImage("james-diamond.png"),
         game.loadImage("james-club.png")
       };
-      for (int i=0; i<images.length; i++) images[i].addBox(new BoundingBox());
+      for (var i=0; i<images.length; i++) images[i].addBox(new BoundingBox());
     }
     setImage(images[count % images.length]);
     count++;
@@ -86,15 +86,15 @@ class ShieldAttack extends ColoredAttack {
   setExtended(extended) {
     this.extended = extended;
     if (shields != null) {
-      for (int i=0; i<shields.length; i++) shields[i].setExtended(extended);
+      for (var i=0; i<shields.length; i++) shields[i].setExtended(extended);
     }
   }
 
   activate() {
-    int num = power + 1;
+    var num = power + 1;
     shields = new CopterShield[num];
     VeggieCopter game = thing.getGame();
-    for (int i=0; i<num; i++) {
+    for (var i=0; i<num; i++) {
       shields[i] = new CopterShield(thing, (float) (2 * Math.PI * i / num));
       shields[i].setPower(1);
       game.addThing(shields[i]);
@@ -104,7 +104,7 @@ class ShieldAttack extends ColoredAttack {
 
   clear() {
     if (shields != null) {
-      for (int i=0; i<shields.length; i++) shields[i].setHP(0);
+      for (var i=0; i<shields.length; i++) shields[i].setHP(0);
       shields = null;
       extended = false;
     }
@@ -117,18 +117,18 @@ class ShieldAttack extends ColoredAttack {
   setPower(power) {
     super.setPower(power);
     if (shields != null) {
-      for (int i=0; i<shields.length; i++) shields[i].setHP(0);
+      for (var i=0; i<shields.length; i++) shields[i].setHP(0);
     }
     activate();
   }
 
   keyPressed(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) setExtended(true);
   }
 
   keyReleased(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) setExtended(false);
   }
 

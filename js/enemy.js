@@ -1,14 +1,14 @@
 class EnemyMovement extends MovementStyle {
 
-  const int ZIGZAG = 1;
-  const int SPIRAL = 2;
-  const int WAVE = 3;
+  const ZIGZAG = 1;
+  const SPIRAL = 2;
+  const WAVE = 3;
 
-  long ticks;
-  int style;
-  float[] params;
+  ticks;
+  style;
+  params;
 
-  float xmod = 0, ymod = 1; // for zigzag
+  xmod = 0, ymod = 1; // for zigzag
 
   /**
    * Constructs a new enemy movement handler.
@@ -20,7 +20,7 @@ class EnemyMovement extends MovementStyle {
    *   spiral: TODO
    *   wave: TODO
    */
-  EnemyMovement(t, String[] params) {
+  EnemyMovement(t, params) {
     super(t);
 
     // determine movement style
@@ -29,28 +29,28 @@ class EnemyMovement extends MovementStyle {
     else if (params[0].equalsIgnoreCase("wave")) style = WAVE;
 
     // set starting position
-    float xpos = Float.parseFloat(params[1]);
-    float ypos = Float.parseFloat(params[2]);
+    var xpos = Float.parseFloat(params[1]);
+    var ypos = Float.parseFloat(params[2]);
 
     // prepare additional parameters
     this.params = new float[params.length - 3];
-    for (int i=0; i<this.params.length; i++) {
+    for (var i=0; i<this.params.length; i++) {
       this.params[i] = Float.parseFloat(params[i + 3]);
     }
 
     // starting position
-    VeggieCopter game = thing.getGame();
+    var game = thing.getGame();
     thing.setPos(xpos, ypos);
   }
 
   /** Moves the given thing according to the enemy type A movement style. */
   move() {
     ticks++;
-    float cx = thing.getCX(), cy = thing.getCY();
+    var cx = thing.getCX(), cy = thing.getCY();
 
     if (style == ZIGZAG) {
       // tick1, xmod1, ymod1, tick2, xmod2, ymod2, ...
-      for (int i=0; i<params.length-2; i+=3) {
+      for (var i=0; i<params.length-2; i+=3) {
         if (params[i] == ticks) {
           xmod = params[i + 1];
           ymod = params[i + 2];
@@ -75,13 +75,13 @@ class EnemyMovement extends MovementStyle {
 
 class EnemyBullet extends Thing {
 
-  const int SIZE = 7;
+  const SIZE = 7;
 
-  static BoundedImage image;
+  static image;
 
   static {
-    BufferedImage img = ImageTools.makeImage(SIZE, SIZE);
-    Graphics g = img.createGraphics();
+    var img = ImageTools.makeImage(SIZE, SIZE);
+    var g = img.createGraphics();
     g.setColor(Color.red);
     g.fillRoundRect(0, 0, SIZE, SIZE, SIZE / 2, SIZE / 2);
     g.dispose();
@@ -95,8 +95,8 @@ class EnemyBullet extends Thing {
     setImage(image);
     setPower(10 * t.getPower());
 
-    float x = t.getCX() - getWidth() / 2f;
-    float y = t.getCY() - getHeight() / 2f;
+    var x = t.getCX() - getWidth() / 2f;
+    var y = t.getCY() - getHeight() / 2f;
     move = new BulletMovement(this, x, y);
     //attack = new RandomBulletAttack(this); // MWAHAHA!
   }
@@ -107,8 +107,8 @@ class EnemyBullet extends Thing {
     setImage(image);
     setPower(10 * t.getPower());
 
-    float x = t.getCX() - getWidth() / 2f;
-    float y = t.getCY() - getHeight() / 2f;
+    var x = t.getCX() - getWidth() / 2f;
+    var y = t.getCY() - getHeight() / 2f;
     move = new BulletMovement(this, x, y, x2, y2);
     //attack = new RandomBulletAttack(this); // MWAHAHA!
   }
@@ -119,7 +119,7 @@ class EnemyBullet extends Thing {
 class RandomBulletAttack extends AttackStyle {
 
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-  const int FREQUENCY = 3;
+  const FREQUENCY = 3;
 
   RandomBulletAttack(t) { super(t); }
 
@@ -133,17 +133,15 @@ class RandomBulletAttack extends AttackStyle {
 
 class EnemyHead extends Thing {
 
-  const int NORMAL = 0;
-  const int ATTACKING = 1;
-  const int HURTING = 2;
+  const NORMAL = 0;
+  const ATTACKING = 1;
+  const HURTING = 2;
 
-  const int SHOT_DELAY = 18;
+  const SHOT_DELAY = 18;
 
-  int shooting;
+  shooting;
 
-  EnemyHead(game, max,
-    normal, attacking, hurting)
-  {
+  EnemyHead(game, max, normal, attacking, hurting) {
     super(game);
     setImageList(new BoundedImage[] {normal, attacking, hurting});
     maxhp = hp = max;
@@ -160,7 +158,7 @@ class EnemyHead extends Thing {
   }
 
   Thing[] shoot() {
-    Thing[] t = super.shoot();
+    var t = super.shoot();
     if (t != null) shooting = SHOT_DELAY;
     else if (shooting > 0) shooting--;
     if (isDead()) {
@@ -170,7 +168,7 @@ class EnemyHead extends Thing {
     return t;
   }
 
-  Thing[] getPowerUp() {
+  getPowerUp() {
     return new Thing[] {new PowerUp(game, getCX(), getCY(), 20, null)};
   }
 
@@ -185,7 +183,7 @@ class Enemy extends EnemyHead {
    * args[2+] = movement parameters (EnemyMovement)
    */
   Enemy(game, String[] args) {
-    super(game, Integer.parseInt(args[0]),
+    super(game, parseInt(args[0]),
       game.loadImage(args[1] + "1.png"),
       game.loadImage(args[1] + "2.png"),
       game.loadImage(args[1] + "3.png"));

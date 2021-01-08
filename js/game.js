@@ -45,7 +45,7 @@ class Game {
     /*
     BufferedImage img = loader.getImage(filename);
     BoundedImage bi = new BoundedImage(img, xoff, yoff);
-    for (int i=0; i<boxes.length; i++) bi.addBox(boxes[i]);
+    for (var i=0; i<boxes.length; i++) bi.addBox(boxes[i]);
     return bi;
     */
   }
@@ -62,7 +62,7 @@ class Game {
   /** Gets objects currently onscreen. */
   getThings() {
     /*
-    t = new Thing[things.size()];
+    t = new Thing[things.length];
     things.copyInto(t);
     return t;
     */
@@ -77,9 +77,9 @@ class Game {
   isClear() {
     /*
     boolean clear = true;
-    for (int i=0; i<things.size(); i++) {
+    for (var i=0; i<things.length; i++) {
       Thing t = (Thing) things.elementAt(i);
-      int type = t.getType();
+      var type = t.getType();
       if (type != Thing.GOOD && type != Thing.GOOD_BULLET) {
         clear = false;
         break;
@@ -114,10 +114,10 @@ class Game {
 
 /*
     // redraw things
-    for (int i=0; i<t.length; i++) t[i].draw(this.buf);
+    for (var i=0; i<t.length; i++) t[i].draw(this.buf);
 
     if (debug) {
-      for (int i=0; i<t.length; i++) {
+      for (var i=0; i<t.length; i++) {
         // draw bounding box
         this.buf.setColor(Color.red);
         Rectangle[] r = t[i].getBoxes();
@@ -127,16 +127,16 @@ class Game {
 
         // draw power level
         this.buf.setColor(Color.white);
-        int x = (int) t[i].getCX() - 3;
-        int y = (int) t[i].getCY() + 6;
+        var x = (int) t[i].getCX() - 3;
+        var y = (int) t[i].getCY() + 6;
         this.buf.drawString("" + t[i].getPower(), x, y);
       }
     }
 
     // draw text messages
-    Message[] m = new Message[messages.size()];
+    Message[] m = new Message[messages.length];
     messages.copyInto(m);
-    for (int i=0; i<m.length; i++) m[i].draw(this.buf);
+    for (var i=0; i<m.length; i++) m[i].draw(this.buf);
 
     // draw stage selection
     if (stage == null) selector.draw(this.buf);
@@ -148,15 +148,15 @@ class Game {
     this.buf.drawLine(0, GAME_HEIGHT, GAME_WIDTH, GAME_HEIGHT);
 
     // draw life bar
-    int x = 1;
+    var x = 1;
     this.buf.drawRect(x, GAME_HEIGHT + 2, 103, 20);
     this.buf.setColor(Color.black);
     this.buf.fillRect(x + 1, GAME_HEIGHT + 3, 102, 19);
-    int hp = copter.getHP();
-    for (int i=0; i<hp; i++) {
-      double q = (double) i / 99;
-      int red = (int) (255 * (1 - q));
-      int green = (int) (255 * q);
+    var hp = copter.getHP();
+    for (var i=0; i<hp; i++) {
+      var q = (double) i / 99;
+      var red = (int) (255 * (1 - q));
+      var green = (int) (255 * q);
       this.buf.setColor(new Color(red, green, 0));
       this.buf.drawLine(x + 2 + i, GAME_HEIGHT + 4, x + 2 + i, GAME_HEIGHT + 20);
     }
@@ -186,15 +186,15 @@ class Game {
 
     /*
     // move things
-    for (int i=0; i<t.length; i++) t[i].move();
+    for (var i=0; i<t.length; i++) t[i].move();
 
     // update text messages
-    for (int i=0; i<m.length; i++) {
+    for (var i=0; i<m.length; i++) {
       if (m[i].checkFinished()) messages.remove(m[i]);
     }
 
     // allow things the chance to attack
-    for (int i=0; i<t.length; i++) {
+    for (var i=0; i<t.length; i++) {
       Thing[] shots = t[i].shoot();
       if (shots != null) {
         for (int j=0; j<shots.length; j++) {
@@ -210,7 +210,7 @@ class Game {
     }
 
     // purge dead things
-    for (int i=0; i<things.size(); i++) {
+    for (var i=0; i<things.length; i++) {
       Thing thing = (Thing) things.elementAt(i);
       if (thing.isDead()) {
         things.removeElementAt(i);
@@ -246,7 +246,7 @@ class Game {
       this.keys.add(code);
       /*
       Thing[] t = getThings();
-      for (int i=0; i<t.length; i++) t[i].keyPressed(e);
+      for (var i=0; i<t.length; i++) t[i].keyPressed(e);
       */
 
       if (code == Keys.SHOOT) {
@@ -294,18 +294,18 @@ class Game {
     // divide things into types, and build rectangle lists
     Thing[][] tt = new Thing[Thing.TYPES.length][];
     int[] counts = new int[Thing.TYPES.length];
-    for (int i=0; i<t.length; i++) {
-      int type = t[i].getType();
+    for (var i=0; i<t.length; i++) {
+      var type = t[i].getType();
       counts[type]++;
     }
     Rectangle[][][] boxes = new Rectangle[Thing.TYPES.length][][];
-    for (int i=0; i<counts.length; i++) {
+    for (var i=0; i<counts.length; i++) {
       tt[i] = new Thing[counts[i]];
       boxes[i] = new Rectangle[counts[i]][];
     }
-    for (int i=0; i<t.length; i++) {
-      int type = t[i].getType();
-      int ndx = --counts[type];
+    for (var i=0; i<t.length; i++) {
+      var type = t[i].getType();
+      var ndx = --counts[type];
       tt[type][ndx] = t[i];
       boxes[type][ndx] = t[i].getBoxes();
     }
@@ -313,7 +313,7 @@ class Game {
     // do collision detection between copter and power-ups
     Rectangle[] rcop = copter.getBoxes();
     Rectangle[][] rups = boxes[Thing.POWER_UP];
-    for (int i=0; i<rups.length; i++) {
+    for (var i=0; i<rups.length; i++) {
       if (rups[i] == null) continue;
       boolean collision = false;
       for (int k=0; k<rups[i].length; k++) {
@@ -330,7 +330,7 @@ class Game {
         ColoredAttack attack = powerUp.getGrantedAttack();
         if (attack == null) {
           // increase power of selected attack style by one
-          int power = copter.getAttack().getPower();
+          var power = copter.getAttack().getPower();
           if (power < 10) copter.getAttack().setPower(power + 1);
         }
         else {
@@ -356,7 +356,7 @@ class Game {
   /** Does collision detection between the given objects. */
   checkCollisions(t1, r1, t2, r2) {
     /*
-    for (int i=0; i<r1.length; i++) {
+    for (var i=0; i<r1.length; i++) {
       for (int j=0; j<r2.length; j++) {
         if (r1[i] == null) break;
         if (r2[j] == null) continue;

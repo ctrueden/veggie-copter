@@ -13,7 +13,7 @@ class StageSelector {
 
   private VeggieCopter game;
   private Vector stages = new Vector();
-  private int current = 0;
+  private var current = 0;
 
   StageSelector(game) {
     this.game = game;
@@ -51,11 +51,11 @@ class StageSelector {
 
   /** Draws stage select screen. */
   draw(g) {
-    int size = stages.size();
-    int w = game.getWidth(), h = game.getHeight();
-    int cols = w / Stage.ICON_SIZE;
-    int rows = (size + cols - 1) / cols;
-    for (int i=0; i<size; i++) {
+    var size = stages.length;
+    var w = game.getWidth(), h = game.getHeight();
+    var cols = w / Stage.ICON_SIZE;
+    var rows = (size + cols - 1) / cols;
+    for (var i=0; i<size; i++) {
       Stage s = (Stage) stages.elementAt(i);
       s.drawIcon(g, STAGE_X[i], STAGE_Y[i], i == current);
     }
@@ -64,11 +64,11 @@ class StageSelector {
 
   /** Adjusts currently selected stage forward or backward. */
   adjustStage(dir) {
-    int start = current;
+    var start = current;
     do {
       current += dir ? 1 : -1;
-      if (current >= stages.size()) current = 0;
-      if (current < 0) current = stages.size() - 1;
+      if (current >= stages.length) current = 0;
+      if (current < 0) current = stages.length - 1;
       Stage s = (Stage) stages.elementAt(current);
       if (!s.isCompleted()) break;
     }
@@ -80,7 +80,7 @@ class StageSelector {
 
   /** Resets stage selector to its initial state. */
   reset() {
-    for (int i=0; i<stages.size(); i++) {
+    for (var i=0; i<stages.length; i++) {
       Stage s = (Stage) stages.elementAt(i);
       s.setCompleted(false);
     }

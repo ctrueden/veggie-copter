@@ -2,7 +2,7 @@
 class KelsAttack extends AttackStyle {
 
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-  const int FREQUENCY = 1;
+  const FREQUENCY = 1;
 
   KelsAttack(t) { super(t); }
 
@@ -16,8 +16,8 @@ class KelsAttack extends AttackStyle {
 
 class KelsMovement extends MovementStyle {
 
-  const int RADIUS2 = 200;
-  const int SPEED = 2;
+  const RADIUS2 = 200;
+  const SPEED = 2;
 
   KelsMovement(t, y, dir) {
     super(t);
@@ -25,7 +25,7 @@ class KelsMovement extends MovementStyle {
 
     // compute starting position
     xpos, ypos;
-    int w = game.getWindowWidth(), h = game.getWindowHeight();
+    var w = game.getWindowWidth(), h = game.getWindowHeight();
 
     if (dir) {
       // appear from right
@@ -43,17 +43,17 @@ class KelsMovement extends MovementStyle {
 
   /** Moves the given thing according to the bouncing movement style. */
   move() {
-    float xpos = thing.getCX(), ypos = thing.getCY();
+    var xpos = thing.getCX(), ypos = thing.getCY();
 
     Copter hero = thing.getGame().getCopter();
-    float cxpos = hero.getCX(), cypos = hero.getCY();
+    var cxpos = hero.getCX(), cypos = hero.getCY();
 
-    float xdist = xpos - cxpos;
-    float ydist = ypos - cypos;
-    float dist2 = xdist * xdist + ydist * ydist;
-    float dist = (float) Math.sqrt(dist2);
-    float xd = xdist / dist;
-    float yd = ydist / dist;
+    var xdist = xpos - cxpos;
+    var ydist = ypos - cypos;
+    var dist2 = xdist * xdist + ydist * ydist;
+    var dist = (float) Math.sqrt(dist2);
+    var xd = xdist / dist;
+    var yd = ydist / dist;
     xpos -= xd;
     ypos -= yd;
 
@@ -78,10 +78,10 @@ class KelsEnemy extends EnemyHead {
     BoundedImage hurting = getBoundedImage(2);
     hurting.addBox(new BoundingBox());
 
-    int y = 0;
+    var y = 0;
     boolean dir = false;
     if (args.length >= 1) {
-      try { y = Integer.parseInt(args[0]); }
+      try { y = parseInt(args[0]); }
       catch (exc) { y = 0; }
     }
     if (args.length >= 2) dir = args[1].equals("true");
@@ -90,7 +90,7 @@ class KelsEnemy extends EnemyHead {
     setAttack(new KelsAttack(this));
   }
 
-  int getScore() { return 3 * super.getScore(); }
+  var getScore() { return 3 * super.getScore(); }
 
 }
 
@@ -110,10 +110,10 @@ class KelsBoss extends BossHead {
     BoundedImage hurting = getBoundedImage(2);
     hurting.addBox(new BoundingBox());
 
-    int y = 0;
+    var y = 0;
     boolean dir = false;
     if (args.length >= 1) {
-      try { y = Integer.parseInt(args[0]); }
+      try { y = parseInt(args[0]); }
       catch (exc) { y = 0; }
     }
     if (args.length >= 2) dir = args[1].equals("true");
@@ -127,6 +127,6 @@ class KelsBoss extends BossHead {
     return new SplitterAttack(game.getCopter());
   }
 
-  int getScore() { return 30 * super.getScore(); }
+  var getScore() { return 30 * super.getScore(); }
 
 }

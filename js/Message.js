@@ -1,10 +1,10 @@
 class Message {
 
   private String msg;
-  private int x, y;
+  private var x, y;
   private Color color;
   private Font font;
-  private int remain;
+  private var remain;
 
   Message(msg, x, y,
     size, color, duration)

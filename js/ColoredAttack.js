@@ -1,11 +1,11 @@
 /** Encapsulates an attack pattern with icon and color. */
 class ColoredAttack extends AttackStyle {
 
-  const Color DARK_RED = new Color(95, 0, 0);
-  const int ICON_SIZE = 21;
+  const DARK_RED = new Color(95, 0, 0);
+  const ICON_SIZE = 21;
 
-  Image image;
-  Color color;
+  image;
+  color;
 
   ColoredAttack(t, c, img) {
     super(t);
@@ -15,10 +15,10 @@ class ColoredAttack extends AttackStyle {
 
   /** Draws an icon representing this attack style in the given position. */
   drawIcon(g, x, y, selected) {
-    Color origColor = g.getColor();
+    var origColor = g.getColor();
     g.setColor(Color.white);
     g.drawRect(x, y, ICON_SIZE - 1, ICON_SIZE - 1);
-    int h = power > 10 ? 19 : (2 * power - 1);
+    var h = power > 10 ? 19 : (2 * power - 1);
     g.setColor(selected ? DARK_RED : Color.black);
     g.fillRect(x + 1, y + 1, ICON_SIZE - 2, ICON_SIZE - h - 2);
     g.setColor(selected ? Color.red : Color.darkGray);
@@ -28,7 +28,7 @@ class ColoredAttack extends AttackStyle {
   }
 
   /** Gets color associated with this attack style. */
-  Color getColor() { return color; }
+  getColor() { return color; }
 
   /**
    * Indicates control has been transferred to from this attack style,

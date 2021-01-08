@@ -1,65 +1,62 @@
 class BounceMovement extends MovementStyle {
 
-  const int X_STEPS = 40;
-  const int Y_STEPS = 30;
-
-  xstart, ystart;
-  xlen, ylen;
-  xinc, yinc;
-  xdir, ydir;
+  static X_STEPS = 40;
+  static Y_STEPS = 30;
 
   BounceMovement(t) {
     super(t);
-    VeggieCopter game = thing.getGame();
+    var game = thing.getGame();
 
     // compute starting position
-    xpos, ypos;
-    int w = game.getWindowWidth(), h = game.getWindowHeight();
+    var xpos, ypos;
+    var w = game.getWindowWidth(), h = game.getWindowHeight();
 
-    double r = Math.random();
+    var r = Math.random();
     if (r < 1.0 / 3) {
       // appear from top
-      int xpad = X_STEPS / 2;
+      var xpad = X_STEPS / 2;
       xpos = (int) ((w - xpad) * Math.random()) + xpad;
       ypos = 0;
-      xdir = Math.random() < 0.5;
-      ydir = true;
+      this.xdir = Math.random() < 0.5;
+      this.ydir = true;
     }
     else if (r < 2.0 / 3) {
       // appear from left
-      int ypad = Y_STEPS / 2;
+      var ypad = Y_STEPS / 2;
       xpos = 0;
       ypos = (int) ((h / 2 - ypad) * Math.random()) + ypad;
-      xdir = true;
-      ydir = true;
+      this.xdir = true;
+      this.ydir = true;
     }
     else {
       // appear from right
-      int ypad = Y_STEPS / 2;
+      var ypad = Y_STEPS / 2;
       xpos = w - 1;
       ypos = (int) ((h / 2 - ypad) * Math.random()) + ypad;
-      xdir = false;
-      ydir = true;
+      this.xdir = false;
+      this.ydir = true;
     }
 
     // compute random starting trajectory
-    xstart = xpos; ystart = ypos;
-    xlen = (int) (thing.getWidth() * Math.random()) + 2 * X_STEPS;
-    ylen = (int) (thing.getHeight() * Math.random()) + 2 * Y_STEPS;
-    xinc = 0; yinc = 0;
+    this.xstart = xpos;
+    this.ystart = ypos;
+    this.xlen = (int) (thing.getWidth() * Math.random()) + 2 * X_STEPS;
+    this.ylen = (int) (thing.getHeight() * Math.random()) + 2 * Y_STEPS;
+    this.xinc = 0;
+    this.yinc = 0;
 
     thing.setPos(xpos, ypos);
   }
 
   /** Moves the given thing according to the bouncing movement style. */
   move() {
-    float xpos = thing.getX(), ypos = thing.getY();
+    var xpos = thing.getX(), ypos = thing.getY();
 
-    float xp = (float) smooth((double) xinc++ / X_STEPS);
+    var xp = (float) smooth((double) xinc++ / X_STEPS);
     if (xdir) xpos = xstart + xp * xlen;
     else xpos = xstart - xp * xlen;
 
-    float yp = (float) smooth((double) yinc++ / Y_STEPS);
+    var yp = (float) smooth((double) yinc++ / Y_STEPS);
     if (ydir) ypos = ystart + yp * ylen;
     else ypos = ystart - yp * ylen;
 
@@ -81,7 +78,7 @@ class BounceMovement extends MovementStyle {
   }
 
   /** Converts linear movement into curved movement with a sine function. */
-  double smooth(p) {
+  smooth(p) {
     p = Math.PI * (p - 0.5); // [0, 1] -> [-PI/2, PI/2]
     p = Math.sin(p); // [-PI/2, PI/2] -> [-1, 1] smooth sine
     p = (p + 1) / 2; // [-1, 1] -> [0, 1]

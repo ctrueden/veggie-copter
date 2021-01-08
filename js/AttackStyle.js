@@ -1,28 +1,25 @@
 /** Encapsulates an attack pattern. */
-class AttackStyle implements KeyListener {
+class AttackStyle {
 
-  /** Thing upon which this attack style object operates. */
-  Thing thing;
-
-  /** Amount of damage the attack style inflicts. */
-  int power = 1;
-
-  AttackStyle(t) { thing = t; }
+  constructor(t) {
+    this.thing = t; // Thing upon which this attack style object operates.
+    this.power = 1; // Amount of damage the attack style inflicts.
+  }
 
   /** Instructs the thing to fire a shot (but only if it wants to). */
-  Thing[] shoot();
+  shoot();
 
   /**
    * Instructs the thing to perform a secondary trigger action,
    * if it has one.
    */
-  Thing[] trigger() { return null; }
+  trigger() { return null; }
 
   /** Sets power level of this attack style. */
   setPower(power) { this.power = power; }
 
   /** Gets power level of this attack style. */
-  int getPower() { return power; }
+  getPower() { return this.power; }
 
   keyPressed(e) { }
   keyReleased(e) { }

@@ -8,7 +8,7 @@ const PRELOAD = [
 class ImageLoader {
   constructor() {
     this.images = {};
-    for (int i=0; i<PRELOAD.length; i++) loadImage(PRELOAD[i]);
+    for (var i=0; i<PRELOAD.length; i++) loadImage(PRELOAD[i]);
   }
 
   getImage(path) {

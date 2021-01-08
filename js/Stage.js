@@ -1,9 +1,9 @@
 /** Contains information regarding a specific stage of the game. */
 class Stage {
 
-  const int TOP_LEFT = 10;
-  const int IMAGE_SIZE = 154;
-  const int ICON_SIZE = 50;
+  const TOP_LEFT = 10;
+  const IMAGE_SIZE = 154;
+  const ICON_SIZE = 50;
 
   private const Font BIG = new Font("SansSerif", Font.BOLD, 36);
   private const Font SMALL = new Font("SansSerif", Font.PLAIN, 12);
@@ -41,19 +41,19 @@ class Stage {
 
     drawOutlinedRect(g, DARK_RED,
       TOP_LEFT, TOP_LEFT, IMAGE_SIZE, IMAGE_SIZE);
-    int gameWidth = game.getWidth();
-    int textHeight = 14 * description.length + 10;
+    var gameWidth = game.getWidth();
+    var textHeight = 14 * description.length + 10;
     drawOutlinedRect(g, Color.darkGray, TOP_LEFT + IMAGE_SIZE + 10,
       TOP_LEFT + 45, gameWidth - TOP_LEFT - IMAGE_SIZE - 20, textHeight);
 
-    int cx = TOP_LEFT + 1 + (IMAGE_SIZE - 2 - imageWidth) / 2;
-    int cy = TOP_LEFT + 1 + (IMAGE_SIZE - 2 - imageHeight) / 2;
+    var cx = TOP_LEFT + 1 + (IMAGE_SIZE - 2 - imageWidth) / 2;
+    var cy = TOP_LEFT + 1 + (IMAGE_SIZE - 2 - imageHeight) / 2;
     g.drawImage(image, cx, cy, game);
     g.setFont(BIG);
     g.setColor(Color.white);
     g.drawString(name, IMAGE_SIZE + TOP_LEFT + 10, TOP_LEFT + 35);
     g.setFont(SMALL);
-    for (int i=0; i<description.length; i++) {
+    for (var i=0; i<description.length; i++) {
       g.drawString(description[i], TOP_LEFT + IMAGE_SIZE + 15,
         14 * i + TOP_LEFT + 61);
     }
@@ -65,8 +65,8 @@ class Stage {
   drawIcon(g, x, y, selected) {
     drawOutlinedRect(g, completed ? Color.gray :
       (selected ? Color.red : DARK_RED), x, y, ICON_SIZE, ICON_SIZE);
-    int cx = x + 2 + (ICON_SIZE - 2 - iconWidth) / 2;
-    int cy = y + 2 + (ICON_SIZE - 2 - iconHeight) / 2;
+    var cx = x + 2 + (ICON_SIZE - 2 - iconWidth) / 2;
+    var cy = y + 2 + (ICON_SIZE - 2 - iconHeight) / 2;
     g.drawImage(icon, cx, cy, game);
   }
 

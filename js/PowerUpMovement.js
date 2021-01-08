@@ -1,6 +1,6 @@
 class PowerUpMovement extends MovementStyle {
 
-  const int PERIOD = 3;
+  const PERIOD = 3;
 
   boolean center;
   long ticks;
@@ -18,7 +18,7 @@ class PowerUpMovement extends MovementStyle {
 
     if (ticks % PERIOD == 0) {
       // do power-up pulsing
-      int index = thing.getImageIndex();
+      var index = thing.getImageIndex();
       if (dir) {
         index--;
         if (index == 0) dir = !dir;
@@ -30,12 +30,12 @@ class PowerUpMovement extends MovementStyle {
       thing.setImageIndex(index);
     }
 
-    float cx = thing.getCX();
-    float cy = thing.getCY();
+    var cx = thing.getCX();
+    var cy = thing.getCY();
     if (center) {
       VeggieCopter game = thing.getGame();
-      float w2 = game.getWidth() / 2f;
-      float h2 = game.getHeight() / 2f;
+      var w2 = game.getWidth() / 2f;
+      var h2 = game.getHeight() / 2f;
       if (cx > w2) {
         if (cx - w2 < 1) cx = w2;
         else cx--;

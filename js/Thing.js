@@ -2,19 +2,19 @@
 class Thing implements KeyListener {
 
   /** Type indicating evil entity. */
-  const int EVIL = 0;
+  const EVIL = 0;
 
   /** Type indicating good entity. */
-  const int GOOD = 1;
+  const GOOD = 1;
 
   /** Type indicating evil bullet. */
-  const int EVIL_BULLET = 2;
+  const EVIL_BULLET = 2;
 
   /** Type indicating good bullet. */
-  const int GOOD_BULLET = 3;
+  const GOOD_BULLET = 3;
 
   /** Type indicating power-up. */
-  const int POWER_UP = 4;
+  const POWER_UP = 4;
 
   /** List of all possible types. */
   const int[] TYPES = {
@@ -22,7 +22,7 @@ class Thing implements KeyListener {
   };
 
   /** How far offscreen objects must be before being discarded. */
-  const int THRESHOLD = 50;
+  const THRESHOLD = 50;
 
   /** Game to which this object belongs. */
   VeggieCopter game;
@@ -40,19 +40,19 @@ class Thing implements KeyListener {
   Vector images = new Vector();
 
   /** Index into images list for object's current status. */
-  int imageIndex = -1;
+  var imageIndex = -1;
 
   /** Hit points. */
-  int hp = 1, maxhp = 1;
+  var hp = 1, maxhp = 1;
 
   /** Amount of damage the object inflicts. */
-  int power = 1;
+  var power = 1;
 
   /** The type of this object. */
-  int type = EVIL;
+  var type = EVIL;
 
   /** Number of times the object has been hit. */
-  int hit;
+  var hit;
 
   /** Constructs a new object. */
   Thing(game) { this.game = game; }
@@ -68,14 +68,14 @@ class Thing implements KeyListener {
     this.images.removeAllElements();
     if (images == null) imageIndex = -1;
     else {
-      for (int i=0; i<images.length; i++) this.images.add(images[i]);
+      for (var i=0; i<images.length; i++) this.images.add(images[i]);
       imageIndex = this.images.isEmpty() ? -1 : 0;
     }
   }
 
   /** Changes the image representing the object. */
   setImageIndex(index) {
-    if (index >= 0 && index < images.size()) imageIndex = index;
+    if (index >= 0 && index < images.length) imageIndex = index;
   }
 
   /** Assigns object's image. */
@@ -87,7 +87,7 @@ class Thing implements KeyListener {
   setPos(x, y) {
     xpos = x;
     ypos = y;
-    int width = getWidth(), height = getHeight();
+    var width = getWidth(), height = getHeight();
     if (xpos < -width - THRESHOLD || ypos < -height - THRESHOLD ||
       xpos >= game.getWindowWidth() + THRESHOLD ||
       ypos >= game.getWindowHeight() + THRESHOLD)
@@ -124,8 +124,8 @@ class Thing implements KeyListener {
   draw(g) {
     BoundedImage img = getBoundedImage();
     if (img == null) return;
-    int x = (int) (getX() + img.getOffsetX());
-    int y = (int) (getY() + img.getOffsetY());
+    var x = (int) (getX() + img.getOffsetX());
+    var y = (int) (getY() + img.getOffsetY());
     g.drawImage(img.getImage(), x, y, game);
   }
 
@@ -170,16 +170,16 @@ class Thing implements KeyListener {
   AttackStyle getAttack() { return attack; }
 
   /** Gets object's X coordinate. */
-  float getX() { return xpos; }
+  var getX() { return xpos; }
 
   /** Gets object's Y coordinate. */
-  float getY() { return ypos; }
+  var getY() { return ypos; }
 
   /** Gets object's centered X coordinate. */
-  float getCX() { return getX() + getWidth() / 2f; }
+  var getCX() { return getX() + getWidth() / 2f; }
 
   /** Gets object's centered Y coordinate. */
-  float getCY() { return getY() + getHeight() / 2f; }
+  var getCY() { return getY() + getHeight() / 2f; }
 
   /** Gets image representing this object. */
   Image getImage() {
@@ -189,20 +189,20 @@ class Thing implements KeyListener {
   }
 
   /** Gets current image index into image list. */
-  int getImageIndex() { return imageIndex; }
+  var getImageIndex() { return imageIndex; }
 
   /** Gets number of images in image list. */
-  int getImageCount() { return images.size(); }
+  var getImageCount() { return images.length; }
 
   /** Gets object's width. */
-  int getWidth() {
+  var getWidth() {
     BoundedImage img = getBoundedImage();
     if (img == null) return -1;
     return img.getWidth();
   }
 
   /** Gets object's height. */
-  int getHeight() {
+  var getHeight() {
     BoundedImage img = getBoundedImage();
     if (img == null) return -1;
     return img.getHeight();
@@ -216,16 +216,16 @@ class Thing implements KeyListener {
   }
 
   /** Gets object's current HP. */
-  int getHP() { return hp; }
+  var getHP() { return hp; }
 
   /** Gets object's maximum HP value. */
-  int getMaxHP() { return maxhp; }
+  var getMaxHP() { return maxhp; }
 
   /** Gets object's power. */
-  int getPower() { return power; }
+  var getPower() { return power; }
 
   /** Gets object's type. */
-  int getType() { return type; }
+  var getType() { return type; }
 
   /** Gets whether object has been hit. */
   boolean isHit() { return hit > 0; }
@@ -234,7 +234,7 @@ class Thing implements KeyListener {
   boolean isDead() { return hp <= 0; }
 
   /** Gets score value of the object. */
-  int getScore() { return maxhp; }
+  var getScore() { return maxhp; }
 
   /** Returns true if this object can harm the given one. */
   boolean harms(t) {

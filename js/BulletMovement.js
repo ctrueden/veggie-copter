@@ -1,11 +1,11 @@
 class BulletMovement extends MovementStyle {
 
-  const float SPEED = 2.2f;
+  const SPEED = 2.2;
 
   xstart, ystart;
   xtraj, ytraj;
-  float speed;
-  int tick;
+  speed;
+  tick;
 
   BulletMovement(t, x, y) {
     this(t, x, y, t.getGame().getCopter().getX(),
@@ -25,9 +25,9 @@ class BulletMovement extends MovementStyle {
     thing.setPos(x, y);
 
     xstart = x; ystart = y;
-    float xx = xtarget - x;
-    float yy = ytarget - y;
-    float c = (float) Math.sqrt((xx * xx + yy * yy) / (speed * speed));
+    var xx = xtarget - x;
+    var yy = ytarget - y;
+    var c = Math.sqrt((xx * xx + yy * yy) / (speed * speed));
 
     xtraj = xx / c;
     ytraj = yy / c;
@@ -36,8 +36,8 @@ class BulletMovement extends MovementStyle {
 
   /** Moves the given thing according to the bullet movement style. */
   move() {
-    float xpos = xstart + tick * xtraj;
-    float ypos = ystart + tick * ytraj;
+    var xpos = xstart + tick * xtraj;
+    var ypos = ystart + tick * ytraj;
     tick++;
     thing.setPos(xpos, ypos);
   }

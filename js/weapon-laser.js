@@ -5,7 +5,7 @@ class LaserAttack extends ColoredAttack {
     {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1};
 
   boolean space;
-  int flux;
+  var flux;
 
   LaserAttack(t) {
     super(t, Color.green, t.getGame().loadImage("icon-laser.png").getImage());
@@ -16,7 +16,7 @@ class LaserAttack extends ColoredAttack {
   /** Fires a shot if space bar is pressed. */
   Thing[] shoot() {
     if (!space) return null;
-    int size = power - 1;
+    var size = power - 1;
     if (size > CopterLaser.MAX_SIZE - 3) size = CopterLaser.MAX_SIZE - 3;
     flux = (flux + 1) % FLUX.length;
     size += FLUX[flux];
@@ -27,12 +27,12 @@ class LaserAttack extends ColoredAttack {
   }
 
   keyPressed(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
   keyReleased(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }
 

@@ -23,19 +23,19 @@ class EnergyAttack extends ColoredAttack {
 
     VeggieCopter game = thing.getGame();
     Copter copter = game.getCopter();
-    float cx1 = copter.getX();
-    float cx2 = cx1 + copter.getWidth();
-    float cy = copter.getY();
+    var cx1 = copter.getX();
+    var cx2 = cx1 + copter.getWidth();
+    var cy = copter.getY();
     Thing[] t = game.getThings();
-    int ndx = -1;
-    float dist = Integer.MAX_VALUE;
-    for (int i=0; i<t.length; i++) {
+    var ndx = -1;
+    var dist = Integer.MAX_VALUE;
+    for (var i=0; i<t.length; i++) {
       if (t[i].getType() != Thing.EVIL) continue;
-      float x1 = t[i].getX();
-      float x2 = x1 + t[i].getWidth();
-      float y = t[i].getCY();
+      var x1 = t[i].getX();
+      var x2 = x1 + t[i].getWidth();
+      var y = t[i].getCY();
       if (y >= cy || cx2 < x1 || cx1 > x2) continue;
-      float ndist = cy - y;
+      var ndist = cy - y;
       if (dist < ndist) continue;
       dist = ndist;
       ndx = i;
@@ -52,12 +52,12 @@ class EnergyAttack extends ColoredAttack {
   }
 
   keyPressed(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
   keyReleased(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) clear();
   }
 

@@ -1,26 +1,26 @@
 class BoxEditor extends JFrame
   KeyListener, MouseListener, MouseMotionListener, WindowListener {
 
-  const Color[] COLORS = {
+  const COLORS = [
     Color.red, Color.blue, Color.green, Color.cyan,
     Color.magenta, Color.yellow, Color.white
-  };
+  ];
  
 
   /** Index of current image. */
-  private int ndx = 0;
+  ndx = 0;
 
   /** List of images. */
-  private Vector images;
+  images;
 
   /** List of image names. */
-  private Vector names;
+  names;
 
   /** Message indicating last event. */
-  private String message;
+  message;
 
   /** Bounding box currently being drawn. */
-  private BoundingBox bb;
+  bb;
 
   BoxEditor() throws IOException {
     super();
@@ -29,13 +29,13 @@ class BoxEditor extends JFrame
     addMouseMotionListener(this);
     addWindowListener(this);
     setBounds(300, 300, 300, 300);
-    String pathPrefix = "src/main/resources/net/restlesscoder/heli";
-    File[] files = new File(pathPrefix).listFiles();
+    var pathPrefix = "src/main/resources/net/restlesscoder/heli";
+    var files = new File(pathPrefix).listFiles();
     images = new Vector();
     names = new Vector();
-    ImageLoader loader = new ImageLoader();
-    for (int i=0; i<files.length; i++) {
-      String name = files[i].getName();
+    var loader = new ImageLoader();
+    for (var i=0; i<files.length; i++) {
+      var name = files[i].getName();
       if (!name.endsWith(".png") && !name.endsWith(".gif")) continue;
       if (name.startsWith("icon-")) continue;
       if (name.endsWith("-heart.png") || name.endsWith("-club.png") ||
@@ -44,8 +44,8 @@ class BoxEditor extends JFrame
         continue;
       }
       System.out.println("Loading " + name);
-      BufferedImage img = loader.getImage(name);
-      BoundedImage bi = new BoundedImage(img);
+      var img = loader.getImage(name);
+      var bi = new BoundedImage(img);
       images.add(bi);
       names.add(name);
     }
@@ -57,27 +57,27 @@ class BoxEditor extends JFrame
   updateTitle() { setTitle((String) names.elementAt(ndx)); }
 
   load() throws IOException {
-    for (int i=0; i<images.size(); i++) {
-      BoundedImage bi = (BoundedImage) images.elementAt(i);
-      String name = (String) names.elementAt(i);
-      String boxName = name.substring(0, name.length() - 3) + "box";
+    for (var i=0; i<images.length; i++) {
+      var bi = (BoundedImage) images.elementAt(i);
+      var name = (String) names.elementAt(i);
+      var boxName = name.substring(0, name.length() - 3) + "box";
       System.out.println("Loading " + boxName);
-      BufferedReader in = null;
+      var in = null;
       try { in = new BufferedReader(new FileReader(boxName)); }
       catch (exc) { continue; }
       while (true) {
-        String line = in.readLine();
+        var line = in.readLine();
         if (line == null) break;
-        StringTokenizer st = new StringTokenizer(line);
-        int[] coords = new int[4];
-        int c = 0;
+        var st = new StringTokenizer(line);
+        var coords = [0, 0, 0, 0];
+        var c = 0;
         while (st.hasMoreTokens()) {
-          String token = st.nextToken();
-          coords[c++] = Integer.parseInt(token);
+          var token = st.nextToken();
+          coords[c++] = parseInt(token);
           if (c == coords.length) break;
         }
         if (c == 4) {
-          int w = bi.getWidth(), h = bi.getHeight();
+          var w = bi.getWidth(), h = bi.getHeight();
           bi.addBox(new BoundingBox(coords[0], coords[1],
             coords[2], coords[3]));
         }
@@ -87,18 +87,18 @@ class BoxEditor extends JFrame
   }
 
   save() throws IOException {
-    for (int i=0; i<images.size(); i++) {
-      BoundedImage bi = (BoundedImage) images.elementAt(i);
-      String name = (String) names.elementAt(i);
-      String boxName = name.substring(0, name.length() - 3) + "box";
+    for (var i=0; i<images.length; i++) {
+      var bi = (BoundedImage) images.elementAt(i);
+      var name = (String) names.elementAt(i);
+      var boxName = name.substring(0, name.length() - 3) + "box";
       System.out.println("Saving " + boxName);
-      PrintWriter out = new PrintWriter(new FileWriter(boxName));
-      int w = bi.getWidth(), h = bi.getHeight();
-      Rectangle[] r = bi.getBoxes(0, 0);
+      var out = new PrintWriter(new FileWriter(boxName));
+      var w = bi.getWidth(), h = bi.getHeight();
+      var r = bi.getBoxes(0, 0);
       for (int b=0; b<r.length; b++) {
         out.print(r[b].x + " " + r[b].y + " ");
-        int x2 = w - r[b].x - r[b].width - 1;
-        int y2 = h - r[b].y - r[b].height - 1;
+        var x2 = w - r[b].x - r[b].width - 1;
+        var y2 = h - r[b].y - r[b].height - 1;
         out.println(x2 + " " + y2);
       }
       out.close();
@@ -106,15 +106,15 @@ class BoxEditor extends JFrame
   }
 
   paint(g) {
-    Dimension size = getSize();
-    BoundedImage bi = (BoundedImage) images.elementAt(ndx);
-    int w = bi.getWidth();
-    int h = bi.getHeight();
-    int x = (size.width - w) / 2;
-    int y = (size.height - h) / 2;
+    var size = getSize();
+    var bi = (BoundedImage) images.elementAt(ndx);
+    var w = bi.getWidth();
+    var h = bi.getHeight();
+    var x = (size.width - w) / 2;
+    var y = (size.height - h) / 2;
     g.fillRect(0, 0, size.width, size.height);
     g.drawImage(bi.getImage(), x, y, this);
-    Rectangle[] r = bi.getBoxes(0, 0);
+    var r = bi.getBoxes(0, 0);
     for (int b=0; b<r.length; b++) {
       g.setColor(COLORS[b]);
       g.drawRect(x + r[b].x, y + r[b].y, r[b].width, r[b].height);
@@ -122,7 +122,7 @@ class BoxEditor extends JFrame
   }
 
   keyPressed(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     switch (code) {
       case KeyEvent.VK_UP:
         break;
@@ -136,12 +136,12 @@ class BoxEditor extends JFrame
         break;
       case KeyEvent.VK_PAGE_UP:
         ndx--;
-        if (ndx < 0) ndx = images.size() - 1;
+        if (ndx < 0) ndx = images.length - 1;
         updateTitle();
         break;
       case KeyEvent.VK_PAGE_DOWN:
         ndx++;
-        if (ndx >= images.size()) ndx = 0;
+        if (ndx >= images.length) ndx = 0;
         updateTitle();
         break;
       case KeyEvent.VK_DELETE:
@@ -154,16 +154,16 @@ class BoxEditor extends JFrame
   keyReleased(e) { }
 
   mousePressed(e) {
-    Dimension size = getSize();
-    BoundedImage bi = (BoundedImage) images.elementAt(ndx);
-    int w = bi.getWidth();
-    int h = bi.getHeight();
-    int x = (size.width - w) / 2;
-    int y = (size.height - h) / 2;
-    int mx = e.getX();
-    int my = e.getY();
-    int x1 = mx - x, y1 = my - y;
-    int x2 = w - x1 - 1, y2 = h - y1 - 1;
+    var size = getSize();
+    var bi = (BoundedImage) images.elementAt(ndx);
+    var w = bi.getWidth();
+    var h = bi.getHeight();
+    var x = (size.width - w) / 2;
+    var y = (size.height - h) / 2;
+    var mx = e.getX();
+    var my = e.getY();
+    var x1 = mx - x, y1 = my - y;
+    var x2 = w - x1 - 1, y2 = h - y1 - 1;
     bb = new BoundingBox(x1, y1, x2, y2);
     bi.addBox(bb);
     repaint();
@@ -177,16 +177,16 @@ class BoxEditor extends JFrame
 
   mouseDragged(e) {
     if (bb != null) {
-      Dimension size = getSize();
-      BoundedImage bi = (BoundedImage) images.elementAt(ndx);
-      int w = bi.getWidth();
-      int h = bi.getHeight();
-      int x = (size.width - w) / 2;
-      int y = (size.height - h) / 2;
-      int mx = e.getX();
-      int my = e.getY();
-      int x1 = mx - x, y1 = my - y;
-      int x2 = w - x1 - 1, y2 = h - y1 - 1;
+      var size = getSize();
+      var bi = (BoundedImage) images.elementAt(ndx);
+      var w = bi.getWidth();
+      var h = bi.getHeight();
+      var x = (size.width - w) / 2;
+      var y = (size.height - h) / 2;
+      var mx = e.getX();
+      var my = e.getY();
+      var x1 = mx - x, y1 = my - y;
+      var x2 = w - x1 - 1, y2 = h - y1 - 1;
       bb.x2 = x2;
       bb.y2 = y2;
       repaint();
@@ -205,7 +205,4 @@ class BoxEditor extends JFrame
   windowDeiconified(e) { }
   windowIconified(e) { }
   windowOpened(e) { }
-
-  static main(String[] args) throws Exception { new BoxEditor(); }
-
 }

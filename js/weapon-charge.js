@@ -1,11 +1,11 @@
 /** Defines veggie copter charge attack style. */
 class ChargeAttack extends ColoredAttack {
 
-  private const int GROW_SPEED = 11;
+  private const GROW_SPEED = 11;
 
   CopterCharge charge;
   boolean space;
-  int ticks;
+  var ticks;
 
   ChargeAttack(t) {
     super(t, Color.white, t.getGame().loadImage("icon-charge.png").getImage());
@@ -32,7 +32,7 @@ class ChargeAttack extends ColoredAttack {
       return new Thing[] {charge};
     }
     ticks++;
-    int rate = GROW_SPEED - power;
+    var rate = GROW_SPEED - power;
     if (rate <= 0) rate = 1;
     if (ticks % rate == 0) {
       if (!charge.grow()) launch();
@@ -41,12 +41,12 @@ class ChargeAttack extends ColoredAttack {
   }
 
   keyPressed(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
   keyReleased(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) clear();
   }
 

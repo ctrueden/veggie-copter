@@ -18,13 +18,13 @@ class TestBoss extends BossHead {
     hurting.addBox(new BoundingBox(3, 30, 3, 50));
     hurting.addBox(new BoundingBox(15, 10, 15, 15));
 
-    int x = 0, y = 0;
+    var x = 0, y = 0;
     if (args.length >= 1) {
-      try { x = Integer.parseInt(args[0]); }
+      try { x = parseInt(args[0]); }
       catch (exc) { x = 0; }
     }
     if (args.length >= 2) {
-      try { y = Integer.parseInt(args[1]); }
+      try { y = parseInt(args[1]); }
       catch (exc) { y = 0; }
     }
 
@@ -49,7 +49,7 @@ class TestBoss extends BossHead {
     super.hit(damage);
   }
 
-  int getScore() {
+  var getScore() {
     ((TestMovement) move).printStats();
     return 0;
   }

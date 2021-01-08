@@ -1,7 +1,7 @@
 class RegenMovement extends MovementStyle {
 
-  const int FLUX_RADIUS = 5;
-  const int FLUX_RATE = 4;
+  const FLUX_RADIUS = 5;
+  const FLUX_RATE = 4;
 
   private Thing owner;
   private long ticks;
@@ -13,8 +13,8 @@ class RegenMovement extends MovementStyle {
   }
 
   syncPos() {
-    float xpos = owner.getCX();
-    float ypos = owner.getCY();
+    var xpos = owner.getCX();
+    var ypos = owner.getCY();
     thing.setCPos(xpos, ypos);
   }
 
@@ -23,25 +23,25 @@ class RegenMovement extends MovementStyle {
     syncPos();
     ticks++;
 
-    int regenRate = 20 - thing.getPower();
+    var regenRate = 20 - thing.getPower();
     if (regenRate <= 0) regenRate = 1;
     if (ticks % regenRate == 0) {
       // regenerate copter
       Copter hero = thing.getGame().getCopter();
-      int hp = hero.getHP();
-      int max = hero.getMaxHP();
+      var hp = hero.getHP();
+      var max = hero.getMaxHP();
       if (hp < max) hero.setHP(hp + 1);
     }
 
     if (ticks % FLUX_RATE == 0) {
       // fluctuate
       long t = ticks / FLUX_RATE;
-      int ndx = thing.getPower() - 1;
+      var ndx = thing.getPower() - 1;
       if (ndx < 0) ndx = 0;
       else if (ndx > 9) ndx = 9;
 
       boolean dir = t % (2 * FLUX_RADIUS) >= FLUX_RADIUS;
-      int amount = (int) (t % FLUX_RADIUS);
+      var amount = (int) (t % FLUX_RADIUS);
       if (dir) amount = FLUX_RADIUS - amount - 1;
       ndx += amount;
 
@@ -53,23 +53,23 @@ class RegenMovement extends MovementStyle {
 
 class CopterRegen extends Thing {
 
-  const int MAX_SIZE = 10 + RegenMovement.FLUX_RADIUS;
+  const MAX_SIZE = 10 + RegenMovement.FLUX_RADIUS;
 
   static BoundedImage[] images;
 
   static {
-    int red = Color.pink.getRed();
-    int green = Color.pink.getGreen();
-    int blue = Color.pink.getBlue();
+    var red = Color.pink.getRed();
+    var green = Color.pink.getGreen();
+    var blue = Color.pink.getBlue();
 
     images = new BoundedImage[MAX_SIZE];
-    for (int i=0; i<MAX_SIZE; i++) {
-      int width = i + 18;
+    for (var i=0; i<MAX_SIZE; i++) {
+      var width = i + 18;
       BufferedImage img = ImageTools.makeImage(width, 2 * width);
       Graphics g = img.createGraphics();
-      int median = width / 2;
+      var median = width / 2;
       for (int rad=median; rad>=1; rad--) {
-        double q = (double) (median - rad) / median;
+        var q = (double) (median - rad) / median;
         g.setColor(new Color(red, green, blue, (int) (128 * q)));
         g.fillOval(median - rad, 2 * (median - rad), 2 * rad, 4 * rad);
       }
@@ -88,7 +88,7 @@ class CopterRegen extends Thing {
 
   setPower(power) {
     super.setPower(power);
-    int size = power - 1;
+    var size = power - 1;
     if (size < 0) size = 0;
     else if (size >= MAX_SIZE) size = MAX_SIZE - 1;
     setImageIndex(size);
@@ -128,12 +128,12 @@ class RegenAttack extends ColoredAttack {
   }
 
   keyPressed(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
   keyReleased(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) clear();
   }
 

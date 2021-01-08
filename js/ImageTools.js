@@ -39,11 +39,11 @@ class ImageTools {
     if (!HARDWARE_ACCEL && image instanceof BufferedImage) {
       return (BufferedImage) image;
     }
-    int w = image.getWidth(OBS);
-    int h = image.getHeight(OBS);
+    var w = image.getWidth(OBS);
+    var h = image.getHeight(OBS);
     BufferedImage bimg = image instanceof BufferedImage ?
       (BufferedImage) image : null;
-    int transparency = bimg == null ? Transparency.TRANSLUCENT :
+    var transparency = bimg == null ? Transparency.TRANSLUCENT :
       bimg.getColorModel().getTransparency();
     BufferedImage result = makeImage(w, h, transparency, null);
     Graphics2D g2 = result.createGraphics();

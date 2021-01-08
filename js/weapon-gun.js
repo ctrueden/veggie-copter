@@ -1,13 +1,13 @@
 class CopterGun extends Thing {
 
-  const int SPEED = 5;
-  const int HEIGHT = 7;
+  const SPEED = 5;
+  const HEIGHT = 7;
   const Color BROWN = Color.yellow.darker();
 
   static BoundedImage image;
 
   static {
-    int len = HEIGHT;
+    var len = HEIGHT;
     BufferedImage img = ImageTools.makeImage(1, len);
     Graphics g = img.createGraphics();
     g.setColor(BROWN);
@@ -30,10 +30,10 @@ class CopterGun extends Thing {
 /** Defines veggie copter gun attack. */
 class GunAttack extends ColoredAttack {
 
-  const int RECHARGE = 2;
+  const RECHARGE = 2;
 
   boolean space = false;
-  int fired;
+  var fired;
 
   GunAttack(t) {
     super(t, CopterGun.BROWN,
@@ -49,24 +49,24 @@ class GunAttack extends ColoredAttack {
       return null;
     }
     if (!space) return null;
-    int num = getPower() + 1;
+    var num = getPower() + 1;
     fired = RECHARGE;
 
-    int x = (int) thing.getCX(), y = (int) thing.getY() - 14;
+    var x = (int) thing.getCX(), y = (int) thing.getY() - 14;
 
     CopterGun[] shots = new CopterGun[num];
     if (num % 2 == 0) {
-      int len = num / 2;
-      for (int i=0; i<len; i++) {
-        int q = 2 * i;
+      var len = num / 2;
+      for (var i=0; i<len; i++) {
+        var q = 2 * i;
         shots[q] = new CopterGun(thing, x - q - 1, y, 1);
         shots[q + 1] = new CopterGun(thing, x + q + 1, y, 1);
       }
     }
     else {
-      int len = num / 2;
-      for (int i=0; i<len; i++) {
-        int q = 2 * i;
+      var len = num / 2;
+      for (var i=0; i<len; i++) {
+        var q = 2 * i;
         shots[q] = new CopterGun(thing, x - q - 2, y, 1);
         shots[q + 1] = new CopterGun(thing, x + q + 2, y, 1);
       }
@@ -77,12 +77,12 @@ class GunAttack extends ColoredAttack {
   }
 
   keyPressed(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) space = true;
   }
 
   keyReleased(e) {
-    int code = e.getKeyCode();
+    var code = e.getKeyCode();
     if (code == Keys.SHOOT) space = false;
   }
 
