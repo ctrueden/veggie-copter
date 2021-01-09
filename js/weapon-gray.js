@@ -1,29 +1,28 @@
 /** Defines veggie copter gray attack style. */
 class GrayAttack extends ColoredAttack {
 
-  boolean space;
-
   GrayAttack(t) {
+    this.space = false;
     super(t, Color.lightGray,
       t.getGame().loadImage("icon-gray.png").getImage());
   }
 
-  clear() { space = false; }
+  clear() { this.space = false; }
 
   /** Fires a shot if space bar is pressed. */
-  Thing[] shoot() {
-    if (!space) return null;
+  var shoot() {
+    if (!this.space) return null;
     return null;
   }
 
   keyPressed(e) {
     var code = e.getKeyCode();
-    if (code == Keys.SHOOT) space = true;
+    if (code == Keys.SHOOT) this.space = true;
   }
 
   keyReleased(e) {
     var code = e.getKeyCode();
-    if (code == Keys.SHOOT) space = false;
+    if (code == Keys.SHOOT) this.space = false;
   }
 
 }

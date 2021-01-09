@@ -14,9 +14,7 @@ class ImageTools {
    * Creates an image using the given graphics configuration.
    * If gc is null, the default configuration is used.
    */
-  static BufferedImage makeImage(width, height,
-    transparency, gc)
-  {
+  static BufferedImage makeImage(width, height, transparency, gc) {
     if (HARDWARE_ACCEL) {
       if (gc == null) gc = getDefaultConfiguration();
       return gc.createCompatibleImage(width, height, transparency);
@@ -52,5 +50,4 @@ class ImageTools {
     g2.dispose();
     return result;
   }
-
 }

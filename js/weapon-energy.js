@@ -17,16 +17,16 @@ class EnergyAttack extends ColoredAttack {
   }
 
   /** Begins energy field if space bar is pressed. */
-  Thing[] shoot() {
+  shoot() {
     if (!space || fired) return null;
     fired = true;
 
-    VeggieCopter game = thing.getGame();
-    Copter copter = game.getCopter();
+    var game = thing.getGame();
+    var copter = game.getCopter();
     var cx1 = copter.getX();
     var cx2 = cx1 + copter.getWidth();
     var cy = copter.getY();
-    Thing[] t = game.getThings();
+    var t = game.getThings();
     var ndx = -1;
     var dist = Integer.MAX_VALUE;
     for (var i=0; i<t.length; i++) {
@@ -43,7 +43,7 @@ class EnergyAttack extends ColoredAttack {
     if (ndx < 0) return null;
     energy = new CopterEnergy(t[ndx]);
     energy.setPower(power);
-    return new Thing[] {energy};
+    return [energy];
   }
 
   setPower(power) {

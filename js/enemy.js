@@ -3,12 +3,6 @@ class EnemyMovement extends MovementStyle {
   static const SPIRAL = 2;
   static const WAVE = 3;
 
-  ticks;
-  style;
-  params;
-
-  xmod = 0, ymod = 1; // for zigzag
-
   /**
    * Constructs a new enemy movement handler.
    * params[0] = movement style (e.g., zigzag, spiral, wave, etc.)
@@ -21,33 +15,35 @@ class EnemyMovement extends MovementStyle {
    */
   constructor(t, params) {
     super(t);
+    this.ticks = 0;
+    this.xmod = 0, this.ymod = 1; // for zigzag
 
     // determine movement style
-    if (equalsIgnoreCase(params[0], "zigzag")) style = ZIGZAG;
-    else if (equalsIgnoreCase(params[0], "spiral")) style = SPIRAL;
-    else if (equalsIgnoreCase(params[0], "wave")) style = WAVE;
+    if (equalsIgnoreCase(params[0], "zigzag")) this.style = ZIGZAG;
+    else if (equalsIgnoreCase(params[0], "spiral")) this.style = SPIRAL;
+    else if (equalsIgnoreCase(params[0], "wave")) this.style = WAVE;
 
     // set starting position
     var xpos = Float.parseFloat(params[1]);
     var ypos = Float.parseFloat(params[2]);
 
     // prepare additional parameters
-    this.params = new float[params.length - 3];
-    for (var i=0; i<this.params.length; i++) {
-      this.params[i] = Float.parseFloat(params[i + 3]);
+    this.params = [];
+    for (var i=3; i<params.length; i++) {
+      this.params.push(parseFloat(params[i]));
     }
 
     // starting position
-    var game = thing.getGame();
-    thing.setPos(xpos, ypos);
+    var game = this.thing.getGame();
+    this.thing.setPos(xpos, ypos);
   }
 
   /** Moves the given thing according to the enemy type A movement style. */
   move() {
-    ticks++;
-    var cx = thing.getCX(), cy = thing.getCY();
+    this.ticks++;
+    var cx = this.thing.getCX(), cy = this.thing.getCY();
 
-    if (style == ZIGZAG) {
+    if (this.style == ZIGZAG) {
       // tick1, xmod1, ymod1, tick2, xmod2, ymod2, ...
       for (var i=0; i<params.length-2; i+=3) {
         if (params[i] == ticks) {
@@ -59,15 +55,15 @@ class EnemyMovement extends MovementStyle {
       cy += ymod;
     }
 
-    else if (style == SPIRAL) {
+    else if (this.style == SPIRAL) {
       // TODO
     }
 
-    else if (style == WAVE) {
+    else if (this.style == WAVE) {
       // TODO
     }
 
-    thing.setCPos(cx, cy);
+    this.thing.setCPos(cx, cy);
   }
 }
 
@@ -115,35 +111,31 @@ class EnemyBullet extends Thing {
 
 /** Defines random enemy bullet attack. */
 class RandomBulletAttack extends AttackStyle {
-
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-  const FREQUENCY = 3;
+  static const FREQUENCY = 3;
 
-  RandomBulletAttack(t) { super(t); }
+  constructor(t) { super(t); }
 
   /** Fires a shot randomly. */
-  Thing[] shoot() {
+  shoot() {
     if (Math.random() >= 1.0 / (60 - FREQUENCY)) return null;
-    return new Thing[] {new EnemyBullet(thing)};
+    return [new EnemyBullet(thing)];
   }
-
 }
 
 class EnemyHead extends Thing {
+  static const NORMAL = 0;
+  static const ATTACKING = 1;
+  static const HURTING = 2;
 
-  const NORMAL = 0;
-  const ATTACKING = 1;
-  const HURTING = 2;
+  static const SHOT_DELAY = 18;
 
-  const SHOT_DELAY = 18;
-
-  shooting;
-
-  EnemyHead(game, max, normal, attacking, hurting) {
+  constructor(game, max, normal, attacking, hurting) {
     super(game);
-    setImageList(new BoundedImage[] {normal, attacking, hurting});
-    maxhp = hp = max;
-    //power = 10;
+    setImageList([normal, attacking, hurting]);
+    this.maxhp = this.hp = max;
+    this.shooting = 0;
+    //this.power = 10;
   }
 
   boolean isShooting() { return shooting > 0; }
@@ -155,10 +147,10 @@ class EnemyHead extends Thing {
     else setImageIndex(NORMAL);
   }
 
-  Thing[] shoot() {
+  shoot() {
     var t = super.shoot();
-    if (t != null) shooting = SHOT_DELAY;
-    else if (shooting > 0) shooting--;
+    if (t != null) this.shooting = SHOT_DELAY;
+    else if (this.shooting > 0) this.shooting--;
     if (isDead()) {
       // dead head drops a power-up
       t = getPowerUp();
@@ -167,39 +159,34 @@ class EnemyHead extends Thing {
   }
 
   getPowerUp() {
-    return new Thing[] {new PowerUp(game, getCX(), getCY(), 20, null)};
+    return [new PowerUp(game, getCX(), getCY(), 20, null)];
   }
-
 }
 
 class Enemy extends EnemyHead {
-
   /**
    * Constructs a new enemy head.
    * args[0] = number of hit points
    * args[1] = name of graphic to use
    * args[2+] = movement parameters (EnemyMovement)
    */
-  Enemy(game, String[] args) {
+  Enemy(game, args) {
     super(game, parseInt(args[0]),
       game.loadImage(args[1] + "1.png"),
       game.loadImage(args[1] + "2.png"),
       game.loadImage(args[1] + "3.png"));
-    BoundedImage normal = getBoundedImage(0);
+    var normal = getBoundedImage(0);
     normal.addBox(new BoundingBox());
-    BoundedImage attacking = getBoundedImage(1);
+    var attacking = getBoundedImage(1);
     attacking.addBox(new BoundingBox());
-    BoundedImage hurting = getBoundedImage(2);
+    var hurting = getBoundedImage(2);
     hurting.addBox(new BoundingBox());
 
-    String[] params = new String[args.length - 2];
-    System.arraycopy(args, 2, params, 0, params.length);
-    setMovement(new EnemyMovement(this, params));
+    setMovement(new EnemyMovement(this, args.slice(2)));
     setAttack(new RandomBulletAttack(this));
   }
 
-  Thing[] getPowerUp() { return null; }
-
+  getPowerUp() { return null; }
 }
 
 class BossHead extends EnemyHead {
@@ -213,10 +200,8 @@ class BossHead extends EnemyHead {
   /** Gets the attack form left behind by this boss upon defeat. */
   ColoredAttack getColoredAttack();
 
-  Thing[] getPowerUp() {
-    return new Thing[] {
-      new PowerUp(game, getCX(), getCY(), 50, getColoredAttack())
-    };
+  getPowerUp() {
+    return [new PowerUp(game, getCX(), getCY(), 50, getColoredAttack())];
   }
 
 }

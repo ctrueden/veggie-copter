@@ -18,12 +18,12 @@ class Game {
     this.buf = canvas.getContext('2d');                   // Offscreen canvas context.
     //this.loader = new ImageLoader();                      // Object for loading images from disk.
     //this.selector = new StageSelector(this);              // Object for handling stage selection.
-    //this.stage = null;                                    // Current game stage.
+    this.stage = null;                                    // Current game stage.
     this.stars = new StarField(GAME_WIDTH, GAME_HEIGHT);  // Field of stars in the background.
     //this.copter = new Copter(this);                       // Our hero.
-    //this.things = [];                                     // List of things onscreen.
-    //this.messages = [];                                   // List of onscreen text messages.
-    //this.score = 0;                                       // The player's score.
+    this.things = [];                                     // List of things onscreen.
+    this.messages = [];                                   // List of onscreen text messages.
+    this.score = 0;                                       // The player's score.
     this.pause = false;                                   // Whether game is paused.
     this.fast = false;                                    // Whether fast forward is enabled.
     this.debug = false;                                   // Debugging flag.
@@ -108,7 +108,7 @@ class Game {
     this.buf.fillStyle = 'black';
     this.buf.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT + STATUS);
 
-    //Thing[] t = getThings();
+    //var t = getThings();
 
     // star field
     this.stars.drawStars(this.buf);
@@ -121,7 +121,7 @@ class Game {
       for (var i=0; i<t.length; i++) {
         // draw bounding box
         this.buf.setColor(Color.red);
-        Rectangle[] r = t[i].getBoxes();
+        var r = t[i].getBoxes();
         for (int j=0; j<r.length; j++) {
           this.buf.drawRect(r[j].x, r[j].y, r[j].width, r[j].height);
         }
@@ -135,7 +135,7 @@ class Game {
     }
 
     // draw text messages
-    Message[] m = new Message[messages.length];
+    var m = new Message[messages.length];
     messages.copyInto(m);
     for (var i=0; i<m.length; i++) m[i].draw(this.buf);
 
@@ -196,7 +196,7 @@ class Game {
 
     // allow things the chance to attack
     for (var i=0; i<t.length; i++) {
-      Thing[] shots = t[i].shoot();
+      var shots = t[i].shoot();
       if (shots != null) {
         for (int j=0; j<shots.length; j++) {
           if (shots[j] != null) things.add(shots[j]);
@@ -246,7 +246,7 @@ class Game {
     if (!this.keys.has(code)) {
       this.keys.add(code);
       /*
-      Thing[] t = getThings();
+      var t = getThings();
       for (var i=0; i<t.length; i++) t[i].keyPressed(e);
       */
 
@@ -293,13 +293,13 @@ class Game {
   checkAllCollisions(t) {
     /*
     // divide things into types, and build rectangle lists
-    Thing[][] tt = new Thing[Thing.TYPES.length][];
-    int[] counts = new int[Thing.TYPES.length];
+    var tt = new Thing[Thing.TYPES.length][];
+    var counts = new int[Thing.TYPES.length];
     for (var i=0; i<t.length; i++) {
       var type = t[i].getType();
       counts[type]++;
     }
-    Rectangle[][][] boxes = new Rectangle[Thing.TYPES.length][][];
+    var boxes = new Rectangle[Thing.TYPES.length][][];
     for (var i=0; i<counts.length; i++) {
       tt[i] = new Thing[counts[i]];
       boxes[i] = new Rectangle[counts[i]][];
@@ -312,8 +312,8 @@ class Game {
     }
 
     // do collision detection between copter and power-ups
-    Rectangle[] rcop = copter.getBoxes();
-    Rectangle[][] rups = boxes[Thing.POWER_UP];
+    var rcop = copter.getBoxes();
+    var rups = boxes[Thing.POWER_UP];
     for (var i=0; i<rups.length; i++) {
       if (rups[i] == null) continue;
       boolean collision = false;

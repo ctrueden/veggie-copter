@@ -9,7 +9,7 @@ class AnnaAttack extends AttackStyle {
   /** Fires a shot randomly. */
   shoot() {
     if (Math.random() >= 1.0 / (60 - FREQUENCY)) return null;
-    return new Thing[] {new EnemyBullet(thing)};
+    return [new EnemyBullet(thing)];
   }
 
 }

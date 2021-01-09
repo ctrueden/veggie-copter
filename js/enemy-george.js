@@ -19,7 +19,7 @@ class GeorgeAttack extends AttackStyle {
   GeorgeAttack(t) { super(t); }
 
   /** Fires a shot according to George's attack pattern. */
-  Thing[] shoot() {
+  shoot() {
     GeorgeMovement pm = (GeorgeMovement) thing.getMovement();
 
     if (pm.isFrantic()) {
@@ -50,7 +50,7 @@ class GeorgeAttack extends AttackStyle {
     if (toFire.isEmpty()) return null;
     var p = toFire[0];
     toFire.removeElementAt(0);
-    return new Thing[] {new EnemyBullet(thing, p.x, p.y)};
+    return [new EnemyBullet(thing, p.x, p.y)];
   }
 
 }
@@ -133,7 +133,7 @@ class GeorgeMovement extends MovementStyle {
 
 class GeorgeEnemy extends EnemyHead {
 
-  GeorgeEnemy(game, String[] args) {
+  GeorgeEnemy(game, args) {
     // CTR TODO parse args and initialize George with proper parameters
     super(game, 80 + (int) (Math.random() * 20),
       game.loadImage("george1.png"),
@@ -163,7 +163,7 @@ class GeorgeEnemy extends EnemyHead {
 
 class GeorgeBoss extends BossHead {
 
-  GeorgeBoss(game, String[] args) {
+  GeorgeBoss(game, args) {
     // CTR TODO parse args and initialize George with proper parameters
     super(game, 800 + (int) (Math.random() * 200),
       game.loadImage("george-boss1.png"),

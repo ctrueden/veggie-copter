@@ -1,36 +1,32 @@
 class CopterGun extends Thing {
-
-  const SPEED = 5;
-  const HEIGHT = 7;
-  const Color BROWN = Color.yellow.darker();
-
-  static BoundedImage image;
+  static const SPEED = 5;
+  static const HEIGHT = 7;
+  static const BROWN = Color.yellow.darker();
 
   static {
     var len = HEIGHT;
-    BufferedImage img = ImageTools.makeImage(1, len);
-    Graphics g = img.createGraphics();
+    var img = ImageTools.makeImage(1, len);
+    var g = img.createGraphics();
     g.setColor(BROWN);
     g.drawLine(0, 0, 0, len);
     g.dispose();
-    image = new BoundedImage(img, 1, HEIGHT);
-    image.addBox(new BoundingBox());
+    CopterGun.prototype.image = new BoundedImage(img, 1, HEIGHT);
+    CopterGun.prototype.image.addBox(new BoundingBox());
   }
 
   CopterGun(thing, x, y, power) {
     super(thing.getGame());
-    type = GOOD_BULLET;
-    setImage(image);
+    this.type = GOOD_BULLET;
+    setImage(this.image);
     setPower(power);
-    move = new BulletMovement(this, x, y + HEIGHT, x, -100, SPEED);
+    this.move = new BulletMovement(this, x, y + HEIGHT, x, -100, SPEED);
   }
-
 }
 
 /** Defines veggie copter gun attack. */
 class GunAttack extends ColoredAttack {
 
-  const RECHARGE = 2;
+  static const RECHARGE = 2;
 
   boolean space = false;
   var fired;

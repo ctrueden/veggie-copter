@@ -1,98 +1,77 @@
-/** Thing is an object on the screen that moves around and has hit points. */
-class Thing implements KeyListener {
+/** Thing is an object on the screen that moves around and has hit points. */ class Thing implements KeyListener {
 
   /** Type indicating evil entity. */
-  const EVIL = 0;
+  static const EVIL = 0;
 
   /** Type indicating good entity. */
-  const GOOD = 1;
+  static const GOOD = 1;
 
   /** Type indicating evil bullet. */
-  const EVIL_BULLET = 2;
+  static const EVIL_BULLET = 2;
 
   /** Type indicating good bullet. */
-  const GOOD_BULLET = 3;
+  static const GOOD_BULLET = 3;
 
   /** Type indicating power-up. */
-  const POWER_UP = 4;
+  static const POWER_UP = 4;
 
   /** List of all possible types. */
-  const int[] TYPES = {
+  static const TYPES = [
     EVIL, GOOD, EVIL_BULLET, GOOD_BULLET, POWER_UP
-  };
+  ];
 
   /** How far offscreen objects must be before being discarded. */
-  const THRESHOLD = 50;
+  static const THRESHOLD = 50;
 
-  /** Game to which this object belongs. */
-  VeggieCopter game;
-
-  /** Object's movement style. */
-  MovementStyle move;
-
-  /** Object's attack style. */
-  AttackStyle attack;
-
-  /** Position of the object. */
-  xpos, ypos;
-
-  /** List of images representing the object. */
-  Vector images = new Vector();
-
-  /** Index into images list for object's current status. */
-  var imageIndex = -1;
-
-  /** Hit points. */
-  var hp = 1, maxhp = 1;
-
-  /** Amount of damage the object inflicts. */
-  var power = 1;
-
-  /** The type of this object. */
-  var type = EVIL;
-
-  /** Number of times the object has been hit. */
-  var hit;
-
-  /** Constructs a new object. */
-  Thing(game) { this.game = game; }
+  constructor(game) {
+    this.game = game;          // Game to which this object belongs.
+    this.move = null;          // Object's movement style.
+    this.attack = null;        // Object's attack style.
+    this.xpos = this.ypos = 0; // Position of the object.
+    this.images = [];          // List of images representing the object.
+    this.imageIndex = -1;      // Index into images list for object's current status.
+    this.hp = this.maxhp = 1;  // Hit points.
+    this.power = 1;            // Amount of damage the object inflicts.
+    this.type = EVIL;          // The type of this object.
+    this.hit = 0;              // Number of times the object has been hit.
+  }
 
   /** Assigns object's movement style. */
-  setMovement(ms) { move = ms; }
+  setMovement(ms) { this.move = ms; }
 
   /** Assigns object's attack style. */
-  setAttack(as) { attack = as; }
+  setAttack(as) { this.attack = as; }
 
   /** Assigns object's image list. */
-  setImageList(BoundedImage[] images) {
+  setImageList(images) {
     this.images.removeAllElements();
-    if (images == null) imageIndex = -1;
+    if (images == null) this.imageIndex = -1;
     else {
-      for (var i=0; i<images.length; i++) this.images.add(images[i]);
-      imageIndex = this.images.isEmpty() ? -1 : 0;
+      this.images.concat(images);
+      this.imageIndex = this.images.isEmpty() ? -1 : 0;
     }
   }
 
   /** Changes the image representing the object. */
   setImageIndex(index) {
-    if (index >= 0 && index < images.length) imageIndex = index;
+    if (index >= 0 && index < this.images.length) this.imageIndex = index;
   }
 
   /** Assigns object's image. */
   setImage(image) {
-    setImageList(new BoundedImage[] {image});
+    setImageList([image]);
   }
 
   /** Assigns object's position. */
   setPos(x, y) {
-    xpos = x;
-    ypos = y;
+    this.xpos = x;
+    this.ypos = y;
     var width = getWidth(), height = getHeight();
-    if (xpos < -width - THRESHOLD || ypos < -height - THRESHOLD ||
-      xpos >= game.getWindowWidth() + THRESHOLD ||
-      ypos >= game.getWindowHeight() + THRESHOLD)
+    if (this.xpos < -width - THRESHOLD || this.ypos < -height - THRESHOLD ||
+      this.xpos >= this.game.getWindowWidth() + THRESHOLD ||
+      this.ypos >= this.game.getWindowHeight() + THRESHOLD)
     {
-      hp = 0;
+      this.hp = 0;
     }
   }
 
@@ -103,7 +82,7 @@ class Thing implements KeyListener {
 
   /** Assigns object's hit points. */
   setHP(hp) {
-    if (hp > maxhp) hp = maxhp;
+    if (hp > this.maxhp) hp = this.maxhp;
     this.hp = hp;
   }
 
@@ -121,30 +100,30 @@ class Thing implements KeyListener {
   setType(type) { this.type = type; }
 
   /** Draws the object onscreen. */
-  draw(g) {
-    BoundedImage img = getBoundedImage();
+  draw(ctx) {
+    var img = getBoundedImage();
     if (img == null) return;
     var x = Math.trunc(getX() + img.getOffsetX());
     var y = Math.trunc(getY() + img.getOffsetY());
-    g.drawImage(img.getImage(), x, y, game);
+    ctx.drawImage(img.getImage(), x, y, this.game);
   }
 
   /** Hits this object for the given amount of damage. */
   hit(damage) {
-    setHP(hp - damage);
-    hit = 2 * damage;
+    setHP(this.hp - damage);
+    this.hit = 2 * damage;
   }
 
   /** Moves the object according to its movement style. */
   move() {
     if (isDead()) return;
-    if (isHit()) hit--;
+    if (isHit()) this.hit--;
     if (move == null) return;
-    move.move();
+    this.move.move();
   }
 
   /** Instructs the object to attack according to its attack style. */
-  Thing[] shoot() {
+  shoot() {
     if (isDead()) return null;
     if (attack == null) return null;
     return attack.shoot();
@@ -154,7 +133,7 @@ class Thing implements KeyListener {
    * Instructs the object to use its secondary (triggered)
    * attack according to its attack style.
    */
-  Thing[] trigger() {
+  trigger() {
     if (isDead()) return null;
     if (attack == null) return null;
     return attack.trigger();
@@ -209,7 +188,7 @@ class Thing implements KeyListener {
   }
 
   /** Gets object's bounding boxes. */
-  Rectangle[] getBoxes() {
+  getBoxes() {
     BoundedImage img = getBoundedImage();
     if (img == null) return null;
     return img.getBoxes(xpos, ypos);

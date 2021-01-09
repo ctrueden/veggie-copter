@@ -7,9 +7,9 @@ class KelsAttack extends AttackStyle {
   KelsAttack(t) { super(t); }
 
   /** Fires a shot randomly. */
-  Thing[] shoot() {
+  shoot() {
     if (Math.random() >= 1.0 / (60 - FREQUENCY)) return null;
-    return new Thing[] {new EnemyBullet(thing)};
+    return [new EnemyBullet(thing)];
   }
 
 }
@@ -64,7 +64,7 @@ class KelsMovement extends MovementStyle {
 
 class KelsEnemy extends EnemyHead {
 
-  KelsEnemy(game, String[] args) {
+  KelsEnemy(game, args) {
     // CTR TODO parse args and initialize Kels with proper parameters
     super(game, 25,
       game.loadImage("kels1.png"),
@@ -96,7 +96,7 @@ class KelsEnemy extends EnemyHead {
 
 class KelsBoss extends BossHead {
 
-  KelsBoss(game, String[] args) {
+  KelsBoss(game, args) {
     // CTR TODO parse args and initialize Kels with proper parameters
     super(game, 250,
       game.loadImage("kels-boss1.png"),

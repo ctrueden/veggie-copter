@@ -19,7 +19,7 @@ class PaulAttack extends AttackStyle {
   PaulAttack(t) { super(t); }
 
   /** Fires a shot according to Paul's attack pattern. */
-  Thing[] shoot() {
+  shoot() {
     PaulMovement pm = (PaulMovement) thing.getMovement();
 
     if (pm.isFrantic()) {
@@ -50,7 +50,7 @@ class PaulAttack extends AttackStyle {
     if (toFire.isEmpty()) return null;
     var p = toFire[0];
     toFire.removeElementAt(0);
-    return new Thing[] {new EnemyBullet(thing, p.x, p.y)};
+    return [new EnemyBullet(thing, p.x, p.y)];
   }
 
 }
@@ -133,7 +133,7 @@ class PaulMovement extends MovementStyle {
 
 class PaulEnemy extends EnemyHead {
 
-  PaulEnemy(game, String[] args) {
+  PaulEnemy(game, args) {
     // CTR TODO parse args and initialize Paul with proper parameters
     super(game, 80 + (int) (Math.random() * 20),
       game.loadImage("paul1.png"),
@@ -165,7 +165,7 @@ class PaulEnemy extends EnemyHead {
 
 class PaulBoss extends BossHead {
 
-  PaulBoss(game, String[] args) {
+  PaulBoss(game, args) {
     // CTR TODO parse args and initialize Paul with proper parameters
     super(game, 800 + (int) (Math.random() * 200),
       game.loadImage("paul-boss1.png"),

@@ -16,12 +16,12 @@ class DoomAttack extends ColoredAttack {
   }
 
   /** Fires a shot if space bar is pressed. */
-  Thing[] shoot() {
+  shoot() {
     if (!space || doom != null || thing.getHP() == 1) return null;
     doom = new CopterDoom(thing);
     doom.setPower(power);
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
-    return new Thing[] {doom};
+    return [doom];
   }
 
   keyPressed(e) {

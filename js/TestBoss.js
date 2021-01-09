@@ -1,19 +1,19 @@
 class TestBoss extends BossHead {
 
-  TestBoss(game, String[] args) {
+  TestBoss(game, args) {
     super(game, 1000,
       game.loadImage("test-boss2.png"),
       game.loadImage("test-boss2.png"),
       game.loadImage("test-boss2.png"));
-    BoundedImage normal = getBoundedImage(0);
+    var normal = getBoundedImage(0);
     normal.addBox(new BoundingBox(30, 0, 30, 0));
     normal.addBox(new BoundingBox(3, 30, 3, 50));
     normal.addBox(new BoundingBox(15, 10, 15, 15));
-    BoundedImage attacking = getBoundedImage(1);
+    var attacking = getBoundedImage(1);
     attacking.addBox(new BoundingBox(30, 0, 30, 0));
     attacking.addBox(new BoundingBox(3, 30, 3, 50));
     attacking.addBox(new BoundingBox(15, 10, 15, 15));
-    BoundedImage hurting = getBoundedImage(2);
+    var hurting = getBoundedImage(2);
     hurting.addBox(new BoundingBox(30, 0, 30, 0));
     hurting.addBox(new BoundingBox(3, 30, 3, 50));
     hurting.addBox(new BoundingBox(15, 10, 15, 15));
@@ -32,7 +32,7 @@ class TestBoss extends BossHead {
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */
-  ColoredAttack getColoredAttack() {
+  getColoredAttack() {
     return new GunAttack(game.getCopter());
   }
 
@@ -49,7 +49,7 @@ class TestBoss extends BossHead {
     super.hit(damage);
   }
 
-  var getScore() {
+  getScore() {
     ((TestMovement) move).printStats();
     return 0;
   }

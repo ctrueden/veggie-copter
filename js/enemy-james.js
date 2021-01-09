@@ -7,9 +7,9 @@ class JamesAttack extends AttackStyle {
   JamesAttack(t) { super(t); }
 
   /** Fires a shot randomly. */
-  Thing[] shoot() {
+  shoot() {
     if (Math.random() >= 1.0 / (60 - FREQUENCY)) return null;
-    return new Thing[] {new EnemyBullet(thing)};
+    return [new EnemyBullet(thing)];
   }
 
 }
@@ -64,7 +64,7 @@ class JamesMovement extends MovementStyle {
 
 class JamesEnemy extends EnemyHead {
 
-  JamesEnemy(game, String[] args) {
+  JamesEnemy(game, args) {
     // CTR TODO parse args and initialize James with proper parameters
     super(game, 25,
       game.loadImage("james1.png"),
@@ -96,7 +96,7 @@ class JamesEnemy extends EnemyHead {
 
 class JamesBoss extends BossHead {
 
-  JamesBoss(game, String[] args) {
+  JamesBoss(game, args) {
     // CTR TODO parse args and initialize James with proper parameters
     super(game, 250,
       game.loadImage("james-boss1.png"),

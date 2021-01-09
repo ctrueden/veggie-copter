@@ -9,7 +9,7 @@ class AlexAttack extends AttackStyle {
   /** Fires a shot randomly. */
   shoot() {
     if (Math.random() >= 1.0 / (60 - FREQUENCY)) return null;
-    return new Thing[] {new EnemyBullet(thing)};
+    return [new EnemyBullet(thing)];
   }
 
 }
@@ -170,7 +170,7 @@ class AlexMovement extends MovementStyle {
 
 class AlexEnemy extends EnemyHead {
 
-  AlexEnemy(game, String[] args) {
+  AlexEnemy(game, args) {
     // CTR TODO parse args and initialize Alex with proper parameters
     super(game, 25,
       game.loadImage("alex1.png"),

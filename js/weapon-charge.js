@@ -23,13 +23,13 @@ class ChargeAttack extends ColoredAttack {
   }
 
   /** Fires a shot if space bar is pressed. */
-  Thing[] shoot() {
+  shoot() {
     if (!space) return null;
 
     if (charge == null) {
       ticks = 0;
       charge = new CopterCharge(thing);
-      return new Thing[] {charge};
+      return [charge];
     }
     ticks++;
     var rate = GROW_SPEED - power;
