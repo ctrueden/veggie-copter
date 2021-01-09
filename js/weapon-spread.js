@@ -30,8 +30,8 @@ class CopterSpread extends Thing {
 /** Defines veggie copter spread attack. */
 class SpreadAttack extends ColoredAttack {
 
-  const RECHARGE = 10;
-  const POWER = 3;
+  RECHARGE = 10;
+  POWER = 3;
 
   boolean space = false;
   var fired;

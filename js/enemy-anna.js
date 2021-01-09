@@ -2,7 +2,7 @@
 class AnnaAttack extends AttackStyle {
 
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-  const FREQUENCY = 1;
+  FREQUENCY = 1;
 
   AnnaAttack(t) { super(t); }
 

@@ -1,6 +1,6 @@
 class BulletMovement extends MovementStyle {
 
-  const SPEED = 2.2;
+  SPEED = 2.2;
 
   xstart, ystart;
   xtraj, ytraj;

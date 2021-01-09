@@ -20,7 +20,7 @@ class SoundPlayer {
 
   playMusic(path) {
     this.song = new Audio(path);
-    if (!this.mute) song.play();
+    if (!this.mute) this.song.play();
   }
 
   stopMusic() {

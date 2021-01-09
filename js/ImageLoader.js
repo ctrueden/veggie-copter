@@ -1,4 +1,4 @@
-const PRELOAD = [
+PRELOAD = [
   "alex1.png", "alex2.png", "alex3.png",
   "alex-boss1.png",
   "paul1.png", "paul2.png", "paul3.png",

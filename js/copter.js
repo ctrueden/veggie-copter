@@ -1,6 +1,6 @@
 /** Defines veggie copter movement. */
 class CopterMovement extends MovementStyle {
-  static const SPEED = 2;
+  SPEED = 2;
 
   constructor(t) {
     super(t);

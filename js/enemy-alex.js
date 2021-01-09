@@ -2,7 +2,7 @@
 class AlexAttack extends AttackStyle {
 
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-  const FREQUENCY = 1;
+  FREQUENCY = 1;
 
   AlexAttack(t) { super(t); }
 
@@ -19,8 +19,8 @@ class AlexMovement extends MovementStyle {
   const X_STEPS = 40;
   const Y_STEPS = 30;
 
-  const SPEED = 2;
-  const LUNGE_RATE = 300;
+  SPEED = 2;
+  LUNGE_RATE = 300;
 
   xstart, ystart;
   xlen, ylen;

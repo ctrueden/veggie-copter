@@ -1,7 +1,7 @@
 class BoxEditor extends JFrame
   KeyListener, MouseListener, MouseMotionListener, WindowListener {
 
-  const COLORS = [
+  COLORS = [
     Color.red, Color.blue, Color.green, Color.cyan,
     Color.magenta, Color.yellow, Color.white
   ];

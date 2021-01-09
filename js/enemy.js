@@ -1,7 +1,7 @@
 class EnemyMovement extends MovementStyle {
-  static const ZIGZAG = 1;
-  static const SPIRAL = 2;
-  static const WAVE = 3;
+  ZIGZAG = 1;
+  SPIRAL = 2;
+  WAVE = 3;
 
   /**
    * Constructs a new enemy movement handler.
@@ -69,7 +69,7 @@ class EnemyMovement extends MovementStyle {
 
 class EnemyBullet extends Thing {
 
-  const SIZE = 7;
+  SIZE = 7;
 
   static image;
 
@@ -112,7 +112,7 @@ class EnemyBullet extends Thing {
 /** Defines random enemy bullet attack. */
 class RandomBulletAttack extends AttackStyle {
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-  static const FREQUENCY = 3;
+  FREQUENCY = 3;
 
   constructor(t) { super(t); }
 
@@ -124,11 +124,11 @@ class RandomBulletAttack extends AttackStyle {
 }
 
 class EnemyHead extends Thing {
-  static const NORMAL = 0;
-  static const ATTACKING = 1;
-  static const HURTING = 2;
+  NORMAL = 0;
+  ATTACKING = 1;
+  HURTING = 2;
 
-  static const SHOT_DELAY = 18;
+  SHOT_DELAY = 18;
 
   constructor(game, max, normal, attacking, hurting) {
     super(game);

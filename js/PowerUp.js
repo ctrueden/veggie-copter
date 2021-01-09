@@ -1,5 +1,5 @@
 class PowerUpMovement extends MovementStyle {
-  static const PERIOD = 3;
+  PERIOD = 3;
 
   PowerUpMovement(t, x, y, center) {
     super(t);
@@ -56,7 +56,7 @@ class PowerUpMovement extends MovementStyle {
 
 /** Power-up object increases copter's weapon power. */
 class PowerUp extends Thing {
-  static const PULSE = 10;
+  PULSE = 10;
 
   /** Constructs a power-up object. */
   PowerUp(game, cx, cy, size, attack) {

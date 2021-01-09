@@ -1,7 +1,7 @@
 class CopterGun extends Thing {
-  static const SPEED = 5;
-  static const HEIGHT = 7;
-  static const BROWN = Color.yellow.darker();
+  SPEED = 5;
+  HEIGHT = 7;
+  BROWN = Color.yellow.darker();
 
   static {
     var len = HEIGHT;
@@ -26,7 +26,7 @@ class CopterGun extends Thing {
 /** Defines veggie copter gun attack. */
 class GunAttack extends ColoredAttack {
 
-  static const RECHARGE = 2;
+  RECHARGE = 2;
 
   boolean space = false;
   var fired;

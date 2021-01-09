@@ -18,7 +18,7 @@ class SplitterMovement extends MovementStyle {
 
 class CopterSplitter extends Thing {
 
-  const MAX_SIZE = 12;
+  MAX_SIZE = 12;
 
   static BoundedImage[] images;
 
@@ -60,10 +60,10 @@ class CopterSplitter extends Thing {
 /** Defines splitter attack. */
 class SplitterAttack extends ColoredAttack {
 
-  const RECHARGE = 10;
-  const MAX_SPLIT = 6;
-  const SPEED = 5;
-  const MULTIPLIER = 4;
+  RECHARGE = 10;
+  MAX_SPLIT = 6;
+  SPEED = 5;
+  MULTIPLIER = 4;
 
   space, trigger;
   var fired;

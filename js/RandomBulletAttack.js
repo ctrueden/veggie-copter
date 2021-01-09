@@ -2,7 +2,7 @@
 class RandomBulletAttack extends AttackStyle {
 
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-  static const FREQUENCY = 3;
+  FREQUENCY = 3;
 
   RandomBulletAttack(t) { super(t); }
 

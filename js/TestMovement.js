@@ -1,17 +1,14 @@
 class TestMovement extends MovementStyle {
-
-  private boolean timing;
-  private long ticks;
-
-  TestMovement(t, x, y) {
+  constructor(t, x, y) {
     super(t);
-    thing.setPos(x, y);
+    this.thing.setPos(x, y);
+    this.timing = false;
+    this.ticks = 0;
   }
 
-  startTimer() { timing = true; }
-  printStats() { System.out.println(ticks + " ticks elapsed."); }
+  startTimer() { this.timing = true; }
+  printStats() { console.info(this.ticks + " ticks elapsed."); }
 
   /** Moves the given thing according to the Test movement style. */
-  move() { if (timing) ticks++; }
-
+  move() { if (this.timing) this.ticks++; }
 }

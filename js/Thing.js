@@ -1,27 +1,27 @@
 /** Thing is an object on the screen that moves around and has hit points. */ class Thing implements KeyListener {
 
   /** Type indicating evil entity. */
-  static const EVIL = 0;
+  EVIL = 0;
 
   /** Type indicating good entity. */
-  static const GOOD = 1;
+  GOOD = 1;
 
   /** Type indicating evil bullet. */
-  static const EVIL_BULLET = 2;
+  EVIL_BULLET = 2;
 
   /** Type indicating good bullet. */
-  static const GOOD_BULLET = 3;
+  GOOD_BULLET = 3;
 
   /** Type indicating power-up. */
-  static const POWER_UP = 4;
+  POWER_UP = 4;
 
   /** List of all possible types. */
-  static const TYPES = [
+  TYPES = [
     EVIL, GOOD, EVIL_BULLET, GOOD_BULLET, POWER_UP
   ];
 
   /** How far offscreen objects must be before being discarded. */
-  static const THRESHOLD = 50;
+  THRESHOLD = 50;
 
   constructor(game) {
     this.game = game;          // Game to which this object belongs.

@@ -1,13 +1,13 @@
 /** Information regarding a specific stage of the game. */
 class Stage {
-  static const TOP_LEFT = 10;
-  static const IMAGE_SIZE = 154;
-  static const ICON_SIZE = 50;
+  TOP_LEFT = 10;
+  IMAGE_SIZE = 154;
+  ICON_SIZE = 50;
 
-  static const BIG = new Font("SansSerif", Font.BOLD, 36);
-  static const SMALL = new Font("SansSerif", Font.PLAIN, 12);
+  BIG = new Font("SansSerif", Font.BOLD, 36);
+  SMALL = new Font("SansSerif", Font.PLAIN, 12);
 
-  static const DARK_RED = new Color(48, 0, 0);
+  DARK_RED = new Color(48, 0, 0);
 
   /** Constructs a playable stage. */
   constructor(game, name, prefix, description) {
@@ -101,14 +101,10 @@ class TestStage extends Stage {
 /** Logic for selecting a stage. */
 class StageSelector {
   /** Stage icon coordinates (values). */
-  static const STAGE_X = {
-    10, 10, 10, 64, 119, 174, 229, 284, 338, 339, 339
-  };
+  STAGE_X = [10, 10, 10, 64, 119, 174, 229, 284, 338, 339, 339];
 
   /** Stage icon coordinates (values). */
-  static const STAGE_Y = {
-    341, 284, 227, 170, 170, 170, 170, 170, 227, 284, 341
-  };
+  STAGE_Y = [341, 284, 227, 170, 170, 170, 170, 170, 227, 284, 341];
 
   constructor(game) {
     this.game = game;

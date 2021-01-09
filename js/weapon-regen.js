@@ -1,14 +1,11 @@
 class RegenMovement extends MovementStyle {
-
-  const FLUX_RADIUS = 5;
-  const FLUX_RATE = 4;
-
-  private Thing owner;
-  private long ticks;
+  FLUX_RADIUS = 5;
+  FLUX_RATE = 4;
 
   RegenMovement(t, owner) {
     super(t);
     this.owner = owner;
+    this.ticks = 0;
     syncPos();
   }
 
@@ -53,7 +50,7 @@ class RegenMovement extends MovementStyle {
 
 class CopterRegen extends Thing {
 
-  const MAX_SIZE = 10 + RegenMovement.FLUX_RADIUS;
+  MAX_SIZE = 10 + RegenMovement.FLUX_RADIUS;
 
   static BoundedImage[] images;
 
@@ -99,42 +96,38 @@ class CopterRegen extends Thing {
 
 /** Defines veggie copter regen "attack" style. */
 class RegenAttack extends ColoredAttack {
-
-  boolean space;
-  CopterRegen regen;
-
   RegenAttack(t) {
     super(t, Color.pink, t.getGame().loadImage("icon-regen.png").getImage());
+    clear();
   }
 
   clear() {
-    space = false;
-    if (regen != null) regen.setHP(0);
-    regen = null;
+    this.space = false;
+    if (this.regen != null) this.regen.setHP(0);
+    this.regen = null;
   }
 
   /** Begins regeneration if space bar is pressed. */
-  Thing[] shoot() {
-    if (!space || regen != null) return null;
-    regen = new CopterRegen(thing);
-    regen.setPower(power);
-    //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
-    return new Thing[] {regen};
+  shoot() {
+    if (!this.space || this.regen != null) return null;
+    this.regen = new CopterRegen(this.thing);
+    this.regen.setPower(this.power);
+    //SoundPlayer.playSound("../assets/laser4.wav");
+    return [this.regen];
   }
 
   setPower(power) {
     super.setPower(power);
-    if (regen != null) regen.setPower(power);
+    if (this.regen != null) this.regen.setPower(power);
   }
 
   keyPressed(e) {
     var code = e.getKeyCode();
-    if (code == Keys.SHOOT) space = true;
+    if (code == Keys.SHOOT) this.space = true;
   }
 
   keyReleased(e) {
     var code = e.getKeyCode();
     if (code == Keys.SHOOT) clear();
   }
-
 }

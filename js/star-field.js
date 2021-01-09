@@ -1,11 +1,11 @@
 /** Number of stars in star field. */
-const STARS = 50;
+STARS = 50;
 
 /** Minimum star speed. */
-const STAR_MIN = 1;
+STAR_MIN = 1;
 
 /** Maximum star speed. */
-const STAR_MAX = 4;
+STAR_MAX = 4;
 
 class StarField {
 

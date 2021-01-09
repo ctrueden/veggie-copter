@@ -1,11 +1,11 @@
 /** Width of game window. */
-const GAME_WIDTH = 400;
+GAME_WIDTH = 400;
 
 /** Height of game window. */
-const GAME_HEIGHT = 400;
+GAME_HEIGHT = 400;
 
 /** Height of status bar. */
-const STATUS = 24;
+STATUS = 24;
 
 class Game {
 

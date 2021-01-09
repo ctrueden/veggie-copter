@@ -2,7 +2,7 @@
 class KelsAttack extends AttackStyle {
 
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-  const FREQUENCY = 1;
+  FREQUENCY = 1;
 
   KelsAttack(t) { super(t); }
 
@@ -16,8 +16,8 @@ class KelsAttack extends AttackStyle {
 
 class KelsMovement extends MovementStyle {
 
-  const RADIUS2 = 200;
-  const SPEED = 2;
+  RADIUS2 = 200;
+  SPEED = 2;
 
   KelsMovement(t, y, dir) {
     super(t);

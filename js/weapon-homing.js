@@ -1,7 +1,7 @@
 /** Defines veggie copter homing missile attack style. */
 class HomingAttack extends ColoredAttack {
 
-  const RECHARGE = 12;
+  RECHARGE = 12;
 
   boolean space = false;
   var fired;

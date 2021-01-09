@@ -2,13 +2,13 @@
 class PaulAttack extends AttackStyle {
 
   /** Number of bullets to fire per spread. */
-  const BULLETS = 5;
+  BULLETS = 5;
 
   /** Spread factor for controlling bullet spread width. */
-  const SPREAD = 24;
+  SPREAD = 24;
 
   /** Number of frames to wait between firing bullets in frantic mode. */
-  const FRANTIC_RATE = 5;
+  FRANTIC_RATE = 5;
 
   /** List of bullets left to fire. */
   Vector toFire = new Vector();
@@ -58,10 +58,10 @@ class PaulAttack extends AttackStyle {
 class PaulMovement extends MovementStyle {
 
   /** Movement speed per frame. */
-  const SPEED = 1;
+  SPEED = 1;
 
   /** Number of HP considered low enough to enter frantic mode. */
-  const LOW_HP = 30;
+  LOW_HP = 30;
 
   var target;
   boolean dir;

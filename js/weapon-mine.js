@@ -43,13 +43,13 @@ class MineBulletMovement extends MovementStyle {
 class MineBullet extends Thing {
 
   /** Size of bullet. */
-  const SIZE = 7;
+  SIZE = 7;
 
   /** Number of ticks until bullet disappears. */
-  const LIFE = 20;
+  LIFE = 20;
 
   /** Power divisor for each bullet. */
-  const POWER = 4;
+  POWER = 4;
 
   static BoundedImage[] images;
 
@@ -127,22 +127,22 @@ class MineExplode extends AttackStyle {
 class MineMovement extends MovementStyle {
 
   /** Number of ticks to initially throw mine forward. */
-  const THROW_DURATION = 20;
+  THROW_DURATION = 20;
 
   /** Speed at which mine is thrown forward. */
-  const THROW_SPEED = 8;
+  THROW_SPEED = 8;
 
   /** Number of ticks until mine blows up automatically. */
-  const EXPLODE_DELAY = 180;
+  EXPLODE_DELAY = 180;
 
   /** Rate at which shaking occurs (lower increases shaking more quickly). */
-  const SHAKE_RATE = 16;
+  SHAKE_RATE = 16;
 
   /** Speed at which mine moves downward after being thrown. */
   const var SPEED = 1;
 
   /** Strength of drag pulling in enemies. */
-  const DRAG_STRENGTH = 20;
+  DRAG_STRENGTH = 20;
 
   long ticks;
   adjX, adjY;
@@ -196,8 +196,8 @@ class MineMovement extends MovementStyle {
 
 class CopterMine extends Thing {
 
-  const POWER_MULTIPLIER = 10;
-  const MAX_SIZE = 11;
+  POWER_MULTIPLIER = 10;
+  MAX_SIZE = 11;
 
   static BoundedImage[] images;
 
@@ -251,7 +251,7 @@ class CopterMine extends Thing {
 /** Defines veggie copter gravity mine attack style. */
 class MineAttack extends ColoredAttack {
 
-  const RECHARGE = 24;
+  RECHARGE = 24;
 
   boolean space;
   var fired;

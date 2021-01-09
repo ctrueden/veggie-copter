@@ -1,8 +1,8 @@
 /** Encapsulates an attack pattern with icon and color. */
 class ColoredAttack extends AttackStyle {
 
-  const DARK_RED = new Color(95, 0, 0);
-  const ICON_SIZE = 21;
+  DARK_RED = new Color(95, 0, 0);
+  ICON_SIZE = 21;
 
   image;
   color;

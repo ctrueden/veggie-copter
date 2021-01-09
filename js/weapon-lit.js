@@ -4,12 +4,12 @@ class LitAttack extends ColoredAttack {
   const var LEFT_CHANCE = 0.2;
   const var RIGHT_CHANCE = 0.2;
 
-  const POWER = 1;
-  const PATH_LENGTH = 200;
+  POWER = 1;
+  PATH_LENGTH = 200;
 
-  const ARC_LENGTH = 10;
-  const DELAY = 10;
-  const PERIOD = ARC_LENGTH + DELAY;
+  ARC_LENGTH = 10;
+  DELAY = 10;
+  PERIOD = ARC_LENGTH + DELAY;
 
   var ticks;
   boolean space = false;

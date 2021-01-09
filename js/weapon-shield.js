@@ -1,9 +1,9 @@
 class ShieldMovement extends MovementStyle {
 
   const var SPEED = 0.1f;
-  const MIN_RADIUS = 30;
-  const MAX_RADIUS = 63;
-  const RADIUS_INC = 3;
+  MIN_RADIUS = 30;
+  MAX_RADIUS = 63;
+  RADIUS_INC = 3;
 
   Thing owner;
   var angle;
@@ -40,7 +40,7 @@ class ShieldMovement extends MovementStyle {
 
 class CopterShield extends Thing {
 
-  const SIZE = 7;
+  SIZE = 7;
 
   static BoundedImage[] images;
   static var count = 0;
