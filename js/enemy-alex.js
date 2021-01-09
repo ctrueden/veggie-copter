@@ -9,7 +9,7 @@ class AlexAttack extends AttackStyle {
   /** Fires a shot randomly. */
   shoot() {
     if (Math.random() >= 1.0 / (60 - FREQUENCY)) return null;
-    return [new EnemyBullet(thing)];
+    return [new EnemyBullet(thing, null, null)];
   }
 
 }
@@ -229,7 +229,7 @@ class AlexBoss extends BossHead {
 
   /** Gets the attack form left behind by this boss upon defeat. */
   getColoredAttack() {
-    return new EnergyAttack(game.getCopter());
+    return new EnergyAttack(game.getCopter(), 0, 0);
   }
 
   getScore() { return 30 * super.getScore(); }

@@ -1,5 +1,90 @@
-/** Thing is an object on the screen that moves around and has hit points. */ class Thing implements KeyListener {
+// Base data structures.
 
+/** An image with associated bounding box insets. */
+class BoundedImage {
+  constructor(img, width, height, xoff, yoff) {
+    this.img = img;                                           // Image.
+    this.width = width == null ? img.getWidth() : width;      // Image width.
+    this.height = height == null ? img.getHeight() : height;  // Image height.
+    this.xoff = xoff == null ? 0 : xoff;                      // X offset.
+    this.yoff = yoff == null ? 0 : yoff;                      // Y offset.
+    this.boxes = [];                                          // Bounding boxes.
+  }
+
+  /** Adds a bounding box to the image. */
+  addBox(box) { boxes.push(box); }
+
+  /** Removes the last bounding box from the image. */
+  removeBox() {
+    boxes.pop();
+  }
+
+  /** Gets image. */
+  getImage() { return this.img; }
+
+  /** Gets image width. */
+  getWidth() { return this.width; }
+
+  /** Gets image height. */
+  getHeight() { return this.height; }
+
+  /** Gets X offset. */
+  getOffsetX() { return this.xoff; }
+
+  /** Gets Y offset. */
+  getOffsetY() { return this.yoff; }
+
+  /** Gets bounding boxes given the image's top left coordinate. */
+  getBoxes(x, y) {
+    var r = [];
+    for (var i=0; i<this.boxes.length; i++) {
+      r.push(this.boxes[i].getBox(x, y, width, height));
+    }
+    return r;
+  }
+}
+
+/** Encapsulates a movement pattern. */
+class MovementStyle {
+  constructor(t) {
+    this.thing = t; // Thing upon which this movement style object operates.
+  }
+
+  /** Moves according to this movement style. */
+  move() { }
+
+  keyPressed(e) { }
+  keyReleased(e) { }
+}
+
+/** Encapsulates an attack pattern. */
+class AttackStyle {
+  constructor(t) {
+    this.thing = t; // Thing upon which this attack style object operates.
+    this.power = 1; // Amount of damage the attack style inflicts.
+  }
+
+  /** Instructs the thing to fire a shot (but only if it wants to). */
+  shoot() { }
+
+  /**
+   * Instructs the thing to perform a secondary trigger action,
+   * if it has one.
+   */
+  trigger() { }
+
+  /** Sets power level of this attack style. */
+  setPower(power) { this.power = power; }
+
+  /** Gets power level of this attack style. */
+  getPower() { return this.power; }
+
+  keyPressed(e) { }
+  keyReleased(e) { }
+}
+
+/** An object on the screen that moves around and has hit points. */
+class Thing {
   /** Type indicating evil entity. */
   EVIL = 0;
 
@@ -16,9 +101,7 @@
   POWER_UP = 4;
 
   /** List of all possible types. */
-  TYPES = [
-    EVIL, GOOD, EVIL_BULLET, GOOD_BULLET, POWER_UP
-  ];
+  TYPES = [EVIL, GOOD, EVIL_BULLET, GOOD_BULLET, POWER_UP];
 
   /** How far offscreen objects must be before being discarded. */
   THRESHOLD = 50;
@@ -77,7 +160,7 @@
 
   /** Assigns object's position (coordinates). */
   setCPos(cx, cy) {
-    setPos(cx - getWidth() / 2f, cy - getHeight() / 2f);
+    setPos(cx - getWidth() / 2, cy - getHeight() / 2);
   }
 
   /** Assigns object's hit points. */
@@ -140,107 +223,102 @@
   }
 
   /** Gets the game to which this object belongs. */
-  VeggieCopter getGame() { return game; }
+  getGame() { return this.game; }
 
   /** Gets the object's movement style. */
-  MovementStyle getMovement() { return move; }
+  getMovement() { return this.move; }
 
   /** Gets the object's attack style. */
-  AttackStyle getAttack() { return attack; }
+  getAttack() { return this.attack; }
 
   /** Gets object's X coordinate. */
-  var getX() { return xpos; }
+  getX() { return this.xpos; }
 
   /** Gets object's Y coordinate. */
-  var getY() { return ypos; }
+  getY() { return this.ypos; }
 
   /** Gets object's centered X coordinate. */
-  var getCX() { return getX() + getWidth() / 2f; }
+  getCX() { return getX() + getWidth() / 2; }
 
   /** Gets object's centered Y coordinate. */
-  var getCY() { return getY() + getHeight() / 2f; }
+  getCY() { return getY() + getHeight() / 2; }
 
   /** Gets image representing this object. */
-  Image getImage() {
-    BoundedImage img = getBoundedImage();
-    if (img == null) return null;
-    return img.getImage();
+  getImage() {
+    var img = getBoundedImage();
+    return img == null ? null : img.getImage();
   }
 
   /** Gets current image index into image list. */
-  var getImageIndex() { return imageIndex; }
+  getImageIndex() { return this.imageIndex; }
 
   /** Gets number of images in image list. */
-  var getImageCount() { return images.length; }
+  getImageCount() { return this.images.length; }
 
   /** Gets object's width. */
-  var getWidth() {
-    BoundedImage img = getBoundedImage();
-    if (img == null) return -1;
-    return img.getWidth();
+  getWidth() {
+    var img = getBoundedImage();
+    return img == null ? -1 : img.getWidth();
   }
 
   /** Gets object's height. */
-  var getHeight() {
-    BoundedImage img = getBoundedImage();
-    if (img == null) return -1;
-    return img.getHeight();
+  getHeight() {
+    var img = getBoundedImage();
+    return img == null ? -1 : img.getHeight();
   }
 
   /** Gets object's bounding boxes. */
   getBoxes() {
-    BoundedImage img = getBoundedImage();
-    if (img == null) return null;
-    return img.getBoxes(xpos, ypos);
+    var img = getBoundedImage();
+    return img == null ? null : img.getBoxes(this.xpos, this.ypos);
   }
 
   /** Gets object's current HP. */
-  var getHP() { return hp; }
+  getHP() { return this.hp; }
 
   /** Gets object's maximum HP value. */
-  var getMaxHP() { return maxhp; }
+  getMaxHP() { return this.maxhp; }
 
   /** Gets object's power. */
-  var getPower() { return power; }
+  getPower() { return this.power; }
 
   /** Gets object's type. */
-  var getType() { return type; }
+  getType() { return this.type; }
 
   /** Gets whether object has been hit. */
-  boolean isHit() { return hit > 0; }
+  isHit() { return this.hit > 0; }
 
   /** Gets whether object is dead. */
-  boolean isDead() { return hp <= 0; }
+  isDead() { return this.hp <= 0; }
 
   /** Gets score value of the object. */
-  var getScore() { return maxhp; }
+  getScore() { return this.maxhp; }
 
   /** Returns true if this object can harm the given one. */
-  boolean harms(t) {
-    return (type == GOOD && t.type == EVIL) ||
-      (type == EVIL && t.type == GOOD) ||
-      (type == GOOD_BULLET && t.type == EVIL) ||
-      (type == EVIL && t.type == GOOD_BULLET) ||
-      (type == GOOD && t.type == EVIL_BULLET) ||
-      (type == EVIL_BULLET && t.type == GOOD);
+  harms(t) {
+    return (this.type == GOOD        && t.type == EVIL) ||
+           (this.type == EVIL        && t.type == GOOD) ||
+           (this.type == GOOD_BULLET && t.type == EVIL) ||
+           (this.type == EVIL        && t.type == GOOD_BULLET) ||
+           (this.type == GOOD        && t.type == EVIL_BULLET) ||
+           (this.type == EVIL_BULLET && t.type == GOOD);
   }
 
   keyPressed(e) {
-    if (move != null) move.keyPressed(e);
-    if (attack != null) attack.keyPressed(e);
+    if (this.move != null) move.keyPressed(e);
+    if (this.attack != null) attack.keyPressed(e);
   }
 
   keyReleased(e) {
-    if (move != null) move.keyReleased(e);
-    if (attack != null) attack.keyReleased(e);
+    if (this.move != null) move.keyReleased(e);
+    if (this.attack != null) attack.keyReleased(e);
   }
 
-  BoundedImage getBoundedImage() {
-    return getBoundedImage(imageIndex);
+  getBoundedImage() {
+    return getBoundedImageAt(this.imageIndex);
   }
 
-  BoundedImage getBoundedImage(index) {
-    return index < 0 ? null : images[index];
+  getBoundedImageAt(index) {
+    return index < 0 ? null : this.images[index];
   }
-
 }

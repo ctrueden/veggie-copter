@@ -1,54 +1,44 @@
-class MineBulletMovement extends MovementStyle {
-
-  const var SPEED = 2.2f;
+class MineShardMovement extends MovementStyle {
+  SPEED = 2.2f;
 
   xstart, ystart;
   xtraj, ytraj;
   var speed;
   var tick;
 
-  MineBulletMovement(t, x, y,
-    xtarget, ytarget)
-  {
-    this(t, x, y, xtarget, ytarget, SPEED);
-  }
-
-  MineBulletMovement(t, x, y,
-    xtarget, ytarget, speed)
-  {
+  constructor(t, x, y, xtarget, ytarget, speed) {
     super(t);
+    if (speed == null) speed = SPEED;
     thing.setCPos(x, y);
 
-    xstart = x; ystart = y;
+    this.xstart = x; this.ystart = y;
     var xx = xtarget - x;
     var yy = ytarget - y;
     var c = (float) Math.sqrt((xx * xx + yy * yy) / (speed * speed));
 
-    xtraj = xx / c;
-    ytraj = yy / c;
-    tick = 0;
+    this.xtraj = xx / c;
+    this.ytraj = yy / c;
+    this.tick = 0;
   }
 
-  /** Moves the given thing according to the bullet movement style. */
   move() {
-    var xpos = xstart + tick * xtraj;
-    var ypos = ystart + tick * ytraj;
-    tick++;
-    thing.setImageIndex(tick);
-    thing.setCPos(xpos, ypos);
+    var xpos = this.xstart + this.tick * this.xtraj;
+    var ypos = this.ystart + this.tick * this.ytraj;
+    this.tick++;
+    this.thing.setImageIndex(this.tick);
+    this.thing.setCPos(xpos, ypos);
   }
-
 }
 
-class MineBullet extends Thing {
+class MineShard extends Thing {
 
-  /** Size of bullet. */
+  /** Size of shard. */
   SIZE = 7;
 
-  /** Number of ticks until bullet disappears. */
+  /** Number of ticks until shard disappears. */
   LIFE = 20;
 
-  /** Power divisor for each bullet. */
+  /** Power divisor for each shard. */
   POWER = 4;
 
   static BoundedImage[] images;
@@ -68,18 +58,18 @@ class MineBullet extends Thing {
     }
   }
 
-  MineBullet(t, angle, sx, sy) {
+  MineShard(t, angle, sx, sy) {
     super(t.getGame());
     type = GOOD_BULLET;
     setImageList(images);
     setPower(LIFE / POWER + 1);
     var tx = (float) (sx + 10 * Math.sin(angle));
     var ty = (float) (sy + 10 * Math.cos(angle));
-    move = new MineBulletMovement(this, sx, sy, tx, ty);
+    move = new MineShardMovement(this, sx, sy, tx, ty);
   }
 
   setImageIndex(index) {
-    if (index == LIFE) setHP(0); // bullets die when they fade away
+    if (index == LIFE) setHP(0); // shards die when they fade away
     else {
       setPower((LIFE - index) / POWER + 1);
       super.setImageIndex(index);
@@ -90,42 +80,40 @@ class MineBullet extends Thing {
 
 /** Defines veggie copter gravity mine explosion behavior. */
 class MineExplode extends AttackStyle {
-
-  boolean explode;
-
-  MineExplode(t) { super(t); }
+  constructor(t) {
+    super(t);
+    this.explode = false;
+  }
 
   /** Causes the mine to explode. */
-  explode() { explode = true; }
+  explode() { this.explode = true; }
 
-  Thing[] shoot() { return null; }
+  shoot() { return null; }
 
   /** Explodes mine when trigger is pressed. */
-  Thing[] trigger() {
+  trigger() {
     if (!explode) return null;
 
-    // explode in power+2 bullets evenly space around a circle
-    var num = thing.getStrength() + 2;
-    Thing[] bullets = new Thing[num];
-    var cx = thing.getCX(), cy = thing.getCY();
+    // explode in power+2 shards evenly space around a circle
+    var num = this.thing.getStrength() + 2;
+    var shards = [];
+    var cx = this.thing.getCX(), cy = this.thing.getCY();
     for (var i=0; i<num; i++) {
-      var angle = (float) (2 * Math.PI * i / num);
-      bullets[i] = new MineBullet(thing, angle, cx, cy);
+      var angle = 2 * Math.PI * i / num;
+      shards.push(new MineShard(this.thing, angle, cx, cy));
     }
     //SoundPlayer.playSound(getClass().getResource("explode.wav"));
-    thing.setHP(0);
-    return bullets;
+    this.thing.setHP(0);
+    return shards;
   }
 
   keyPressed(e) {
     var code = e.getKeyCode();
     if (code == Keys.TRIGGER) explode();
   }
-
 }
 
 class MineMovement extends MovementStyle {
-
   /** Number of ticks to initially throw mine forward. */
   THROW_DURATION = 20;
 
@@ -144,27 +132,28 @@ class MineMovement extends MovementStyle {
   /** Strength of drag pulling in enemies. */
   DRAG_STRENGTH = 20;
 
-  long ticks;
-  adjX, adjY;
-
-  MineMovement(t) { super(t); }
+  constructor(t) {
+    super(t);
+    this.ticks = 0;
+    this.adjX = this.adjY = 0;
+  }
 
   /** Drags nearby enemies closer to the mine. */
   move() {
-    var xpos = thing.getX(), ypos = thing.getY();
-    ticks++;
+    var xpos = this.thing.getX(), ypos = this.thing.getY();
+    this.ticks++;
 
-    var pow = thing.getStrength();
+    var pow = this.thing.getStrength();
     if (ticks <= THROW_DURATION) {
       // initially throw mine forward
       var throwSpeed = THROW_SPEED + pow;
       var q = (float) Math.sqrt((double) ticks / THROW_DURATION);
-      thing.setPos(xpos, ypos - throwSpeed * (1 - q));
+      this.thing.setPos(xpos, ypos - throwSpeed * (1 - q));
       return;
     }
     else if (ticks == EXPLODE_DELAY + 6 * pow) {
       // mine automatically explodes
-      ((MineExplode) thing.getAttack()).explode();
+      ((MineExplode) this.thing.getAttack()).explode();
     }
 
     var shake = (float) ticks / SHAKE_RATE;
@@ -173,10 +162,10 @@ class MineMovement extends MovementStyle {
     adjY = shake * (float) (Math.random() - 0.5);
     var x = xpos + adjX;
     var y = ypos + adjY;
-    thing.setPos(x, y + SPEED);
+    this.thing.setPos(x, y + SPEED);
 
     // use distance squared function to drag in enemies
-    Thing[] t = thing.getGame().getThings();
+    Thing[] t = this.thing.getGame().getThings();
     for (var i=0; i<t.length; i++) {
       if (t[i].getType() != Thing.EVIL) continue;
       var tx = t[i].getCX(), ty = t[i].getCY();
@@ -218,7 +207,7 @@ class CopterMine extends Thing {
     }
   }
 
-  CopterMine(thing, power) {
+  constructor(thing, power) {
     super(thing.getGame());
     type = GOOD_BULLET;
     setPower(power);
@@ -264,7 +253,7 @@ class MineAttack extends ColoredAttack {
   clear() { space = false; }
 
   /** Drops mines while space bar is being pressed. */
-  Thing[] shoot() {
+  shoot() {
     if (fired > 0) {
       fired--;
       return null;
@@ -272,9 +261,9 @@ class MineAttack extends ColoredAttack {
     if (!space) return null;
     fired = RECHARGE - power / 2;
 
-    CopterMine mine = new CopterMine(thing, power);
+    var mine = new CopterMine(thing, power);
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
-    return new Thing[] {mine};
+    return [mine];
   }
 
   keyPressed(e) {

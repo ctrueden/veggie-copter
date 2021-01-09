@@ -45,14 +45,14 @@ class EnemyMovement extends MovementStyle {
 
     if (this.style == ZIGZAG) {
       // tick1, xmod1, ymod1, tick2, xmod2, ymod2, ...
-      for (var i=0; i<params.length-2; i+=3) {
-        if (params[i] == ticks) {
-          xmod = params[i + 1];
-          ymod = params[i + 2];
+      for (var i=0; i<this.params.length-2; i+=3) {
+        if (this.params[i] == ticks) {
+          this.xmod = this.params[i + 1];
+          this.ymod = this.params[i + 2];
         }
       }
-      cx += xmod;
-      cy += ymod;
+      cx += this.xmod;
+      cy += this.ymod;
     }
 
     else if (this.style == SPIRAL) {
@@ -67,46 +67,32 @@ class EnemyMovement extends MovementStyle {
   }
 }
 
-class EnemyBullet extends Thing {
+// TODO: Better way to cache this statically??
+var ENEMY_BULLET_IMAGE = null;
 
+class EnemyBullet extends Thing {
   SIZE = 7;
 
-  static image;
-
-  static {
-    var img = ImageTools.makeImage(SIZE, SIZE);
-    var g = img.createGraphics();
-    g.setColor(Color.red);
-    g.fillRoundRect(0, 0, SIZE, SIZE, SIZE / 2, SIZE / 2);
-    g.dispose();
-    image = new BoundedImage(img);
-    image.addBox(new BoundingBox());
-  }
-
-  EnemyBullet(t) {
+  constructor(t, x2, y2) {
     super(t.getGame());
-    type = EVIL_BULLET;
-    setImage(image);
+    this.type = EVIL_BULLET;
+
+    if (ENEMY_BULLET_IMAGE == null) {
+      var img = ImageTools.makeImage(SIZE, SIZE);
+      var ctx = img.createGraphics();
+      ctx.setColor(Color.red);
+      ctx.fillRoundRect(0, 0, SIZE, SIZE, SIZE / 2, SIZE / 2);
+      ENEMY_BULLET_IMAGE = new BoundedImage(img);
+      ENEMY_BULLET_IMAGE.addBox(new BoundingBox());
+    }
+    setImage(ENEMY_BULLET_IMAGE);
     setPower(10 * t.getPower());
 
-    var x = t.getCX() - getWidth() / 2f;
-    var y = t.getCY() - getHeight() / 2f;
-    move = new BulletMovement(this, x, y);
+    var x = t.getCX() - getWidth() / 2;
+    var y = t.getCY() - getHeight() / 2;
+    this.move = new BulletMovement(this, x, y, x2, y2);
     //attack = new RandomBulletAttack(this); // MWAHAHA!
   }
-
-  EnemyBullet(t, x2, y2) {
-    super(t.getGame());
-    type = EVIL_BULLET;
-    setImage(image);
-    setPower(10 * t.getPower());
-
-    var x = t.getCX() - getWidth() / 2f;
-    var y = t.getCY() - getHeight() / 2f;
-    move = new BulletMovement(this, x, y, x2, y2);
-    //attack = new RandomBulletAttack(this); // MWAHAHA!
-  }
-
 }
 
 /** Defines random enemy bullet attack. */
@@ -119,7 +105,7 @@ class RandomBulletAttack extends AttackStyle {
   /** Fires a shot randomly. */
   shoot() {
     if (Math.random() >= 1.0 / (60 - FREQUENCY)) return null;
-    return [new EnemyBullet(thing)];
+    return [new EnemyBullet(thing, null, null)];
   }
 }
 
@@ -138,7 +124,7 @@ class EnemyHead extends Thing {
     //this.power = 10;
   }
 
-  boolean isShooting() { return shooting > 0; }
+  isShooting() { return this.shooting > 0; }
 
   move() {
     super.move();
@@ -170,7 +156,7 @@ class Enemy extends EnemyHead {
    * args[1] = name of graphic to use
    * args[2+] = movement parameters (EnemyMovement)
    */
-  Enemy(game, args) {
+  constructor(game, args) {
     super(game, parseInt(args[0]),
       game.loadImage(args[1] + "1.png"),
       game.loadImage(args[1] + "2.png"),
@@ -191,14 +177,12 @@ class Enemy extends EnemyHead {
 
 class BossHead extends EnemyHead {
 
-  BossHead(game, max,
-    normal, attacking, hurting)
-  {
+  constructor(game, max, normal, attacking, hurting) {
     super(game, max, normal, attacking, hurting);
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */
-  ColoredAttack getColoredAttack();
+  getColoredAttack() { return null; }
 
   getPowerUp() {
     return [new PowerUp(game, getCX(), getCY(), 50, getColoredAttack())];
