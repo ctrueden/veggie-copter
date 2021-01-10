@@ -11,7 +11,7 @@ class CopterGun extends Thing {
     g.drawLine(0, 0, 0, len);
     g.dispose();
     CopterGun.prototype.image = new BoundedImage(img, 1, HEIGHT);
-    CopterGun.prototype.image.addBox(new BoundingBox(0, 0, 0, 0));
+    CopterGun.prototype.image.addBox(new BoundingBox());
   }
 
   CopterGun(thing, x, y, power) {
@@ -24,7 +24,7 @@ class CopterGun extends Thing {
 }
 
 /** Defines veggie copter gun attack. */
-class GunAttack extends ColoredAttack {
+class GunWeapon extends Weapon {
 
   RECHARGE = 2;
 

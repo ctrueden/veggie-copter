@@ -1,5 +1,5 @@
 /** Defines veggie copter homing missile attack style. */
-class HomingAttack extends ColoredAttack {
+class HomingWeapon extends Weapon {
 
   RECHARGE = 12;
 

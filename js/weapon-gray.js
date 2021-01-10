@@ -1,5 +1,5 @@
 /** Defines veggie copter gray attack style. */
-class GrayAttack extends ColoredAttack {
+class GrayWeapon extends Weapon {
 
   GrayAttack(t) {
     this.space = false;

@@ -85,7 +85,7 @@ class EnemyBullet extends Thing {
       ctx.setColor(Color.red);
       ctx.fillRoundRect(0, 0, SIZE, SIZE, SIZE / 2, SIZE / 2);
       ENEMY_BULLET_IMAGE = new BoundedImage(img);
-      ENEMY_BULLET_IMAGE.addBox(new BoundingBox(0, 0, 0, 0));
+      ENEMY_BULLET_IMAGE.addBox(new BoundingBox());
     }
     setImage(ENEMY_BULLET_IMAGE);
     setPower(10 * t.getPower());
@@ -120,7 +120,7 @@ class EnemyHead extends Thing {
 
   constructor(game, max, normal, attacking, hurting) {
     super(game);
-    setImageList([normal, attacking, hurting]);
+    this.setImageList([normal, attacking, hurting]);
     this.maxhp = this.hp = max;
     this.shooting = 0;
     //this.power = 10;
@@ -164,11 +164,11 @@ class Enemy extends EnemyHead {
       game.loadImage(args[1] + "2.png"),
       game.loadImage(args[1] + "3.png"));
     var normal = this.getBoundedImage(0);
-    normal.addBox(new BoundingBox(0, 0, 0, 0));
+    normal.addBox(new BoundingBox());
     var attacking = this.getBoundedImage(1);
-    attacking.addBox(new BoundingBox(0, 0, 0, 0));
+    attacking.addBox(new BoundingBox());
     var hurting = this.getBoundedImage(2);
-    hurting.addBox(new BoundingBox(0, 0, 0, 0));
+    hurting.addBox(new BoundingBox());
 
     setMovement(new EnemyMovement(this, args.slice(2)));
     setAttack(new RandomBulletAttack(this));
@@ -184,10 +184,10 @@ class BossHead extends EnemyHead {
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */
-  getColoredAttack() { return null; }
+  getWeapon() { return null; }
 
   getPowerUp() {
-    return [new PowerUp(game, getCX(), getCY(), 50, getColoredAttack())];
+    return [new PowerUp(game, getCX(), getCY(), 50, getWeapon())];
   }
 
 }

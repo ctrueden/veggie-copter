@@ -300,11 +300,8 @@ class Thing {
     if (this.attack != null) attack.keyReleased(e);
   }
 
-  getBoundedImage() {
-    return this.getBoundedImageAt(this.imageIndex);
-  }
-
-  getBoundedImageAt(index) {
+  getBoundedImage(index) {
+    if (index == null) index = this.imageIndex;
     return index < 0 ? null : this.images[index];
   }
 }

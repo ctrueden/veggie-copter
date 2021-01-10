@@ -1,5 +1,5 @@
 /** Defines veggie copter laser attack style. */
-class LaserAttack extends ColoredAttack {
+class LaserWeapon extends Weapon {
 
   const int[] FLUX =
     {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1};

@@ -56,7 +56,7 @@ class CopterShield extends Thing {
         game.loadImage("james-diamond.png"),
         game.loadImage("james-club.png")
       };
-      for (var i=0; i<images.length; i++) images[i].addBox(new BoundingBox(0, 0, 0, 0));
+      for (var i=0; i<images.length; i++) images[i].addBox(new BoundingBox());
     }
     setImage(images[count % images.length]);
     count++;
@@ -72,7 +72,7 @@ class CopterShield extends Thing {
 }
 
 /** Defines veggie copter shield attack style. */
-class ShieldAttack extends ColoredAttack {
+class ShieldWeapon extends Weapon {
 
   const Color PURPLE = new Color(0.7f, 0, 0.7f);
 

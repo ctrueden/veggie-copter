@@ -1,5 +1,5 @@
 /** Defines veggie copter doom attack style. */
-class DoomAttack extends ColoredAttack {
+class DoomWeapon extends Weapon {
 
   boolean space;
   CopterDoom doom;

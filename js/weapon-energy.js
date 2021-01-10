@@ -1,5 +1,5 @@
 /** Defines veggie copter energy field attack style. */
-class EnergyAttack extends ColoredAttack {
+class EnergyWeapon extends Weapon {
 
   space, fired;
   CopterEnergy energy;

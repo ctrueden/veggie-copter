@@ -1,5 +1,5 @@
 /** Defines veggie copter lightning attack style. */
-class LitAttack extends ColoredAttack {
+class LitWeapon extends Weapon {
 
   const var LEFT_CHANCE = 0.2;
   const var RIGHT_CHANCE = 0.2;

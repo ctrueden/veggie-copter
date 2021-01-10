@@ -12,7 +12,7 @@ class CopterSpread extends Thing {
     g.fillRoundRect(0, 0, size, size, size / 2, size / 2);
     g.dispose();
     image = new BoundedImage(img);
-    image.addBox(new BoundingBox(0, 0, 0, 0));
+    image.addBox(new BoundingBox());
   }
 
   CopterSpread(thing, angle) {
@@ -28,7 +28,7 @@ class CopterSpread extends Thing {
 }
 
 /** Defines veggie copter spread attack. */
-class SpreadAttack extends ColoredAttack {
+class SpreadWeapon extends Weapon {
 
   RECHARGE = 10;
   POWER = 3;
@@ -36,7 +36,7 @@ class SpreadAttack extends ColoredAttack {
   boolean space = false;
   var fired;
 
-  SpreadAttack(t) {
+  constructor(t) {
     super(t, Color.blue, t.getGame().loadImage("icon-spread.png").getImage());
   }
 

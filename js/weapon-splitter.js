@@ -32,7 +32,7 @@ class CopterSplitter extends Thing {
       g.fillRoundRect(0, 0, size, size, size / 2, size / 2);
       g.dispose();
       images[i] = new BoundedImage(img);
-      images[i].addBox(new BoundingBox(0, 0, 0, 0));
+      images[i].addBox(new BoundingBox());
     }
   }
 
@@ -58,7 +58,7 @@ class CopterSplitter extends Thing {
 }
 
 /** Defines splitter attack. */
-class SplitterAttack extends ColoredAttack {
+class SplitterAttack extends Weapon {
 
   RECHARGE = 10;
   MAX_SPLIT = 6;

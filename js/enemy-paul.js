@@ -147,7 +147,7 @@ class PaulEnemy extends EnemyHead {
     attacking.addBox(new BoundingBox(1, 5, 1, 10));
     attacking.addBox(new BoundingBox(8, 1, 8, 1));
     BoundedImage hurting = getBoundedImage(2);
-    hurting.addBox(new BoundingBox(0, 0, 0, 0));
+    hurting.addBox(new BoundingBox());
     setMovement(new PaulMovement(this));
     setAttack(new PaulAttack(this));
   }
@@ -173,17 +173,17 @@ class PaulBoss extends BossHead {
       game.loadImage("paul-boss3.png"));
     // CTR TODO set proper bounding box and offsets here
     BoundedImage normal = getBoundedImage(0);
-    normal.addBox(new BoundingBox(0, 0, 0, 0));
+    normal.addBox(new BoundingBox());
     BoundedImage attacking = getBoundedImage(1);
-    attacking.addBox(new BoundingBox(0, 0, 0, 0));
+    attacking.addBox(new BoundingBox());
     BoundedImage hurting = getBoundedImage(2);
-    hurting.addBox(new BoundingBox(0, 0, 0, 0));
+    hurting.addBox(new BoundingBox());
     setMovement(new PaulMovement(this));
     setAttack(new PaulAttack(this));
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */
-  ColoredAttack getColoredAttack() {
+  Weapon getWeapon() {
     return new SpreadAttack(game.getCopter());
   }
 

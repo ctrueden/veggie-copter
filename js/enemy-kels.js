@@ -72,11 +72,11 @@ class KelsEnemy extends EnemyHead {
       game.loadImage("kels3.png"));
     // CTR TODO set proper bounding box and offsets here
     BoundedImage normal = getBoundedImage(0);
-    normal.addBox(new BoundingBox(0, 0, 0, 0));
+    normal.addBox(new BoundingBox());
     BoundedImage attacking = getBoundedImage(1);
-    attacking.addBox(new BoundingBox(0, 0, 0, 0));
+    attacking.addBox(new BoundingBox());
     BoundedImage hurting = getBoundedImage(2);
-    hurting.addBox(new BoundingBox(0, 0, 0, 0));
+    hurting.addBox(new BoundingBox());
 
     var y = 0;
     boolean dir = false;
@@ -104,11 +104,11 @@ class KelsBoss extends BossHead {
       game.loadImage("kels-boss3.png"));
     // CTR TODO set proper bounding box and offsets here
     BoundedImage normal = getBoundedImage(0);
-    normal.addBox(new BoundingBox(0, 0, 0, 0));
+    normal.addBox(new BoundingBox());
     BoundedImage attacking = getBoundedImage(1);
-    attacking.addBox(new BoundingBox(0, 0, 0, 0));
+    attacking.addBox(new BoundingBox());
     BoundedImage hurting = getBoundedImage(2);
-    hurting.addBox(new BoundingBox(0, 0, 0, 0));
+    hurting.addBox(new BoundingBox());
 
     var y = 0;
     boolean dir = false;
@@ -123,7 +123,7 @@ class KelsBoss extends BossHead {
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */
-  ColoredAttack getColoredAttack() {
+  Weapon getWeapon() {
     return new SplitterAttack(game.getCopter());
   }
 

@@ -1,3 +1,22 @@
+class Message {
+  constructor(msg, x, y, size, color, duration) {
+    this.msg = msg;
+    this.x = x;
+    this.y = y;
+    this.font = size + "px SansSerif";
+    this.color = color;
+    this.remain = duration;
+  }
+
+  draw(ctx) {
+    ctx.font = this.font;
+    ctx.fillStyle = this.color;
+    ctx.fillText(this.msg, this.x, this.y);
+  }
+
+  checkFinished() { return --this.remain <= 0; }
+}
+
 /** An object for parsing and executing a game script. */
 class GameScript {
   constructor(game, scriptPath) {
@@ -10,7 +29,7 @@ class GameScript {
       .then(r => r.text())
       .then(text => {
         text.split("\n").forEach(line => {
-          var tokens = line.split(" +");
+          var tokens = line.split(" ");
           var name = tokens.shift();
           this.commands.push({name: name, params: tokens});
         });
@@ -45,6 +64,7 @@ class GameScript {
       }
       var cmd = this.commands[this.cmdIndex].name;
       var args = this.commands[this.cmdIndex].params;
+      if (game.debug) console.info(cmd + "(" + args + ")");
       if (equalsIgnoreCase(cmd, "add")) this.add(args);
       else if (equalsIgnoreCase(cmd, "print")) this.print(args);
       else if (equalsIgnoreCase(cmd, "wait")) this.wait(args);
@@ -62,22 +82,31 @@ class GameScript {
   add(args) {
     // syntax: add ObjectType P1 P2 ... Pn
     if (args.length < 1) {
-      ignoreCommand("add", args);
+      this.ignoreCommand("add", args);
       return;
     }
     var className = args[0];
     var p = args.slice(1);
     try {
+      if (equalsIgnoreCase(className, "TestBoss")) {
+        game.addThing(new TestBoss(this.game, p)); // TEMP
+      }
+      else console.error("ALKJHFLKSDJHDSF " + className);
       // NB: Instantiate object of the given class.
-      game.addThing(window[className](this.game, p));
+      //var t = window[className](this.game, p);
+      game.addThing(t);
+      console.info(t);
     }
-    catch (err) { ignoreCommand("add", args); }
+    catch (err) {
+      console.error(err);
+      this.ignoreCommand("add", args);
+    }
   }
 
   print(args) {
     // syntax: print X Y size R G B duration Message to be printed
     if (args.length < 8) {
-      ignoreCommand("print", args);
+      this.ignoreCommand("print", args);
       return;
     }
     var x, y, size, r, g, b, time;
@@ -91,7 +120,7 @@ class GameScript {
       time = parseInt(args[6]);
     }
     catch (err) {
-      ignoreCommand("print", args);
+      this.ignoreCommand("print", args);
       return;
     }
     var msg = "";
@@ -102,16 +131,16 @@ class GameScript {
   wait(args) {
     // syntax: wait clear  OR  wait clear X  OR  wait X
     if (args.length < 1) {
-      ignoreCommand("wait", args);
+      this.ignoreCommand("wait", args);
       return;
     }
     if (args.length == 2) {
       if (!equalsIgnoreCase(args[0], "clear")) {
-        ignoreCommand("wait", args);
+        this.ignoreCommand("wait", args);
         return;
       }
       try { this.waiting = parseInt(args[1]); }
-      catch (err) { ignoreCommand("wait", args); }
+      catch (err) { this.ignoreCommand("wait", args); }
       this.waitClear = true;
     }
     else {
@@ -121,7 +150,7 @@ class GameScript {
       }
       else {
         try { this.waiting = parseInt(args[0]); }
-        catch (err) { ignoreCommand("wait", args); }
+        catch (err) { this.ignoreCommand("wait", args); }
       }
     }
   }

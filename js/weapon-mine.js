@@ -54,7 +54,7 @@ class MineShard extends Thing {
       g.fillRoundRect(0, 0, SIZE, SIZE, SIZE / 2, SIZE / 2);
       g.dispose();
       images[i] = new BoundedImage(img);
-      images[i].addBox(new BoundingBox(0, 0, 0, 0));
+      images[i].addBox(new BoundingBox());
     }
   }
 
@@ -203,7 +203,7 @@ class CopterMine extends Thing {
       g.fillOval(q, q, q, q);
       g.dispose();
       images[i] = new BoundedImage(img);
-      images[i].addBox(new BoundingBox(0, 0, 0, 0));
+      images[i].addBox(new BoundingBox());
     }
   }
 
@@ -238,7 +238,7 @@ class CopterMine extends Thing {
 }
 
 /** Defines veggie copter gravity mine attack style. */
-class MineAttack extends ColoredAttack {
+class MineAttack extends Weapon {
 
   RECHARGE = 24;
 

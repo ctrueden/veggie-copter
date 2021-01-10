@@ -192,9 +192,9 @@ class AlexEnemy extends EnemyHead {
     super.move();
 
     // set proper expression
-    if (isHit() || this.move.isRunning()) setImageIndex(HURTING);
-    else if (isShooting() || this.move.isLunging()) setImageIndex(ATTACKING);
-    else setImageIndex(NORMAL);
+    if (this.isHit() || this.move.isRunning()) this.setImageIndex(HURTING);
+    else if (this.isShooting() || this.move.isLunging()) this.setImageIndex(ATTACKING);
+    else this.setImageIndex(NORMAL);
 
     // regen
     if (this.game.getTicks() % 6 == 0 && hp < maxhp) hp++;
@@ -202,13 +202,12 @@ class AlexEnemy extends EnemyHead {
 }
 
 class AlexBoss extends BossHead {
-
-  AlexBoss(game, args) {
+  constructor(game, args) {
     // CTR TODO parse args and initialize Alex with proper parameters
     super(game, 250,
-      game.loadImage("alex-boss1.png"),
-      game.loadImage("alex-boss2.png"),
-      game.loadImage("alex-boss3.png"));
+      game.loadImage("../assets/alex-boss1.png"),
+      game.loadImage("../assets/alex-boss2.png"),
+      game.loadImage("../assets/alex-boss3.png"));
     // CTR TODO set proper bounding box and offsets here
     var normal = getBoundedImage(0);
     normal.addBox(new BoundingBox(95, 3, 100, 60));
@@ -224,7 +223,7 @@ class AlexBoss extends BossHead {
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */
-  getColoredAttack() {
+  getWeapon() {
     return new EnergyAttack(game.getCopter(), 0, 0);
   }
 

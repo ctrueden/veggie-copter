@@ -69,7 +69,7 @@ class Game {
     for (var i=0; i<this.things.length; i++) {
       var t = this.things[i];
       var type = t.getType();
-      if (type != Thing.GOOD && type != Thing.GOOD_BULLET) {
+      if (type != ThingTypes.GOOD && type != ThingTypes.GOOD_BULLET) {
         clear = false;
         break;
       }
@@ -300,7 +300,7 @@ class Game {
 
     // do collision detection between copter and power-ups
     var rcop = this.copter.getBoxes();
-    var rups = boxes[Thing.POWER_UP];
+    var rups = boxes[ThingTypes.POWER_UP];
     for (var i=0; i<rups.length; i++) {
       if (rups[i] == null) continue;
       boolean collision = false;
@@ -314,8 +314,8 @@ class Game {
         if (collision) break;
       }
       if (collision) {
-        PowerUp powerUp = (PowerUp) tt[Thing.POWER_UP][i];
-        ColoredAttack attack = powerUp.getGrantedAttack();
+        var powerUp = tt[ThingTypes.POWER_UP][i];
+        var attack = powerUp.getGrantedAttack();
         if (attack == null) {
           // increase power of selected attack style by one
           var power = this.copter.getAttack().getPower();
@@ -326,18 +326,18 @@ class Game {
           CopterAttack copterAttack = (CopterAttack) this.copter.getAttack();
           copterAttack.addAttackStyle(attack);
         }
-        tt[Thing.POWER_UP][i].setHP(0);
+        tt[ThingTypes.POWER_UP][i].setHP(0);
         rups[i] = null;
       }
     }
 
     // do collision detection between good and evil objects
-    checkCollisions(tt[Thing.GOOD], boxes[Thing.GOOD],
-      tt[Thing.EVIL], boxes[Thing.EVIL]);
-    checkCollisions(tt[Thing.GOOD_BULLET], boxes[Thing.GOOD_BULLET],
-      tt[Thing.EVIL], boxes[Thing.EVIL]);
-    checkCollisions(tt[Thing.GOOD], boxes[Thing.GOOD],
-      tt[Thing.EVIL_BULLET], boxes[Thing.EVIL_BULLET]);
+    checkCollisions(tt[ThingTypes.GOOD], boxes[ThingTypes.GOOD],
+      tt[ThingTypes.EVIL], boxes[ThingTypes.EVIL]);
+    checkCollisions(tt[ThingTypes.GOOD_BULLET], boxes[ThingTypes.GOOD_BULLET],
+      tt[ThingTypes.EVIL], boxes[ThingTypes.EVIL]);
+    checkCollisions(tt[ThingTypes.GOOD], boxes[ThingTypes.GOOD],
+      tt[ThingTypes.EVIL_BULLET], boxes[ThingTypes.EVIL_BULLET]);
     */
   }
 
@@ -374,7 +374,7 @@ class Game {
     /*
     defender.hit(attacker.getPower());
     if (defender.isDead()) {
-      if (defender.getType() == Thing.EVIL) score += defender.getScore();
+      if (defender.getType() == ThingTypes.EVIL) score += defender.getScore();
       return true;
     }
     */
