@@ -3,13 +3,13 @@ class CopterMovement extends MovementStyle {
   constructor(t) {
     super(t);
     this.speed = 2;
-    reset();
+    this.reset();
   }
 
   reset() {
     this.left = this.right = this.up = this.down = false;
     var game = this.thing.getGame();
-    this.thing.setPos(game.getWindowWidth() / 2, game.getWindowHeight() - 40);
+    this.thing.setPos(game.width / 2, game.height - 40);
   }
 
   /** Moves according to the keyboard presses. */
@@ -21,7 +21,7 @@ class CopterMovement extends MovementStyle {
     xpos += xdir; ypos += ydir;
 
     var game = this.thing.game;
-    var w = game.getWindowWidth(), h = game.getWindowHeight();
+    var w = game.width, h = game.height;
     var width = this.thing.getWidth(), height = this.thing.getHeight();
     if (xpos < 1) xpos = 1; if (xpos + width >= w) xpos = w - width - 1;
     if (ypos < 1) ypos = 1; if (ypos + height >= h) ypos = h - height - 1;
@@ -55,72 +55,65 @@ class CopterMovement extends MovementStyle {
 
 /** Defines veggie copter attack. */
 class CopterAttack extends AttackStyle {
-
-  Vector attacks = new Vector();
-  var current = 0;
-
-  constructor(t) { super(t); }
+  constructor(t) {
+    super(t);
+    this.attacks = [];
+    this.current = 0;
+  }
 
   /** Gets current attack style. */
   getAttackStyle() {
-    return current < 0 ? null : attacks[current];
+    return this.current < 0 ? null : this.attacks[this.current];
   }
 
   /** Gets list of linked attack styles. */
   getAttackStyles() {
-    var att = new ColoredAttack[attacks.length];
-    attacks.copyInto(att);
-    return att;
+    return this.attacks.splice();
   }
 
   /** Adds an attack style to the list of choices. */
   addAttackStyle(attack) {
-    // check whether copter already has this type of attack
-    Class c = attack.getClass();
-    var size = attacks.length;
-    for (var i=0; i<size; i++) {
-      if (attacks[i].getClass().equals(c)) return;
-    }
-    attacks.add(attack);
+    // TODO: check whether copter already has this type of attack
+    this.attacks.push(attack);
   }
 
   /** Sets attack style to the given list index. */
   setAttackStyle(index) {
-    if (index < -1 || index >= attacks.length) return;
-    ColoredAttack attack = getAttackStyle();
+    if (index < -1 || index >= this.attacks.length) return;
+    var attack = this.getAttackStyle();
     if (attack == null) { // all attack styles
-      for (var i=0; i<attacks.length; i++) {
-        attacks[i].clear();
+      for (var i=0; i<this.attacks.length; i++) {
+        this.attacks[i].clear();
       }
     }
     else attack.clear();
-    current = index;
-    attack = getAttackStyle();
+    this.current = index;
+    attack = this.getAttackStyle();
     if (attack == null) { // all attack styles
-      for (var i=0; i<attacks.length; i++) {
-        attacks[i].activate();
+      for (var i=0; i<this.attacks.length; i++) {
+        this.attacks[i].activate();
       }
     }
     else attack.activate();
   }
 
-  reactivateAttackStyle() { setAttackStyle(current); }
+  reactivateAttackStyle() { this.setAttackStyle(this.current); }
 
   drawWeaponStatus(ctx, x, y) {
-    var size = attacks.length;
+    var size = this.attacks.length;
     for (var i=0; i<size; i++) {
-      attacks[i].drawIcon(ctx, x, y, current < 0 || i == current);
-      x += ColoredAttack.ICON_SIZE - 1; // one pixel overlap
+      this.attacks[i].drawIcon(ctx, x, y, this.current < 0 || i == this.current);
+      x += this.attacks[i].iconSize - 1; // one pixel overlap
     }
   }
 
   shoot() {
-    var attack = getAttackStyle();
+    var attack = this.getAttackStyle();
     if (attack == null) { // all attack styles
       var shots = [];
-      for (var i=0; i<attacks.length; i++) {
-        var t = attacks[i].shoot();
-        if (t != null) for (int j=0; j<t.length; j++) shots.push(t[j]);
+      for (var i=0; i<this.attacks.length; i++) {
+        var t = this.attacks[i].shoot();
+        if (t != null) for (var j=0; j<t.length; j++) shots.push(t[j]);
       }
       return shots.length == 0 ? null : shots;
     }
@@ -128,12 +121,12 @@ class CopterAttack extends AttackStyle {
   }
 
   trigger() {
-    var attack = getAttackStyle();
+    var attack = this.getAttackStyle();
     if (attack == null) { // all attack styles
       var triggers = [];
-      for (var i=0; i<attacks.length; i++) {
-        var t = attacks[i].trigger();
-        if (t != null) for (int j=0; j<t.length; j++) triggers.add(t[j]);
+      for (var i=0; i<this.attacks.length; i++) {
+        var t = this.attacks[i].trigger();
+        if (t != null) for (var j=0; j<t.length; j++) triggers.add(t[j]);
       }
       return triggers.length == 0 ? null : triggers;
     }
@@ -141,27 +134,27 @@ class CopterAttack extends AttackStyle {
   }
 
   setPower(power) {
-    var attack = getAttackStyle();
+    var attack = this.getAttackStyle();
     if (attack == null) { // all attack styles
-      for (var i=0; i<attacks.length; i++) {
-        attacks[i].setPower(power);
+      for (var i=0; i<this.attacks.length; i++) {
+        this.attacks[i].setPower(power);
       }
     }
     else attack.setPower(power);
   }
 
   getPower() {
-    var attack = getAttackStyle();
+    var attack = this.getAttackStyle();
     if (attack == null) { // all attack styles
-      return attacks[0].getPower();
+      return this.attacks[0].getPower();
     }
     return attack.getPower();
   }
 
   keyPressed(e) {
     var code = e.getKeyCode();
-    var size = attacks.length;
-    if (code == Keys.ATTACK_STYLE_CYCLE) setAttackStyle((current + 1) % size);
+    var size = this.attacks.length;
+    if (code == Keys.ATTACK_STYLE_CYCLE) setAttackStyle((this.current + 1) % size);
     else if (code == Keys.ALL_ATTACK_STYLES) {
       // turn on all attack styles simultaneously
       setAttackStyle(-1);
@@ -176,10 +169,10 @@ class CopterAttack extends AttackStyle {
         }
       }
       if (!match) {
-        var attack = getAttackStyle();
+        var attack = this.getAttackStyle();
         if (attack == null) { // all attack styles
-          for (var i=0; i<attacks.length; i++) {
-            attacks[i].keyPressed(e);
+          for (var i=0; i<this.attacks.length; i++) {
+            this.attacks[i].keyPressed(e);
           }
         }
         else attack.keyPressed(e);
@@ -188,10 +181,10 @@ class CopterAttack extends AttackStyle {
   }
 
   keyReleased(e) {
-    var attack = getAttackStyle();
+    var attack = this.getAttackStyle();
     if (attack == null) { // all attack styles
-      for (var i=0; i<attacks.length; i++) {
-        attacks[i].keyReleased(e);
+      for (var i=0; i<this.attacks.length; i++) {
+        this.attacks[i].keyReleased(e);
       }
     }
     else attack.keyReleased(e);
@@ -204,12 +197,13 @@ class Copter extends Thing {
   /** Constructs a copter object. */
   constructor(game) {
     super(game);
-    var bi = game.loadImage("copter.gif");
+    var bi = game.loadImage("../assets/copter.gif");
     bi.addBox(new BoundingBox(2, 6, 2, 5));
-    setImage(bi);
-    setMovement(new CopterMovement(this));
+    this.setImage(bi);
+    this.setMovement(new CopterMovement(this));
 
     var copterAttack = new CopterAttack(this);
+    /*
     copterAttack.addAttackStyle(new GunAttack(this)); // brown
     copterAttack.addAttackStyle(new EnergyAttack(this)); // orange
     copterAttack.addAttackStyle(new SplitterAttack(this)); // yellow
@@ -223,10 +217,11 @@ class Copter extends Thing {
     copterAttack.addAttackStyle(new GrayAttack(this)); // gray
     copterAttack.addAttackStyle(new MineAttack(this)); // dark gray
     copterAttack.addAttackStyle(new DoomAttack(this)); // black
-    setAttack(copterAttack);
+    */
+    this.setAttack(copterAttack);
 
     this.maxhp = this.hp = 100;
-    this.type = GOOD;
+    this.type = ThingTypes.GOOD;
   }
 
   reset() { this.move.reset(); }
@@ -250,5 +245,4 @@ class Copter extends Thing {
     }
     super.keyPressed(e);
   }
-
 }

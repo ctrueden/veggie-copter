@@ -12,7 +12,7 @@ class CopterSpread extends Thing {
     g.fillRoundRect(0, 0, size, size, size / 2, size / 2);
     g.dispose();
     image = new BoundedImage(img);
-    image.addBox(new BoundingBox());
+    image.addBox(new BoundingBox(0, 0, 0, 0));
   }
 
   CopterSpread(thing, angle) {

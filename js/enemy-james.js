@@ -72,11 +72,11 @@ class JamesEnemy extends EnemyHead {
       game.loadImage("james3.png"));
     // CTR TODO set proper bounding box and offsets here
     BoundedImage normal = getBoundedImage(0);
-    normal.addBox(new BoundingBox());
+    normal.addBox(new BoundingBox(0, 0, 0, 0));
     BoundedImage attacking = getBoundedImage(1);
-    attacking.addBox(new BoundingBox());
+    attacking.addBox(new BoundingBox(0, 0, 0, 0));
     BoundedImage hurting = getBoundedImage(2);
-    hurting.addBox(new BoundingBox());
+    hurting.addBox(new BoundingBox(0, 0, 0, 0));
 
     var y = 0;
     boolean dir = false;
@@ -104,11 +104,11 @@ class JamesBoss extends BossHead {
       game.loadImage("james-boss3.png"));
     // CTR TODO set proper bounding box and offsets here
     BoundedImage normal = getBoundedImage(0);
-    normal.addBox(new BoundingBox());
+    normal.addBox(new BoundingBox(0, 0, 0, 0));
     BoundedImage attacking = getBoundedImage(1);
-    attacking.addBox(new BoundingBox());
+    attacking.addBox(new BoundingBox(0, 0, 0, 0));
     BoundedImage hurting = getBoundedImage(2);
-    hurting.addBox(new BoundingBox());
+    hurting.addBox(new BoundingBox(0, 0, 0, 0));
 
     var y = 0;
     boolean dir = false;

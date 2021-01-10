@@ -11,7 +11,7 @@ class CopterGun extends Thing {
     g.drawLine(0, 0, 0, len);
     g.dispose();
     CopterGun.prototype.image = new BoundedImage(img, 1, HEIGHT);
-    CopterGun.prototype.image.addBox(new BoundingBox());
+    CopterGun.prototype.image.addBox(new BoundingBox(0, 0, 0, 0));
   }
 
   CopterGun(thing, x, y, power) {
@@ -45,7 +45,7 @@ class GunAttack extends ColoredAttack {
       return null;
     }
     if (!space) return null;
-    var num = getPower() + 1;
+    var num = this.getPower() + 1;
     fired = RECHARGE;
 
     var xint = thing.getCX(), yint = thing.getY() - 14;

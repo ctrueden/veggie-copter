@@ -3,16 +3,16 @@
 /** An image with associated bounding box insets. */
 class BoundedImage {
   constructor(img, width, height, xoff, yoff) {
-    this.img = img;                                           // Image.
-    this.width = width == null ? img.getWidth() : width;      // Image width.
-    this.height = height == null ? img.getHeight() : height;  // Image height.
-    this.xoff = xoff == null ? 0 : xoff;                      // X offset.
-    this.yoff = yoff == null ? 0 : yoff;                      // Y offset.
-    this.boxes = [];                                          // Bounding boxes.
+    this.img = img;                                      // Image.
+    this.width = width == null ? img.width : width;      // Image width.
+    this.height = height == null ? img.height : height;  // Image height.
+    this.xoff = xoff == null ? 0 : xoff;                 // X offset.
+    this.yoff = yoff == null ? 0 : yoff;                 // Y offset.
+    this.boxes = [];                                     // Bounding boxes.
   }
 
   /** Adds a bounding box to the image. */
-  addBox(box) { boxes.push(box); }
+  addBox(box) { this.boxes.push(box); }
 
   /** Removes the last bounding box from the image. */
   removeBox() {
@@ -83,40 +83,29 @@ class AttackStyle {
   keyReleased(e) { }
 }
 
+var ThingTypes = {
+  EVIL: 0,        // evil entity
+  GOOD: 1,        // good entity
+  EVIL_BULLET: 2, // evil bullet
+  GOOD_BULLET: 3, // good bullet
+  POWER_UP: 4,    // power-up
+};
+
 /** An object on the screen that moves around and has hit points. */
 class Thing {
-  /** Type indicating evil entity. */
-  EVIL = 0;
-
-  /** Type indicating good entity. */
-  GOOD = 1;
-
-  /** Type indicating evil bullet. */
-  EVIL_BULLET = 2;
-
-  /** Type indicating good bullet. */
-  GOOD_BULLET = 3;
-
-  /** Type indicating power-up. */
-  POWER_UP = 4;
-
-  /** List of all possible types. */
-  TYPES = [EVIL, GOOD, EVIL_BULLET, GOOD_BULLET, POWER_UP];
-
-  /** How far offscreen objects must be before being discarded. */
-  THRESHOLD = 50;
-
   constructor(game) {
-    this.game = game;          // Game to which this object belongs.
-    this.move = null;          // Object's movement style.
-    this.attack = null;        // Object's attack style.
-    this.xpos = this.ypos = 0; // Position of the object.
-    this.images = [];          // List of images representing the object.
-    this.imageIndex = -1;      // Index into images list for object's current status.
-    this.hp = this.maxhp = 1;  // Hit points.
-    this.power = 1;            // Amount of damage the object inflicts.
-    this.type = EVIL;          // The type of this object.
-    this.hit = 0;              // Number of times the object has been hit.
+    this.game = game;            // Game to which this object belongs.
+    this.move = null;            // Object's movement style.
+    this.attack = null;          // Object's attack style.
+    this.xpos = this.ypos = 0;   // Position of the object.
+    this.images = [];            // List of images representing the object.
+    this.imageIndex = -1;        // Index into images list for object's current status.
+    this.hp = this.maxhp = 1;    // Hit points.
+    this.power = 1;              // Amount of damage the object inflicts.
+    this.type = ThingTypes.EVIL; // The type of this object.
+    this.hit = 0;                // Number of times the object has been hit.
+
+    this.threshold = 50;         // How far offscreen object must be before being discarded.
   }
 
   /** Assigns object's movement style. */
@@ -127,11 +116,14 @@ class Thing {
 
   /** Assigns object's image list. */
   setImageList(images) {
-    this.images.removeAllElements();
-    if (images == null) this.imageIndex = -1;
+    this.images = [];
+    if (images == null || images.length == 0) {
+      this.images = [];
+      this.imageIndex = -1;
+    }
     else {
-      this.images.concat(images);
-      this.imageIndex = this.images.isEmpty() ? -1 : 0;
+      this.images = images.splice();
+      this.imageIndex = 0;
     }
   }
 
@@ -142,17 +134,18 @@ class Thing {
 
   /** Assigns object's image. */
   setImage(image) {
-    setImageList([image]);
+    this.setImageList([image]);
   }
 
   /** Assigns object's position. */
   setPos(x, y) {
     this.xpos = x;
     this.ypos = y;
-    var width = getWidth(), height = getHeight();
-    if (this.xpos < -width - THRESHOLD || this.ypos < -height - THRESHOLD ||
-      this.xpos >= this.game.getWindowWidth() + THRESHOLD ||
-      this.ypos >= this.game.getWindowHeight() + THRESHOLD)
+    var width = this.getWidth(), height = this.getHeight();
+    if (this.xpos < -width - this.threshold ||
+        this.ypos < -height - this.threshold ||
+        this.xpos >= this.game.width + this.threshold ||
+        this.ypos >= this.game.height + this.threshold)
     {
       this.hp = 0;
     }
@@ -172,19 +165,12 @@ class Thing {
   /** Assigns object's power. */
   setPower(power) { this.power = power; }
 
-  /**
-   * Assigns object's type.
-   * Valid types are:
-   * <li>GOOD
-   * <li>EVIL
-   * <li>GOOD_BULLET
-   * <li>EVIL_BULLET
-   */
+  /** Assigns object's type, from the ThingTypes enumeration. */
   setType(type) { this.type = type; }
 
   /** Draws the object onscreen. */
   draw(ctx) {
-    var img = getBoundedImage();
+    var img = this.getBoundedImage();
     if (img == null) return;
     var x = Math.trunc(getX() + img.getOffsetX());
     var y = Math.trunc(getY() + img.getOffsetY());
@@ -245,7 +231,7 @@ class Thing {
 
   /** Gets image representing this object. */
   getImage() {
-    var img = getBoundedImage();
+    var img = this.getBoundedImage();
     return img == null ? null : img.getImage();
   }
 
@@ -257,19 +243,19 @@ class Thing {
 
   /** Gets object's width. */
   getWidth() {
-    var img = getBoundedImage();
+    var img = this.getBoundedImage();
     return img == null ? -1 : img.getWidth();
   }
 
   /** Gets object's height. */
   getHeight() {
-    var img = getBoundedImage();
+    var img = this.getBoundedImage();
     return img == null ? -1 : img.getHeight();
   }
 
   /** Gets object's bounding boxes. */
   getBoxes() {
-    var img = getBoundedImage();
+    var img = this.getBoundedImage();
     return img == null ? null : img.getBoxes(this.xpos, this.ypos);
   }
 
@@ -296,12 +282,12 @@ class Thing {
 
   /** Returns true if this object can harm the given one. */
   harms(t) {
-    return (this.type == GOOD        && t.type == EVIL) ||
-           (this.type == EVIL        && t.type == GOOD) ||
-           (this.type == GOOD_BULLET && t.type == EVIL) ||
-           (this.type == EVIL        && t.type == GOOD_BULLET) ||
-           (this.type == GOOD        && t.type == EVIL_BULLET) ||
-           (this.type == EVIL_BULLET && t.type == GOOD);
+    return (this.type == ThingTypes.GOOD        && t.type == ThingTypes.EVIL) ||
+           (this.type == ThingTypes.EVIL        && t.type == ThingTypes.GOOD) ||
+           (this.type == ThingTypes.GOOD_BULLET && t.type == ThingTypes.EVIL) ||
+           (this.type == ThingTypes.EVIL        && t.type == ThingTypes.GOOD_BULLET) ||
+           (this.type == ThingTypes.GOOD        && t.type == ThingTypes.EVIL_BULLET) ||
+           (this.type == ThingTypes.EVIL_BULLET && t.type == ThingTypes.GOOD);
   }
 
   keyPressed(e) {
@@ -315,7 +301,7 @@ class Thing {
   }
 
   getBoundedImage() {
-    return getBoundedImageAt(this.imageIndex);
+    return this.getBoundedImageAt(this.imageIndex);
   }
 
   getBoundedImageAt(index) {

@@ -19,7 +19,7 @@ class Game {
     this.selector = new StageSelector(this);              // Object for handling stage selection.
     this.stage = null;                                    // Current game stage.
     this.stars = new StarField(this.width, this.height);  // Field of stars in the background.
-    //this.copter = new Copter(this);                       // Our hero.
+    this.copter = new Copter(this);                       // Our hero.
     this.things = [];                                     // List of things onscreen.
     this.messages = [];                                   // List of onscreen text messages.
     this.score = 0;                                       // The player's score.
@@ -34,18 +34,14 @@ class Game {
     //this.player.playMusic("../assets/metblast.mid");
   }
 
-  /** Loads the given image from disk. */
-  loadImageZero(filename) {
-    //return loadImage(filename, 0, 0, []);
-    var img = this.loader.getImage(filename);
-    return new BoundedImage(img, 0, 0);
-  }
-
   /**
    * Loads the given image from disk, using the specified
    * bounding box insets for collision detection.
    */
   loadImage(filename, xoff, yoff, boxes) {
+    if (xoff == null) xoff = 0;
+    if (yoff == null) yoff = 0;
+    if (boxes == null) boxes = [];
     var img = this.loader.getImage(filename);
     var bi = new BoundedImage(img, xoff, yoff);
     for (var i=0; i<boxes.length; i++) bi.addBox(boxes[i]);
@@ -53,7 +49,7 @@ class Game {
   }
 
   /** Gets veggie copter object (our hero!). */
-  //getCopter() { return this.copter; }
+  getCopter() { return this.copter; }
 
   /** Gets number of frames since game has started. */
   getTicks() { return this.ticks; }
@@ -85,7 +81,7 @@ class Game {
   resetGame() {
     this.things = [];
     this.messages = [];
-    //this.copter = new Copter(this);
+    this.copter = new Copter(this);
     this.ticks = 0;
     this.score = 0;
     this.stage = null;
@@ -97,62 +93,69 @@ class Game {
     this.buf.fillStyle = 'black';
     this.buf.fillRect(0, 0, this.offscreen.width, this.offscreen.height);
 
-    //var t = getThings();
-
     // star field
     this.stars.drawStars(this.buf);
 
-/*
     // redraw things
+    var t = this.getThings();
     for (var i=0; i<t.length; i++) t[i].draw(this.buf);
 
-    if (debug) {
+    if (this.debug) {
       for (var i=0; i<t.length; i++) {
         // draw bounding box
-        this.buf.setColor(Color.red);
+        this.buf.strokeStyle = "red";
         var r = t[i].getBoxes();
-        for (int j=0; j<r.length; j++) {
-          this.buf.drawRect(r[j].x, r[j].y, r[j].width, r[j].height);
+        for (var j=0; j<r.length; j++) {
+          this.buf.beginPath();
+          this.buf.rect(r[j].x, r[j].y, r[j].width, r[j].height);
+          this.buf.stroke();
         }
 
         // draw power level
-        this.buf.setColor(Color.white);
+        this.buf.strokeStyle = "white";
         var xint = Math.trunc(t[i].getCX()) - 3;
         var yint = Math.trunc(t[i].getCY()) + 6;
-        this.buf.drawString("" + t[i].getPower(), xint, yint);
+        this.buf.fillText("" + t[i].getPower(), xint, yint);
       }
     }
 
     // draw text messages
-    var m = messages.splice();
+    var m = this.messages.splice();
     for (var i=0; i<m.length; i++) m[i].draw(this.buf);
-*/
+
     // draw stage selection
     if (this.stage == null) this.selector.draw(this.buf);
-/*
+
     // draw status bar
-    this.buf.setColor(Color.darkGray);
+    this.buf.fillStyle = "darkgray";
     this.buf.fillRect(0, this.height + 1, this.width, 24);
-    this.buf.setColor(Color.white);
-    this.buf.drawLine(0, this.height, this.width, this.height);
+    this.buf.beginPath();
+    this.buf.strokeStyle = "white";
+    this.buf.moveTo(0, this.height);
+    this.buf.lineTo(this.width, this.height);
+    this.buf.stroke();
 
     // draw life bar
     var x = 1;
-    this.buf.drawRect(x, this.height + 2, 103, 20);
-    this.buf.setColor(Color.black);
+    this.buf.beginPath();
+    this.buf.rect(x, this.height + 2, 103, 20);
+    this.buf.stroke();
+    this.buf.strokeStyle = "black";
     this.buf.fillRect(x + 1, this.height + 3, 102, 19);
-    var hp = copter.getHP();
+    var hp = this.copter.getHP();
     for (var i=0; i<hp; i++) {
-      var q = (double) i / 99;
+      var q = i / 99;
       var red = Math.trunc(255 * (1 - q));
       var green = Math.trunc(255 * q);
-      this.buf.setColor(new Color(red, green, 0));
-      this.buf.drawLine(x + 2 + i, this.height + 4, x + 2 + i, this.height + 20);
+      this.buf.beginPath();
+      this.buf.strokeStyle = "rgb(" + red + ", " + green + ", 0)";
+      this.buf.moveTo(x + 2 + i, this.height + 4);
+      this.buf.lineTo(x + 2 + i, this.height + 20);
+      this.buf.stroke();
     }
 
     // draw weapon selector
-    copter.drawWeaponStatus(this.buf, x + 107, this.height + 2);
-*/
+    this.copter.drawWeaponStatus(this.buf, x + 107, this.height + 2);
 
     // blit the offscreen canvas to the on-screen canvas
     this.ctx.drawImage(this.offscreen, 0, 0);
@@ -167,64 +170,66 @@ class Game {
 
   /** Advances the game state by one tick. */
   tick() {
+    var t = this.getThings();
+
     // collision detection
     //checkAllCollisions(t);
 
     // update star field
     this.stars.moveStars();
 
-    /*
     // move things
     for (var i=0; i<t.length; i++) t[i].move();
 
     // update text messages
+    var m = this.messages.splice();
     for (var i=0; i<m.length; i++) {
-      if (m[i].checkFinished()) messages.remove(m[i]);
+      if (m[i].checkFinished()) this.messages.remove(m[i]);
     }
 
     // allow things the chance to attack
     for (var i=0; i<t.length; i++) {
       var shots = t[i].shoot();
       if (shots != null) {
-        for (int j=0; j<shots.length; j++) {
-          if (shots[j] != null) things.add(shots[j]);
+        for (var j=0; j<shots.length; j++) {
+          if (shots[j] != null) this.things.add(shots[j]);
         }
       }
       shots = t[i].trigger();
       if (shots != null) {
-        for (int j=0; j<shots.length; j++) {
-          if (shots[j] != null) things.add(shots[j]);
+        for (var j=0; j<shots.length; j++) {
+          if (shots[j] != null) this.things.add(shots[j]);
         }
       }
     }
 
     // purge dead things
-    for (var i=0; i<things.length; i++) {
-      var thing = things[i];
+    for (var i=0; i<this.things.length; i++) {
+      var thing = this.things[i];
       if (thing.isDead()) {
-        things.removeElementAt(i);
-        if (thing == copter) {
-          printMessage(new Message("Game Over",
+        this.things.splice(i, 1);
+        if (thing == this.copter) {
+          this.printMessage(new Message("Game Over",
             (this.width - 250) / 2, (this.height - 30) / 2 + 30,
-            48, Color.red, Integer.MAX_VALUE));
-          printMessage(new Message("Press space to play again",
+            48, "red", Infinity));
+          this.printMessage(new Message("Press space to play again",
             (this.width - 170) / 2, (this.height - 30) / 2 + 50,
-            16, Color.gray, Integer.MAX_VALUE));
+            16, "gray", Infinity));
         }
       }
     }
 
-    if (stage != null && !copter.isDead()) {
-      boolean done = stage.executeScript();
+    if (this.stage != null && !this.copter.isDead()) {
+      var done = this.stage.executeScript();
       if (done) {
-        stage.setCompleted(true);
-        selector.adjustStage(true);
-        stage = null;
-        things.removeAllElements();
-        copter.reset();
+        this.stage.setCompleted(true);
+        this.selector.adjustStage(true);
+        this.stage = null;
+        this.things = [];
+        this.copter.reset();
       }
     }
-    */
+
     this.ticks++;
   }
 
@@ -237,16 +242,14 @@ class Game {
       for (var i=0; i<t.length; i++) t[i].keyPressed(e);
 
       if (code == Keys.SHOOT) {
-        /*
         if (this.stage == null) {
           this.stage = this.selector.getSelectedStage();
           this.stage.resetScript();
-          things.push(this.copter);
+          this.things.push(this.copter);
           this.copter.getAttack().reactivateAttackStyle();
           this.copter.getAttack().reactivateAttackStyle();
         }
-        else if (this.copter.isDead()) resetGame();
-        */
+        else if (this.copter.isDead()) this.resetGame();
       }
       else if (code == Keys.PAUSE) {
         this.pause = !this.pause;
@@ -259,7 +262,7 @@ class Game {
       }
       else if (code == Keys.FAST_FORWARD) this.fast = true;
       else if (code == Keys.TOGGLE_DEBUG) this.debug = !this.debug;
-      else if (code == Keys.TOGGLE_MUTE) player.toggleMute();
+      else if (code == Keys.TOGGLE_MUTE) this.player.toggleMute();
     }
   }
 
@@ -277,13 +280,13 @@ class Game {
   checkAllCollisions(t) {
     /*
     // divide things into types, and build rectangle lists
-    var tt = new Thing[Thing.TYPES.length][];
-    var counts = new int[Thing.TYPES.length];
+    var tt = new Thing[ThingTypes.length][];
+    var counts = new int[ThingTypes.length];
     for (var i=0; i<t.length; i++) {
       var type = t[i].getType();
       counts[type]++;
     }
-    var boxes = new Rectangle[Thing.TYPES.length][][];
+    var boxes = new Rectangle[ThingTypes.length][][];
     for (var i=0; i<counts.length; i++) {
       tt[i] = new Thing[counts[i]];
       boxes[i] = new Rectangle[counts[i]][];
@@ -342,7 +345,7 @@ class Game {
   checkCollisions(t1, r1, t2, r2) {
     /*
     for (var i=0; i<r1.length; i++) {
-      for (int j=0; j<r2.length; j++) {
+      for (var j=0; j<r2.length; j++) {
         if (r1[i] == null) break;
         if (r2[j] == null) continue;
         boolean collision = false;
@@ -374,8 +377,8 @@ class Game {
       if (defender.getType() == Thing.EVIL) score += defender.getScore();
       return true;
     }
-    return false;
     */
+    return false;
   }
 }
 

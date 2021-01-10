@@ -56,7 +56,7 @@ class CopterShield extends Thing {
         game.loadImage("james-diamond.png"),
         game.loadImage("james-club.png")
       };
-      for (var i=0; i<images.length; i++) images[i].addBox(new BoundingBox());
+      for (var i=0; i<images.length; i++) images[i].addBox(new BoundingBox(0, 0, 0, 0));
     }
     setImage(images[count % images.length]);
     count++;

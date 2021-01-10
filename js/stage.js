@@ -13,8 +13,8 @@ class Stage {
     this.game = game;
     this.name = name;
     this.script = new GameScript(game, "../assets/" + scriptName + ".txt");
-    this.image = game.loadImageZero("../assets/" + scriptName + "-boss2.png").getImage();
-    this.icon = game.loadImageZero("../assets/" + scriptName + "1.png").getImage();
+    this.image = game.loadImage("../assets/" + scriptName + "-boss2.png").getImage();
+    this.icon = game.loadImage("../assets/" + scriptName + "1.png").getImage();
     this.description = description;
     this.completed = false;
   }
@@ -56,7 +56,7 @@ class Stage {
    */
   executeScript() {
     var done = this.script.execute();
-    if (done) resetScript();
+    if (done) this.resetScript();
     return done;
   }
 
@@ -121,7 +121,6 @@ class StageSelector {
       var info = this.stageInfo[i];
       info.stage.drawIcon(ctx, info.x, info.y, i == this.current);
     }
-    // FIXME: WHY do we need a "this." here, but not anywhere else...?
     this.getSelectedStage().drawSelectScreen(ctx);
   }
 

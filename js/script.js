@@ -28,29 +28,29 @@ class GameScript {
    * @return true if the script is complete
    */
   execute() {
-    while (cmdIndex < this.commands.length) {
+    while (this.cmdIndex < this.commands.length) {
       if (this.waitClear) {
         if (this.game.isClear()) {
           this.waitClear = false;
           this.waiting = 0;
         }
         else if (this.waiting > 0) {
-          waiting--;
+          this.waiting--;
           break;
         }
       }
-      else if (waiting > 0) {
-        waiting--;
+      else if (this.waiting > 0) {
+        this.waiting--;
         break;
       }
-      var cmd = this.commands[cmdIndex].name;
-      var args = this.commands[cmdIndex].params;
-      if (equalsIgnoreCase(cmd, "add")) add(args);
-      else if (equalsIgnoreCase(cmd, "print")) print(args);
-      else if (equalsIgnoreCase(cmd, "wait")) wait(args);
-      cmdIndex++;
+      var cmd = this.commands[this.cmdIndex].name;
+      var args = this.commands[this.cmdIndex].params;
+      if (equalsIgnoreCase(cmd, "add")) this.add(args);
+      else if (equalsIgnoreCase(cmd, "print")) this.print(args);
+      else if (equalsIgnoreCase(cmd, "wait")) this.wait(args);
+      this.cmdIndex++;
     }
-    return cmdIndex >= this.commands.length;
+    return this.cmdIndex >= this.commands.length;
   }
 
   reset() {

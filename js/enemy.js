@@ -85,7 +85,7 @@ class EnemyBullet extends Thing {
       ctx.setColor(Color.red);
       ctx.fillRoundRect(0, 0, SIZE, SIZE, SIZE / 2, SIZE / 2);
       ENEMY_BULLET_IMAGE = new BoundedImage(img);
-      ENEMY_BULLET_IMAGE.addBox(new BoundingBox());
+      ENEMY_BULLET_IMAGE.addBox(new BoundingBox(0, 0, 0, 0));
     }
     setImage(ENEMY_BULLET_IMAGE);
     setPower(10 * t.getPower());
@@ -141,7 +141,7 @@ class EnemyHead extends Thing {
     else if (this.shooting > 0) this.shooting--;
     if (isDead()) {
       // dead head drops a power-up
-      t = getPowerUp();
+      t = this.getPowerUp();
     }
     return t;
   }
@@ -163,12 +163,12 @@ class Enemy extends EnemyHead {
       game.loadImage(args[1] + "1.png"),
       game.loadImage(args[1] + "2.png"),
       game.loadImage(args[1] + "3.png"));
-    var normal = getBoundedImage(0);
-    normal.addBox(new BoundingBox());
-    var attacking = getBoundedImage(1);
-    attacking.addBox(new BoundingBox());
-    var hurting = getBoundedImage(2);
-    hurting.addBox(new BoundingBox());
+    var normal = this.getBoundedImage(0);
+    normal.addBox(new BoundingBox(0, 0, 0, 0));
+    var attacking = this.getBoundedImage(1);
+    attacking.addBox(new BoundingBox(0, 0, 0, 0));
+    var hurting = this.getBoundedImage(2);
+    hurting.addBox(new BoundingBox(0, 0, 0, 0));
 
     setMovement(new EnemyMovement(this, args.slice(2)));
     setAttack(new RandomBulletAttack(this));
