@@ -30,7 +30,7 @@ class Stage {
     var origColor = ctx.getColor();
 
     drawOutlinedRect(g, DARK_RED, TOP_LEFT, TOP_LEFT, IMAGE_SIZE, IMAGE_SIZE);
-    var gameWidth = game.getWidth();
+    var gameWidth = this.game.width;
     var textHeight = 14 * description.length + 10;
     drawOutlinedRect(g, Color.darkGray, TOP_LEFT + IMAGE_SIZE + 10,
       TOP_LEFT + 45, gameWidth - TOP_LEFT - IMAGE_SIZE - 20, textHeight);
@@ -143,7 +143,7 @@ class StageSelector {
   /** Draws stage select screen. */
   draw(ctx) {
     var size = this.stages.length;
-    var w = this.game.getWidth(), h = this.game.getHeight();
+    var w = this.game.width, h = this.game.height;
     var cols = w / Stage.ICON_SIZE;
     var rows = (size + cols - 1) / cols;
     for (var i=0; i<size; i++) {

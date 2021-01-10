@@ -1,25 +1,18 @@
-/** Width of game window. */
-GAME_WIDTH = 400;
-
-/** Height of game window. */
-GAME_HEIGHT = 400;
-
-/** Height of status bar. */
-STATUS = 24;
-
 class Game {
-
   constructor(canvas) {
-    // Start the music.
-    this.player = new SoundPlayer();
-    //this.player.playMusic("../assets/metblast.mid");
+    this.width = 400;                                     // Width of game window.
+    this.height = 400;                                    // Height of game window.
+    this.statusHeight = 24;                               // Height of status bar.
 
-    this.offscreen = canvas;                              // Offscreen canvas.
+    canvas.width = this.width;
+    canvas.height = this.height + this.statusHeight;
+    this.offscreen = canvas;
     this.buf = canvas.getContext('2d');                   // Offscreen canvas context.
+
     //this.loader = new ImageLoader();                      // Object for loading images from disk.
     //this.selector = new StageSelector(this);              // Object for handling stage selection.
     this.stage = null;                                    // Current game stage.
-    this.stars = new StarField(GAME_WIDTH, GAME_HEIGHT);  // Field of stars in the background.
+    this.stars = new StarField(this.width, this.height);  // Field of stars in the background.
     //this.copter = new Copter(this);                       // Our hero.
     this.things = [];                                     // List of things onscreen.
     this.messages = [];                                   // List of onscreen text messages.
@@ -29,6 +22,11 @@ class Game {
     this.debug = false;                                   // Debugging flag.
     this.ticks = 0;                                       // Game frame counter.
     this.keys = new Set();                                // Set of keys current being held.
+
+    // Start the music.
+    this.player = new SoundPlayer();
+    //this.player.playMusic("../assets/metblast.mid");
+
   }
 
   /** Loads the given image from disk. */
@@ -106,7 +104,7 @@ class Game {
   /** Draws the veggie copter graphics to the image buffer. */
   draw(ctx) {
     this.buf.fillStyle = 'black';
-    this.buf.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT + STATUS);
+    this.buf.fillRect(0, 0, this.offscreen.width, this.offscreen.height);
 
     //var t = getThings();
 
@@ -144,26 +142,26 @@ class Game {
 
     // draw status bar
     this.buf.setColor(Color.darkGray);
-    this.buf.fillRect(0, GAME_HEIGHT + 1, GAME_WIDTH, 24);
+    this.buf.fillRect(0, this.height + 1, this.width, 24);
     this.buf.setColor(Color.white);
-    this.buf.drawLine(0, GAME_HEIGHT, GAME_WIDTH, GAME_HEIGHT);
+    this.buf.drawLine(0, this.height, this.width, this.height);
 
     // draw life bar
     var x = 1;
-    this.buf.drawRect(x, GAME_HEIGHT + 2, 103, 20);
+    this.buf.drawRect(x, this.height + 2, 103, 20);
     this.buf.setColor(Color.black);
-    this.buf.fillRect(x + 1, GAME_HEIGHT + 3, 102, 19);
+    this.buf.fillRect(x + 1, this.height + 3, 102, 19);
     var hp = copter.getHP();
     for (var i=0; i<hp; i++) {
       var q = (double) i / 99;
       var red = Math.trunc(255 * (1 - q));
       var green = Math.trunc(255 * q);
       this.buf.setColor(new Color(red, green, 0));
-      this.buf.drawLine(x + 2 + i, GAME_HEIGHT + 4, x + 2 + i, GAME_HEIGHT + 20);
+      this.buf.drawLine(x + 2 + i, this.height + 4, x + 2 + i, this.height + 20);
     }
 
     // draw weapon selector
-    copter.drawWeaponStatus(this.buf, x + 107, GAME_HEIGHT + 2);
+    copter.drawWeaponStatus(this.buf, x + 107, this.height + 2);
 */
 
     // blit the offscreen canvas to the on-screen canvas
@@ -217,10 +215,10 @@ class Game {
         things.removeElementAt(i);
         if (thing == copter) {
           printMessage(new Message("Game Over",
-            (GAME_WIDTH - 250) / 2, (GAME_HEIGHT - 30) / 2 + 30,
+            (this.width - 250) / 2, (this.height - 30) / 2 + 30,
             48, Color.red, Integer.MAX_VALUE));
           printMessage(new Message("Press space to play again",
-            (GAME_WIDTH - 170) / 2, (GAME_HEIGHT - 30) / 2 + 50,
+            (this.width - 170) / 2, (this.height - 30) / 2 + 50,
             16, Color.gray, Integer.MAX_VALUE));
         }
       }
@@ -406,10 +404,7 @@ function animate() {
 }
 
 window.onload = function() {
-    var offscreen = document.createElement('canvas')
-    offscreen.width = GAME_WIDTH;
-    offscreen.height = GAME_HEIGHT + STATUS;
-    game = new Game(offscreen);
+    game = new Game(document.createElement('canvas'));
     window.onkeydown = function(e) { game.keyPressed(e); }
     window.onkeyup = function(e) { game.keyReleased(e); }
     animate();
