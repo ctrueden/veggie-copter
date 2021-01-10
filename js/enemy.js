@@ -1,8 +1,9 @@
-class EnemyMovement extends MovementStyle {
-  ZIGZAG = 1;
-  SPIRAL = 2;
-  WAVE = 3;
+// TODO: Make separate EnemyMovement subclass for each of these.
+const ZIGZAG = 1;
+const SPIRAL = 2;
+const WAVE = 3;
 
+class EnemyMovement extends MovementStyle {
   /**
    * Constructs a new enemy movement handler.
    * params[0] = movement style (e.g., zigzag, spiral, wave, etc.)
@@ -15,6 +16,7 @@ class EnemyMovement extends MovementStyle {
    */
   constructor(t, params) {
     super(t);
+
     this.ticks = 0;
     this.xmod = 0, this.ymod = 1; // for zigzag
 

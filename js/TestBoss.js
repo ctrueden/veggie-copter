@@ -1,6 +1,5 @@
 class TestBoss extends BossHead {
-
-  TestBoss(game, args) {
+  constructor(game, args) {
     super(game, 1000,
       game.loadImage("test-boss2.png"),
       game.loadImage("test-boss2.png"),

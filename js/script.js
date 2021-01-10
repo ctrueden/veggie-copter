@@ -12,7 +12,7 @@ class GameScript {
         text.split("\n").forEach(line => {
           var tokens = line.split(" +");
           var name = tokens.shift();
-          this.commands.push({name: name, params, tokens});
+          this.commands.push({name: name, params: tokens});
         });
 
         // append 1/2 pause at the end of each stage

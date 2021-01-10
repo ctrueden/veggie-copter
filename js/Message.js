@@ -3,7 +3,7 @@ class Message {
     this.msg = msg;
     this.x = x;
     this.y = y;
-    this.font = new Font("SansSerif", Font.PLAIN, size);
+    this.font = size + "px SansSerif";
     this.color = color;
     this.remain = duration;
   }

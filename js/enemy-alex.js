@@ -1,37 +1,29 @@
 /** Defines random enemy bullet attack. */
 class AlexAttack extends AttackStyle {
+  constructor(t) {
+    super(t);
 
-  /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-  FREQUENCY = 1;
-
-  AlexAttack(t) { super(t); }
+    /** Probability that this thing will fire a bullet (1=rare, 60=always). */
+    this.frequency = 1;
+  }
 
   /** Fires a shot randomly. */
   shoot() {
-    if (Math.random() >= 1.0 / (60 - FREQUENCY)) return null;
+    if (Math.random() >= 1.0 / (60 - this.frequency)) return null;
     return [new EnemyBullet(thing, null, null)];
   }
 
 }
 
 class AlexMovement extends MovementStyle {
-
-  const X_STEPS = 40;
-  const Y_STEPS = 30;
-
-  SPEED = 2;
-  LUNGE_RATE = 300;
-
-  xstart, ystart;
-  xlen, ylen;
-  xinc, yinc;
-  xdir, ydir;
-  ticks;
-  needsToRun, running, lunging;
-  lastX, lastY;
-
-  AlexMovement(t) {
+  constructor(t) {
     super(t);
+
+    this.xSteps = 40;
+    this.ySteps = 30;
+    this.speed = 2;
+    this.lungeRate = 300;
+
     var game = thing.getGame();
 
     // compute starting position
@@ -44,24 +36,24 @@ class AlexMovement extends MovementStyle {
       var xpad = X_STEPS / 2;
       xpos = (w - xpad) * Math.random() + xpad;
       ypos = 0;
-      xdir = Math.random() < 0.5;
-      ydir = true;
+      this.xdir = Math.random() < 0.5;
+      this.ydir = true;
     }
     else if (r < 2.0 / 3) {
       // appear from left
       var ypad = Y_STEPS / 2;
       xpos = 0;
       ypos = (h / 2 - ypad) * Math.random() + ypad;
-      xdir = true;
-      ydir = true;
+      this.xdir = true;
+      this.ydir = true;
     }
     else {
       // appear from right
       var ypad = Y_STEPS / 2;
       xpos = w - 1;
       ypos = (h / 2 - ypad) * Math.random() + ypad;
-      xdir = false;
-      ydir = true;
+      this.xdir = false;
+      this.ydir = true;
     }
 
     // compute random starting trajectory
@@ -72,7 +64,11 @@ class AlexMovement extends MovementStyle {
     this.xinc = 0;
     this.yinc = 0;
 
-    lastX = xpos; lastY = ypos;
+    this.ticks = 0;
+    this.needsToRun = false;
+    this.running = false;
+    this.lunging = false;
+    this.lastX = xpos; this.lastY = ypos;
     this.thing.setPos(xpos, ypos);
   }
 
@@ -116,14 +112,14 @@ class AlexMovement extends MovementStyle {
     if (ydir) ypos = (float) (ystart + yp * ylen / SPEED);
     else ypos = (float) (ystart - yp * ylen / SPEED);
 
-    if (thing.isHit() && !running) needsToRun = true;
+    if (thing.isHit() && !running) this.needsToRun = true;
     var w = game.getWindowWidth();
     var h = game.getWindowHeight();
     var width = thing.getWidth();
     var height = thing.getHeight();
 
     if (xinc == X_STEPS) {
-      if (needsToRun) {
+      if (this.needsToRun) {
         // run away when being shot
         running = true;
         xstart = xpos;
@@ -138,7 +134,7 @@ class AlexMovement extends MovementStyle {
         xinc = 0;
         running = false;
       }
-      needsToRun = false;
+      this.needsToRun = false;
       lunging = false;
     }
 

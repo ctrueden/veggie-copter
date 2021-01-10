@@ -1,12 +1,11 @@
 class BulletMovement extends MovementStyle {
-  SPEED = 2.2;
-
   constructor(t, x, y, xtarget, ytarget, speed) {
     super(t);
+
     this.thing.setPos(x, y);
     if (xtarget == null) xtarget = t.getGame().getCopter().getX();
     if (ytarget == null) ytarget = t.getGame().getCopter().getY();
-    if (speed == null) speed = SPEED;
+    this.speed = speed == null ? 2.2 : speed;
     this.xstart = x; this.ystart = y;
     var xx = xtarget - x;
     var yy = ytarget - y;

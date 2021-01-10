@@ -1,17 +1,17 @@
 class BushMovement extends MovementStyle {
-
-  /** Movement speed per frame. */
-  SPEED = 1;
-
-  /** Number of HP considered low enough to enter frantic mode. */
-  LOW_HP = 25;
-
-  target;
-  dir;
-  turning;
-
-  BushMovement(t) {
+  constructor(t) {
     super(t);
+
+    // Movement speed per frame.
+    this.speed = 1;
+
+    // Number of HP considered low enough to enter frantic mode.
+    this.lowhp = = 25;
+
+    this.target = 0;
+    this.dir = false;
+    this.turning = false;
+
     var game = thing.getGame();
     var w = game.getWindowWidth();
 
@@ -27,37 +27,37 @@ class BushMovement extends MovementStyle {
   move() {
     if (isFrantic()) return;
 
-    var cx = thing.getCX(), cy = thing.getCY();
-    turning = false;
+    var cx = this.thing.getCX(), cy = this.thing.getCY();
+    this.turning = false;
 
-    if (dir) {
-      if (cy > target) cy -= SPEED;
-      else if (cy < target) cy += SPEED;
+    if (this.dir) {
+      if (cy > this.target) cy -= this.speed;
+      else if (cy < this.target) cy += this.speed;
       else doSwitch();
     }
     else {
-      if (cx > target) cx -= SPEED;
-      else if (cx < target) cx += SPEED;
+      if (cx > this.target) cx -= this.speed;
+      else if (cx < this.target) cx += this.speed;
       else doSwitch();
     }
 
-    thing.setCPos(cx, cy);
+    this.thing.setCPos(cx, cy);
   }
 
   /** Gets whether thing is currently changing directions. */
-  isTurning() { return turning; }
+  isTurning() { return this.turning; }
 
-  isFrantic() { return thing.getHP() <= LOW_HP; }
+  isFrantic() { return this.thing.getHP() <= this.lowhp; }
 
   /** Gets movement direction of this thing. */
-  getDirection() { return dir; }
+  getDirection() { return this.dir; }
 
   /** Switches between horizontal and vertical movement modes. */
   doSwitch() {
-    var hero = thing.getGame().getCopter();
-    dir = !dir;
-    target = dir ? hero.getCY() : hero.getCX();
-    turning = true;
+    var hero = this.thing.getGame().getCopter();
+    this.dir = !this.dir;
+    this.target = this.dir ? hero.getCY() : hero.getCX();
+    this.turning = true;
   }
 
 }

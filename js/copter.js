@@ -1,9 +1,8 @@
 /** Defines veggie copter movement. */
 class CopterMovement extends MovementStyle {
-  SPEED = 2;
-
   constructor(t) {
     super(t);
+    this.speed = 2;
     reset();
   }
 
@@ -17,8 +16,8 @@ class CopterMovement extends MovementStyle {
   move() {
     var xpos = this.thing.getX(), ypos = this.thing.getY();
     var xdir = 0, ydir = 0;
-    if (left) xdir -= SPEED; if (right) xdir += SPEED;
-    if (up) ydir -= SPEED; if (down) ydir += SPEED;
+    if (left) xdir -= this.speed; if (right) xdir += this.speed;
+    if (up) ydir -= this.speed; if (down) ydir += this.speed;
     xpos += xdir; ypos += ydir;
 
     var game = this.thing.game;

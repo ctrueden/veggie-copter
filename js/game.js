@@ -1,16 +1,22 @@
 class Game {
   constructor(canvas) {
-    this.width = 400;                                     // Width of game window.
-    this.height = 400;                                    // Height of game window.
+    this.width = 400;                                     // Width of game area.
+    this.height = 400;                                    // Height of game area.
     this.statusHeight = 24;                               // Height of status bar.
 
-    canvas.width = this.width;
-    canvas.height = this.height + this.statusHeight;
-    this.offscreen = canvas;
-    this.buf = canvas.getContext('2d');                   // Offscreen canvas context.
+    this.canvas = canvas;                                 // Canvas onto which the game is drawn.
+    this.canvas.width = this.width;
+    this.canvas.height = this.height + this.statusHeight;
 
-    //this.loader = new ImageLoader();                      // Object for loading images from disk.
-    //this.selector = new StageSelector(this);              // Object for handling stage selection.
+    this.offscreen = document.createElement('canvas');    // Offscreen canvas, for double buffering.
+    this.offscreen.width = this.canvas.width;
+    this.offscreen.height = this.canvas.height;
+
+    this.ctx = this.canvas.getContext('2d');              // Original canvas context.
+    this.buf = this.offscreen.getContext('2d');           // Offscreen canvas context.
+
+    this.loader = new ImageLoader();                      // Object for loading images from disk.
+    this.selector = new StageSelector(this);              // Object for handling stage selection.
     this.stage = null;                                    // Current game stage.
     this.stars = new StarField(this.width, this.height);  // Field of stars in the background.
     //this.copter = new Copter(this);                       // Our hero.
@@ -26,14 +32,13 @@ class Game {
     // Start the music.
     this.player = new SoundPlayer();
     //this.player.playMusic("../assets/metblast.mid");
-
   }
 
   /** Loads the given image from disk. */
-  loadImage(filename) {
-    /*
-    return loadImage(filename, 0, 0, new BoundingBox[0]);
-    */
+  loadImageZero(filename) {
+    //return loadImage(filename, 0, 0, []);
+    var img = this.loader.getImage(filename);
+    return new BoundedImage(img, 0, 0);
   }
 
   /**
@@ -41,12 +46,10 @@ class Game {
    * bounding box insets for collision detection.
    */
   loadImage(filename, xoff, yoff, boxes) {
-    /*
-    BufferedImage img = loader.getImage(filename);
-    BoundedImage bi = new BoundedImage(img, xoff, yoff);
+    var img = this.loader.getImage(filename);
+    var bi = new BoundedImage(img, xoff, yoff);
     for (var i=0; i<boxes.length; i++) bi.addBox(boxes[i]);
     return bi;
-    */
   }
 
   /** Gets veggie copter object (our hero!). */
@@ -56,28 +59,19 @@ class Game {
   getTicks() { return this.ticks; }
 
   /** Adds an object to the list of onscreen things. */
-  //addThing(t) { things.add(t); }
+  addThing(t) { this.things.push(t); }
 
   /** Gets objects currently onscreen. */
-  getThings() {
-    /*
-    t = new Thing[things.length];
-    things.copyInto(t);
-    return t;
-    */
-  }
+  getThings() { return this.things.splice(); }
 
   /** Overlays a text message to the screen. */
-  /*
-  printMessage(m) { messages.add(m); }
-  */
+  printMessage(m) { this.messages.push(m); }
 
   /** Whether there are any enemies currently onscreen. */
   isClear() {
-    /*
-    boolean clear = true;
-    for (var i=0; i<things.length; i++) {
-      var t = things[i];
+    var clear = true;
+    for (var i=0; i<this.things.length; i++) {
+      var t = this.things[i];
       var type = t.getType();
       if (type != Thing.GOOD && type != Thing.GOOD_BULLET) {
         clear = false;
@@ -85,24 +79,21 @@ class Game {
       }
     }
     return clear;
-    */
   }
 
   /** Resets the game to its initial state. */
   resetGame() {
-    /*
-    things.removeAllElements();
-    messages.removeAllElements();
-    copter = new Copter(this);
-    ticks = 0;
-    score = 0;
-    stage = null;
-    selector.reset();
-    */
+    this.things = [];
+    this.messages = [];
+    //this.copter = new Copter(this);
+    this.ticks = 0;
+    this.score = 0;
+    this.stage = null;
+    this.selector.reset();
   }
 
   /** Draws the veggie copter graphics to the image buffer. */
-  draw(ctx) {
+  draw() {
     this.buf.fillStyle = 'black';
     this.buf.fillRect(0, 0, this.offscreen.width, this.offscreen.height);
 
@@ -133,13 +124,12 @@ class Game {
     }
 
     // draw text messages
-    var m = new Message[messages.length];
-    messages.copyInto(m);
+    var m = messages.splice();
     for (var i=0; i<m.length; i++) m[i].draw(this.buf);
-
+*/
     // draw stage selection
-    if (stage == null) selector.draw(this.buf);
-
+    if (this.stage == null) this.selector.draw(this.buf);
+/*
     // draw status bar
     this.buf.setColor(Color.darkGray);
     this.buf.fillRect(0, this.height + 1, this.width, 24);
@@ -165,7 +155,7 @@ class Game {
 */
 
     // blit the offscreen canvas to the on-screen canvas
-    ctx.drawImage(this.offscreen, 0, 0);
+    this.ctx.drawImage(this.offscreen, 0, 0);
   }
 
   /** Updates the game state. */
@@ -243,35 +233,33 @@ class Game {
     const code = e.keyCode;
     if (!this.keys.has(code)) {
       this.keys.add(code);
-      /*
-      var t = getThings();
+      var t = this.getThings();
       for (var i=0; i<t.length; i++) t[i].keyPressed(e);
-      */
 
       if (code == Keys.SHOOT) {
         /*
-        if (stage == null) {
-          stage = selector.getSelectedStage();
-          stage.resetScript();
-          things.add(copter);
-          copter.getAttack().reactivateAttackStyle();
-          copter.getAttack().reactivateAttackStyle();
+        if (this.stage == null) {
+          this.stage = this.selector.getSelectedStage();
+          this.stage.resetScript();
+          things.push(this.copter);
+          this.copter.getAttack().reactivateAttackStyle();
+          this.copter.getAttack().reactivateAttackStyle();
         }
-        else if (copter.isDead()) resetGame();
+        else if (this.copter.isDead()) resetGame();
         */
       }
       else if (code == Keys.PAUSE) {
         this.pause = !this.pause;
       }
       else if (code == Keys.MOVE_LEFT) {
-        //if (stage == null) selector.adjustStage(false);
+        if (this.stage == null) this.selector.adjustStage(false);
       }
       else if (code == Keys.MOVE_RIGHT) {
-        //if (stage == null) selector.adjustStage(true);
+        if (this.stage == null) this.selector.adjustStage(true);
       }
       else if (code == Keys.FAST_FORWARD) this.fast = true;
       else if (code == Keys.TOGGLE_DEBUG) this.debug = !this.debug;
-      //else if (code == Keys.TOGGLE_MUTE) SoundPlayer.toggleMute();
+      else if (code == Keys.TOGGLE_MUTE) player.toggleMute();
     }
   }
 
@@ -279,10 +267,8 @@ class Game {
   keyReleased(e) {
     const code = e.keyCode;
     this.keys.delete(code);
-    /*
-    var t = getThings();
+    var t = this.getThings();
     for (var i=0; i<t.length; i++) t[i].keyReleased(e);
-    */
 
     if (code == Keys.FAST_FORWARD) this.fast = false;
   }
@@ -310,7 +296,7 @@ class Game {
     }
 
     // do collision detection between copter and power-ups
-    var rcop = copter.getBoxes();
+    var rcop = this.copter.getBoxes();
     var rups = boxes[Thing.POWER_UP];
     for (var i=0; i<rups.length; i++) {
       if (rups[i] == null) continue;
@@ -329,12 +315,12 @@ class Game {
         ColoredAttack attack = powerUp.getGrantedAttack();
         if (attack == null) {
           // increase power of selected attack style by one
-          var power = copter.getAttack().getPower();
-          if (power < 10) copter.getAttack().setPower(power + 1);
+          var power = this.copter.getAttack().getPower();
+          if (power < 10) this.copter.getAttack().setPower(power + 1);
         }
         else {
           // grant new attack style to copter
-          CopterAttack copterAttack = (CopterAttack) copter.getAttack();
+          CopterAttack copterAttack = (CopterAttack) this.copter.getAttack();
           copterAttack.addAttackStyle(attack);
         }
         tt[Thing.POWER_UP][i].setHP(0);
@@ -398,14 +384,12 @@ var game = null;
 function animate() {
   requestAnimationFrame(animate);
   game.update();
-  const canvas = document.getElementById('canvas');
-  const ctx = canvas.getContext('2d');
-  game.draw(ctx);
+  game.draw();
 }
 
 window.onload = function() {
-    game = new Game(document.createElement('canvas'));
-    window.onkeydown = function(e) { game.keyPressed(e); }
-    window.onkeyup = function(e) { game.keyReleased(e); }
-    animate();
+  game = new Game(document.getElementById('canvas'));
+  window.onkeydown = function(e) { game.keyPressed(e); }
+  window.onkeyup = function(e) { game.keyReleased(e); }
+  animate();
 };

@@ -1,28 +1,22 @@
 /** Encapsulates an attack pattern with icon and color. */
 class ColoredAttack extends AttackStyle {
-
-  DARK_RED = new Color(95, 0, 0);
-  ICON_SIZE = 21;
-
-  image;
-  color;
-
-  ColoredAttack(t, c, img) {
+  constructor(t, c, img) {
     super(t);
-    color = c;
-    image = img;
+    this.color = c;
+    this.image = img;
+    this.iconSize = 21;
   }
 
   /** Draws an icon representing this attack style in the given position. */
   drawIcon(g, x, y, selected) {
     var origColor = g.getColor();
     g.setColor(Color.white);
-    g.drawRect(x, y, ICON_SIZE - 1, ICON_SIZE - 1);
+    g.drawRect(x, y, this.iconSize - 1, this.iconSize - 1);
     var h = power > 10 ? 19 : (2 * power - 1);
-    g.setColor(selected ? DARK_RED : Color.black);
-    g.fillRect(x + 1, y + 1, ICON_SIZE - 2, ICON_SIZE - h - 2);
+    g.setColor(selected ? "darkred" : "black");
+    g.fillRect(x + 1, y + 1, this.iconSize - 2, this.iconSize - h - 2);
     g.setColor(selected ? Color.red : Color.darkGray);
-    g.fillRect(x + 1, y + ICON_SIZE - h - 1, ICON_SIZE - 2, h);
+    g.fillRect(x + 1, y + this.iconSize - h - 1, this.iconSize - 2, h);
     g.drawImage(image, x + 1, y + 1, thing.getGame());
     g.setColor(origColor);
   }

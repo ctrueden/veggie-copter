@@ -1,16 +1,14 @@
-// Utility constants, functions and classes.
-
-DARK_RED = "rgb(48, 0, 0)";
+// Utility functions and classes.
 
 function equalsIgnoreCase(s1, s2) {
     return s1.localeCompare(s2, undefined, { sensitivity: 'base' }) === 0;
 }
 
 function drawOutlinedRect(ctx, color, x, y, width, height) {
-  ctx.fillColor = color;
+  ctx.fillStyle = color;
   ctx.fillRect(x, y, width - 1, height - 1);
   ctx.beginPath();
-  ctx.strokeColor = "white";
+  ctx.strokeStyle = "white";
   ctx.rect(x, y, width - 1, height - 1);
   ctx.stroke();
 }

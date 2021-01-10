@@ -1,18 +1,17 @@
 class PowerUpMovement extends MovementStyle {
-  PERIOD = 3;
-
   PowerUpMovement(t, x, y, center) {
     super(t);
     this.thing.setPos(x, y);
     this.center = center;
     this.ticks = 0;
     this.dir = false;
+    this.period = 3;
   }
 
   move() {
     this.ticks++;
 
-    if (this.ticks % PERIOD == 0) {
+    if (this.ticks % this.period == 0) {
       // do power-up pulsing
       var index = this.thing.getImageIndex();
       if (dir) {

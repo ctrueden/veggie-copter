@@ -1,30 +1,23 @@
-/** Number of stars in star field. */
-STARS = 50;
-
-/** Minimum star speed. */
-STAR_MIN = 1;
-
-/** Maximum star speed. */
-STAR_MAX = 4;
-
 class StarField {
-
-  /** Constructs a star field. */
   constructor(w, h) {
+    this.count = 50;   // Number of stars in star field.
+    this.minSpeed = 1; // Minimum star speed.
+    this.maxSpeed = 4; // Maximum star speed.
+
     this.width = w;
     this.height = h;
     this.starY = []; // Y values
     this.starV = []; // velocities
-    for (var i=0; i<STARS; i++) {
+    for (var i=0; i<this.count; i++) {
       this.starY[i] = this.height * Math.random();
-      this.starV[i] = (STAR_MAX - STAR_MIN + 1) * Math.random() + STAR_MIN;
+      this.starV[i] = (this.maxSpeed - this.minSpeed + 1) * Math.random() + this.minSpeed;
     }
   }
 
   /** Draws stars to the given graphics context. */
   drawStars(ctx) {
-    for (var i=0; i<STARS; i++) {
-      var x = i * this.width / STARS;
+    for (var i=0; i<this.count; i++) {
+      var x = i * this.width / this.count;
       ctx.beginPath();
       ctx.strokeStyle = 'gray';
       ctx.moveTo(x, this.starY[i]);
@@ -35,11 +28,11 @@ class StarField {
 
   /** Updates star positions. */
   moveStars() {
-    for (var i=0; i<STARS; i++) {
+    for (var i=0; i<this.count; i++) {
       this.starY[i] += this.starV[i];
       if (this.starY[i] - 2 * this.starV[i] > this.height) {
         this.starY[i] = 0;
-        this.starV[i] = (STAR_MAX - STAR_MIN + 1) * Math.random() + STAR_MIN;
+        this.starV[i] = (this.maxSpeed - this.minSpeed + 1) * Math.random() + this.minSpeed;
       }
     }
   }
