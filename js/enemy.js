@@ -69,25 +69,20 @@ class EnemyMovement extends MovementStyle {
   }
 }
 
-// TODO: Better way to cache this statically??
-var ENEMY_BULLET_SPRITE = null;
-var ENEMY_BULLET_SIZE = 7;
-
 class EnemyBullet extends Thing {
   constructor(t, x2, y2) {
     super(t.game);
-    this.type = EVIL_BULLET;
-
-    if (ENEMY_BULLET_SPRITE == null) {
-      var size = ENEMY_BULLET_SIZE;
+    this.type = ThingTypes.EVIL_BULLET;
+    this.setSprite(this.game.retrieve('enemy-bullet', this, obj => {
+      var size = 7;
       var image = makeImage(size, size);
       var ctx = context2d(image);
       ctx.fillStyle = "red";
       ctx.fillRoundRect(0, 0, size, size, size / 2, size / 2);
-      ENEMY_BULLET_SPRITE = new Sprite(image);
-      ENEMY_BULLET_SPRITE.addBox(new BoundingBox());
-    }
-    this.setSprite(ENEMY_BULLET_SPRITE);
+      var sprite = new Sprite(image);
+      sprite.addBox(new BoundingBox());
+      return sprite;
+    }));
     this.power = 10 * t.power;
 
     var x = t.cx - this.width / 2;
