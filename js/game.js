@@ -303,8 +303,7 @@ class Game {
         var attack = powerup.getGrantedAttack();
         if (attack == null) {
           // increase power of selected attack style by one
-          var power = this.copter.attack.power;
-          if (power < 10) this.copter.attack.setPower(power + 1);
+          if (this.copter.attack.power < 10) this.copter.attack.power++;
         }
         else {
           // grant new attack style to copter

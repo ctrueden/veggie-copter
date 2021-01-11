@@ -21,7 +21,7 @@ class LaserWeapon extends Weapon {
     flux = (flux + 1) % FLUX.length;
     size += FLUX[flux];
     CopterLaser laser = new CopterLaser(thing, size);
-    laser.setPower(power);
+    laser.power = power;
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return new Thing[] {laser};
   }

@@ -58,9 +58,9 @@ class MineShard extends Thing {
 
   MineShard(t, angle, sx, sy) {
     super(t.game);
-    type = GOOD_BULLET;
+    this.type = GOOD_BULLET;
     setSprites(images);
-    setPower(LIFE / POWER + 1);
+    this.power = LIFE / POWER + 1;
     var tx = (float) (sx + 10 * Math.sin(angle));
     var ty = (float) (sy + 10 * Math.cos(angle));
     move = new MineShardMovement(this, sx, sy, tx, ty);
@@ -69,7 +69,7 @@ class MineShard extends Thing {
   activateSprite(index) {
     if (index == LIFE) setHP(0); // shards die when they fade away
     else {
-      setPower((LIFE - index) / POWER + 1);
+      power = (LIFE - index) / POWER + 1;
       super.activateSprite(index);
     }
   }
@@ -205,10 +205,10 @@ class CopterMine extends Thing {
 
   constructor(thing, power) {
     super(thing.game);
-    type = GOOD_BULLET;
-    setPower(power);
-    move = new MineMovement(this);
-    attack = new MineExplode(this);
+    this.type = GOOD_BULLET;
+    this.power = power;
+    this.move = new MineMovement(this);
+    this.attack = new MineExplode(this);
     setCPos(thing.cx, thing.cy);
   }
 
@@ -216,9 +216,9 @@ class CopterMine extends Thing {
   var getStrength() { return power; }
 
   /** Changes mine size based on power value. */
-  setPower(power) {
-    super.setPower(power);
-    maxHP = hp = POWER_MULTIPLIER * power;
+  set power(power) {
+    super.power = power;
+    this.maxHP = this.hp = POWER_MULTIPLIER * power;
 
     var size = power - 1;
     if (size < 0) size = 0;
@@ -227,7 +227,7 @@ class CopterMine extends Thing {
   }
 
   /** Mines do not directly damage enemies. */
-  getPower() { return 0; }
+  get power() { return 0; }
 
   /** Mines cannot be destroyed. */
   hit(damage) { }

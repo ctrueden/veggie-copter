@@ -49,7 +49,7 @@ class SpreadWeapon extends Weapon {
     }
     if (!space) return null;
     fired = RECHARGE;
-    var pow = getPower();
+    var pow = this.power;
     var num = pow + 2;
 
     var widthDeg = 20 * num - 30;
@@ -64,7 +64,7 @@ class SpreadWeapon extends Weapon {
     CopterSpread[] shots = new CopterSpread[num];
     for (int s=0; s<num; s++) {
       shots[s] = new CopterSpread(thing, startRad + inc * s);
-      shots[s].setPower(POWER);
+      shots[s].power = POWER;
     }
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return shots;

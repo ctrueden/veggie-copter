@@ -18,7 +18,7 @@ class DoomWeapon extends Weapon {
   shoot() {
     if (!this.space || this.doom != null || this.thing.hp == 1) return null;
     var doom = new CopterDoom(thing);
-    doom.setPower(power);
+    doom.power = power;
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return [doom];
   }

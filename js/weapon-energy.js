@@ -41,13 +41,13 @@ class EnergyWeapon extends Weapon {
     }
     if (ndx < 0) return null;
     energy = new CopterEnergy(t[ndx]);
-    energy.setPower(power);
+    energy.power = power;
     return [energy];
   }
 
-  setPower(power) {
-    super.setPower(power);
-    if (energy != null) energy.setPower(power);
+  set power(power) {
+    super.power = power;
+    if (energy != null) energy.power = power;
   }
 
   keyPressed(e) {

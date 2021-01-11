@@ -28,7 +28,7 @@ class LitWeapon extends Weapon {
   Thing[] shoot() {
     if (!space) return null;
     ticks++;
-    var pow = getPower();
+    var pow = this.power;
     var q = ticks % PERIOD;
     CopterLit[] lits = new CopterLit[pow];
     for (var i=0; i<pow; i++) {
@@ -41,7 +41,7 @@ class LitWeapon extends Weapon {
 
       if (paths[i] == null) continue;
       lits[i] = new CopterLit(thing, paths[i]);
-      lits[i].setPower(POWER);
+      lits[i].power = POWER;
     }
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return lits;

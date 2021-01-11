@@ -19,11 +19,11 @@ class HomingWeapon extends Weapon {
       return null;
     }
     if (!space) return null;
-    var pow = getPower();
+    var pow = this.power;
     fired = RECHARGE - pow;
 
     CopterHoming homing = new CopterHoming(thing);
-    homing.setPower(8);
+    homing.power = 8;
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return new Thing[] {homing};
   }

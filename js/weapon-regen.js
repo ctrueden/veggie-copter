@@ -20,7 +20,7 @@ class RegenMovement extends MovementStyle {
     this.syncPos();
     ticks++;
 
-    var regenRate = 20 - thing.getPower();
+    var regenRate = 20 - thing.power;
     if (regenRate <= 0) regenRate = 1;
     if (ticks % regenRate == 0) {
       // regenerate copter
@@ -33,7 +33,7 @@ class RegenMovement extends MovementStyle {
     if (ticks % FLUX_RATE == 0) {
       // fluctuate
       long t = ticks / FLUX_RATE;
-      var ndx = thing.getPower() - 1;
+      var ndx = thing.power - 1;
       if (ndx < 0) ndx = 0;
       else if (ndx > 9) ndx = 9;
 
@@ -49,7 +49,6 @@ class RegenMovement extends MovementStyle {
 }
 
 class CopterRegen extends Thing {
-
   MAX_SIZE = 10 + RegenMovement.FLUX_RADIUS;
 
   static Sprite[] images;
@@ -82,15 +81,14 @@ class CopterRegen extends Thing {
     move = new RegenMovement(this, thing);
   }
 
-  setPower(power) {
-    super.setPower(power);
+  set power(power) {
+    super.power = power;
     var size = power - 1;
     if (size < 0) size = 0;
     else if (size >= MAX_SIZE) size = MAX_SIZE - 1;
     activateSprite(size);
-    ((RegenMovement) move).syncPos();
+    this.move.syncPos();
   }
-
 }
 
 /** Defines veggie copter regen "attack" style. */
@@ -110,14 +108,14 @@ class RegenWeapon extends Weapon {
   shoot() {
     if (!this.space || this.regen != null) return null;
     this.regen = new CopterRegen(this.thing);
-    this.regen.setPower(this.power);
+    this.regen.power = this.power;
     //SoundPlayer.playSound("../assets/laser4.wav");
     return [this.regen];
   }
 
-  setPower(power) {
-    super.setPower(power);
-    if (this.regen != null) this.regen.setPower(power);
+  set power(power) {
+    super.power = power;
+    if (this.regen != null) this.regen.power = power;
   }
 
   keyPressed(e) {

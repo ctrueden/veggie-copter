@@ -71,7 +71,7 @@ class CopterCharge extends Thing {
 
   setHP(hp) {
     this.hp = Math.min(hp, this.maxHP);
-    setPower(this.hp);
+    this.power = this.hp;
     var size = Math.max(hp - 1, 0);
     this.activateImage(size);
   }

@@ -19,7 +19,7 @@ class CopterGun extends Thing {
     super(thing.game);
     this.type = ThingTypes.GOOD_BULLET;
     setSprite(this.image);
-    setPower(power);
+    this.power = power;
     this.move = new BulletMovement(this, x, y + HEIGHT, x, -100, SPEED);
   }
 }
@@ -45,7 +45,7 @@ class GunWeapon extends Weapon {
       return null;
     }
     if (!space) return null;
-    var num = this.getPower() + 1;
+    var num = this.power + 1;
     fired = RECHARGE;
 
     var xint = thing.cx, yint = thing.getY() - 14;

@@ -81,10 +81,10 @@ class AttackStyle {
   trigger() { }
 
   /** Gets power level of this attack style. */
-  get power() { return this.power; }
+  get power() { return this._power; }
 
   /** Sets power level of this attack style. */
-  set power(power) { this.power = power; }
+  set power(power) { this._power = power; }
 
   keyPressed(e) { }
   keyReleased(e) { }
@@ -107,7 +107,7 @@ class Thing {
     this.xpos = this.ypos = 0;   // Position of the object.
     this.sprites = {};           // Collection of sprites representing the object.
     this.activeSpriteKey = null; // Name key of object's active sprite.
-    this.hp = this.maxHP = 1;    // Hit points.
+    this._hp = this.maxHP = 1;   // Hit points.
     this.power = 1;              // Amount of damage the object inflicts.
     this.type = ThingTypes.EVIL; // The type of this object.
     this.hit = 0;                // Number of times the object has been hit.
@@ -160,16 +160,13 @@ class Thing {
   }
 
   /** Assigns object's hit points. */
-  setHP(hp) {
+  set hp(hp) {
     if (hp > this.maxHP) hp = this.maxHP;
-    this.hp = hp;
+    this._hp = hp;
   }
 
   /** Assigns object's power. */
-  setPower(power) { this.power = power; }
-
-  /** Assigns object's type, from the ThingTypes enumeration. */
-  setType(type) { this.type = type; }
+  set power(power) { this._power = power; }
 
   /** Draws the object onto the given canvas context. */
   draw(ctx) {

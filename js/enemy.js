@@ -88,7 +88,7 @@ class EnemyBullet extends Thing {
       ENEMY_BULLET_SPRITE.addBox(new BoundingBox());
     }
     this.setSprite(ENEMY_BULLET_SPRITE);
-    this.setPower(10 * t.power);
+    this.power = 10 * t.power;
 
     var x = t.cx - this.width / 2;
     var y = t.cy - this.height / 2;

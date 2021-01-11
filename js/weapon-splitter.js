@@ -48,9 +48,9 @@ class CopterSplitter extends Thing {
   }
 
   /** Assigns object's power. */
-  setPower(power) {
-    super.setPower(power);
-    this.attack.setPower(power);
+  set power(power) {
+    super.power = power;
+    this.attack.power = power;
   }
 }
 
@@ -96,7 +96,7 @@ class SplitterAttack extends Weapon {
 
     CopterSplitter splitter = new CopterSplitter(thing.game,
       thing.cx, thing.ypos, 0, -SPEED, 1, power + 1);
-    splitter.setPower(MULTIPLIER * (power + 2));
+    splitter.power = MULTIPLIER * (power + 2);
     return new Thing[] {splitter};
   }
 
@@ -122,7 +122,7 @@ class SplitterAttack extends Weapon {
       //new CopterSplitter(game, x, y, -SPEED, SPEED, count + 1, size),
       //new CopterSplitter(game, x, y, SPEED, -SPEED, count + 1, size)
     };
-    for (var i=0; i<cs.length; i++) cs[i].setPower(power - 2 * MULTIPLIER);
+    for (var i=0; i<cs.length; i++) cs[i].power = power - 2 * MULTIPLIER;
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return cs;
   }

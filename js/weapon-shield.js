@@ -24,7 +24,7 @@ class ShieldMovement extends MovementStyle {
 
   /** Moves the given thing according to the bullet movement style. */
   move() {
-    var speed = SPEED - thing.getPower() * SPEED / 20;
+    var speed = SPEED - thing.power * SPEED / 20;
     if (speed < 0) speed = 0;
     angle += speed;
     var targetRadius = extended ? MAX_RADIUS : MIN_RADIUS;
@@ -96,7 +96,7 @@ class ShieldWeapon extends Weapon {
     VeggieCopter game = thing.game;
     for (var i=0; i<num; i++) {
       shields[i] = new CopterShield(thing, (float) (2 * Math.PI * i / num));
-      shields[i].setPower(1);
+      shields[i].power = 1;
       game.addThing(shields[i]);
     }
     setExtended(extended);
@@ -114,8 +114,8 @@ class ShieldWeapon extends Weapon {
     return null;
   }
 
-  setPower(power) {
-    super.setPower(power);
+  set power(power) {
+    super.power = power;
     if (shields != null) {
       for (var i=0; i<shields.length; i++) shields[i].setHP(0);
     }
