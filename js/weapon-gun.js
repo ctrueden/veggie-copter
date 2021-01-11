@@ -1,83 +1,79 @@
-class CopterGun extends Thing {
-  SPEED = 5;
-  HEIGHT = 7;
-
-  static {
-    var len = HEIGHT;
-    var img = makeImage(1, len);
-    var ctx = context2d(img);
-    ctx.beginPath();
-    ctx.strokeStyle = "brown";
-    ctx.moveTo(0, 0);
-    ctx.lineTo(0, len);
-    ctx.stroke();
-    CopterGun.prototype.image = new Sprite(img, 1, HEIGHT);
-    CopterGun.prototype.image.addBox(new BoundingBox());
-  }
-
+class GunBullet extends Thing {
   constructor(thing, x, y, power) {
     super(thing.game);
     this.type = ThingTypes.GOOD_BULLET;
-    setSprite(this.image);
+    this.speed = 5;
+    this.tallness = 7;
+    this.setSprite(this.game.retrieve('gun-bullet', this, obj => {
+      var len = obj.tallness;
+      var img = makeImage(1, len);
+      var ctx = context2d(img);
+      ctx.beginPath();
+      ctx.strokeStyle = "brown";
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, len);
+      ctx.stroke();
+      var sprite = new Sprite(img, 1, len);
+      sprite.addBox(new BoundingBox());
+      return sprite;
+    }));
     this.power = power;
-    this.movement = new BulletMovement(this, x, y + HEIGHT, x, -100, SPEED);
+    this.movement = new BulletMovement(this,
+      x, y + this.tallness, x, -100, this.speed);
   }
 }
 
 /** Defines veggie copter gun attack. */
 class GunWeapon extends Weapon {
-  boolean space = false;
-  var fired;
-
-  GunAttack(t) {
+  constructor(t) {
     super(t, "brown", t.game.loadSprite("icon-gun").image);
     this.space = false;
     this.fired = 0;
     this.recharge = 2;
   }
 
-  clear() { space = false; }
+  clear() { this.space = false; }
 
   /** Fires two shots if space bar is pressed. */
   shoot() {
-    if (fired > 0) {
-      fired--;
+    if (this.fired > 0) {
+      this.fired--;
       return null;
     }
-    if (!space) return null;
+    if (!this.space) return null;
     var num = this.power + 1;
-    fired = RECHARGE;
+    this.fired = this.recharge;
 
-    var xint = thing.cx, yint = thing.getY() - 14;
+    var xint = this.thing.cx;
+    var yint = this.thing.ypos - 14;
 
-    CopterGun[] shots = new CopterGun[num];
+    var shots = [];
     if (num % 2 == 0) {
       var len = num / 2;
       for (var i=0; i<len; i++) {
         var q = 2 * i;
-        shots[q] = new CopterGun(thing, xint - q - 1, yint, 1);
-        shots[q + 1] = new CopterGun(thing, xint + q + 1, yint, 1);
+        shots.push(new GunBullet(this.thing, xint - q - 1, yint, 1));
+        shots.push(new GunBullet(this.thing, xint + q + 1, yint, 1));
       }
     }
     else {
       var len = num / 2;
       for (var i=0; i<len; i++) {
         var q = 2 * i;
-        shots[q] = new CopterGun(thing, xint - q - 2, yint, 1);
-        shots[q + 1] = new CopterGun(thing, xint + q + 2, yint, 1);
+        shots.push(new GunBullet(this.thing, xint - q - 2, yint, 1));
+        shots.push(new GunBullet(this.thing, xint + q + 2, yint, 1));
       }
-      shots[num - 1] = new CopterGun(thing, xint, yint, 1);
+      shots.push(new GunBullet(this.thing, xint, yint, 1));
     }
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return shots;
   }
 
   keyPressed(e) {
-    if (Keys.SHOOT.includes(e.keyCode)) space = true;
+    if (Keys.SHOOT.includes(e.keyCode)) this.space = true;
   }
 
   keyReleased(e) {
-    if (Keys.SHOOT.includes(e.keyCode)) space = false;
+    if (Keys.SHOOT.includes(e.keyCode)) this.space = false;
   }
-
 }
