@@ -12,6 +12,7 @@ class Game {
     this.ctx = context2d(this.canvas);                    // Original canvas context.
     this.buf = context2d(this.offscreen);                 // Offscreen canvas context.
 
+    this.cache = {};                                      // Data cache, for use by game components.
     this.loader = new ImageLoader();                      // Object for loading images from disk.
     this.selector = new StageSelector(this);              // Object for handling stage selection.
     this.stage = null;                                    // Current game stage.
@@ -46,6 +47,16 @@ class Game {
     var sprite = new Sprite(image, xoff, yoff);
     for (var i=0; i<boxes.length; i++) sprite.addBox(boxes[i]);
     return sprite;
+  }
+
+  /**
+   * Obtains the value associated with the given key, creating it via
+   * the specified generator function if it does not already exist.
+   * Useful for caching the results of expensive computations.
+   */
+  retrieve(key, obj, generate) {
+    if (!(key in this.cache)) this.cache[key] = generate(obj);
+    return this.cache[key];
   }
 
   /** Overlays a text message to the screen. */
