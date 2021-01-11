@@ -83,8 +83,8 @@ class JamesEnemy extends EnemyHead {
     }
     if (args.length >= 2) dir = args[1].equals("true");
 
-    setMovement(new JamesMovement(this, y, dir));
-    setAttack(new JamesAttack(this));
+    this.move = new JamesMovement(this, y, dir);
+    this.attack = new JamesAttack(this);
   }
 
   var getScore() { return 3 * super.getScore(); }
@@ -112,8 +112,8 @@ class JamesBoss extends BossHead {
     }
     if (args.length >= 2) dir = args[1].equals("true");
 
-    setMovement(new JamesMovement(this, y, dir));
-    setAttack(new JamesAttack(this));
+    this.move = new JamesMovement(this, y, dir);
+    this.attack = new JamesAttack(this);
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */

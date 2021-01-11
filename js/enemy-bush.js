@@ -112,8 +112,8 @@ class BushEnemy extends EnemyHead {
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
     this.hurtImage.addBox(new BoundingBox());
-    setMovement(new BushMovement(this));
-    setAttack(new BushAttack(this));
+    this.move = new BushMovement(this);
+    this.attack = new BushAttack(this);
   }
 
   getScore() { return 5 * super.getScore(); }

@@ -115,12 +115,6 @@ class Thing {
     this.threshold = 50;         // How far offscreen object must be before being discarded.
   }
 
-  /** Assigns object's movement style. */
-  setMovement(ms) { this.move = ms; }
-
-  /** Assigns object's attack style. */
-  setAttack(as) { this.attack = as; }
-
   /** Assigns object's collection of sprites. */
   setSprites(sprites, activeSpriteKey) {
     if (sprites == null) {

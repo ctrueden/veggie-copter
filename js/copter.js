@@ -152,7 +152,7 @@ class Copter extends Thing {
     var sprite = game.sprite("copter.gif");
     sprite.addBox(new BoundingBox(2, 6, 2, 5));
     this.setSprite(sprite);
-    this.setMovement(new CopterMovement(this));
+    this.move = new CopterMovement(this);
 
     var copterAttack = new CopterAttack(this);
     /*
@@ -170,7 +170,7 @@ class Copter extends Thing {
     copterAttack.addAttackStyle(new MineAttack(this)); // dark gray
     copterAttack.addAttackStyle(new DoomAttack(this)); // black
     */
-    this.setAttack(copterAttack);
+    this.attack = copterAttack;
 
     this.maxHP = this.hp = 100;
     this.type = ThingTypes.GOOD;

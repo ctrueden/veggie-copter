@@ -139,8 +139,8 @@ class PaulEnemy extends EnemyHead {
     this.attackImage.addBox(new BoundingBox(1, 5, 1, 10));
     this.attackImage.addBox(new BoundingBox(8, 1, 8, 1));
     this.hurtImage.addBox(new BoundingBox());
-    setMovement(new PaulMovement(this));
-    setAttack(new PaulAttack(this));
+    this.move = new PaulMovement(this);
+    this.attack = new PaulAttack(this);
   }
 
   var getScore() { return 5 * super.getScore(); }
@@ -166,8 +166,8 @@ class PaulBoss extends BossHead {
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
     this.hurtImage.addBox(new BoundingBox());
-    setMovement(new PaulMovement(this));
-    setAttack(new PaulAttack(this));
+    this.move = new PaulMovement(this);
+    this.attack = new PaulAttack(this);
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */

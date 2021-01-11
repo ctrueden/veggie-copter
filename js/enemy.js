@@ -176,8 +176,8 @@ class Enemy extends EnemyHead {
     this.attackImage.addBox(new BoundingBox());
     this.hurtImage.addBox(new BoundingBox());
 
-    setMovement(new EnemyMovement(this, args.slice(2)));
-    setAttack(new RandomBulletAttack(this));
+    this.move = new EnemyMovement(this, args.slice(2));
+    this.attack = new RandomBulletAttack(this);
   }
 
   get powerup() { return null; }

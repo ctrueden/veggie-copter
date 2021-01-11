@@ -179,8 +179,8 @@ class AlexEnemy extends EnemyHead {
     this.attackImage.addBox(new BoundingBox(23, 5, 23, 17));
     this.hurtImage.addBox(new BoundingBox(32, 1, 27, 13));
     this.hurtImage.addBox(new BoundingBox(27, 5, 22, 17));
-    setMovement(new AlexMovement(this));
-    setAttack(new AlexAttack(this));
+    this.move = new AlexMovement(this);
+    this.attack =snew AlexAttack(this);
   }
 
   getScore() { return 3 * super.getScore(); }
@@ -213,8 +213,8 @@ class AlexBoss extends BossHead {
     this.attackImage.addBox(new BoundingBox(69, 15, 69, 51));
     this.hurtImage.addBox(new BoundingBox(96, 3, 81, 39));
     this.hurtImage.addBox(new BoundingBox(81, 15, 66, 51));
-    setMovement(new AlexMovement(this));
-    setAttack(new AlexAttack(this));
+    this.move = new AlexMovement(this);
+    this.attack = new AlexAttack(this);
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */

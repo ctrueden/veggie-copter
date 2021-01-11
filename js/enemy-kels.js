@@ -83,8 +83,8 @@ class KelsEnemy extends EnemyHead {
     }
     if (args.length >= 2) dir = args[1].equals("true");
 
-    setMovement(new KelsMovement(this, y, dir));
-    setAttack(new KelsAttack(this));
+    this.move = new KelsMovement(this, y, dir);
+    this.attack = new KelsAttack(this);
   }
 
   var getScore() { return 3 * super.getScore(); }
@@ -112,8 +112,8 @@ class KelsBoss extends BossHead {
     }
     if (args.length >= 2) dir = args[1].equals("true");
 
-    setMovement(new KelsMovement(this, y, dir));
-    setAttack(new KelsAttack(this));
+    this.move = new KelsMovement(this, y, dir);
+    this.attack = new KelsAttack(this);
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */

@@ -138,8 +138,8 @@ class GeorgeEnemy extends EnemyHead {
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
     this.hurtImage.addBox(new BoundingBox());
-    setMovement(new GeorgeMovement(this));
-    setAttack(new GeorgeAttack(this));
+    this.move = new GeorgeMovement(this);
+    this.attack = new GeorgeAttack(this);
   }
 
   var getScore() { return 5 * super.getScore(); }
@@ -165,8 +165,8 @@ class GeorgeBoss extends BossHead {
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
     this.hurtImage.addBox(new BoundingBox());
-    setMovement(new GeorgeMovement(this));
-    setAttack(new GeorgeAttack(this));
+    this.move = new GeorgeMovement(this);
+    this.attack = new GeorgeAttack(this);
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */

@@ -38,7 +38,7 @@ class TestBoss extends BossHead {
       catch (err) { y = 0; }
     }
 
-    this.setMovement(new TestMovement(this, x, y));
+    this.move = new TestMovement(this, x, y);
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */
