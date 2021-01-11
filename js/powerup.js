@@ -83,7 +83,7 @@ class PowerUp extends Thing {
       img.addBox(new BoundingBox(1, 1, 1, 1));
       imgs[i] = img;
     }
-    setImages(imgs, 0);
+    this.setImages(imgs, 0);
 
     setPos(cx - size / 2, cy - size / 2);
     setMovement(new PowerUpMovement(this, this.xpos, this.ypos, this.att != null));

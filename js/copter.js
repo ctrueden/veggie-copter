@@ -199,7 +199,7 @@ class Copter extends Thing {
     super(game);
     var bi = game.loadImage("../assets/copter.gif");
     bi.addBox(new BoundingBox(2, 6, 2, 5));
-    this.setImages({hero: bi}, 'hero');
+    this.setImage(bi);
     this.setMovement(new CopterMovement(this));
 
     var copterAttack = new CopterAttack(this);

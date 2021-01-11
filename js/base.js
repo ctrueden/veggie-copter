@@ -148,6 +148,8 @@ class Thing {
     }
   }
 
+  setImage(image) { this.setImages({0: image}, 0); }
+
   /** Changes the image currently representing the object. */
   activateImage(imageName) {
     if (imageName == null || imageName in this.images) this.activeImage = imageName;
