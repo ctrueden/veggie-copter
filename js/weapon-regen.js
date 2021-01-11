@@ -106,7 +106,7 @@ class RegenWeapon extends Weapon {
 
   /** Begins regeneration if space bar is pressed. */
   shoot() {
-    if (!this.space || this.regen) return null;
+    if (!this.space || this.regen) return [];
     this.regen = new CopterRegen(this.thing);
     this.regen.power = this.power;
     //SoundPlayer.playSound("../assets/laser4.wav");

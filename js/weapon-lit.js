@@ -26,7 +26,7 @@ class LitWeapon extends Weapon {
 
   /** Fires a shot if space bar is pressed. */
   Thing[] shoot() {
-    if (!space) return null;
+    if (!space) return [];
     ticks++;
     var pow = this.power;
     var q = ticks % PERIOD;

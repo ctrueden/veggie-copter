@@ -88,22 +88,16 @@ class CopterAttack extends AttackStyle {
     if (this.activeWeapon) return this.activeWeapon.shoot();
     // all weapons
     var shots = [];
-    for (var i=0; i<this.weapons.length; i++) {
-      var newShots = this.weapons[i].shoot();
-      if (newShots) shots.concat(newShots);
-    }
-    return shots.length == 0 ? null : shots;
+    this.weapons.forEach(weapon => shots.concat(weapon.shoot()));
+    return shots;
   }
 
   trigger() {
     if (this.activeWeapon) return this.activeWeapon.trigger();
     // all weapons
     var triggers = [];
-    for (var i=0; i<this.weapons.length; i++) {
-      var newTriggers = this.weapons[i].trigger();
-      if (newTriggers) triggers.concat(newTriggers);
-    }
-    return triggers.length == 0 ? null : triggers;
+    this.weapons.forEach(weapon => triggers.concat(weapon.trigger()));
+    return triggers;
   }
 
   set power(power) {

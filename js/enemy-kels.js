@@ -8,7 +8,7 @@ class KelsAttack extends AttackStyle {
 
   /** Fires a shot randomly. */
   shoot() {
-    if (Math.random() >= 1.0 / (60 - FREQUENCY)) return null;
+    if (Math.random() >= 1.0 / (60 - FREQUENCY)) return [];
     return [new EnemyBullet(thing, null, null)];
   }
 

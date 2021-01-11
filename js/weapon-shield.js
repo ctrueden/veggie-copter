@@ -110,10 +110,6 @@ class ShieldWeapon extends Weapon {
     }
   }
 
-  Thing[] shoot() {
-    return null;
-  }
-
   set power(power) {
     super.power = power;
     if (shields) {

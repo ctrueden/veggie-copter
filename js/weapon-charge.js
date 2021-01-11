@@ -101,7 +101,7 @@ class ChargeWeapon extends Weapon {
 
   /** Fires a shot if space bar is pressed. */
   shoot() {
-    if (!this.space) return null;
+    if (!this.space) return [];
 
     if (this.charge == null) {
       this.ticks = 0;
@@ -114,7 +114,7 @@ class ChargeWeapon extends Weapon {
     if (this.ticks % rate == 0) {
       if (!this.charge.grow()) launch();
     }
-    return null;
+    return [];
   }
 
   keyPressed(e) {

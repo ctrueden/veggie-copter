@@ -23,7 +23,7 @@ class GeorgeAttack extends AttackStyle {
     if (thing.move.isFrantic()) {
       if (this.waitTicks > 0) {
         this.waitTicks--;
-        return null;
+        return [];
       }
       var x = (int) (thing.game.width * Math.random());
       var y = (int) (thing.game.height * Math.random());
@@ -45,7 +45,7 @@ class GeorgeAttack extends AttackStyle {
       }
     }
 
-    if (toFire.isEmpty()) return null;
+    if (toFire.isEmpty()) return [];
     var p = toFire[0];
     toFire.removeElementAt(0);
     return [new EnemyBullet(thing, p.x, p.y)];

@@ -86,11 +86,11 @@ class MineExplode extends AttackStyle {
   /** Causes the mine to explode. */
   explode() { this.explode = true; }
 
-  shoot() { return null; }
+  shoot() { return []; }
 
   /** Explodes mine when trigger is pressed. */
   trigger() {
-    if (!explode) return null;
+    if (!explode) return [];
 
     // explode in power+2 shards evenly space around a circle
     var num = this.thing.getStrength() + 2;
@@ -251,9 +251,9 @@ class MineAttack extends Weapon {
   shoot() {
     if (fired > 0) {
       fired--;
-      return null;
+      return [];
     }
-    if (!space) return null;
+    if (!space) return [];
     fired = RECHARGE - power / 2;
 
     var mine = new CopterMine(thing, power);

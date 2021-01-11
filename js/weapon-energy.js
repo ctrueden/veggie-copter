@@ -17,7 +17,7 @@ class EnergyWeapon extends Weapon {
 
   /** Begins energy field if space bar is pressed. */
   shoot() {
-    if (!space || fired) return null;
+    if (!space || fired) return [];
     fired = true;
 
     var game = thing.game;
@@ -39,7 +39,7 @@ class EnergyWeapon extends Weapon {
       dist = ndist;
       ndx = i;
     }
-    if (ndx < 0) return null;
+    if (ndx < 0) return [];
     energy = new CopterEnergy(t[ndx]);
     energy.power = power;
     return [energy];

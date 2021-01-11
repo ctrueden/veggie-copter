@@ -16,9 +16,9 @@ class HomingWeapon extends Weapon {
   Thing[] shoot() {
     if (fired > 0) {
       fired--;
-      return null;
+      return [];
     }
-    if (!space) return null;
+    if (!space) return [];
     var pow = this.power;
     fired = RECHARGE - pow;
 

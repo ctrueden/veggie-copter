@@ -85,25 +85,25 @@ class SplitterAttack extends Weapon {
   clear() { space = trigger = false; }
 
   /** Fires a splitter shot. */
-  Thing[] shoot() {
+  shoot() {
     if (fired > 0) {
       fired--;
-      return null;
+      return [];
     }
-    if (!space) return null;
-    if (count != 0) return null;
+    if (!space) return [];
+    if (count != 0) return [];
     fired = RECHARGE;
 
     CopterSplitter splitter = new CopterSplitter(thing.game,
       thing.cx, thing.ypos, 0, -SPEED, 1, power + 1);
     splitter.power = MULTIPLIER * (power + 2);
-    return new Thing[] {splitter};
+    return [splitter];
   }
 
   /** Splits existing splitter shots. */
   Thing[] trigger() {
-    if (!trigger) return null;
-    if (count == 0 || power <= 2 * MULTIPLIER) return null;
+    if (!trigger) return [];
+    if (count == 0 || power <= 2 * MULTIPLIER) return [];
     thing.setHP(0);
 
     VeggieCopter game = thing.game;

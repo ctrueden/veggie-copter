@@ -10,8 +10,8 @@ class GrayWeapon extends Weapon {
 
   /** Fires a shot if space bar is pressed. */
   var shoot() {
-    if (!this.space) return null;
-    return null;
+    if (!this.space) return [];
+    return [];
   }
 
   keyPressed(e) {

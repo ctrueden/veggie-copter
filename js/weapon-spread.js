@@ -45,9 +45,9 @@ class SpreadWeapon extends Weapon {
   Thing[] shoot() {
     if (fired > 0) {
       fired--;
-      return null;
+      return [];
     }
-    if (!space) return null;
+    if (!space) return [];
     fired = RECHARGE;
     var pow = this.power;
     var num = pow + 2;

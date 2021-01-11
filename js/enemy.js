@@ -102,7 +102,7 @@ class RandomBulletAttack extends AttackStyle {
 
   /** Fires a shot randomly. */
   shoot() {
-    if (Math.random() >= 1.0 / (60 - this.frequency)) return null;
+    if (Math.random() >= 1.0 / (60 - this.frequency)) return [];
     return [new EnemyBullet(thing, null, null)];
   }
 }
@@ -140,14 +140,14 @@ class EnemyHead extends Thing {
   hurtingActivate() { this.activateSprite('hurting'); }
 
   shoot() {
-    var t = super.shoot();
-    if (t != null) this.shooting = SHOT_DELAY;
+    var shots = super.shoot();
+    if (shots.length > 0) this.shooting = SHOT_DELAY;
     else if (this.shooting > 0) this.shooting--;
     if (this.isDead()) {
       // dead head drops a power-up
-      t = this.powerup;
+      shots = this.powerup;
     }
-    return t;
+    return shots;
   }
 
   get powerup() {
@@ -175,7 +175,7 @@ class Enemy extends EnemyHead {
     this.attack = new RandomBulletAttack(this);
   }
 
-  get powerup() { return null; }
+  get powerup() { return []; }
 }
 
 class BossHead extends EnemyHead {

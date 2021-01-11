@@ -15,7 +15,7 @@ class LaserWeapon extends Weapon {
 
   /** Fires a shot if space bar is pressed. */
   Thing[] shoot() {
-    if (!space) return null;
+    if (!space) return [];
     var size = power - 1;
     if (size > CopterLaser.MAX_SIZE - 3) size = CopterLaser.MAX_SIZE - 3;
     flux = (flux + 1) % FLUX.length;

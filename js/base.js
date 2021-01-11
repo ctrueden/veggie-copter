@@ -72,13 +72,13 @@ class AttackStyle {
   }
 
   /** Instructs the thing to fire a shot (but only if it wants to). */
-  shoot() { }
+  shoot() { return []; }
 
   /**
    * Instructs the thing to perform a secondary trigger action,
    * if it has one.
    */
-  trigger() { }
+  trigger() { return []; }
 
   /** Gets power level of this attack style. */
   get power() { return this._power; }
@@ -185,8 +185,8 @@ class Thing {
 
   /** Instructs the object to attack according to its attack style. */
   shoot() {
-    if (this.isDead()) return null;
-    if (this.attack == null) return null;
+    if (this.isDead()) return [];
+    if (this.attack == null) return [];
     return this.attack.shoot();
   }
 
@@ -195,8 +195,8 @@ class Thing {
    * attack according to its attack style.
    */
   trigger() {
-    if (this.isDead()) return null;
-    if (this.attack == null) return null;
+    if (this.isDead()) return [];
+    if (this.attack == null) return [];
     return this.attack.trigger();
   }
 

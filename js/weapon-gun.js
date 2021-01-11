@@ -38,9 +38,9 @@ class GunWeapon extends Weapon {
   shoot() {
     if (this.fired > 0) {
       this.fired--;
-      return null;
+      return [];
     }
-    if (!this.space) return null;
+    if (!this.space) return [];
     var num = this.power + 1;
     this.fired = this.recharge;
 
