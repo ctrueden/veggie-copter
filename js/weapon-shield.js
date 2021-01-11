@@ -97,7 +97,7 @@ class ShieldWeapon extends Weapon {
     for (var i=0; i<num; i++) {
       shields[i] = new CopterShield(thing, (float) (2 * Math.PI * i / num));
       shields[i].power = 1;
-      game.addThing(shields[i]);
+      game.things.push(shields[i]);
     }
     setExtended(extended);
   }

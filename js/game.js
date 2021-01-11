@@ -47,12 +47,6 @@ class Game {
     return sprite;
   }
 
-  /** Adds an object to the list of onscreen things. */
-  addThing(t) { this.things.push(t); }
-
-  /** Gets objects currently onscreen. */
-  getThings() { return this.things.splice(); }
-
   /** Overlays a text message to the screen. */
   printMessage(m) { this.messages.push(m); }
 
@@ -89,11 +83,10 @@ class Game {
     this.stars.drawStars(this.buf);
 
     // redraw things
-    var things = this.getThings();
-    things.forEach(t => t.draw(this.buf));
+    this.things.forEach(t => t.draw(this.buf));
 
     if (this.debug) {
-      things.forEach(t => {
+      this.things.forEach(t => {
         // draw bounding box
         this.buf.strokeStyle = "red";
         var r = t.boxes;
@@ -112,7 +105,7 @@ class Game {
     }
 
     // draw text messages
-    var m = this.messages.splice();
+    var m = this.messages.slice();
     for (var i=0; i<m.length; i++) m[i].draw(this.buf);
 
     // draw stage selection
@@ -161,38 +154,33 @@ class Game {
 
   /** Advances the game state by one tick. */
   tick() {
-    var t = this.getThings();
+    var things = this.things.slice(); // NB: Make a copy!
 
     // collision detection
-    //checkAllCollisions(t);
+    this.checkAllCollisions(things);
 
     // update star field
     this.stars.moveStars();
 
     // move things
-    for (var i=0; i<t.length; i++) t[i].move();
+    things.forEach(t => { console.info(`Moving thing of type ${t.name}`); t.move(); });
 
     // update text messages
-    var m = this.messages.splice();
-    for (var i=0; i<m.length; i++) {
-      if (m[i].checkFinished()) this.messages.remove(m[i]);
-    }
+    this.messages.slice().forEach(m => {
+      if (m.checkFinished()) this.messages.remove(m);
+    });
 
     // allow things the chance to attack
-    for (var i=0; i<t.length; i++) {
-      var shots = t[i].shoot();
+    things.forEach(t => {
+      var shots = t.shoot();
       if (shots != null) {
-        for (var j=0; j<shots.length; j++) {
-          if (shots[j] != null) this.things.add(shots[j]);
-        }
+        shots.forEach(shot => { if (shot != null) this.things.add(shot); });
       }
-      shots = t[i].trigger();
+      shots = t.trigger();
       if (shots != null) {
-        for (var j=0; j<shots.length; j++) {
-          if (shots[j] != null) this.things.add(shots[j]);
-        }
+        shots.forEach(shot => { if (shot != null) this.things.add(shot); });
       }
-    }
+    });
 
     // purge dead things
     for (var i=0; i<this.things.length; i++) {
@@ -228,7 +216,7 @@ class Game {
   keyPressed(e) {
     if (!this.keys.has(e.keyCode)) {
       this.keys.add(e.keyCode);
-      this.getThings().forEach(t => t.keyPressed(e));
+      this.things.slice().forEach(t => t.keyPressed(e));
 
       if (Keys.SHOOT.includes(e.keyCode)) {
         if (this.stage == null) {
@@ -257,7 +245,7 @@ class Game {
   /** Handles key releases. */
   keyReleased(e) {
     this.keys.delete(e.keyCode);
-    this.getThings().forEach(t => t.keyReleased(e));
+    this.things.slice().forEach(t => t.keyReleased(e));
     if (Keys.FAST_FORWARD.includes(e.keyCode)) this.fast = false;
   }
 
