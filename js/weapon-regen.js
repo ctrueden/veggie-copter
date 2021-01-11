@@ -100,13 +100,13 @@ class RegenWeapon extends Weapon {
 
   clear() {
     this.space = false;
-    if (this.regen != null) this.regen.setHP(0);
+    if (this.regen) this.regen.setHP(0);
     this.regen = null;
   }
 
   /** Begins regeneration if space bar is pressed. */
   shoot() {
-    if (!this.space || this.regen != null) return null;
+    if (!this.space || this.regen) return null;
     this.regen = new CopterRegen(this.thing);
     this.regen.power = this.power;
     //SoundPlayer.playSound("../assets/laser4.wav");
@@ -115,7 +115,7 @@ class RegenWeapon extends Weapon {
 
   set power(power) {
     super.power = power;
-    if (this.regen != null) this.regen.power = power;
+    if (this.regen) this.regen.power = power;
   }
 
   keyPressed(e) {

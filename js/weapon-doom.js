@@ -10,13 +10,13 @@ class DoomWeapon extends Weapon {
 
   clear() {
     space = false;
-    if (doom != null) doom.setHP(0);
+    if (doom) doom.setHP(0);
     doom = null;
   }
 
   /** Fires a shot if space bar is pressed. */
   shoot() {
-    if (!this.space || this.doom != null || this.thing.hp == 1) return null;
+    if (!this.space || this.doom || this.thing.hp == 1) return null;
     var doom = new CopterDoom(thing);
     doom.power = power;
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));

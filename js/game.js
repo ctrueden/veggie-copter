@@ -171,13 +171,9 @@ class Game {
     // allow things the chance to attack
     things.forEach(t => {
       var shots = t.shoot();
-      if (shots != null) {
-        shots.forEach(shot => { if (shot != null) this.things.add(shot); });
-      }
-      shots = t.trigger();
-      if (shots != null) {
-        shots.forEach(shot => { if (shot != null) this.things.add(shot); });
-      }
+      if (shots) this.things.concat(shots);
+      var triggers = t.trigger();
+      if (triggers) this.things.concat(triggers);
     });
 
     // purge dead things
@@ -196,7 +192,7 @@ class Game {
       }
     }
 
-    if (this.stage != null && !this.copter.isDead()) {
+    if (this.stage && !this.copter.isDead()) {
       var done = this.stage.executeScript();
       if (done) {
         this.stage.setCompleted(true);

@@ -178,10 +178,9 @@ class Thing {
 
   /** Moves the object according to its movement style. */
   move() {
-    if (isDead()) return;
-    if (isHit()) this.hit--;
-    if (move != null) return;
-    this.move.move();
+    if (this.isDead()) return;
+    if (this.isHit()) this.hit--;
+    if (this.move) this.move.move();
   }
 
   /** Instructs the object to attack according to its attack style. */
@@ -251,13 +250,13 @@ class Thing {
   }
 
   keyPressed(e) {
-    if (this.move != null) move.keyPressed(e);
-    if (this.attack != null) attack.keyPressed(e);
+    if (this.move) this.move.keyPressed(e);
+    if (this.attack) this.attack.keyPressed(e);
   }
 
   keyReleased(e) {
-    if (this.move != null) move.keyReleased(e);
-    if (this.attack != null) attack.keyReleased(e);
+    if (this.move) this.move.keyReleased(e);
+    if (this.attack) this.attack.keyReleased(e);
   }
 
   /** Retrieves the sprite with the given name key. */

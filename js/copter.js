@@ -67,10 +67,10 @@ class CopterAttack extends AttackStyle {
   /** Sets attack style to the given list index. */
   activate(index) {
     if (index >= this.attacks.length) return; // out of bounds
-    if (this.activeAttack != null) this.activeAttack.clear();
+    if (this.activeAttack) this.activeAttack.clear();
     else this.attacks.forEach(attack => attack.clear());
     this.activeIndex = index;
-    if (this.activeAttack != null) this.activeAttack.activate();
+    if (this.activeAttack) this.activeAttack.activate();
     else this.attacks.forEach(attack => attack.activate());
   }
 
@@ -85,34 +85,34 @@ class CopterAttack extends AttackStyle {
   }
 
   shoot() {
-    if (this.activeAttack != null) return this.activeAttack.shoot();
+    if (this.activeAttack) return this.activeAttack.shoot();
     // all attack styles
     var shots = [];
     for (var i=0; i<this.attacks.length; i++) {
-      var t = this.attacks[i].shoot();
-      if (t != null) for (var j=0; j<t.length; j++) shots.push(t[j]);
+      var newShots = this.attacks[i].shoot();
+      if (newShots) shots.concat(newShots);
     }
     return shots.length == 0 ? null : shots;
   }
 
   trigger() {
-    if (this.activeAttack != null) return this.activeAttack.trigger();
+    if (this.activeAttack) return this.activeAttack.trigger();
     // all attack styles
     var triggers = [];
     for (var i=0; i<this.attacks.length; i++) {
-      var t = this.attacks[i].trigger();
-      if (t != null) for (var j=0; j<t.length; j++) triggers.add(t[j]);
+      var newTriggers = this.attacks[i].trigger();
+      if (newTriggers) triggers.concat(newTriggers);
     }
     return triggers.length == 0 ? null : triggers;
   }
 
   set power(power) {
-    if (this.activeAttack != null) this.activeAttack.power = power;
+    if (this.activeAttack) this.activeAttack.power = power;
     else if (this.attacks) this.attacks.forEach(attack => attack.power = power);
   }
 
   get power() {
-    return this.activeAttack != null ? this.activeAttack.power : this.attacks[0].power;
+    return this.activeAttack ? this.activeAttack.power : this.attacks[0].power;
   }
 
   keyPressed(e) {
@@ -128,7 +128,7 @@ class CopterAttack extends AttackStyle {
       var index = Keys.WEAPONS.indexOf(e.keyCode);
       if (index >= 0) this.activate(index);
       else {
-        if (this.activeAttack != null) this.activeAttack.keyPressed(e);
+        if (this.activeAttack) this.activeAttack.keyPressed(e);
         else this.attacks.forEach(attack => attack.keyPressed(e));
       }
     }

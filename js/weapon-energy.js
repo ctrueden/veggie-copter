@@ -11,7 +11,7 @@ class EnergyWeapon extends Weapon {
   clear() {
     space = false;
     fired = false;
-    if (energy != null) energy.setHP(0);
+    if (energy) energy.setHP(0);
     energy = null;
   }
 
@@ -47,7 +47,7 @@ class EnergyWeapon extends Weapon {
 
   set power(power) {
     super.power = power;
-    if (energy != null) energy.power = power;
+    if (energy) energy.power = power;
   }
 
   keyPressed(e) {
