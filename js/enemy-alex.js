@@ -189,9 +189,9 @@ class AlexEnemy extends EnemyHead {
     super.move();
 
     // set proper expression
-    if (this.isHit() || this.movement.isRunning()) this.activateImage('hurting');
-    else if (this.isShooting() || this.movement.isLunging()) this.activateImage('attacking');
-    else this.activateImage('normal');
+    if (this.isHit() || this.movement.isRunning()) this.hurtingActivate();
+    else if (this.isShooting() || this.movement.isLunging()) this.attackingActivate();
+    else this.normalActivate();
 
     // regen
     if (this.game.ticks % 6 == 0 && this.hp < this.maxHP) this.hp++;
@@ -228,9 +228,9 @@ class AlexBoss extends BossHead {
     super.move();
 
     // set proper expression
-    if (this.isHit() || this.movement.isRunning()) this.activateImage('hurting');
-    else if (this.isShooting() || this.movement.isLunging()) this.activateImage('attacking');
-    else this.activateImage('normal');
+    if (this.isHit() || this.movement.isRunning()) this.hurtingActivate();
+    else if (this.isShooting() || this.movement.isLunging()) this.attackingActivate();
+    else this.normalActivate();
 
     // regen
     if (this.game.ticks % 20 == 0 && this.hp < this.maxHP) this.hp++;

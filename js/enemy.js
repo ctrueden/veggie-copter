@@ -140,9 +140,9 @@ class EnemyHead extends Thing {
   get attackImage() { return this.sprite('attacking'); }
   get hurtImage() { return this.sprite('hurting'); }
 
-  normalActivate() { this.activateImage('normal'); }
-  attackingActivate() { this.activateImage('attacking'); }
-  hurtingActivate() { this.activateImage('hurting'); }
+  normalActivate() { this.activateSprite('normal'); }
+  attackingActivate() { this.activateSprite('attacking'); }
+  hurtingActivate() { this.activateSprite('hurting'); }
 
   shoot() {
     var t = super.shoot();

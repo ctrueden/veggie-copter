@@ -51,7 +51,7 @@ class TestBoss extends BossHead {
   draw(ctx) {
     super.draw(ctx);
     ctx.fillColor = "yellow";
-    ctx.fillText("" + hp, Math.trunc(this.cx) - 15, Math.trunc(this.cy) + 20);
+    ctx.fillText(`${this.hp}`, Math.trunc(this.cx) - 15, Math.trunc(this.cy) + 20);
   }
 
   /** Hits this object for the given amount of damage. */

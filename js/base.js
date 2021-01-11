@@ -45,7 +45,7 @@ class Sprite {
   getBoxes(x, y) {
     var r = [];
     for (var i=0; i<this.boxes.length; i++) {
-      r.push(this.boxes[i].getBox(x, y, width, height));
+      r.push(this.boxes[i].getBox(x, y, this.width, this.height));
     }
     return r;
   }

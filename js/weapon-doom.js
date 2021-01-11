@@ -24,7 +24,7 @@ class DoomWeapon extends Weapon {
   }
 
   keyPressed(e) {
-    if (Keys.SHOOT.includes(e.keyCode)) space = true;
+    if (Keys.SHOOT.includes(e.keyCode)) this.space = true;
   }
 
   keyReleased(e) {

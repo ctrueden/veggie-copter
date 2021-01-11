@@ -22,7 +22,7 @@ class PowerUpMovement extends MovementStyle {
         index++;
         if (index == this.thing.images.length - 1) this.dir = !this.dir;
       }
-      this.thing.activateImage(index);
+      this.thing.activateSprite(index);
     }
 
     var cx = this.thing.cx;

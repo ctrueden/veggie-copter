@@ -145,8 +145,6 @@ class CopterAttack extends AttackStyle {
 
 /** Veggie copter object (the good guy!). */
 class Copter extends Thing {
-
-  /** Constructs a copter object. */
   constructor(game) {
     super(game);
     var sprite = game.sprite("copter.gif");

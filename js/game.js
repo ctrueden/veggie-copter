@@ -161,7 +161,7 @@ class Game {
     this.stars.moveStars();
 
     // move things
-    things.forEach(t => { console.info(`Moving thing of type ${t.name}`); t.move(); });
+    things.forEach(t => t.move());
 
     // update text messages
     this.messages.slice().forEach(m => {
