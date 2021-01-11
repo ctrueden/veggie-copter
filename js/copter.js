@@ -49,95 +49,95 @@ class CopterMovement extends MovementStyle {
 class CopterAttack extends AttackStyle {
   constructor(t) {
     super(t);
-    this.attacks = [];
-    this.activeIndex = 0;
+    this.weapons = [];
+    this.weaponIndex = 0;
   }
 
-  /** Gets the active attack style. */
-  get activeAttack() {
-    return this.activeIndex == null ? null : this.attacks[this.activeIndex];
+  /** Gets the active weapon. */
+  get activeWeapon() {
+    return this.weaponIndex == null ? null : this.weapons[this.weaponIndex];
   }
 
-  /** Adds an attack style to the list of choices. */
-  addAttackStyle(attack) {
-    // TODO: check whether copter already has this type of attack
-    this.attacks.push(attack);
+  /** Adds a weapon to the list of choices. */
+  addWeapon(weapon) {
+    // TODO: check whether copter already has this type of weapon
+    this.weapons.push(weapon);
   }
 
   /** Sets attack style to the given list index. */
   activate(index) {
-    if (index >= this.attacks.length) return; // out of bounds
-    if (this.activeAttack) this.activeAttack.clear();
-    else this.attacks.forEach(attack => attack.clear());
-    this.activeIndex = index;
-    if (this.activeAttack) this.activeAttack.activate();
-    else this.attacks.forEach(attack => attack.activate());
+    if (index >= this.weapons.length) return; // out of bounds
+    if (this.activeWeapon) this.activeWeapon.clear();
+    else this.weapons.forEach(weapon => weapon.clear());
+    this.weaponIndex = index;
+    if (this.activeWeapon) this.activeWeapon.activate();
+    else this.weapons.forEach(weapon => weapon.activate());
   }
 
-  reactivate() { this.activate(this.activeIndex); }
+  reactivate() { this.activate(this.weaponIndex); }
 
   drawWeaponStatus(ctx, x, y) {
-    var size = this.attacks.length;
+    var size = this.weapons.length;
     for (var i=0; i<size; i++) {
-      this.attacks[i].drawIcon(ctx, x, y, this.activeIndex == null || i == this.activeIndex);
-      x += this.attacks[i].iconSize - 1; // one pixel overlap
+      this.weapons[i].drawIcon(ctx, x, y, this.weaponIndex == null || i == this.weaponIndex);
+      x += this.weapons[i].iconSize - 1; // one pixel overlap
     }
   }
 
   shoot() {
-    if (this.activeAttack) return this.activeAttack.shoot();
-    // all attack styles
+    if (this.activeWeapon) return this.activeWeapon.shoot();
+    // all weapons
     var shots = [];
-    for (var i=0; i<this.attacks.length; i++) {
-      var newShots = this.attacks[i].shoot();
+    for (var i=0; i<this.weapons.length; i++) {
+      var newShots = this.weapons[i].shoot();
       if (newShots) shots.concat(newShots);
     }
     return shots.length == 0 ? null : shots;
   }
 
   trigger() {
-    if (this.activeAttack) return this.activeAttack.trigger();
-    // all attack styles
+    if (this.activeWeapon) return this.activeWeapon.trigger();
+    // all weapons
     var triggers = [];
-    for (var i=0; i<this.attacks.length; i++) {
-      var newTriggers = this.attacks[i].trigger();
+    for (var i=0; i<this.weapons.length; i++) {
+      var newTriggers = this.weapons[i].trigger();
       if (newTriggers) triggers.concat(newTriggers);
     }
     return triggers.length == 0 ? null : triggers;
   }
 
   set power(power) {
-    if (this.activeAttack) this.activeAttack.power = power;
-    else if (this.attacks) this.attacks.forEach(attack => attack.power = power);
+    if (this.activeWeapon) this.activeWeapon.power = power;
+    else if (this.weapons) this.weapons.forEach(attack => attack.power = power);
   }
 
   get power() {
-    return this.activeAttack ? this.activeAttack.power : this.attacks[0].power;
+    return this.activeWeapon ? this.activeWeapon.power : this.weapons[0].power;
   }
 
   keyPressed(e) {
     if (Keys.WEAPON_CYCLE.includes(e.keyCode)) {
-      // roll to the next attack mode
-      this.activate((this.activeIndex + 1) % this.attacks.length);
+      // roll to the next weapon
+      this.activate((this.weaponIndex + 1) % this.weapons.length);
     }
     else if (Keys.ALL_WEAPONS.includes(e.keyCode)) {
-      // turn on all attack styles simultaneously
+      // turn on all weapons simultaneously
       this.activate(null);
     }
     else {
       var index = Keys.WEAPONS.indexOf(e.keyCode);
       if (index >= 0) this.activate(index);
       else {
-        if (this.activeAttack) this.activeAttack.keyPressed(e);
-        else this.attacks.forEach(attack => attack.keyPressed(e));
+        if (this.activeWeapon) this.activeWeapon.keyPressed(e);
+        else this.weapons.forEach(attack => attack.keyPressed(e));
       }
     }
   }
 
   keyReleased(e) {
     var attack = this.attackStyle;
-    if (attack == null) { // all attack styles
-      this.attacks.forEach(attack => attack.keyReleased(e));
+    if (attack == null) { // all weapons
+      this.weapons.forEach(attack => attack.keyReleased(e));
     }
     else attack.keyReleased(e);
   }
@@ -152,23 +152,22 @@ class Copter extends Thing {
     this.setSprite(sprite);
     this.movement = new CopterMovement(this);
 
-    var copterAttack = new CopterAttack(this);
+    this.attack = new CopterAttack(this);
     /*
-    copterAttack.addAttackStyle(new GunAttack(this)); // brown
-    copterAttack.addAttackStyle(new EnergyAttack(this)); // orange
-    copterAttack.addAttackStyle(new SplitterAttack(this)); // yellow
-    copterAttack.addAttackStyle(new LaserAttack(this)); // green
-    copterAttack.addAttackStyle(new LitAttack(this)); // cyan
-    copterAttack.addAttackStyle(new SpreadAttack(this)); // blue
-    copterAttack.addAttackStyle(new ShieldAttack(this)); // purple
-    copterAttack.addAttackStyle(new HomingAttack(this)); // magenta
-    copterAttack.addAttackStyle(new RegenAttack(this)); // pink
-    copterAttack.addAttackStyle(new ChargeAttack(this)); // white
-    copterAttack.addAttackStyle(new GrayAttack(this)); // gray
-    copterAttack.addAttackStyle(new MineAttack(this)); // dark gray
-    copterAttack.addAttackStyle(new DoomAttack(this)); // black
+    this.attack.addWeapon(new GunWeapon(this)); // brown
+    this.attack.addWeapon(new EnergyWeapon(this)); // orange
+    this.attack.addWeapon(new SplitterWeapon(this)); // yellow
+    this.attack.addWeapon(new LaserWeapon(this)); // green
+    this.attack.addWeapon(new LitWeapon(this)); // cyan
+    this.attack.addWeapon(new SpreadWeapon(this)); // blue
+    this.attack.addWeapon(new ShieldWeapon(this)); // purple
+    this.attack.addWeapon(new HomingWeapon(this)); // magenta
+    this.attack.addWeapon(new RegenWeapon(this)); // pink
+    this.attack.addWeapon(new ChargeWeapon(this)); // white
+    this.attack.addWeapon(new GrayWeapon(this)); // gray
+    this.attack.addWeapon(new MineWeapon(this)); // dark gray
+    this.attack.addWeapon(new DoomWeapon(this)); // black
     */
-    this.attack = copterAttack;
 
     this.maxHP = this.hp = 100;
     this.type = ThingTypes.GOOD;
