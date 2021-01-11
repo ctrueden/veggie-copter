@@ -89,13 +89,12 @@ class GameScript {
     var p = args.slice(1);
     try {
       if (equalsIgnoreCase(className, "TestBoss")) {
-        game.addThing(new TestBoss(this.game, p)); // TEMP
+        this.game.addThing(new TestBoss(this.game, p)); // TEMP
       }
       else console.error("ALKJHFLKSDJHDSF " + className);
       // NB: Instantiate object of the given class.
       //var t = window[className](this.game, p);
-      game.addThing(t);
-      console.info(t);
+      //this.game.addThing(t);
     }
     catch (err) {
       console.error(err);
