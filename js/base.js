@@ -164,10 +164,10 @@ class Thing {
 
   /** Draws the object onto the given canvas context. */
   draw(ctx) {
-    if (this.sprite == null) return;
-    var x = Math.trunc(this.xpos + this.sprite.xoff);
-    var y = Math.trunc(this.ypos + this.sprite.yoff);
-    ctx.drawImage(this.sprite.image, x, y);
+    if (this.sprite() == null) return;
+    var x = Math.trunc(this.xpos + this.sprite().xoff);
+    var y = Math.trunc(this.ypos + this.sprite().yoff);
+    ctx.drawImage(this.sprite().image, x, y);
   }
 
   /** Hits this object for the given amount of damage. */
