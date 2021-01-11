@@ -10,8 +10,8 @@ class RegenMovement extends MovementStyle {
   }
 
   syncPos() {
-    var xpos = owner.getCX();
-    var ypos = owner.getCY();
+    var xpos = owner.cx;
+    var ypos = owner.cy;
     thing.setCPos(xpos, ypos);
   }
 
@@ -24,9 +24,9 @@ class RegenMovement extends MovementStyle {
     if (regenRate <= 0) regenRate = 1;
     if (ticks % regenRate == 0) {
       // regenerate copter
-      Copter hero = thing.getGame().getCopter();
-      var hp = hero.getHP();
-      var max = hero.getMaxHP();
+      var hero = thing.game.copter;
+      var hp = hero.hp;
+      var max = hero.maxHP;
       if (hp < max) hero.setHP(hp + 1);
     }
 
@@ -42,7 +42,7 @@ class RegenMovement extends MovementStyle {
       if (dir) amount = FLUX_RADIUS - amount - 1;
       ndx += amount;
 
-      thing.setImageIndex(ndx);
+      thing.activateSprite(ndx);
     }
   }
 
@@ -52,14 +52,14 @@ class CopterRegen extends Thing {
 
   MAX_SIZE = 10 + RegenMovement.FLUX_RADIUS;
 
-  static BoundedImage[] images;
+  static Sprite[] images;
 
   static {
     var red = Color.pink.getRed();
     var green = Color.pink.getGreen();
     var blue = Color.pink.getBlue();
 
-    images = new BoundedImage[MAX_SIZE];
+    images = new Sprite[MAX_SIZE];
     for (var i=0; i<MAX_SIZE; i++) {
       var width = i + 18;
       var img = makeImage(width, 2 * width);
@@ -70,14 +70,14 @@ class CopterRegen extends Thing {
         ctx.fillStyle = color(red, green, blue, 0.5 * q);
         ctx.fillOval(median - rad, 2 * (median - rad), 2 * rad, 4 * rad);
       }
-      images[i] = new BoundedImage(img);
+      images[i] = new Sprite(img);
       images[i].addBox(new BoundingBox(5, 5, 5, 5));
     }
   }
 
   CopterRegen(thing) {
-    super(thing.getGame());
-    setImageList(images);
+    super(thing.game);
+    setSprites(images);
     type = GOOD_BULLET;
     move = new RegenMovement(this, thing);
   }
@@ -87,7 +87,7 @@ class CopterRegen extends Thing {
     var size = power - 1;
     if (size < 0) size = 0;
     else if (size >= MAX_SIZE) size = MAX_SIZE - 1;
-    setImageIndex(size);
+    activateSprite(size);
     ((RegenMovement) move).syncPos();
   }
 
@@ -96,7 +96,7 @@ class CopterRegen extends Thing {
 /** Defines veggie copter regen "attack" style. */
 class RegenWeapon extends Weapon {
   RegenAttack(t) {
-    super(t, Color.pink, t.getGame().loadImage("icon-regen.png").getImage());
+    super(t, "pink", t.game.sprite("icon-regen").image);
     clear();
   }
 

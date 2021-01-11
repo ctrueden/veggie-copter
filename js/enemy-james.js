@@ -21,7 +21,7 @@ class JamesMovement extends MovementStyle {
 
   JamesMovement(t, y, dir) {
     super(t);
-    VeggieCopter game = thing.getGame();
+    VeggieCopter game = thing.game;
 
     // compute starting position
     xpos, ypos;
@@ -29,7 +29,7 @@ class JamesMovement extends MovementStyle {
 
     if (dir) {
       // appear from right
-      xpos = w - thing.getWidth();
+      xpos = w - thing.width;
       ypos = y;
     }
     else {
@@ -43,10 +43,10 @@ class JamesMovement extends MovementStyle {
 
   /** Moves the given thing according to the bouncing movement style. */
   move() {
-    var xpos = thing.getCX(), ypos = thing.getCY();
+    var xpos = thing.cx, ypos = thing.cy;
 
-    Copter hero = thing.getGame().getCopter();
-    var cxpos = hero.getCX(), cypos = hero.getCY();
+    Copter hero = thing.game.copter;
+    var cxpos = hero.cx, cypos = hero.cy;
 
     var xdist = xpos - cxpos;
     var ydist = ypos - cypos;
@@ -67,9 +67,9 @@ class JamesEnemy extends EnemyHead {
   JamesEnemy(game, args) {
     // CTR TODO parse args and initialize James with proper parameters
     super(game, 25,
-      game.loadImage("james1.png"),
-      game.loadImage("james2.png"),
-      game.loadImage("james3.png"));
+      game.sprite("james1"),
+      game.sprite("james2"),
+      game.sprite("james3"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
@@ -96,9 +96,9 @@ class JamesBoss extends BossHead {
   JamesBoss(game, args) {
     // CTR TODO parse args and initialize James with proper parameters
     super(game, 250,
-      game.loadImage("james-boss1.png"),
-      game.loadImage("james-boss2.png"),
-      game.loadImage("james-boss3.png"));
+      game.sprite("james-boss1.png"),
+      game.sprite("james-boss2.png"),
+      game.sprite("james-boss3.png"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
@@ -118,7 +118,7 @@ class JamesBoss extends BossHead {
 
   /** Gets the attack form left behind by this boss upon defeat. */
   Weapon getWeapon() {
-    return new SplitterAttack(game.getCopter());
+    return new SplitterAttack(game.copter);
   }
 
   var getScore() { return 30 * super.getScore(); }

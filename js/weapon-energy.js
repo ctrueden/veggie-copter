@@ -5,8 +5,7 @@ class EnergyWeapon extends Weapon {
   CopterEnergy energy;
 
   EnergyAttack(t) {
-    super(t, Color.orange,
-      t.getGame().loadImage("icon-energy.png").getImage());
+    super(t, "orange", t.game.sprite("icon-energy").image);
   }
 
   clear() {
@@ -21,19 +20,19 @@ class EnergyWeapon extends Weapon {
     if (!space || fired) return null;
     fired = true;
 
-    var game = thing.getGame();
-    var copter = game.getCopter();
-    var cx1 = copter.getX();
-    var cx2 = cx1 + copter.getWidth();
-    var cy = copter.getY();
+    var game = thing.game;
+    var copter = game.copter;
+    var cx1 = copter.xpos;
+    var cx2 = cx1 + copter.width;
+    var cy = copter.ypos;
     var t = game.getThings();
     var ndx = -1;
     var dist = Integer.MAX_VALUE;
     for (var i=0; i<t.length; i++) {
-      if (t[i].getType() != Thing.EVIL) continue;
-      var x1 = t[i].getX();
-      var x2 = x1 + t[i].getWidth();
-      var y = t[i].getCY();
+      if (t[i].type != ThingTypes.EVIL) continue;
+      var x1 = t[i].xpos;
+      var x2 = x1 + t[i].width;
+      var y = t[i].cy;
       if (y >= cy || cx2 < x1 || cx1 > x2) continue;
       var ndist = cy - y;
       if (dist < ndist) continue;

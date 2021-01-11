@@ -2,23 +2,19 @@ class BushMovement extends MovementStyle {
   constructor(t) {
     super(t);
 
-    // Movement speed per frame.
-    this.speed = 1;
-
-    // Number of HP considered low enough to enter frantic mode.
-    this.lowhp = = 25;
-
+    this.speed = 1;       // Movement speed per frame.
+    this.lowhp = = 25;    // Number of HP considered low enough to enter frantic mode.
     this.target = 0;
-    this.dir = false;
+    this.dir = false;     // Movement direction.
     this.turning = false;
 
-    var game = thing.getGame();
+    var game = thing.game;
     var w = game.getWindowWidth();
 
     // compute starting position
-    var width = thing.getWidth();
+    var width = thing.width;
     var xpos = (int) ((w - 2 * width) * Math.random()) + width;
-    var ypos = -thing.getHeight();
+    var ypos = -thing.height;
     doSwitch();
     thing.setPos(xpos, ypos);
   }
@@ -27,7 +23,7 @@ class BushMovement extends MovementStyle {
   move() {
     if (isFrantic()) return;
 
-    var cx = this.thing.getCX(), cy = this.thing.getCY();
+    var cx = this.thing.cx, cy = this.thing.cy;
     this.turning = false;
 
     if (this.dir) {
@@ -47,65 +43,51 @@ class BushMovement extends MovementStyle {
   /** Gets whether thing is currently changing directions. */
   isTurning() { return this.turning; }
 
-  isFrantic() { return this.thing.getHP() <= this.lowhp; }
-
-  /** Gets movement direction of this thing. */
-  getDirection() { return this.dir; }
+  isFrantic() { return this.thing.hp <= this.lowhp; }
 
   /** Switches between horizontal and vertical movement modes. */
   doSwitch() {
-    var hero = this.thing.getGame().getCopter();
+    var hero = this.thing.game.copter;
     this.dir = !this.dir;
-    this.target = this.dir ? hero.getCY() : hero.getCX();
+    this.target = this.dir ? hero.cy : hero.cx;
     this.turning = true;
   }
-
 }
 
 /** Defines Bush's attack style. */
 class BushAttack extends AttackStyle {
-
-  /** Number of bullets to fire per spread. */
-  BULLETS = 5;
-
-  /** Spread factor for controlling bullet spread width. */
-  SPREAD = 24;
-
-  /** Number of frames to wait between firing bullets in frantic mode. */
-  FRANTIC_RATE = 5;
-
-  /** List of bullets left to fire. */
-  toFire = [];
-
-  /** Frames to wait until adding another bullet (frantic mode only). */
-  waitTicks = FRANTIC_RATE;
-
-  BushAttack(t) { super(t); }
+  constructor(t) {
+    super(t);
+    this.bullets = 5;                  // Number of bullets to fire per spread.
+    this.spread = 24;                  // Spread factor for controlling bullet spread width.
+    this.franticRate = 5;              // Number of frames to wait between firing bullets in frantic mode.
+    this.toFire = [];                  // List of bullets left to fire.
+    this.waitTicks = this.franticRate; // Frames to wait until adding another bullet (frantic mode only).
+  }
 
   /** Fires a shot according to Bush's attack pattern. */
   shoot() {
-    var pm = thing.getMovement();
+    var move = this.thing.move;
 
-    if (pm.isFrantic()) {
-      if (waitTicks > 0) {
-        waitTicks--;
+    if (this.thing.isFrantic()) {
+      if (this.waitTicks > 0) {
+        this.waitTicks--;
         return null;
       }
-      var x = (int) (thing.getGame().getWidth() * Math.random());
-      var y = (int) (thing.getGame().getHeight() * Math.random());
+      var x = Math.trunc(thing.game.width * Math.random());
+      var y = Math.trunc(thing.game.height * Math.random());
       toFire.add(new Point(x, y));
-      waitTicks = FRANTIC_RATE;
+      waitTicks = this.franticRate;
     }
     else {
-      if (pm.isTurning()) {
+      if (move.isTurning()) {
         // initialize new bullet spread when changing directions
-        Copter hero = thing.getGame().getCopter();
-        var hx = hero.getX(), hy = hero.getY();
-        var dir = pm.getDirection();
-        for (var i=0; i<BULLETS; i++) {
-          var mod = i - BULLETS / 2f;
-          var x = dir ? (hx + SPREAD * mod) : hx;
-          var y = dir ? hy : (hy + SPREAD * mod);
+        Copter hero = thing.game.copter;
+        var hx = hero.xpos, hy = hero.ypos;
+        for (var i=0; i<this.bullets; i++) {
+          var mod = i - this.bullets / 2f;
+          var x = move.dir ? (hx + this.spread * mod) : hx;
+          var y = move.dir ? hy : (hy + this.spread * mod);
           toFire.add(new Point((int) x, (int) y));
         }
       }
@@ -120,13 +102,12 @@ class BushAttack extends AttackStyle {
 }
 
 class BushEnemy extends EnemyHead {
-
-  BushEnemy(game, args) {
+  constructor(game, args) {
     // CTR TODO parse args and initialize Bush with proper parameters
     super(game, 80 + (int) (Math.random() * 20),
-      game.loadImage("bush1.png"),
-      game.loadImage("bush2.png"),
-      game.loadImage("bush3.png"));
+      game.sprite("bush1"),
+      game.sprite("bush2"),
+      game.sprite("bush3"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
@@ -135,13 +116,10 @@ class BushEnemy extends EnemyHead {
     setAttack(new BushAttack(this));
   }
 
-  var getScore() { return 5 * super.getScore(); }
+  getScore() { return 5 * super.getScore(); }
 
   move() {
     super.move();
-
-    // regen
-    if (((BushMovement) move).isTurning()) hp++;
+    if (this.move.isTurning()) this.hp++; // regen
   }
-
 }

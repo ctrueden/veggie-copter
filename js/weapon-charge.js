@@ -11,13 +11,13 @@ class ChargeMovement extends MovementStyle {
 
   move() {
     if (this.launched) {
-      var xpos = this.thing.getX(), ypos = this.thing.getY();
+      var xpos = this.thing.xpos, ypos = this.thing.ypos;
       ypos -= 5;
       this.thing.setPos(xpos, ypos);
     }
     else {
-      this.thing.setPos(this.owner.getCX() - this.thing.getWidth() / 2,
-        this.owner.getY() - this.thing.getHeight() / 2);
+      this.thing.setPos(this.owner.cx - this.thing.width / 2,
+        this.owner.getY() - this.thing.height / 2);
     }
   }
 }
@@ -26,10 +26,10 @@ class CopterCharge extends Thing {
   private static final int GROWTH_RATE = 10;
   private static final int MAX_SIZE = 20;
 
-  protected static BoundedImage[] images;
+  protected static Sprite[] sprites;
 
   static {
-    images = new BoundedImage[MAX_SIZE];
+    sprites = new Sprite[MAX_SIZE];
     for (int i=0; i<MAX_SIZE; i++) {
       int size = 2 * i + 12;
       var img = makeImage(size, size);
@@ -42,35 +42,35 @@ class CopterCharge extends Thing {
         ctx.fillColor = color(q, q, q, q / 255);
         ctx.fillOval(l, l, j, j);
       }
-      images[i] = new BoundedImage(img);
-      images[i].addBox(new BoundingBox(1, 1, 1, 1));
+      sprites[i] = new Sprite(img);
+      sprites[i].addBox(new BoundingBox(1, 1, 1, 1));
     }
   }
 
   protected int size;
 
   public CopterCharge(Thing thing) {
-    super(thing.getGame());
-    setImageList(images);
+    super(thing.game);
+    setSprites(sprites);
     type = GOOD_BULLET;
     size = -1;
     grow();
-    float x = thing.getCX() - getWidth(), y = thing.getY();
+    float x = thing.cx - width, y = thing.getY();
     move = new ChargeMovement(this, thing, x, y);
   }
 
   public boolean grow() {
     if (size == MAX_SIZE - 11 + GROWTH_RATE) return false;
     size++;
-    maxhp = size + 1;
-    setHP(maxhp);
+    maxHP = size + 1;
+    setHP(maxHP);
     return true;
   }
 
   launch() { this.move.launch(); }
 
   setHP(hp) {
-    this.hp = Math.min(hp, this.maxhp);
+    this.hp = Math.min(hp, this.maxHP);
     setPower(this.hp);
     var size = Math.max(hp - 1, 0);
     this.activateImage(size);
@@ -82,7 +82,7 @@ class ChargeWeapon extends Weapon {
   GROW_SPEED = 11;
 
   constructor(t) {
-    super(t, Color.white, t.getGame().loadImage("icon-charge.png").getImage());
+    super(t, "white", t.game.sprite("icon-charge").image);
     this.charge = null;
     this.space = false;
     this.ticks = 0;

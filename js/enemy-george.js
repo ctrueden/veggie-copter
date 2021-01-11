@@ -20,24 +20,22 @@ class GeorgeAttack extends AttackStyle {
 
   /** Fires a shot according to George's attack pattern. */
   shoot() {
-    GeorgeMovement pm = (GeorgeMovement) thing.getMovement();
-
-    if (pm.isFrantic()) {
-      if (waitTicks > 0) {
-        waitTicks--;
+    if (thing.move.isFrantic()) {
+      if (this.waitTicks > 0) {
+        this.waitTicks--;
         return null;
       }
-      var x = (int) (thing.getGame().getWidth() * Math.random());
-      var y = (int) (thing.getGame().getHeight() * Math.random());
+      var x = (int) (thing.game.width * Math.random());
+      var y = (int) (thing.game.height * Math.random());
       toFire.add(new Point(x, y));
       waitTicks = FRANTIC_RATE;
     }
     else {
-      if (pm.isTurning()) {
+      if (thing.move.isTurning()) {
         // initialize new bullet spread when changing directions
-        Copter hero = thing.getGame().getCopter();
-        var hx = hero.getX(), hy = hero.getY();
-        boolean dir = pm.getDirection();
+        Copter hero = thing.game.copter;
+        var hx = hero.xpos, hy = hero.ypos;
+        boolean dir = thing.move.dir;
         for (var i=0; i<BULLETS; i++) {
           var mod = i - BULLETS / 2f;
           var x = dir ? hx + SPREAD * mod : hx;
@@ -69,13 +67,13 @@ class GeorgeMovement extends MovementStyle {
 
   GeorgeMovement(t) {
     super(t);
-    VeggieCopter game = thing.getGame();
+    VeggieCopter game = thing.game;
     var w = game.getWindowWidth();
 
     // compute starting position
-    var width = thing.getWidth();
+    var width = thing.width;
     var xpos = (float) ((w - 2 * width) * Math.random()) + width;
-    var ypos = -thing.getHeight();
+    var ypos = -thing.height;
     thing.setPos(xpos, ypos);
     doSwitch();
   }
@@ -83,16 +81,13 @@ class GeorgeMovement extends MovementStyle {
   /** Gets whether thing is currently changing directions. */
   boolean isTurning() { return turning; }
 
-  boolean isFrantic() { return thing.getHP() <= LOW_HP; }
-
-  /** Gets movement direction of this thing. */
-  boolean getDirection() { return dir; }
+  boolean isFrantic() { return thing.hp <= LOW_HP; }
 
   /** Moves the given thing according to the George movement style. */
   move() {
     if (isFrantic()) return;
 
-    var cx = thing.getCX(), cy = thing.getCY();
+    var cx = thing.cx, cy = thing.cy;
     turning = false;
 
     if (dir) {
@@ -123,9 +118,9 @@ class GeorgeMovement extends MovementStyle {
 
   /** Switches between horizontal and vertical movement modes. */
   doSwitch() {
-    Copter hero = thing.getGame().getCopter();
+    Copter hero = thing.game.copter;
     dir = !dir;
-    target = dir ? hero.getCY() : hero.getCX();
+    target = dir ? hero.cy : hero.cx;
     turning = true;
   }
 
@@ -136,9 +131,9 @@ class GeorgeEnemy extends EnemyHead {
   GeorgeEnemy(game, args) {
     // CTR TODO parse args and initialize George with proper parameters
     super(game, 80 + (int) (Math.random() * 20),
-      game.loadImage("george1.png"),
-      game.loadImage("george2.png"),
-      game.loadImage("george3.png"));
+      game.sprite("george1"),
+      game.sprite("george2"),
+      game.sprite("george3"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
@@ -163,9 +158,9 @@ class GeorgeBoss extends BossHead {
   GeorgeBoss(game, args) {
     // CTR TODO parse args and initialize George with proper parameters
     super(game, 800 + (int) (Math.random() * 200),
-      game.loadImage("george-boss1.png"),
-      game.loadImage("george-boss2.png"),
-      game.loadImage("george-boss3.png"));
+      game.sprite("george-boss1.png"),
+      game.sprite("george-boss2.png"),
+      game.sprite("george-boss3.png"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
@@ -176,7 +171,7 @@ class GeorgeBoss extends BossHead {
 
   /** Gets the attack form left behind by this boss upon defeat. */
   Weapon getWeapon() {
-    return new SpreadAttack(game.getCopter());
+    return new SpreadAttack(game.copter);
   }
 
   var getScore() { return 50 * super.getScore(); }

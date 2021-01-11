@@ -25,7 +25,7 @@ class MineShardMovement extends MovementStyle {
     var xpos = this.xstart + this.tick * this.xtraj;
     var ypos = this.ystart + this.tick * this.ytraj;
     this.tick++;
-    this.thing.setImageIndex(this.tick);
+    this.thing.activateSprite(this.tick);
     this.thing.setCPos(xpos, ypos);
   }
 }
@@ -41,36 +41,36 @@ class MineShard extends Thing {
   /** Power divisor for each shard. */
   POWER = 4;
 
-  static BoundedImage[] images;
+  static Sprite[] images;
 
   static {
-    images = new BoundedImage[LIFE];
+    images = new Sprite[LIFE];
     for (var i=0; i<LIFE; i++) {
       var img = makeImage(SIZE, SIZE);
       var ctx = context2d(img);
       var alpha = (LIFE - i) / LIFE;
       ctx.fillStyle = color(128, 128, 128, alpha);
       ctx.fillRoundRect(0, 0, SIZE, SIZE, SIZE / 2, SIZE / 2);
-      images[i] = new BoundedImage(img);
+      images[i] = new Sprite(img);
       images[i].addBox(new BoundingBox());
     }
   }
 
   MineShard(t, angle, sx, sy) {
-    super(t.getGame());
+    super(t.game);
     type = GOOD_BULLET;
-    setImageList(images);
+    setSprites(images);
     setPower(LIFE / POWER + 1);
     var tx = (float) (sx + 10 * Math.sin(angle));
     var ty = (float) (sy + 10 * Math.cos(angle));
     move = new MineShardMovement(this, sx, sy, tx, ty);
   }
 
-  setImageIndex(index) {
+  activateSprite(index) {
     if (index == LIFE) setHP(0); // shards die when they fade away
     else {
       setPower((LIFE - index) / POWER + 1);
-      super.setImageIndex(index);
+      super.activateSprite(index);
     }
   }
 
@@ -95,7 +95,7 @@ class MineExplode extends AttackStyle {
     // explode in power+2 shards evenly space around a circle
     var num = this.thing.getStrength() + 2;
     var shards = [];
-    var cx = this.thing.getCX(), cy = this.thing.getCY();
+    var cx = this.thing.cx, cy = this.thing.cy;
     for (var i=0; i<num; i++) {
       var angle = 2 * Math.PI * i / num;
       shards.push(new MineShard(this.thing, angle, cx, cy));
@@ -138,7 +138,7 @@ class MineMovement extends MovementStyle {
 
   /** Drags nearby enemies closer to the mine. */
   move() {
-    var xpos = this.thing.getX(), ypos = this.thing.getY();
+    var xpos = this.thing.xpos, ypos = this.thing.ypos;
     this.ticks++;
 
     var pow = this.thing.getStrength();
@@ -163,10 +163,10 @@ class MineMovement extends MovementStyle {
     this.thing.setPos(x, y + SPEED);
 
     // use distance squared function to drag in enemies
-    Thing[] t = this.thing.getGame().getThings();
+    Thing[] t = this.thing.game.getThings();
     for (var i=0; i<t.length; i++) {
-      if (t[i].getType() != Thing.EVIL) continue;
-      var tx = t[i].getCX(), ty = t[i].getCY();
+      if (t[i].type != ThingTypes.EVIL) continue;
+      var tx = t[i].cx, ty = t[i].cy;
       var xx = xpos - tx, yy = ypos - ty;
       var dist2 = xx * xx + yy * yy;
       if (dist2 < 1) continue;
@@ -186,10 +186,10 @@ class CopterMine extends Thing {
   POWER_MULTIPLIER = 10;
   MAX_SIZE = 11;
 
-  static BoundedImage[] images;
+  static Sprite[] images;
 
   static {
-    images = new BoundedImage[MAX_SIZE];
+    images = new Sprite[MAX_SIZE];
     for (var i=0; i<MAX_SIZE; i++) {
       var size = i + 10;
       var img = makeImage(size, size);
@@ -199,18 +199,18 @@ class CopterMine extends Thing {
       ctx.fillStyle = "red";
       var q = size / 3 + 1;
       ctx.fillOval(q, q, q, q);
-      images[i] = new BoundedImage(img);
+      images[i] = new Sprite(img);
       images[i].addBox(new BoundingBox());
     }
   }
 
   constructor(thing, power) {
-    super(thing.getGame());
+    super(thing.game);
     type = GOOD_BULLET;
     setPower(power);
     move = new MineMovement(this);
     attack = new MineExplode(this);
-    setCPos(thing.getCX(), thing.getCY());
+    setCPos(thing.cx, thing.cy);
   }
 
   /** Gets strength (power) of the mine. */
@@ -219,16 +219,16 @@ class CopterMine extends Thing {
   /** Changes mine size based on power value. */
   setPower(power) {
     super.setPower(power);
-    maxhp = hp = POWER_MULTIPLIER * power;
+    maxHP = hp = POWER_MULTIPLIER * power;
 
     var size = power - 1;
     if (size < 0) size = 0;
     else if (size >= MAX_SIZE) size = MAX_SIZE - 1;
-    setImage(images[size]);
+    setSprite(images[size]);
   }
 
   /** Mines do not directly damage enemies. */
-  var getPower() { return 0; }
+  getPower() { return 0; }
 
   /** Mines cannot be destroyed. */
   hit(damage) { }
@@ -243,8 +243,7 @@ class MineAttack extends Weapon {
   var fired;
 
   MineAttack(t) {
-    super(t, Color.darkGray,
-      t.getGame().loadImage("icon-mine.png").getImage());
+    super(t, "darkgray", t.game.sprite("icon-mine").image);
   }
 
   clear() { space = false; }

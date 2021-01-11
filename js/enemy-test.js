@@ -15,9 +15,9 @@ class TestMovement extends MovementStyle {
 class TestBoss extends BossHead {
   constructor(game, args) {
     super(game, 1000,
-      game.loadImage("../assets/test-boss2.png"),
-      game.loadImage("../assets/test-boss2.png"),
-      game.loadImage("../assets/test-boss2.png"));
+      game.sprite("test-boss2"),
+      game.sprite("test-boss2"),
+      game.sprite("test-boss2"));
     this.normalImage.addBox(new BoundingBox(30, 0, 30, 0));
     this.normalImage.addBox(new BoundingBox(3, 30, 3, 50));
     this.normalImage.addBox(new BoundingBox(15, 10, 15, 15));
@@ -43,7 +43,7 @@ class TestBoss extends BossHead {
 
   /** Gets the attack form left behind by this boss upon defeat. */
   getWeapon() {
-    //return new GunWeapon(game.getCopter());
+    //return new GunWeapon(this.game.copter);
     return new Weapon();
   }
 
@@ -51,17 +51,17 @@ class TestBoss extends BossHead {
   draw(ctx) {
     super.draw(ctx);
     ctx.fillColor = "yellow";
-    ctx.fillText("" + hp, Math.trunc(this.getCX()) - 15, Math.trunc(this.getCY()) + 20);
+    ctx.fillText("" + hp, Math.trunc(this.cx) - 15, Math.trunc(this.cy) + 20);
   }
 
   /** Hits this object for the given amount of damage. */
   hit(damage) {
-    if (damage > 0) move.startTimer();
+    if (damage > 0) this.move.startTimer();
     super.hit(damage);
   }
 
   getScore() {
-    move.printStats();
+    this.move.printStats();
     return 0;
   }
 }

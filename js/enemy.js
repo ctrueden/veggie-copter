@@ -36,14 +36,14 @@ class EnemyMovement extends MovementStyle {
     }
 
     // starting position
-    var game = this.thing.getGame();
+    var game = this.thing.game;
     this.thing.setPos(xpos, ypos);
   }
 
   /** Moves the given thing according to the enemy type A movement style. */
   move() {
     this.ticks++;
-    var cx = this.thing.getCX(), cy = this.thing.getCY();
+    var cx = this.thing.cx, cy = this.thing.cy;
 
     if (this.style == ZIGZAG) {
       // tick1, xmod1, ymod1, tick2, xmod2, ymod2, ...
@@ -70,28 +70,28 @@ class EnemyMovement extends MovementStyle {
 }
 
 // TODO: Better way to cache this statically??
-var ENEMY_BULLET_IMAGE = null;
+var ENEMY_BULLET_SPRITE = null;
 var ENEMY_BULLET_SIZE = 7;
 
 class EnemyBullet extends Thing {
   constructor(t, x2, y2) {
-    super(t.getGame());
+    super(t.game);
     this.type = EVIL_BULLET;
 
-    if (ENEMY_BULLET_IMAGE == null) {
+    if (ENEMY_BULLET_SPRITE == null) {
       var size = ENEMY_BULLET_SIZE;
-      var img = makeImage(size, size);
-      var ctx = context2d(img);
+      var image = makeImage(size, size);
+      var ctx = context2d(image);
       ctx.fillStyle = "red";
       ctx.fillRoundRect(0, 0, size, size, size / 2, size / 2);
-      ENEMY_BULLET_IMAGE = new BoundedImage(img);
-      ENEMY_BULLET_IMAGE.addBox(new BoundingBox());
+      ENEMY_BULLET_SPRITE = new Sprite(image);
+      ENEMY_BULLET_SPRITE.addBox(new BoundingBox());
     }
-    setImage(ENEMY_BULLET_IMAGE);
-    setPower(10 * t.getPower());
+    this.setSprite(ENEMY_BULLET_SPRITE);
+    this.setPower(10 * t.power);
 
-    var x = t.getCX() - getWidth() / 2;
-    var y = t.getCY() - getHeight() / 2;
+    var x = t.cx - this.width / 2;
+    var y = t.cy - this.height / 2;
     this.move = new BulletMovement(this, x, y, x2, y2);
     //this.attack = new RandomBulletAttack(this); // MWAHAHA!
   }
@@ -121,8 +121,8 @@ class EnemyHead extends Thing {
 
   constructor(game, max, normal, attacking, hurting) {
     super(game);
-    this.setImages({normal: normal, attacking: attacking, hurting: hurting});
-    this.maxhp = this.hp = max;
+    this.setSprites({normal: normal, attacking: attacking, hurting: hurting});
+    this.maxHP = this.hp = max;
     this.shooting = 0;
     //this.power = 10;
   }
@@ -136,9 +136,9 @@ class EnemyHead extends Thing {
     else this.normalActivate();
   }
 
-  get normalImage() { return this.getBoundedImage('normal'); }
-  get attackImage() { return this.getBoundedImage('attacking'); }
-  get hurtImage() { return this.getBoundedImage('hurting'); }
+  get normalImage() { return this.sprite('normal'); }
+  get attackImage() { return this.sprite('attacking'); }
+  get hurtImage() { return this.sprite('hurting'); }
 
   normalActivate() { this.activateImage('normal'); }
   attackingActivate() { this.activateImage('attacking'); }
@@ -148,15 +148,15 @@ class EnemyHead extends Thing {
     var t = super.shoot();
     if (t != null) this.shooting = SHOT_DELAY;
     else if (this.shooting > 0) this.shooting--;
-    if (isDead()) {
+    if (this.isDead()) {
       // dead head drops a power-up
-      t = this.getPowerUp();
+      t = this.powerup;
     }
     return t;
   }
 
-  getPowerUp() {
-    return [new PowerUp(game, getCX(), getCY(), 20, null)];
+  get powerup() {
+    return [new PowerUp(this.game, this.cx, this.cy, 20, null)];
   }
 }
 
@@ -169,9 +169,9 @@ class Enemy extends EnemyHead {
    */
   constructor(game, args) {
     super(game, parseInt(args[0]),
-      game.loadImage(args[1] + "1.png"),
-      game.loadImage(args[1] + "2.png"),
-      game.loadImage(args[1] + "3.png"));
+      game.sprite(`${args[1]}1`),
+      game.sprite(`${args[1]}2`),
+      game.sprite(`${args[1]}3`));
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
     this.hurtImage.addBox(new BoundingBox());
@@ -180,7 +180,7 @@ class Enemy extends EnemyHead {
     setAttack(new RandomBulletAttack(this));
   }
 
-  getPowerUp() { return null; }
+  get powerup() { return null; }
 }
 
 class BossHead extends EnemyHead {
@@ -190,10 +190,10 @@ class BossHead extends EnemyHead {
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */
-  getWeapon() { return null; }
+  get weapon() { return null; }
 
-  getPowerUp() {
-    return [new PowerUp(game, getCX(), getCY(), 50, getWeapon())];
+  get powerup() {
+    return [new PowerUp(this.game, this.cx, this.cy, 50, this.weapon)];
   }
 
 }

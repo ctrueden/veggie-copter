@@ -11,14 +11,14 @@ class CopterGun extends Thing {
     ctx.moveTo(0, 0);
     ctx.lineTo(0, len);
     ctx.stroke();
-    CopterGun.prototype.image = new BoundedImage(img, 1, HEIGHT);
+    CopterGun.prototype.image = new Sprite(img, 1, HEIGHT);
     CopterGun.prototype.image.addBox(new BoundingBox());
   }
 
   constructor(thing, x, y, power) {
-    super(thing.getGame());
+    super(thing.game);
     this.type = ThingTypes.GOOD_BULLET;
-    setImage(this.image);
+    setSprite(this.image);
     setPower(power);
     this.move = new BulletMovement(this, x, y + HEIGHT, x, -100, SPEED);
   }
@@ -30,8 +30,7 @@ class GunWeapon extends Weapon {
   var fired;
 
   GunAttack(t) {
-    super(t, "brown",
-      t.getGame().loadImage("../assets/icon-gun.png").getImage());
+    super(t, "brown", t.game.sprite("icon-gun").image);
     this.space = false;
     this.fired = 0;
     this.recharge = 2;
@@ -49,7 +48,7 @@ class GunWeapon extends Weapon {
     var num = this.getPower() + 1;
     fired = RECHARGE;
 
-    var xint = thing.getCX(), yint = thing.getY() - 14;
+    var xint = thing.cx, yint = thing.getY() - 14;
 
     CopterGun[] shots = new CopterGun[num];
     if (num % 2 == 0) {

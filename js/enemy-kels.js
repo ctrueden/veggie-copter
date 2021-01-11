@@ -21,7 +21,7 @@ class KelsMovement extends MovementStyle {
 
   KelsMovement(t, y, dir) {
     super(t);
-    VeggieCopter game = thing.getGame();
+    VeggieCopter game = thing.game;
 
     // compute starting position
     xpos, ypos;
@@ -29,7 +29,7 @@ class KelsMovement extends MovementStyle {
 
     if (dir) {
       // appear from right
-      xpos = w - thing.getWidth();
+      xpos = w - thing.width;
       ypos = y;
     }
     else {
@@ -43,10 +43,10 @@ class KelsMovement extends MovementStyle {
 
   /** Moves the given thing according to the bouncing movement style. */
   move() {
-    var xpos = thing.getCX(), ypos = thing.getCY();
+    var xpos = thing.cx, ypos = thing.cy;
 
-    Copter hero = thing.getGame().getCopter();
-    var cxpos = hero.getCX(), cypos = hero.getCY();
+    Copter hero = thing.game.copter;
+    var cxpos = hero.cx, cypos = hero.cy;
 
     var xdist = xpos - cxpos;
     var ydist = ypos - cypos;
@@ -67,9 +67,9 @@ class KelsEnemy extends EnemyHead {
   KelsEnemy(game, args) {
     // CTR TODO parse args and initialize Kels with proper parameters
     super(game, 25,
-      game.loadImage("kels1.png"),
-      game.loadImage("kels2.png"),
-      game.loadImage("kels3.png"));
+      game.sprite("kels1"),
+      game.sprite("kels2"),
+      game.sprite("kels3"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
@@ -96,9 +96,9 @@ class KelsBoss extends BossHead {
   KelsBoss(game, args) {
     // CTR TODO parse args and initialize Kels with proper parameters
     super(game, 250,
-      game.loadImage("kels-boss1.png"),
-      game.loadImage("kels-boss2.png"),
-      game.loadImage("kels-boss3.png"));
+      game.sprite("kels-boss1"),
+      game.sprite("kels-boss2"),
+      game.sprite("kels-boss3"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
@@ -118,7 +118,7 @@ class KelsBoss extends BossHead {
 
   /** Gets the attack form left behind by this boss upon defeat. */
   Weapon getWeapon() {
-    return new SplitterAttack(game.getCopter());
+    return new SplitterAttack(game.copter);
   }
 
   var getScore() { return 30 * super.getScore(); }

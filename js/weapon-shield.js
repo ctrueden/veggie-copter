@@ -15,8 +15,8 @@ class ShieldMovement extends MovementStyle {
     this.owner = owner;
     this.angle = angle;
     radius = 0;
-    var xpos = owner.getCX() + radius * (float) Math.cos(angle);
-    var ypos = owner.getCY() + radius * (float) Math.sin(angle);
+    var xpos = owner.cx + radius * (float) Math.cos(angle);
+    var ypos = owner.cy + radius * (float) Math.sin(angle);
     thing.setCPos(xpos, ypos);
   }
 
@@ -31,8 +31,8 @@ class ShieldMovement extends MovementStyle {
     if (radius < targetRadius) radius += RADIUS_INC;
     else if (radius > targetRadius) radius -= RADIUS_INC;
     while (angle > 2 * Math.PI) angle -= 2 * Math.PI;
-    var xpos = owner.getCX() + radius * (float) Math.cos(angle);
-    var ypos = owner.getCY() + radius * (float) Math.sin(angle);
+    var xpos = owner.cx + radius * (float) Math.cos(angle);
+    var ypos = owner.cy + radius * (float) Math.sin(angle);
     thing.setCPos(xpos, ypos);
   }
 
@@ -42,28 +42,28 @@ class CopterShield extends Thing {
 
   SIZE = 7;
 
-  static BoundedImage[] images;
+  static Sprite[] images;
   static var count = 0;
 
   CopterShield(thing, angle) {
-    super(thing.getGame());
+    super(thing.game);
     type = GOOD;
     move = new ShieldMovement(this, thing, angle);
     if (images == null) {
-      images = new BoundedImage[] {
-        game.loadImage("james-spade.png"),
-        game.loadImage("james-heart.png"),
-        game.loadImage("james-diamond.png"),
-        game.loadImage("james-club.png")
+      images = new Sprite[] {
+        game.sprite("james-spade"),
+        game.sprite("james-heart"),
+        game.sprite("james-diamond"),
+        game.sprite("james-club")
       };
       for (var i=0; i<images.length; i++) images[i].addBox(new BoundingBox());
     }
-    setImage(images[count % images.length]);
+    setSprite(images[count % images.length]);
     count++;
   }
 
   setExtended(extended) {
-    ((ShieldMovement) move).setExtended(extended);
+    this.move.setExtended(extended);
   }
 
   /** Shields cannot be destroyed. */
@@ -80,7 +80,7 @@ class ShieldWeapon extends Weapon {
   boolean extended;
 
   ShieldAttack(t) {
-    super(t, PURPLE, t.getGame().loadImage("icon-shield.png").getImage());
+    super(t, PURPLE, t.game.sprite("icon-shield.png").image);
   }
 
   setExtended(extended) {
@@ -93,7 +93,7 @@ class ShieldWeapon extends Weapon {
   activate() {
     var num = power + 1;
     shields = new CopterShield[num];
-    VeggieCopter game = thing.getGame();
+    VeggieCopter game = thing.game;
     for (var i=0; i<num; i++) {
       shields[i] = new CopterShield(thing, (float) (2 * Math.PI * i / num));
       shields[i].setPower(1);

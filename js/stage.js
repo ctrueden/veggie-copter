@@ -13,8 +13,8 @@ class Stage {
     this.game = game;
     this.name = name;
     this.script = new GameScript(game, "../assets/" + scriptName + ".txt");
-    this.image = game.loadImage("../assets/" + scriptName + "-boss2.png").getImage();
-    this.icon = game.loadImage("../assets/" + scriptName + "1.png").getImage();
+    this.image = game.sprite(`${scriptName}-boss2`).image;
+    this.icon = game.sprite(`${scriptName}1`).image;
     this.description = description;
     this.completed = false;
   }

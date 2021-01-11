@@ -44,9 +44,9 @@ class BoxEditor extends JFrame
         continue;
       }
       System.out.println("Loading " + name);
-      var img = loader.getImage(name);
-      var bi = new BoundedImage(img);
-      images.add(bi);
+      var img = loader.image(name);
+      var sprite = new Sprite(img);
+      images.add(sprite);
       names.add(name);
     }
     updateTitle();
@@ -58,7 +58,7 @@ class BoxEditor extends JFrame
 
   load() throws IOException {
     for (var i=0; i<images.length; i++) {
-      var bi = images[i];
+      var sprite = images[i];
       var name = names[i];
       var boxName = name.substring(0, name.length() - 3) + "box";
       System.out.println("Loading " + boxName);
@@ -77,8 +77,8 @@ class BoxEditor extends JFrame
           if (c == coords.length) break;
         }
         if (c == 4) {
-          var w = bi.getWidth(), h = bi.getHeight();
-          bi.addBox(new BoundingBox(coords[0], coords[1],
+          var w = sprite.width, h = sprite.height;
+          sprite.addBox(new BoundingBox(coords[0], coords[1],
             coords[2], coords[3]));
         }
       }
@@ -88,13 +88,13 @@ class BoxEditor extends JFrame
 
   save() throws IOException {
     for (var i=0; i<images.length; i++) {
-      var bi = images[i];
+      var sprite = images[i];
       var name = names[i];
       var boxName = name.substring(0, name.length() - 3) + "box";
       System.out.println("Saving " + boxName);
       var out = new PrintWriter(new FileWriter(boxName));
-      var w = bi.getWidth(), h = bi.getHeight();
-      var r = bi.getBoxes(0, 0);
+      var w = sprite.width, h = sprite.height;
+      var r = sprite.getBoxes(0, 0);
       for (int b=0; b<r.length; b++) {
         out.print(r[b].x + " " + r[b].y + " ");
         var x2 = w - r[b].x - r[b].width - 1;
@@ -107,14 +107,14 @@ class BoxEditor extends JFrame
 
   paint(g) {
     var size = getSize();
-    var bi = images[ndx];
-    var w = bi.getWidth();
-    var h = bi.getHeight();
+    var sprite = images[ndx];
+    var w = sprite.width;
+    var h = sprite.height;
     var x = (size.width - w) / 2;
     var y = (size.height - h) / 2;
     g.fillRect(0, 0, size.width, size.height);
-    g.drawImage(bi.getImage(), x, y, this);
-    var r = bi.getBoxes(0, 0);
+    g.drawImage(sprite.image, x, y, this);
+    var r = sprite.getBoxes(0, 0);
     for (int b=0; b<r.length; b++) {
       g.setColor(COLORS[b]);
       g.drawRect(x + r[b].x, y + r[b].y, r[b].width, r[b].height);
@@ -145,8 +145,8 @@ class BoxEditor extends JFrame
         updateTitle();
         break;
       case KeyEvent.VK_DELETE:
-        BoundedImage bi = (BoundedImage) images[ndx];
-        bi.removeBox();
+        Sprite sprite = (Sprite) images[ndx];
+        sprite.removeBox();
         break;
     }
     repaint();
@@ -155,9 +155,9 @@ class BoxEditor extends JFrame
 
   mousePressed(e) {
     var size = getSize();
-    var bi = images[ndx];
-    var w = bi.getWidth();
-    var h = bi.getHeight();
+    var sprite = images[ndx];
+    var w = sprite.width;
+    var h = sprite.height;
     var x = (size.width - w) / 2;
     var y = (size.height - h) / 2;
     var mx = e.getX();
@@ -165,7 +165,7 @@ class BoxEditor extends JFrame
     var x1 = mx - x, y1 = my - y;
     var x2 = w - x1 - 1, y2 = h - y1 - 1;
     bb = new BoundingBox(x1, y1, x2, y2);
-    bi.addBox(bb);
+    sprite.addBox(bb);
     repaint();
   }
   mouseReleased(e) {
@@ -178,9 +178,9 @@ class BoxEditor extends JFrame
   mouseDragged(e) {
     if (bb != null) {
       var size = getSize();
-      var bi = images[ndx];
-      var w = bi.getWidth();
-      var h = bi.getHeight();
+      var sprite = images[ndx];
+      var w = sprite.width;
+      var h = sprite.height;
       var x = (size.width - w) / 2;
       var y = (size.height - h) / 2;
       var mx = e.getX();

@@ -32,24 +32,20 @@ class Game {
   }
 
   /**
-   * Loads the given image from disk, using the specified
-   * bounding box insets for collision detection.
+   * Loads the given sprite image from disk, using the
+   * specified bounding box insets for collision detection.
    */
-  loadImage(filename, xoff, yoff, boxes) {
+  sprite(name, xoff, yoff, boxes) {
+    if (name.indexOf('.') < 0) name += '.png';
+    var path = `../assets/${name}`;
     if (xoff == null) xoff = 0;
     if (yoff == null) yoff = 0;
     if (boxes == null) boxes = [];
-    var img = this.loader.getImage(filename);
-    var bi = new BoundedImage(img, xoff, yoff);
-    for (var i=0; i<boxes.length; i++) bi.addBox(boxes[i]);
-    return bi;
+    var image = this.loader.image(path);
+    var sprite = new Sprite(image, xoff, yoff);
+    for (var i=0; i<boxes.length; i++) sprite.addBox(boxes[i]);
+    return sprite;
   }
-
-  /** Gets veggie copter object (our hero!). */
-  getCopter() { return this.copter; }
-
-  /** Gets number of frames since game has started. */
-  getTicks() { return this.ticks; }
 
   /** Adds an object to the list of onscreen things. */
   addThing(t) { this.things.push(t); }
@@ -65,8 +61,7 @@ class Game {
     var clear = true;
     for (var i=0; i<this.things.length; i++) {
       var t = this.things[i];
-      var type = t.getType();
-      if (type != ThingTypes.GOOD && type != ThingTypes.GOOD_BULLET) {
+      if (t.type != ThingTypes.GOOD && t.type != ThingTypes.GOOD_BULLET) {
         clear = false;
         break;
       }
@@ -101,7 +96,7 @@ class Game {
       for (var i=0; i<t.length; i++) {
         // draw bounding box
         this.buf.strokeStyle = "red";
-        var r = t[i].getBoxes();
+        var r = t[i].boxes;
         for (var j=0; j<r.length; j++) {
           this.buf.beginPath();
           this.buf.rect(r[j].x, r[j].y, r[j].width, r[j].height);
@@ -110,9 +105,9 @@ class Game {
 
         // draw power level
         this.buf.strokeStyle = "white";
-        var xint = Math.trunc(t[i].getCX()) - 3;
-        var yint = Math.trunc(t[i].getCY()) + 6;
-        this.buf.fillText("" + t[i].getPower(), xint, yint);
+        var xint = Math.trunc(t[i].cx) - 3;
+        var yint = Math.trunc(t[i].cy) + 6;
+        this.buf.fillText("" + t[i].power, xint, yint);
       }
     }
 
@@ -139,8 +134,7 @@ class Game {
     this.buf.stroke();
     this.buf.strokeStyle = "black";
     this.buf.fillRect(x + 1, this.height + 3, 102, 19);
-    var hp = this.copter.getHP();
-    for (var i=0; i<hp; i++) {
+    for (var i=0; i<this.copter.hp; i++) {
       var q = i / 99;
       var red = Math.trunc(255 * (1 - q));
       var green = Math.trunc(255 * q);
@@ -243,8 +237,7 @@ class Game {
           this.stage = this.selector.getSelectedStage();
           this.stage.resetScript();
           this.things.push(this.copter);
-          this.copter.getAttack().reactivateAttackStyle();
-          this.copter.getAttack().reactivateAttackStyle();
+          this.copter.attack.reactivate();
         }
         else if (this.copter.isDead()) this.resetGame();
       }
@@ -280,7 +273,7 @@ class Game {
     var tt = new Thing[ThingTypes.length][];
     var counts = new int[ThingTypes.length];
     for (var i=0; i<t.length; i++) {
-      var type = t[i].getType();
+      var type = t[i].type;
       counts[type]++;
     }
     var boxes = new Rectangle[ThingTypes.length][][];
@@ -289,14 +282,14 @@ class Game {
       boxes[i] = new Rectangle[counts[i]][];
     }
     for (var i=0; i<t.length; i++) {
-      var type = t[i].getType();
+      var type = t[i].type;
       var ndx = --counts[type];
       tt[type][ndx] = t[i];
-      boxes[type][ndx] = t[i].getBoxes();
+      boxes[type][ndx] = t[i].boxes;
     }
 
     // do collision detection between copter and power-ups
-    var rcop = this.copter.getBoxes();
+    var rcop = this.copter.boxes;
     var rups = boxes[ThingTypes.POWER_UP];
     for (var i=0; i<rups.length; i++) {
       if (rups[i] == null) continue;
@@ -311,17 +304,16 @@ class Game {
         if (collision) break;
       }
       if (collision) {
-        var powerUp = tt[ThingTypes.POWER_UP][i];
-        var attack = powerUp.getGrantedAttack();
+        var powerup = tt[ThingTypes.POWER_UP][i];
+        var attack = powerup.getGrantedAttack();
         if (attack == null) {
           // increase power of selected attack style by one
-          var power = this.copter.getAttack().getPower();
-          if (power < 10) this.copter.getAttack().setPower(power + 1);
+          var power = this.copter.attack.power;
+          if (power < 10) this.copter.attack.setPower(power + 1);
         }
         else {
           // grant new attack style to copter
-          CopterAttack copterAttack = (CopterAttack) this.copter.getAttack();
-          copterAttack.addAttackStyle(attack);
+          this.copter.attack.addAttackStyle(attack);
         }
         tt[ThingTypes.POWER_UP][i].setHP(0);
         rups[i] = null;
@@ -369,9 +361,9 @@ class Game {
   /** Instructs the given attacker to damage the specified defender. */
   smack(attacker, defender) {
     /*
-    defender.hit(attacker.getPower());
+    defender.hit(attacker.power);
     if (defender.isDead()) {
-      if (defender.getType() == ThingTypes.EVIL) score += defender.getScore();
+      if (defender.type == ThingTypes.EVIL) score += defender.getScore();
       return true;
     }
     */

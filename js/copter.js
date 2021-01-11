@@ -8,13 +8,13 @@ class CopterMovement extends MovementStyle {
 
   reset() {
     this.left = this.right = this.up = this.down = false;
-    var game = this.thing.getGame();
+    var game = this.thing.game;
     this.thing.setPos(game.width / 2, game.height - 40);
   }
 
   /** Moves according to the keyboard presses. */
   move() {
-    var xpos = this.thing.getX(), ypos = this.thing.getY();
+    var xpos = this.thing.xpos, ypos = this.thing.ypos;
     var xdir = 0, ydir = 0;
     if (left) xdir -= this.speed; if (right) xdir += this.speed;
     if (up) ydir -= this.speed; if (down) ydir += this.speed;
@@ -22,7 +22,7 @@ class CopterMovement extends MovementStyle {
 
     var game = this.thing.game;
     var w = game.width, h = game.height;
-    var width = this.thing.getWidth(), height = this.thing.getHeight();
+    var width = this.thing.width, height = this.thing.height;
     if (xpos < 1) xpos = 1; if (xpos + width >= w) xpos = w - width - 1;
     if (ypos < 1) ypos = 1; if (ypos + height >= h) ypos = h - height - 1;
     this.thing.setPos(xpos, ypos);
@@ -58,17 +58,12 @@ class CopterAttack extends AttackStyle {
   constructor(t) {
     super(t);
     this.attacks = [];
-    this.current = 0;
+    this.activeIndex = 0;
   }
 
-  /** Gets current attack style. */
-  getAttackStyle() {
-    return this.current < 0 ? null : this.attacks[this.current];
-  }
-
-  /** Gets list of linked attack styles. */
-  getAttackStyles() {
-    return this.attacks.splice();
+  /** Gets the active attack style. */
+  get activeAttack() {
+    return this.activeIndex == null ? null : this.attacks[this.activeIndex];
   }
 
   /** Adds an attack style to the list of choices. */
@@ -78,114 +73,84 @@ class CopterAttack extends AttackStyle {
   }
 
   /** Sets attack style to the given list index. */
-  setAttackStyle(index) {
-    if (index < -1 || index >= this.attacks.length) return;
-    var attack = this.getAttackStyle();
-    if (attack == null) { // all attack styles
-      for (var i=0; i<this.attacks.length; i++) {
-        this.attacks[i].clear();
-      }
-    }
-    else attack.clear();
-    this.current = index;
-    attack = this.getAttackStyle();
-    if (attack == null) { // all attack styles
-      for (var i=0; i<this.attacks.length; i++) {
-        this.attacks[i].activate();
-      }
-    }
-    else attack.activate();
+  activate(index) {
+    if (index >= this.attacks.length) return; // out of bounds
+    if (this.activeAttack != null) this.activeAttack.clear();
+    else this.attacks.forEach(attack => attack.clear());
+    this.activeIndex = index;
+    if (this.activeAttack != null) this.activeAttack.activate();
+    else this.attacks.forEach(attack => attack.activate());
   }
 
-  reactivateAttackStyle() { this.setAttackStyle(this.current); }
+  reactivate() { this.activate(this.activeIndex); }
 
   drawWeaponStatus(ctx, x, y) {
     var size = this.attacks.length;
     for (var i=0; i<size; i++) {
-      this.attacks[i].drawIcon(ctx, x, y, this.current < 0 || i == this.current);
+      this.attacks[i].drawIcon(ctx, x, y, this.activeIndex == null || i == this.activeIndex);
       x += this.attacks[i].iconSize - 1; // one pixel overlap
     }
   }
 
   shoot() {
-    var attack = this.getAttackStyle();
-    if (attack == null) { // all attack styles
-      var shots = [];
-      for (var i=0; i<this.attacks.length; i++) {
-        var t = this.attacks[i].shoot();
-        if (t != null) for (var j=0; j<t.length; j++) shots.push(t[j]);
-      }
-      return shots.length == 0 ? null : shots;
+    if (this.activeAttack != null) return this.activeAttack.shoot();
+    // all attack styles
+    var shots = [];
+    for (var i=0; i<this.attacks.length; i++) {
+      var t = this.attacks[i].shoot();
+      if (t != null) for (var j=0; j<t.length; j++) shots.push(t[j]);
     }
-    return attack.shoot();
+    return shots.length == 0 ? null : shots;
   }
 
   trigger() {
-    var attack = this.getAttackStyle();
-    if (attack == null) { // all attack styles
-      var triggers = [];
-      for (var i=0; i<this.attacks.length; i++) {
-        var t = this.attacks[i].trigger();
-        if (t != null) for (var j=0; j<t.length; j++) triggers.add(t[j]);
-      }
-      return triggers.length == 0 ? null : triggers;
+    if (this.activeAttack != null) return this.activeAttack.trigger();
+    // all attack styles
+    var triggers = [];
+    for (var i=0; i<this.attacks.length; i++) {
+      var t = this.attacks[i].trigger();
+      if (t != null) for (var j=0; j<t.length; j++) triggers.add(t[j]);
     }
-    return attack.trigger();
+    return triggers.length == 0 ? null : triggers;
   }
 
-  setPower(power) {
-    var attack = this.getAttackStyle();
-    if (attack == null) { // all attack styles
-      for (var i=0; i<this.attacks.length; i++) {
-        this.attacks[i].setPower(power);
-      }
-    }
-    else attack.setPower(power);
+  set power(power) {
+    if (this.activeAttack != null) this.activeAttack.power = power;
+    else if (this.attacks) this.attacks.forEach(attack => attack.power = power);
   }
 
-  getPower() {
-    var attack = this.getAttackStyle();
-    if (attack == null) { // all attack styles
-      return this.attacks[0].getPower();
-    }
-    return attack.getPower();
+  get power() {
+    return this.activeAttack != null ? this.activeAttack.power : this.attacks[0].power;
   }
 
   keyPressed(e) {
     var code = e.getKeyCode();
     var size = this.attacks.length;
-    if (code == Keys.ATTACK_STYLE_CYCLE) setAttackStyle((this.current + 1) % size);
+    if (code == Keys.ATTACK_STYLE_CYCLE) this.activate((this.activeIndex + 1) % size);
     else if (code == Keys.ALL_ATTACK_STYLES) {
       // turn on all attack styles simultaneously
-      setAttackStyle(-1);
+      this.activate(null);
     }
     else {
       var match = false;
       for (var i=0; i<Keys.ATTACK_STYLES.length; i++) {
         if (code == Keys.ATTACK_STYLES[i]) {
-          setAttackStyle(i);
+          this.activate(i);
           match = true;
           break;
         }
       }
       if (!match) {
-        var attack = this.getAttackStyle();
-        if (attack == null) { // all attack styles
-          for (var i=0; i<this.attacks.length; i++) {
-            this.attacks[i].keyPressed(e);
-          }
-        }
-        else attack.keyPressed(e);
+        if (this.activeAttack != null) this.activeAttack.keyPressed(e);
+        else this.attacks.forEach(attack => attack.keyPressed(e));
       }
     }
   }
 
   keyReleased(e) {
-    var attack = this.getAttackStyle();
+    var attack = this.attackStyle;
     if (attack == null) { // all attack styles
-      for (var i=0; i<this.attacks.length; i++) {
-        this.attacks[i].keyReleased(e);
-      }
+      this.attacks.forEach(attack => attack.keyReleased(e));
     }
     else attack.keyReleased(e);
   }
@@ -197,9 +162,9 @@ class Copter extends Thing {
   /** Constructs a copter object. */
   constructor(game) {
     super(game);
-    var bi = game.loadImage("../assets/copter.gif");
-    bi.addBox(new BoundingBox(2, 6, 2, 5));
-    this.setImage(bi);
+    var sprite = game.sprite("copter.gif");
+    sprite.addBox(new BoundingBox(2, 6, 2, 5));
+    this.setSprite(sprite);
     this.setMovement(new CopterMovement(this));
 
     var copterAttack = new CopterAttack(this);
@@ -220,7 +185,7 @@ class Copter extends Thing {
     */
     this.setAttack(copterAttack);
 
-    this.maxhp = this.hp = 100;
+    this.maxHP = this.hp = 100;
     this.type = ThingTypes.GOOD;
   }
 
@@ -234,12 +199,12 @@ class Copter extends Thing {
   keyPressed(e) {
     var code = e.getKeyCode();
     if (code == Keys.POWER_UP) {
-      var pow = this.attack.getPower();
+      var pow = this.attack.power;
       pow++;
       this.attack.setPower(pow);
     }
     else if (code == Keys.POWER_DOWN) {
-      var pow = this.attack.getPower();
+      var pow = this.attack.power;
       if (pow > 1) pow--;
       this.attack.setPower(pow);
     }

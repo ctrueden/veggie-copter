@@ -20,28 +20,25 @@ class PaulAttack extends AttackStyle {
 
   /** Fires a shot according to Paul's attack pattern. */
   shoot() {
-    PaulMovement pm = (PaulMovement) thing.getMovement();
-
-    if (pm.isFrantic()) {
+    if (thing.move.isFrantic()) {
       if (waitTicks > 0) {
         waitTicks--;
         return null;
       }
-      var x = (int) (thing.getGame().getWidth() * Math.random());
-      var y = (int) (thing.getGame().getHeight() * Math.random());
+      var x = (int) (thing.game.width * Math.random());
+      var y = (int) (thing.game.height * Math.random());
       toFire.add(new Point(x, y));
       waitTicks = FRANTIC_RATE;
     }
     else {
-      if (pm.isTurning()) {
+      if (thing.move.isTurning()) {
         // initialize new bullet spread when changing directions
-        Copter hero = thing.getGame().getCopter();
-        var hx = hero.getX(), hy = hero.getY();
-        boolean dir = pm.getDirection();
+        var hero = thing.game.copter;
+        var hx = hero.xpos, hy = hero.ypos;
         for (var i=0; i<BULLETS; i++) {
           var mod = i - BULLETS / 2f;
-          var x = dir ? (hx + SPREAD * mod) : hx;
-          var y = dir ? hy : (hy + SPREAD * mod);
+          var x = thing.move.dir ? (hx + SPREAD * mod) : hx;
+          var y = thing.move.dir ? hy : (hy + SPREAD * mod);
           toFire.add(new Point((int) x, (int) y));
         }
       }
@@ -69,13 +66,13 @@ class PaulMovement extends MovementStyle {
 
   PaulMovement(t) {
     super(t);
-    VeggieCopter game = thing.getGame();
+    VeggieCopter game = thing.game;
     var w = game.getWindowWidth();
 
     // compute starting position
-    var width = thing.getWidth();
+    var width = thing.width;
     var xpos = (float) ((w - 2 * width) * Math.random()) + width;
-    var ypos = -thing.getHeight();
+    var ypos = -thing.height;
     thing.setPos(xpos, ypos);
     doSwitch();
   }
@@ -83,19 +80,16 @@ class PaulMovement extends MovementStyle {
   /** Gets whether thing is currently changing directions. */
   boolean isTurning() { return turning; }
 
-  boolean isFrantic() { return thing.getHP() <= LOW_HP; }
-
-  /** Gets movement direction of this thing. */
-  boolean getDirection() { return dir; }
+  boolean isFrantic() { return thing.hp <= LOW_HP; }
 
   /** Moves the given thing according to the Paul movement style. */
   move() {
     if (isFrantic()) return;
 
-    var cx = thing.getCX(), cy = thing.getCY();
+    var cx = thing.cx, cy = thing.cy;
     turning = false;
 
-    if (dir) {
+    if (this.dir) {
       if (cy > target) {
         if (cy - target < SPEED) cy = target;
         else cy -= SPEED;
@@ -123,10 +117,10 @@ class PaulMovement extends MovementStyle {
 
   /** Switches between horizontal and vertical movement modes. */
   doSwitch() {
-    Copter hero = thing.getGame().getCopter();
-    dir = !dir;
-    target = dir ? hero.getCY() : hero.getCX();
-    turning = true;
+    var hero = thing.game.copter;
+    this.dir = !this.dir;
+    this.target = this.dir ? hero.cy : hero.cx;
+    this.turning = true;
   }
 
 }
@@ -136,9 +130,9 @@ class PaulEnemy extends EnemyHead {
   PaulEnemy(game, args) {
     // CTR TODO parse args and initialize Paul with proper parameters
     super(game, 80 + (int) (Math.random() * 20),
-      game.loadImage("paul1.png"),
-      game.loadImage("paul2.png"),
-      game.loadImage("paul3.png"));
+      game.sprite("paul1"),
+      game.sprite("paul2"),
+      game.sprite("paul3"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox(1, 5, 1, 10));
     this.normalImage.addBox(new BoundingBox(8, 1, 8, 1));
@@ -165,9 +159,9 @@ class PaulBoss extends BossHead {
   PaulBoss(game, args) {
     // CTR TODO parse args and initialize Paul with proper parameters
     super(game, 800 + (int) (Math.random() * 200),
-      game.loadImage("paul-boss1.png"),
-      game.loadImage("paul-boss2.png"),
-      game.loadImage("paul-boss3.png"));
+      game.sprite("paul-boss1"),
+      game.sprite("paul-boss2"),
+      game.sprite("paul-boss3"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
@@ -178,7 +172,7 @@ class PaulBoss extends BossHead {
 
   /** Gets the attack form left behind by this boss upon defeat. */
   Weapon getWeapon() {
-    return new SpreadAttack(game.getCopter());
+    return new SpreadAttack(game.copter);
   }
 
   var getScore() { return 50 * super.getScore(); }

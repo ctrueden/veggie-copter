@@ -11,26 +11,25 @@ class SplitterMovement extends MovementStyle {
 
   /** Moves the given thing according to the splitter movement style. */
   move() {
-    thing.setPos(thing.getX() + xdir, thing.getY() + ydir);
+    thing.setPos(thing.xpos + xdir, thing.ypos + ydir);
   }
 
 }
 
 class CopterSplitter extends Thing {
-
   MAX_SIZE = 12;
 
-  static BoundedImage[] images;
+  static Sprite[] images;
 
   static {
-    images = new BoundedImage[MAX_SIZE];
+    images = new Sprite[MAX_SIZE];
     for (var i=0; i<MAX_SIZE; i++) {
       var size = i + 4;
       var img = makeImage(size, size);
       var ctx = context2d(img);
       ctx.fillStyle = "yellow";
       ctx.fillRoundRect(0, 0, size, size, size / 2, size / 2);
-      images[i] = new BoundedImage(img);
+      images[i] = new Sprite(img);
       images[i].addBox(new BoundingBox());
     }
   }
@@ -42,18 +41,17 @@ class CopterSplitter extends Thing {
     type = GOOD_BULLET;
     if (size < 0) size = 0;
     else if (size >= MAX_SIZE) size = MAX_SIZE - 1;
-    setImage(images[size]);
-    if (count == 1) y -= getHeight();
-    move = new SplitterMovement(this, x - getWidth() / 2f, y, xdir, ydir);
+    setSprite(images[size]);
+    if (count == 1) y -= height;
+    move = new SplitterMovement(this, x - width / 2f, y, xdir, ydir);
     attack = new SplitterAttack(this, xdir, ydir, count);
   }
 
   /** Assigns object's power. */
   setPower(power) {
     super.setPower(power);
-    attack.setPower(power);
+    this.attack.setPower(power);
   }
-
 }
 
 /** Defines splitter attack. */
@@ -72,7 +70,7 @@ class SplitterAttack extends Weapon {
   SplitterAttack(t) { this(t, 0, 0, 0); }
 
   SplitterAttack(t, xdir, ydir, count) {
-    super(t, Color.yellow, t.getGame().loadImage("icon-split.png").getImage());
+    super(t, "yellow", t.game.sprite("icon-split").image);
     if (xdir == 0 && ydir == 0) {
       this.xdir = SPEED;
       this.ydir = 0;
@@ -96,8 +94,8 @@ class SplitterAttack extends Weapon {
     if (count != 0) return null;
     fired = RECHARGE;
 
-    CopterSplitter splitter = new CopterSplitter(thing.getGame(),
-      thing.getCX(), thing.getY(), 0, -SPEED, 1, power + 1);
+    CopterSplitter splitter = new CopterSplitter(thing.game,
+      thing.cx, thing.ypos, 0, -SPEED, 1, power + 1);
     splitter.setPower(MULTIPLIER * (power + 2));
     return new Thing[] {splitter};
   }
@@ -108,8 +106,8 @@ class SplitterAttack extends Weapon {
     if (count == 0 || power <= 2 * MULTIPLIER) return null;
     thing.setHP(0);
 
-    VeggieCopter game = thing.getGame();
-    var x = thing.getCX(), y = thing.getCY();
+    VeggieCopter game = thing.game;
+    var x = thing.cx, y = thing.cy;
     var xd = ydir, yd = xdir;
     var size = power / MULTIPLIER - 3;
 

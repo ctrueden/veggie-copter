@@ -22,15 +22,15 @@ class BoundingBox {
   }
 }
 
-/** An image with associated bounding box insets. */
-class BoundedImage {
-  constructor(img, width, height, xoff, yoff) {
-    this.img = img;                                      // Image.
-    this.width = width == null ? img.width : width;      // Image width.
-    this.height = height == null ? img.height : height;  // Image height.
-    this.xoff = xoff == null ? 0 : xoff;                 // X offset.
-    this.yoff = yoff == null ? 0 : yoff;                 // Y offset.
-    this.boxes = [];                                     // Bounding boxes.
+/** An image plus associated bounding box insets. */
+class Sprite {
+  constructor(image, width, height, xoff, yoff) {
+    this.image = image;                                   // Image.
+    this.width = width == null ? image.width : width;     // Image width.
+    this.height = height == null ? image.height : height; // Image height.
+    this.xoff = xoff == null ? 0 : xoff;                  // X offset.
+    this.yoff = yoff == null ? 0 : yoff;                  // Y offset.
+    this.boxes = [];                                      // Bounding boxes.
   }
 
   /** Adds a bounding box to the image. */
@@ -40,21 +40,6 @@ class BoundedImage {
   removeBox() {
     boxes.pop();
   }
-
-  /** Gets image. */
-  getImage() { return this.img; }
-
-  /** Gets image width. */
-  getWidth() { return this.width; }
-
-  /** Gets image height. */
-  getHeight() { return this.height; }
-
-  /** Gets X offset. */
-  getOffsetX() { return this.xoff; }
-
-  /** Gets Y offset. */
-  getOffsetY() { return this.yoff; }
 
   /** Gets bounding boxes given the image's top left coordinate. */
   getBoxes(x, y) {
@@ -95,11 +80,11 @@ class AttackStyle {
    */
   trigger() { }
 
-  /** Sets power level of this attack style. */
-  setPower(power) { this.power = power; }
-
   /** Gets power level of this attack style. */
-  getPower() { return this.power; }
+  get power() { return this.power; }
+
+  /** Sets power level of this attack style. */
+  set power(power) { this.power = power; }
 
   keyPressed(e) { }
   keyReleased(e) { }
@@ -120,9 +105,9 @@ class Thing {
     this.move = null;            // Object's movement style.
     this.attack = null;          // Object's attack style.
     this.xpos = this.ypos = 0;   // Position of the object.
-    this.images = {};            // Collection of images representing the object.
-    this.activeImage = null;     // Name key of image for object's current status.
-    this.hp = this.maxhp = 1;    // Hit points.
+    this.sprites = {};           // Collection of sprites representing the object.
+    this.activeSpriteKey = null; // Name key of object's active sprite.
+    this.hp = this.maxHP = 1;    // Hit points.
     this.power = 1;              // Amount of damage the object inflicts.
     this.type = ThingTypes.EVIL; // The type of this object.
     this.hit = 0;                // Number of times the object has been hit.
@@ -136,33 +121,32 @@ class Thing {
   /** Assigns object's attack style. */
   setAttack(as) { this.attack = as; }
 
-  /** Assigns object's collection of images. */
-  setImages(images, activeImage) {
-    if (images == null) {
-      this.images = {};
-      this.activeImage = null;
+  /** Assigns object's collection of sprites. */
+  setSprites(sprites, activeSpriteKey) {
+    if (sprites == null) {
+      this.sprites = {};
+      this.activeSpriteKey = null;
     }
     else {
-      this.images = clone(images);
-      this.activateImage(activeImage);
+      this.sprites = clone(sprites);
+      this.activateSprite(activeSpriteKey);
     }
   }
 
-  setImage(image) { this.setImages({0: image}, 0); }
+  setSprite(sprite) { this.setSprites({0: sprite}, 0); }
 
-  /** Changes the image currently representing the object. */
-  activateImage(imageName) {
-    if (imageName == null || imageName in this.images) this.activeImage = imageName;
-    else this.noSuchImage(imageName);
+  /** Changes the sprite currently representing the object. */
+  activateSprite(key) {
+    if (key == null || key in this.sprites) this.activeSpriteKey = key;
+    else this.noSuchSprite(key);
   }
 
   /** Assigns object's position. */
   setPos(x, y) {
     this.xpos = x;
     this.ypos = y;
-    var width = this.getWidth(), height = this.getHeight();
-    if (this.xpos < -width - this.threshold ||
-        this.ypos < -height - this.threshold ||
+    if (this.xpos < -this.width - this.threshold ||
+        this.ypos < -this.height - this.threshold ||
         this.xpos >= this.game.width + this.threshold ||
         this.ypos >= this.game.height + this.threshold)
     {
@@ -172,12 +156,12 @@ class Thing {
 
   /** Assigns object's position (coordinates). */
   setCPos(cx, cy) {
-    setPos(cx - getWidth() / 2, cy - getHeight() / 2);
+    setPos(cx - this.width / 2, cy - this.height / 2);
   }
 
   /** Assigns object's hit points. */
   setHP(hp) {
-    if (hp > this.maxhp) hp = this.maxhp;
+    if (hp > this.maxHP) hp = this.maxHP;
     this.hp = hp;
   }
 
@@ -189,11 +173,10 @@ class Thing {
 
   /** Draws the object onto the given canvas context. */
   draw(ctx) {
-    var img = this.getBoundedImage();
-    if (img == null) return;
-    var x = Math.trunc(getX() + img.getOffsetX());
-    var y = Math.trunc(getY() + img.getOffsetY());
-    ctx.drawImage(img.getImage(), x, y);
+    if (this.sprite == null) return;
+    var x = Math.trunc(this.xpos + this.sprite.xoff);
+    var y = Math.trunc(this.ypos + this.sprite.yoff);
+    ctx.drawImage(this.sprite.image, x, y);
   }
 
   /** Hits this object for the given amount of damage. */
@@ -227,68 +210,35 @@ class Thing {
     return this.attack.trigger();
   }
 
-  /** Gets the game to which this object belongs. */
-  getGame() { return this.game; }
-
-  /** Gets the object's movement style. */
-  getMovement() { return this.move; }
-
-  /** Gets the object's attack style. */
-  getAttack() { return this.attack; }
-
-  /** Gets object's X coordinate. */
-  getX() { return this.xpos; }
-
-  /** Gets object's Y coordinate. */
-  getY() { return this.ypos; }
-
   /** Gets object's centered X coordinate. */
-  getCX() { return this.getX() + this.getWidth() / 2; }
+  get cx() { return this.xpos + this.width / 2; }
 
   /** Gets object's centered Y coordinate. */
-  getCY() { return this.getY() + this.getHeight() / 2; }
+  get cy() { return this.ypos + this.height / 2; }
 
-  /** Gets image representing this object. */
-  getImage() {
-    var img = this.getBoundedImage();
-    return img == null ? null : img.getImage();
+  /** Gets image of the object's active sprite. */
+  get image() {
+    var sprite = this.sprite();
+    return sprite == null ? null : sprite.image;
   }
 
-  /** Gets current image index into image list. */
-  getImageIndex() { return this.imageIndex; }
-
-  /** Gets number of images in image list. */
-  getImageCount() { return this.images.length; }
-
   /** Gets object's width. */
-  getWidth() {
-    var img = this.getBoundedImage();
-    return img == null ? -1 : img.getWidth();
+  get width() {
+    var sprite = this.sprite();
+    return sprite == null ? -1 : sprite.width;
   }
 
   /** Gets object's height. */
-  getHeight() {
-    var img = this.getBoundedImage();
-    return img == null ? -1 : img.getHeight();
+  get height() {
+    var sprite = this.sprite();
+    return sprite == null ? -1 : sprite.height;
   }
 
-  /** Gets object's bounding boxes. */
-  getBoxes() {
-    var img = this.getBoundedImage();
-    return img == null ? null : img.getBoxes(this.xpos, this.ypos);
+  /** Gets bounding boxes of the object's active sprite. */
+  get boxes() {
+    var sprite = this.sprite();
+    return sprite == null ? null : sprite.getBoxes(this.xpos, this.ypos);
   }
-
-  /** Gets object's current HP. */
-  getHP() { return this.hp; }
-
-  /** Gets object's maximum HP value. */
-  getMaxHP() { return this.maxhp; }
-
-  /** Gets object's power. */
-  getPower() { return this.power; }
-
-  /** Gets object's type. */
-  getType() { return this.type; }
 
   /** Gets whether object has been hit. */
   isHit() { return this.hit > 0; }
@@ -297,7 +247,7 @@ class Thing {
   isDead() { return this.hp <= 0; }
 
   /** Gets score value of the object. */
-  getScore() { return this.maxhp; }
+  get score() { return this.maxHP; }
 
   /** Returns true if this object can harm the given one. */
   harms(t) {
@@ -319,14 +269,15 @@ class Thing {
     if (this.attack != null) attack.keyReleased(e);
   }
 
-  getBoundedImage(imageName) {
-    if (imageName == null) imageName = this.imageName;
-    if (imageName == null) return null;
-    if (!(imageName in this.images)) this.noSuchImage(imageName);
-    else return this.images[imageName];
+  /** Retrieves the sprite with the given name key. */
+  sprite(key) {
+    if (key == null) key = this.activeSpriteKey;
+    if (key == null) return null;
+    if (!(key in this.sprites)) this.noSuchSprite(key);
+    else return this.sprites[key];
   }
 
-  noSuchImage(imageName) {
-    console.error(this + ": no such image: " + imageName);
+  noSuchSprite(key) {
+    console.error(this + ": no such sprite image: " + key);
   }
 }

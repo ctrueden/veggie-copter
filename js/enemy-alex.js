@@ -23,7 +23,7 @@ class AlexMovement extends MovementStyle {
     this.speed = 2;
     this.lungeRate = 300;
 
-    var game = thing.getGame();
+    var game = thing.game;
 
     // compute starting position
     var xpos, ypos;
@@ -58,8 +58,8 @@ class AlexMovement extends MovementStyle {
     // compute random starting trajectory
     this.xstart = xpos;
     this.ystart = ypos;
-    this.xlen = this.thing.getWidth() * Math.random() + 2 * this.xSteps;
-    this.ylen = this.thing.getHeight() * Math.random() + 2 * this.ySteps;
+    this.xlen = this.thing.width * Math.random() + 2 * this.xSteps;
+    this.ylen = this.thing.height * Math.random() + 2 * this.ySteps;
     this.xinc = 0;
     this.yinc = 0;
 
@@ -77,8 +77,8 @@ class AlexMovement extends MovementStyle {
 
   /** Moves the given thing according to the bouncing movement style. */
   move() {
-    var xpos = thing.getX(), ypos = thing.getY();
-    var game = thing.getGame();
+    var xpos = thing.xpos, ypos = thing.ypos;
+    var game = thing.game;
 
     // adjust for external movement
     xstart = xstart - lastX + xpos;
@@ -88,16 +88,16 @@ class AlexMovement extends MovementStyle {
     if (ticks % LUNGE_RATE == 0) {
       // lunge toward ship
       this.lunging = true;
-      var hero = game.getCopter();
+      var hero = game.copter;
 
       xstart = xpos;
-      var sx = hero.getX();
+      var sx = hero.xpos;
       xdir = sx > xpos;
       xlen = 3 * (xdir ? sx - xpos : xpos - sx) / 2;
       xinc = 0;
 
       ystart = ypos;
-      var sy = hero.getY();
+      var sy = hero.ypos;
       ydir = sy > ypos;
       ylen = 3 * (ydir ? sy - ypos : ypos - sy) / 2;
       yinc = 0;
@@ -114,15 +114,15 @@ class AlexMovement extends MovementStyle {
     if (thing.isHit() && !this.running) this.needsToRun = true;
     var w = game.getWindowWidth();
     var h = game.getWindowHeight();
-    var width = thing.getWidth();
-    var height = thing.getHeight();
+    var width = thing.width;
+    var height = thing.height;
 
     if (xinc == this.xSteps) {
       if (this.needsToRun) {
         // run away when being shot
         this.running = true;
         xstart = xpos;
-        xdir = thing.getCX() < w / 2;
+        xdir = thing.cx < w / 2;
         xlen = 2 * (xdir ? w - width - xpos : xpos) - 10;
         xinc = 0;
       }
@@ -168,9 +168,9 @@ class AlexEnemy extends EnemyHead {
   AlexEnemy(game, args) {
     // CTR TODO parse args and initialize Alex with proper parameters
     super(game, 25,
-      game.loadImage("alex1.png"),
-      game.loadImage("alex2.png"),
-      game.loadImage("alex3.png"));
+      game.sprite("alex1"),
+      game.sprite("alex2"),
+      game.sprite("alex3"));
     // CTR TODO set proper bounding box and offsets here
     var normal = this.normalImage();
     normal.addBox(new BoundingBox(30, 1, 30, 20));
@@ -194,7 +194,7 @@ class AlexEnemy extends EnemyHead {
     else this.activateImage('normal');
 
     // regen
-    if (this.game.getTicks() % 6 == 0 && hp < maxhp) hp++;
+    if (this.game.ticks % 6 == 0 && this.hp < this.maxHP) this.hp++;
   }
 }
 
@@ -202,9 +202,9 @@ class AlexBoss extends BossHead {
   constructor(game, args) {
     // CTR TODO parse args and initialize Alex with proper parameters
     super(game, 250,
-      game.loadImage("../assets/alex-boss1.png"),
-      game.loadImage("../assets/alex-boss2.png"),
-      game.loadImage("../assets/alex-boss3.png"));
+      game.sprite("alex-boss1"),
+      game.sprite("alex-boss2"),
+      game.sprite("alex-boss3"));
     // CTR TODO set proper bounding box and offsets here
     var normal = this.normalImage();
     normal.addBox(new BoundingBox(95, 3, 100, 60));
@@ -219,7 +219,7 @@ class AlexBoss extends BossHead {
 
   /** Gets the attack form left behind by this boss upon defeat. */
   getWeapon() {
-    return new EnergyAttack(this.game.getCopter(), 0, 0);
+    return new EnergyAttack(this.game.copter, 0, 0);
   }
 
   getScore() { return 30 * super.getScore(); }
@@ -233,7 +233,6 @@ class AlexBoss extends BossHead {
     else this.activateImage('normal');
 
     // regen
-    if (this.game.getTicks() % 20 == 0 && this.hp < this.maxhp) this.hp++;
+    if (this.game.ticks % 20 == 0 && this.hp < this.maxHP) this.hp++;
   }
-
 }

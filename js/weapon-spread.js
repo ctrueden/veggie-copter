@@ -2,7 +2,7 @@ class CopterSpread extends Thing {
 
   const var SPREAD_SPEED = 10;
 
-  static BoundedImage image;
+  static Sprite image;
 
   static {
     var size = 9;
@@ -10,15 +10,15 @@ class CopterSpread extends Thing {
     var ctx = context2d(img);
     ctx.fillStyle = "blue";
     ctx.fillRoundRect(0, 0, size, size, size / 2, size / 2);
-    image = new BoundedImage(img);
+    image = new Sprite(img);
     image.addBox(new BoundingBox());
   }
 
   CopterSpread(thing, angle) {
-    super(thing.getGame());
+    super(thing.game);
     type = GOOD_BULLET;
-    setImage(image);
-    var x = thing.getCX() - getWidth() / 2, y = thing.getY();
+    setSprite(image);
+    var x = thing.cx - width / 2, y = thing.getY();
     var xd = -(float) (100 * Math.cos(angle)) + x;
     var yd = -(float) (100 * Math.sin(angle)) + y;
     move = new BulletMovement(this, x, y, xd, yd, SPREAD_SPEED);
@@ -36,7 +36,7 @@ class SpreadWeapon extends Weapon {
   var fired;
 
   constructor(t) {
-    super(t, Color.blue, t.getGame().loadImage("icon-spread.png").getImage());
+    super(t, "blue", t.game.sprite("icon-spread").image);
   }
 
   clear() { space = false; }

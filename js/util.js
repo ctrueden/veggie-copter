@@ -48,7 +48,7 @@ class ImageLoader {
     this.images = {};
   }
 
-  getImage(path) {
+  image(path) {
     if (path in this.images) return this.images[path];
     var image = this.loadImage(path);
     this.images[path] = image;

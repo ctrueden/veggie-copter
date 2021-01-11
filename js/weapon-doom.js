@@ -5,8 +5,7 @@ class DoomWeapon extends Weapon {
   CopterDoom doom;
 
   DoomAttack(t) {
-    super(t, Color.black,
-      t.getGame().loadImage("icon-doom.png").getImage());
+    super(t, "black", t.game.sprite("icon-doom").image);
   }
 
   clear() {
@@ -17,8 +16,8 @@ class DoomWeapon extends Weapon {
 
   /** Fires a shot if space bar is pressed. */
   shoot() {
-    if (!space || doom != null || thing.getHP() == 1) return null;
-    doom = new CopterDoom(thing);
+    if (!this.space || this.doom != null || this.thing.hp == 1) return null;
+    var doom = new CopterDoom(thing);
     doom.setPower(power);
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return [doom];

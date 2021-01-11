@@ -5,7 +5,7 @@ class BounceMovement extends MovementStyle {
     this.xSteps = 40;
     this.ySteps = 30;
 
-    var game = this.thing.getGame();
+    var game = this.thing.game;
 
     // compute starting position
     var xpos, ypos;
@@ -40,8 +40,8 @@ class BounceMovement extends MovementStyle {
     // compute random starting trajectory
     this.xstart = xpos;
     this.ystart = ypos;
-    this.xlen = this.thing.getWidth() * Math.random() + 2 * this.xSteps;
-    this.ylen = this.thing.getHeight() * Math.random() + 2 * this.ySteps;
+    this.xlen = this.thing.width * Math.random() + 2 * this.xSteps;
+    this.ylen = this.thing.height * Math.random() + 2 * this.ySteps;
     this.xinc = 0;
     this.yinc = 0;
 
@@ -50,7 +50,7 @@ class BounceMovement extends MovementStyle {
 
   /** Moves the thing according to the bouncing movement style. */
   move() {
-    var xpos = this.thing.getX(), ypos = this.thing.getY();
+    var xpos = this.thing.xpos, ypos = this.thing.ypos;
 
     var xp = smooth(xinc++ / this.xSteps);
     if (xdir) xpos = xstart + xp * xlen;
@@ -63,14 +63,14 @@ class BounceMovement extends MovementStyle {
     if (this.xinc == this.xSteps) {
       this.xstart = xpos;
       this.xdir = !this.xdir;
-      this.xlen = this.thing.getWidth() * Math.random() + this.xSteps;
+      this.xlen = this.thing.width * Math.random() + this.xSteps;
       this.xinc = 0;
     }
 
     if (this.yinc == this.ySteps) {
       this.ystart = ypos;
       this.ydir = !this.ydir;
-      this.ylen = this.thing.getHeight() * Math.random() + this.ySteps;
+      this.ylen = this.thing.height * Math.random() + this.ySteps;
       this.yinc = 0;
     }
 
