@@ -52,15 +52,13 @@ class Game {
 
   /** Whether there are any enemies currently onscreen. */
   isClear() {
-    var clear = true;
     for (var i=0; i<this.things.length; i++) {
       var t = this.things[i];
       if (t.type != ThingTypes.GOOD && t.type != ThingTypes.GOOD_BULLET) {
-        clear = false;
-        break;
+        return false;
       }
     }
-    return clear;
+    return true;
   }
 
   /** Resets the game to its initial state. */
@@ -74,7 +72,7 @@ class Game {
     this.selector.reset();
   }
 
-  /** Draws the veggie copter graphics to the image buffer. */
+  /** Draws the veggie copter graphics to the linked canvas. */
   draw() {
     this.buf.fillStyle = 'black';
     this.buf.fillRect(0, 0, this.offscreen.width, this.offscreen.height);
