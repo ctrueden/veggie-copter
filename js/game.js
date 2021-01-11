@@ -237,7 +237,10 @@ class Game {
         if (this.stage == null) this.selector.adjustStage(true);
       }
       else if (Keys.FAST_FORWARD.includes(e.keyCode)) this.fast = true;
-      else if (Keys.TOGGLE_DEBUG.includes(e.keyCode)) this.debug = !this.debug;
+      else if (Keys.TOGGLE_DEBUG.includes(e.keyCode)) {
+        this.debug = !this.debug;
+        console.info(`Debug mode ${this.debug ? 'enabled' : 'disabled'}`);
+      }
       else if (Keys.TOGGLE_MUTE.includes(e.keyCode)) this.player.toggleMute();
     }
   }
