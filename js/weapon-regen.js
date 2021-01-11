@@ -121,12 +121,10 @@ class RegenWeapon extends Weapon {
   }
 
   keyPressed(e) {
-    var code = e.getKeyCode();
-    if (code == Keys.SHOOT) this.space = true;
+    if (Keys.SHOOT.includes(e.keyCode)) this.space = true;
   }
 
   keyReleased(e) {
-    var code = e.getKeyCode();
-    if (code == Keys.SHOOT) clear();
+    if (Keys.SHOOT.includes(e.keyCode)) clear();
   }
 }

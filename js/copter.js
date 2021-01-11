@@ -16,8 +16,10 @@ class CopterMovement extends MovementStyle {
   move() {
     var xpos = this.thing.xpos, ypos = this.thing.ypos;
     var xdir = 0, ydir = 0;
-    if (left) xdir -= this.speed; if (right) xdir += this.speed;
-    if (up) ydir -= this.speed; if (down) ydir += this.speed;
+    if (this.left) xdir -= this.speed;
+    if (this.right) xdir += this.speed;
+    if (this.up) ydir -= this.speed;
+    if (this.down) ydir += this.speed;
     xpos += xdir; ypos += ydir;
 
     var game = this.thing.game;
@@ -29,27 +31,17 @@ class CopterMovement extends MovementStyle {
   }
 
   keyPressed(e) {
-    var code = e.getKeyCode();
-    if (code == KeyEvent.VK_LEFT ||
-      code == KeyEvent.VK_KP_LEFT) left = true;
-    else if (code == KeyEvent.VK_RIGHT ||
-      code == KeyEvent.VK_KP_RIGHT) right = true;
-    else if (code == KeyEvent.VK_UP ||
-      code == KeyEvent.VK_KP_UP) up = true;
-    else if (code == KeyEvent.VK_DOWN ||
-      code == KeyEvent.VK_KP_DOWN) down = true;
+    if (Keys.MOVE_LEFT.includes(e.keyCode)) this.left = true;
+    else if (Keys.MOVE_RIGHT.includes(e.keyCode)) this.right = true;
+    else if (Keys.MOVE_UP.includes(e.keyCode)) this.up = true;
+    else if (Keys.MOVE_DOWN.includes(e.keyCode)) this.down = true;
   }
 
   keyReleased(e) {
-    var code = e.getKeyCode();
-    if (code == KeyEvent.VK_LEFT ||
-      code == KeyEvent.VK_KP_LEFT) left = false;
-    else if (code == KeyEvent.VK_RIGHT ||
-      code == KeyEvent.VK_KP_RIGHT) right = false;
-    else if (code == KeyEvent.VK_UP ||
-      code == KeyEvent.VK_KP_UP) up = false;
-    else if (code == KeyEvent.VK_DOWN ||
-      code == KeyEvent.VK_KP_DOWN) down = false;
+    if (Keys.MOVE_LEFT.includes(e.keyCode)) this.left = false;
+    else if (Keys.MOVE_RIGHT.includes(e.keyCode)) this.right = false;
+    else if (Keys.MOVE_UP.includes(e.keyCode)) this.up = false;
+    else if (Keys.MOVE_DOWN.includes(e.keyCode)) this.down = false;
   }
 }
 
@@ -124,23 +116,18 @@ class CopterAttack extends AttackStyle {
   }
 
   keyPressed(e) {
-    var code = e.getKeyCode();
-    var size = this.attacks.length;
-    if (code == Keys.ATTACK_STYLE_CYCLE) this.activate((this.activeIndex + 1) % size);
-    else if (code == Keys.ALL_ATTACK_STYLES) {
+    if (Keys.WEAPON_CYCLE.includes(e.keyCode)) {
+      // roll to the next attack mode
+      this.activate((this.activeIndex + 1) % this.attacks.length);
+    }
+    else if (Keys.ALL_WEAPONS.includes(e.keyCode)) {
       // turn on all attack styles simultaneously
       this.activate(null);
     }
     else {
-      var match = false;
-      for (var i=0; i<Keys.ATTACK_STYLES.length; i++) {
-        if (code == Keys.ATTACK_STYLES[i]) {
-          this.activate(i);
-          match = true;
-          break;
-        }
-      }
-      if (!match) {
+      var index = Keys.WEAPONS.indexOf(e.keyCode);
+      if (index >= 0) this.activate(index);
+      else {
         if (this.activeAttack != null) this.activeAttack.keyPressed(e);
         else this.attacks.forEach(attack => attack.keyPressed(e));
       }
@@ -197,17 +184,8 @@ class Copter extends Thing {
 
   /** Handles keyboard presses. */
   keyPressed(e) {
-    var code = e.getKeyCode();
-    if (code == Keys.POWER_UP) {
-      var pow = this.attack.power;
-      pow++;
-      this.attack.setPower(pow);
-    }
-    else if (code == Keys.POWER_DOWN) {
-      var pow = this.attack.power;
-      if (pow > 1) pow--;
-      this.attack.setPower(pow);
-    }
+    if (Keys.POWER_UP.includes(e.keyCode)) this.attack.power++;
+    else if (Keys.POWER_DOWN.includes(e.keyCode)) this.attack.power--;
     super.keyPressed(e);
   }
 }

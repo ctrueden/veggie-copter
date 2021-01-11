@@ -128,15 +128,13 @@ class SplitterAttack extends Weapon {
   }
 
   keyPressed(e) {
-    var code = e.getKeyCode();
-    if (code == Keys.SHOOT) space = true;
-    else if (code == Keys.TRIGGER) trigger = true;
+    if (Keys.SHOOT.includes(e.keyCode)) space = true;
+    else if (Keys.TRIGGER.includes(e.keyCode)) trigger = true;
   }
 
   keyReleased(e) {
-    var code = e.getKeyCode();
-    if (code == Keys.SHOOT) space = false;
-    else if (code == Keys.TRIGGER) trigger = false;
+    if (Keys.SHOOT.includes(e.keyCode)) space = false;
+    else if (Keys.TRIGGER.includes(e.keyCode)) trigger = false;
   }
 
 }

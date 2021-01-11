@@ -48,16 +48,14 @@ class LitWeapon extends Weapon {
   }
 
   keyPressed(e) {
-    var code = e.getKeyCode();
-    if (code == Keys.SHOOT) {
+    if (Keys.SHOOT.includes(e.keyCode)) {
       space = true;
       ticks = 0;
     }
   }
 
   keyReleased(e) {
-    var code = e.getKeyCode();
-    if (code == Keys.SHOOT) space = false;
+    if (Keys.SHOOT.includes(e.keyCode)) space = false;
   }
 
   generatePath(index) {

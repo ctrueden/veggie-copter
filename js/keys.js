@@ -1,3 +1,4 @@
+// Credit: https://stackoverflow.com/a/1465409/1207769
 if (typeof KeyEvent == "undefined") {
   var KeyEvent = {
     DOM_VK_CANCEL: 3,
@@ -119,22 +120,24 @@ if (typeof KeyEvent == "undefined") {
 }
 
 var Keys = {
-  SHOOT: KeyEvent.DOM_VK_SPACE,
-  TRIGGER: KeyEvent.DOM_VK_B,
-  MOVE_LEFT: KeyEvent.DOM_VK_LEFT,
-  MOVE_RIGHT: KeyEvent.DOM_VK_RIGHT,
-  FAST_FORWARD: KeyEvent.DOM_VK_BACK_QUOTE,
-  TOGGLE_MUTE: KeyEvent.DOM_VK_M,
-  TOGGLE_DEBUG: KeyEvent.DOM_VK_BACK_SLASH,
-  PAUSE: KeyEvent.DOM_VK_P,
-  POWER_UP: KeyEvent.DOM_VK_Q,
-  POWER_DOWN: KeyEvent.DOM_VK_A,
-  ATTACK_STYLE_CYCLE: KeyEvent.DOM_VK_Z,
-  ATTACK_STYLES: [
+  SHOOT: [KeyEvent.DOM_VK_SPACE],
+  TRIGGER: [KeyEvent.DOM_VK_B],
+  MOVE_LEFT: [KeyEvent.DOM_VK_LEFT, KeyEvent.DOM_VK_NUMPAD4, KeyEvent.DOM_VK_A],
+  MOVE_RIGHT: [KeyEvent.DOM_VK_RIGHT, KeyEvent.DOM_VK_NUMPAD6, KeyEvent.DOM_VK_D],
+  MOVE_UP: [KeyEvent.DOM_VK_UP, KeyEvent.DOM_VK_NUMPAD8, KeyEvent.DOM_VK_W],
+  MOVE_DOWN: [KeyEvent.DOM_VK_DOWN, KeyEvent.DOM_VK_NUMPAD2, KeyEvent.DOM_VK_S],
+  FAST_FORWARD: [KeyEvent.DOM_VK_BACK_QUOTE],
+  TOGGLE_MUTE: [KeyEvent.DOM_VK_M],
+  TOGGLE_DEBUG: [KeyEvent.DOM_VK_BACK_SLASH],
+  PAUSE: [KeyEvent.DOM_VK_P],
+  POWER_UP: [KeyEvent.DOM_VK_Q],
+  POWER_DOWN: [KeyEvent.DOM_VK_A],
+  WEAPON_CYCLE: [KeyEvent.DOM_VK_Z],
+  WEAPONS: [
     KeyEvent.DOM_VK_1, KeyEvent.DOM_VK_2, KeyEvent.DOM_VK_3, KeyEvent.DOM_VK_4,
     KeyEvent.DOM_VK_5, KeyEvent.DOM_VK_6, KeyEvent.DOM_VK_7, KeyEvent.DOM_VK_8,
-    KeyEvent.DOM_VK_9, KeyEvent.DOM_VK_0, KeyEvent.DOM_VK_MINUS, KeyEvent.DOM_VK_EQUALS,
-    KeyEvent.DOM_VK_BACK_SPACE
+    KeyEvent.DOM_VK_9, KeyEvent.DOM_VK_0, KeyEvent.DOM_VK_MINUS,
+    KeyEvent.DOM_VK_EQUALS, KeyEvent.DOM_VK_BACK_SPACE
   ],
-  ALL_ATTACK_STYLES: KeyEvent.DOM_VK_END
+  ALL_WEAPONS: [KeyEvent.DOM_VK_END]
 };

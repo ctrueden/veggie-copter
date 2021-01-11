@@ -9,8 +9,8 @@ class Game {
     this.canvas.height = this.height + this.statusHeight;
     this.offscreen = makeImage(this.canvas.width,         // Offscreen canvas, for double buffering.
                                this.canvas.height);
-    this.ctx = this.canvas.getContext('2d');              // Original canvas context.
-    this.buf = this.offscreen.getContext('2d');           // Offscreen canvas context.
+    this.ctx = context2d(this.canvas);                    // Original canvas context.
+    this.buf = context2d(this.offscreen);                 // Offscreen canvas context.
 
     this.loader = new ImageLoader();                      // Object for loading images from disk.
     this.selector = new StageSelector(this);              // Object for handling stage selection.
@@ -89,14 +89,14 @@ class Game {
     this.stars.drawStars(this.buf);
 
     // redraw things
-    var t = this.getThings();
-    for (var i=0; i<t.length; i++) t[i].draw(this.buf);
+    var things = this.getThings();
+    things.forEach(t => t.draw(this.buf));
 
     if (this.debug) {
-      for (var i=0; i<t.length; i++) {
+      things.forEach(t => {
         // draw bounding box
         this.buf.strokeStyle = "red";
-        var r = t[i].boxes;
+        var r = t.boxes;
         for (var j=0; j<r.length; j++) {
           this.buf.beginPath();
           this.buf.rect(r[j].x, r[j].y, r[j].width, r[j].height);
@@ -105,10 +105,10 @@ class Game {
 
         // draw power level
         this.buf.strokeStyle = "white";
-        var xint = Math.trunc(t[i].cx) - 3;
-        var yint = Math.trunc(t[i].cy) + 6;
-        this.buf.fillText("" + t[i].power, xint, yint);
-      }
+        var xint = Math.trunc(t.cx) - 3;
+        var yint = Math.trunc(t.cy) + 6;
+        this.buf.fillText("" + t.power, xint, yint);
+      });
     }
 
     // draw text messages
@@ -226,44 +226,39 @@ class Game {
 
   /** Handles key presses. */
   keyPressed(e) {
-    const code = e.keyCode;
-    if (!this.keys.has(code)) {
-      this.keys.add(code);
-      var t = this.getThings();
-      for (var i=0; i<t.length; i++) t[i].keyPressed(e);
+    if (!this.keys.has(e.keyCode)) {
+      this.keys.add(e.keyCode);
+      this.getThings().forEach(t => t.keyPressed(e));
 
-      if (code == Keys.SHOOT) {
+      if (Keys.SHOOT.includes(e.keyCode)) {
         if (this.stage == null) {
-          this.stage = this.selector.getSelectedStage();
+          this.stage = this.selector.selectedStage;
           this.stage.resetScript();
           this.things.push(this.copter);
           this.copter.attack.reactivate();
         }
         else if (this.copter.isDead()) this.resetGame();
       }
-      else if (code == Keys.PAUSE) {
+      else if (Keys.PAUSE.includes(e.keyCode)) {
         this.pause = !this.pause;
       }
-      else if (code == Keys.MOVE_LEFT) {
+      else if (Keys.MOVE_LEFT.includes(e.keyCode)) {
         if (this.stage == null) this.selector.adjustStage(false);
       }
-      else if (code == Keys.MOVE_RIGHT) {
+      else if (Keys.MOVE_RIGHT.includes(e.keyCode)) {
         if (this.stage == null) this.selector.adjustStage(true);
       }
-      else if (code == Keys.FAST_FORWARD) this.fast = true;
-      else if (code == Keys.TOGGLE_DEBUG) this.debug = !this.debug;
-      else if (code == Keys.TOGGLE_MUTE) this.player.toggleMute();
+      else if (Keys.FAST_FORWARD.includes(e.keyCode)) this.fast = true;
+      else if (Keys.TOGGLE_DEBUG.includes(e.keyCode)) this.debug = !this.debug;
+      else if (Keys.TOGGLE_MUTE.includes(e.keyCode)) this.player.toggleMute();
     }
   }
 
   /** Handles key releases. */
   keyReleased(e) {
-    const code = e.keyCode;
-    this.keys.delete(code);
-    var t = this.getThings();
-    for (var i=0; i<t.length; i++) t[i].keyReleased(e);
-
-    if (code == Keys.FAST_FORWARD) this.fast = false;
+    this.keys.delete(e.keyCode);
+    this.getThings().forEach(t => t.keyReleased(e));
+    if (Keys.FAST_FORWARD.includes(e.keyCode)) this.fast = false;
   }
 
   /** Does collision detection between the given objects. */

@@ -121,7 +121,7 @@ class StageSelector {
       var info = this.stageInfo[i];
       info.stage.drawIcon(ctx, info.x, info.y, i == this.current);
     }
-    this.getSelectedStage().drawSelectScreen(ctx);
+    this.selectedStage.drawSelectScreen(ctx);
   }
 
   /** Adjusts currently selected stage forward or backward. */
@@ -131,13 +131,13 @@ class StageSelector {
       this.current += dir ? 1 : -1;
       if (this.current >= this.stageInfo.length) this.current = 0;
       if (this.current < 0) this.current = this.stageInfo.length - 1;
-      if (!this.getSelectedStage().isCompleted()) break;
+      if (!this.selectedStage.isCompleted()) break;
     }
     while (start != this.current);
   }
 
   /** Gets currently selected stage. */
-  getSelectedStage() { return this.stageInfo[this.current].stage; }
+  get selectedStage() { return this.stageInfo[this.current].stage; }
 
   /** Resets stage selector to its initial state. */
   reset() {

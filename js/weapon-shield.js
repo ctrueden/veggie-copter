@@ -123,13 +123,11 @@ class ShieldWeapon extends Weapon {
   }
 
   keyPressed(e) {
-    var code = e.getKeyCode();
-    if (code == Keys.SHOOT) setExtended(true);
+    if (Keys.SHOOT.includes(e.keyCode)) setExtended(true);
   }
 
   keyReleased(e) {
-    var code = e.getKeyCode();
-    if (code == Keys.SHOOT) setExtended(false);
+    if (Keys.SHOOT.includes(e.keyCode)) setExtended(false);
   }
 
 }

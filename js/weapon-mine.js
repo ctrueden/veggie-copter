@@ -106,8 +106,7 @@ class MineExplode extends AttackStyle {
   }
 
   keyPressed(e) {
-    var code = e.getKeyCode();
-    if (code == Keys.TRIGGER) explode();
+    if (Keys.TRIGGER.includes(e.keyCode)) explode();
   }
 }
 
@@ -263,13 +262,11 @@ class MineAttack extends Weapon {
   }
 
   keyPressed(e) {
-    var code = e.getKeyCode();
-    if (code == Keys.SHOOT) space = true;
+    if (Keys.SHOOT.includes(e.keyCode)) space = true;
   }
 
   keyReleased(e) {
-    var code = e.getKeyCode();
-    if (code == Keys.SHOOT) space = false;
+    if (Keys.SHOOT.includes(e.keyCode)) space = false;
   }
 
 }
