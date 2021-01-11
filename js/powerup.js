@@ -63,7 +63,7 @@ class PowerUp extends Thing {
     // create power-up images
     var imgs = {};
     var pulse = 10; // Number of ticks of pulsation.
-    var color = att == null ? "white" : att.getColor();
+    var color = this.att == null ? "white" : this.att.getColor();
     var r2 = color.getRed() / 2;
     var g2 = color.getGreen() / 2;
     var b2 = color.getBlue() / 2;
@@ -75,8 +75,8 @@ class PowerUp extends Thing {
       var ctx = context2d(img);
       var median = size / 2;
       for (var rad=median; rad>=1; rad--) {
-        var q = (double) (median - rad) / median;
-        ctx.fillStyle = color(red, green, blue, Math.trunc(255 * q));
+        var alpha = (median - rad) / median;
+        ctx.fillStyle = color(red, green, blue, alpha);
         ctx.fillOval(median - rad, median - rad, 2 * rad, 2 * rad);
       }
       var img = new BoundedImage(img);

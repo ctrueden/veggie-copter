@@ -48,9 +48,8 @@ class MineShard extends Thing {
     for (var i=0; i<LIFE; i++) {
       var img = makeImage(SIZE, SIZE);
       var ctx = context2d(img);
-      var alpha = 255 * (LIFE - i) / LIFE;
-      ctx.fillStyle = color(Color.gray.getRed(),
-        Color.gray.getGreen(), Color.gray.getBlue(), alpha);
+      var alpha = (LIFE - i) / LIFE;
+      ctx.fillStyle = color(128, 128, 128, alpha);
       ctx.fillRoundRect(0, 0, SIZE, SIZE, SIZE / 2, SIZE / 2);
       images[i] = new BoundedImage(img);
       images[i].addBox(new BoundingBox());

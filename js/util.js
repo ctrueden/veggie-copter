@@ -14,6 +14,15 @@ function color(r, g, b, a) {
     `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
+function rgba(color) {
+  // Credit: https://stackoverflow.com/a/10971090/1207769
+  return color.replace(/[^\d,.%]/g, '').split(',');
+}
+function red(color) { return rgba(color)[0]; }
+function green(color) { return rgba(color)[1]; }
+function blue(color) { return rgba(color)[2]; }
+function alpha(color) { return rgba(color)[3]; }
+
 function makeImage(width, height) {
   var canvas = document.createElement('canvas');
   canvas.width = width;

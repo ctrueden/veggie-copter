@@ -1,7 +1,6 @@
 class CopterGun extends Thing {
   SPEED = 5;
   HEIGHT = 7;
-  BROWN = Color.yellow.darker();
 
   static {
     var len = HEIGHT;
@@ -34,7 +33,7 @@ class GunWeapon extends Weapon {
   var fired;
 
   GunAttack(t) {
-    super(t, CopterGun.BROWN,
+    super(t, "brown",
       t.getGame().loadImage("icon-gun.png").getImage());
   }
 

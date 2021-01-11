@@ -67,7 +67,7 @@ class CopterRegen extends Thing {
       var median = width / 2;
       for (var rad=median; rad>=1; rad--) {
         var q = (median - rad) / median;
-        ctx.fillStyle = color(red, green, blue, Math.trunc(128 * q));
+        ctx.fillStyle = color(red, green, blue, 0.5 * q);
         ctx.fillOval(median - rad, 2 * (median - rad), 2 * rad, 4 * rad);
       }
       images[i] = new BoundedImage(img);

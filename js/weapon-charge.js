@@ -39,7 +39,7 @@ class CopterCharge extends Thing {
         var l = (size - j) / 2;
         //int r = (size + j) / 2;
         var q = bright * (size - j) / size;
-        ctx.fillColor = color(q, q, q, q);
+        ctx.fillColor = color(q, q, q, q / 255);
         ctx.fillOval(l, l, j, j);
       }
       images[i] = new BoundedImage(img);
