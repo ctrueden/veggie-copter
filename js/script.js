@@ -48,6 +48,14 @@ class GameScript {
    */
   execute() {
     while (this.cmdIndex < this.commands.length) {
+      var cmd = this.commands[this.cmdIndex].name;
+      var args = this.commands[this.cmdIndex].params;
+      if (this.game.debug) {
+        console.info(`execute ${this.cmdIndex}/${this.commands.length}: ` +
+          `waitClear=${this.waitClear}, ` +
+          `waiting=${this.waiting}, ` +
+          `cmd=${cmd}(${args})`);
+      }
       if (this.waitClear) {
         if (this.game.isClear()) {
           this.waitClear = false;
@@ -62,9 +70,7 @@ class GameScript {
         this.waiting--;
         break;
       }
-      var cmd = this.commands[this.cmdIndex].name;
-      var args = this.commands[this.cmdIndex].params;
-      if (game.debug) console.info(cmd + "(" + args + ")");
+      if (this.game.debug) console.info(cmd + "(" + args + ")");
       if (equalsIgnoreCase(cmd, "add")) this.add(args);
       else if (equalsIgnoreCase(cmd, "print")) this.print(args);
       else if (equalsIgnoreCase(cmd, "wait")) this.wait(args);
