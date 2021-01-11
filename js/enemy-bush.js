@@ -128,12 +128,9 @@ class BushEnemy extends EnemyHead {
       game.loadImage("bush2.png"),
       game.loadImage("bush3.png"));
     // CTR TODO set proper bounding box and offsets here
-    var normal = getBoundedImage(0);
-    normal.addBox(new BoundingBox());
-    var attacking = getBoundedImage(1);
-    attacking.addBox(new BoundingBox());
-    var hurting = getBoundedImage(2);
-    hurting.addBox(new BoundingBox());
+    this.normalImage.addBox(new BoundingBox());
+    this.attackImage.addBox(new BoundingBox());
+    this.hurtImage.addBox(new BoundingBox());
     setMovement(new BushMovement(this));
     setAttack(new BushAttack(this));
   }

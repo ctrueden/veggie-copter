@@ -71,19 +71,19 @@ class EnemyMovement extends MovementStyle {
 
 // TODO: Better way to cache this statically??
 var ENEMY_BULLET_IMAGE = null;
+var ENEMY_BULLET_SIZE = 7;
 
 class EnemyBullet extends Thing {
-  SIZE = 7;
-
   constructor(t, x2, y2) {
     super(t.getGame());
     this.type = EVIL_BULLET;
 
     if (ENEMY_BULLET_IMAGE == null) {
-      var img = ImageTools.makeImage(SIZE, SIZE);
-      var ctx = img.createGraphics();
-      ctx.setColor(Color.red);
-      ctx.fillRoundRect(0, 0, SIZE, SIZE, SIZE / 2, SIZE / 2);
+      var size = ENEMY_BULLET_SIZE;
+      var img = makeImage(size, size);
+      var ctx = context2d(img);
+      ctx.fillStyle = "red";
+      ctx.fillRoundRect(0, 0, size, size, size / 2, size / 2);
       ENEMY_BULLET_IMAGE = new BoundedImage(img);
       ENEMY_BULLET_IMAGE.addBox(new BoundingBox());
     }
@@ -93,20 +93,21 @@ class EnemyBullet extends Thing {
     var x = t.getCX() - getWidth() / 2;
     var y = t.getCY() - getHeight() / 2;
     this.move = new BulletMovement(this, x, y, x2, y2);
-    //attack = new RandomBulletAttack(this); // MWAHAHA!
+    //this.attack = new RandomBulletAttack(this); // MWAHAHA!
   }
 }
 
 /** Defines random enemy bullet attack. */
 class RandomBulletAttack extends AttackStyle {
-  /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-  FREQUENCY = 3;
-
-  constructor(t) { super(t); }
+  constructor(t) {
+    super(t);
+    /** Probability that this thing will fire a bullet (1=rare, 60=always). */
+    this.frequency = 3;
+  }
 
   /** Fires a shot randomly. */
   shoot() {
-    if (Math.random() >= 1.0 / (60 - FREQUENCY)) return null;
+    if (Math.random() >= 1.0 / (60 - this.frequency)) return null;
     return [new EnemyBullet(thing, null, null)];
   }
 }
@@ -120,7 +121,7 @@ class EnemyHead extends Thing {
 
   constructor(game, max, normal, attacking, hurting) {
     super(game);
-    this.setImageList([normal, attacking, hurting]);
+    this.setImages({normal: normal, attacking: attacking, hurting: hurting});
     this.maxhp = this.hp = max;
     this.shooting = 0;
     //this.power = 10;
@@ -130,10 +131,18 @@ class EnemyHead extends Thing {
 
   move() {
     super.move();
-    if (isHit()) setImageIndex(HURTING);
-    else if (isShooting()) setImageIndex(ATTACKING);
-    else setImageIndex(NORMAL);
+    if (this.isHit()) this.hurtingActivate();
+    else if (this.isShooting()) this.attackingActivate();
+    else this.normalActivate();
   }
+
+  get normalImage() { return this.getBoundedImage('normal'); }
+  get attackImage() { return this.getBoundedImage('attacking'); }
+  get hurtImage() { return this.getBoundedImage('hurting'); }
+
+  normalActivate() { this.activateImage('normal'); }
+  attackingActivate() { this.activateImage('attacking'); }
+  hurtingActivate() { this.activateImage('hurting'); }
 
   shoot() {
     var t = super.shoot();
@@ -163,12 +172,9 @@ class Enemy extends EnemyHead {
       game.loadImage(args[1] + "1.png"),
       game.loadImage(args[1] + "2.png"),
       game.loadImage(args[1] + "3.png"));
-    var normal = this.getBoundedImage(0);
-    normal.addBox(new BoundingBox());
-    var attacking = this.getBoundedImage(1);
-    attacking.addBox(new BoundingBox());
-    var hurting = this.getBoundedImage(2);
-    hurting.addBox(new BoundingBox());
+    this.normalImage.addBox(new BoundingBox());
+    this.attackImage.addBox(new BoundingBox());
+    this.hurtImage.addBox(new BoundingBox());
 
     setMovement(new EnemyMovement(this, args.slice(2)));
     setAttack(new RandomBulletAttack(this));

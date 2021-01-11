@@ -1,5 +1,27 @@
 // Base data structures.
 
+/** A rectangle in space. */
+class BoundingBox {
+  constructor(x1, y1, x2, y2) {
+    this.x1 = x1 == null ? 0 : x1;
+    this.y1 = y1 == null ? 0 : y1;
+    this.x2 = x2 == null ? 0 : x2;
+    this.y2 = y2 == null ? 0 : y2;
+  }
+
+  get width() { return this.x2 - this.x1 + 1; }
+  get height() { return this.y2 - this.y1 + 1; }
+
+  /** Gets bounding box given the coordinates, width and height. */
+  getBox(x, y, width, height) {
+    var w = width - this.x1 - this.x2 - 1;
+    var h = height - this.y1 - this.y2 - 1;
+    if (w < 1) w = 1;
+    if (h < 1) h = 1;
+    return {x: x + this.x1, y: y + this.y1, width: w, height: h};
+  }
+}
+
 /** An image with associated bounding box insets. */
 class BoundedImage {
   constructor(img, width, height, xoff, yoff) {
@@ -44,7 +66,7 @@ class BoundedImage {
   }
 }
 
-/** Encapsulates a movement pattern. */
+/** A movement pattern. */
 class MovementStyle {
   constructor(t) {
     this.thing = t; // Thing upon which this movement style object operates.
@@ -57,7 +79,7 @@ class MovementStyle {
   keyReleased(e) { }
 }
 
-/** Encapsulates an attack pattern. */
+/** An attack pattern. */
 class AttackStyle {
   constructor(t) {
     this.thing = t; // Thing upon which this attack style object operates.
@@ -91,15 +113,15 @@ var ThingTypes = {
   POWER_UP: 4,    // power-up
 };
 
-/** An object on the screen that moves around and has hit points. */
+/** An object on the screen that can (potentially) move and attack. */
 class Thing {
   constructor(game) {
     this.game = game;            // Game to which this object belongs.
     this.move = null;            // Object's movement style.
     this.attack = null;          // Object's attack style.
     this.xpos = this.ypos = 0;   // Position of the object.
-    this.images = [];            // List of images representing the object.
-    this.imageIndex = -1;        // Index into images list for object's current status.
+    this.images = {};            // Collection of images representing the object.
+    this.activeImage = null;     // Name key of image for object's current status.
     this.hp = this.maxhp = 1;    // Hit points.
     this.power = 1;              // Amount of damage the object inflicts.
     this.type = ThingTypes.EVIL; // The type of this object.
@@ -114,27 +136,22 @@ class Thing {
   /** Assigns object's attack style. */
   setAttack(as) { this.attack = as; }
 
-  /** Assigns object's image list. */
-  setImageList(images) {
-    this.images = [];
-    if (images == null || images.length == 0) {
-      this.images = [];
-      this.imageIndex = -1;
+  /** Assigns object's collection of images. */
+  setImages(images, activeImage) {
+    if (images == null) {
+      this.images = {};
+      this.activeImage = null;
     }
     else {
-      this.images = images.splice();
-      this.imageIndex = 0;
+      this.images = clone(images);
+      this.activateImage(activeImage);
     }
   }
 
-  /** Changes the image representing the object. */
-  setImageIndex(index) {
-    if (index >= 0 && index < this.images.length) this.imageIndex = index;
-  }
-
-  /** Assigns object's image. */
-  setImage(image) {
-    this.setImageList([image]);
+  /** Changes the image currently representing the object. */
+  activateImage(imageName) {
+    if (imageName == null || imageName in this.images) this.activeImage = imageName;
+    else this.noSuchImage(imageName);
   }
 
   /** Assigns object's position. */
@@ -168,13 +185,13 @@ class Thing {
   /** Assigns object's type, from the ThingTypes enumeration. */
   setType(type) { this.type = type; }
 
-  /** Draws the object onscreen. */
+  /** Draws the object onto the given canvas context. */
   draw(ctx) {
     var img = this.getBoundedImage();
     if (img == null) return;
     var x = Math.trunc(getX() + img.getOffsetX());
     var y = Math.trunc(getY() + img.getOffsetY());
-    ctx.drawImage(img.getImage(), x, y, this.game);
+    ctx.drawImage(img.getImage(), x, y);
   }
 
   /** Hits this object for the given amount of damage. */
@@ -187,15 +204,15 @@ class Thing {
   move() {
     if (isDead()) return;
     if (isHit()) this.hit--;
-    if (move == null) return;
+    if (move != null) return;
     this.move.move();
   }
 
   /** Instructs the object to attack according to its attack style. */
   shoot() {
-    if (isDead()) return null;
-    if (attack == null) return null;
-    return attack.shoot();
+    if (this.isDead()) return null;
+    if (this.attack == null) return null;
+    return this.attack.shoot();
   }
 
   /**
@@ -203,9 +220,9 @@ class Thing {
    * attack according to its attack style.
    */
   trigger() {
-    if (isDead()) return null;
-    if (attack == null) return null;
-    return attack.trigger();
+    if (this.isDead()) return null;
+    if (this.attack == null) return null;
+    return this.attack.trigger();
   }
 
   /** Gets the game to which this object belongs. */
@@ -224,10 +241,10 @@ class Thing {
   getY() { return this.ypos; }
 
   /** Gets object's centered X coordinate. */
-  getCX() { return getX() + getWidth() / 2; }
+  getCX() { return this.getX() + this.getWidth() / 2; }
 
   /** Gets object's centered Y coordinate. */
-  getCY() { return getY() + getHeight() / 2; }
+  getCY() { return this.getY() + this.getHeight() / 2; }
 
   /** Gets image representing this object. */
   getImage() {
@@ -300,8 +317,14 @@ class Thing {
     if (this.attack != null) attack.keyReleased(e);
   }
 
-  getBoundedImage(index) {
-    if (index == null) index = this.imageIndex;
-    return index < 0 ? null : this.images[index];
+  getBoundedImage(imageName) {
+    if (imageName == null) imageName = this.imageName;
+    if (imageName == null) return null;
+    if (!(imageName in this.images)) this.noSuchImage(imageName);
+    else return this.images[imageName];
+  }
+
+  noSuchImage(imageName) {
+    console.error(this + ": no such image: " + imageName);
   }
 }

@@ -5,11 +5,13 @@ class CopterGun extends Thing {
 
   static {
     var len = HEIGHT;
-    var img = ImageTools.makeImage(1, len);
-    var g = img.createGraphics();
-    g.setColor(BROWN);
-    g.drawLine(0, 0, 0, len);
-    g.dispose();
+    var img = makeImage(1, len);
+    var ctx = context2d(img);
+    ctx.beginPath();
+    ctx.strokeStyle = "brown";
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, len);
+    ctx.stroke();
     CopterGun.prototype.image = new BoundedImage(img, 1, HEIGHT);
     CopterGun.prototype.image.addBox(new BoundingBox());
   }

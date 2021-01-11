@@ -1,5 +1,5 @@
 class PowerUpMovement extends MovementStyle {
-  PowerUpMovement(t, x, y, center) {
+  constructor(t, x, y, center) {
     super(t);
     this.thing.setPos(x, y);
     this.center = center;
@@ -22,15 +22,15 @@ class PowerUpMovement extends MovementStyle {
         index++;
         if (index == this.thing.getImageCount() - 1) dir = !dir;
       }
-      this.thing.setImageIndex(index);
+      this.thing.activateImage(index);
     }
 
     var cx = this.thing.getCX();
     var cy = this.thing.getCY();
     if (center) {
-      VeggieCopter game = this.thing.getGame();
-      var w2 = game.getWidth() / 2f;
-      var h2 = game.getHeight() / 2f;
+      var game = this.thing.getGame();
+      var w2 = game.getWidth() / 2;
+      var h2 = game.getHeight() / 2;
       if (cx > w2) {
         if (cx - w2 < 1) cx = w2;
         else cx--;
@@ -55,40 +55,37 @@ class PowerUpMovement extends MovementStyle {
 
 /** Power-up object increases copter's weapon power. */
 class PowerUp extends Thing {
-  PULSE = 10;
-
-  /** Constructs a power-up object. */
-  PowerUp(game, cx, cy, size, attack) {
+  constructor(game, cx, cy, size, attack) {
     super(game);
-    this.type = POWER_UP;
+    this.type = ThingTypes.POWER_UP;
     this.att = attack;
 
     // create power-up images
-    var imgs = [];
-    var color = att == null ? Color.white : att.getColor();
+    var imgs = {};
+    var pulse = 10; // Number of ticks of pulsation.
+    var color = att == null ? "white" : att.getColor();
     var r2 = color.getRed() / 2;
     var g2 = color.getGreen() / 2;
     var b2 = color.getBlue() / 2;
-    for (var i=0; i<PULSE; i++) {
-      var red = r2 + r2 * (i + 1) / PULSE;
-      var green = g2 + g2 * (i + 1) / PULSE;
-      var blue = b2 + b2 * (i + 1) / PULSE;
-      var img = ImageTools.makeImage(size, size);
-      var g = img.createGraphics();
+    for (var i=0; i<pulse; i++) {
+      var red = r2 + r2 * (i + 1) / pulse;
+      var green = g2 + g2 * (i + 1) / pulse;
+      var blue = b2 + b2 * (i + 1) / pulse;
+      var img = makeImage(size, size);
+      var ctx = context2d(img);
       var median = size / 2;
       for (var rad=median; rad>=1; rad--) {
         var q = (double) (median - rad) / median;
-        g.setColor(new Color(red, green, blue, Math.trunc(255 * q)));
-        g.fillOval(median - rad, median - rad, 2 * rad, 2 * rad);
+        ctx.fillStyle = color(red, green, blue, Math.trunc(255 * q));
+        ctx.fillOval(median - rad, median - rad, 2 * rad, 2 * rad);
       }
-      g.dispose();
       var img = new BoundedImage(img);
       img.addBox(new BoundingBox(1, 1, 1, 1));
-      imgs.push(img);
+      imgs[i] = img;
     }
-    setImageList(imgs);
+    setImages(imgs, 0);
 
-    setPos(cx - size / 2f, cy - size / 2f);
+    setPos(cx - size / 2, cy - size / 2);
     setMovement(new PowerUpMovement(this, this.xpos, this.ypos, this.att != null));
   }
 

@@ -1,35 +1,24 @@
 class ChargeMovement extends MovementStyle {
-
-  private Thing owner;
-  private boolean launched = false;
-
-
-  // -- Constructor --
-
-  public ChargeMovement(Thing t, Thing owner, float x, float y) {
+  constructor(t, owner, x, y) {
     super(t);
     this.owner = owner;
-    thing.setPos(x, y);
+    this.launched = false;
+    this.thing.setPos(x, y);
   }
 
-
-  // -- ChargeMovement API methods --
-
   /** Launches the charge forth. */
-  public void launch() { launched = true; }
+  launch() { this.launched = true; }
 
-
-  // -- MovementStyle API methods --
-
-  /** Moves the charge according to the charge movement style. */
-  public void move() {
-    if (launched) {
-      float xpos = thing.getX(), ypos = thing.getY();
+  move() {
+    if (this.launched) {
+      var xpos = this.thing.getX(), ypos = this.thing.getY();
       ypos -= 5;
-      thing.setPos(xpos, ypos);
+      this.thing.setPos(xpos, ypos);
     }
-    else thing.setPos(owner.getCX() - thing.getWidth() / 2f,
-      owner.getY() - thing.getHeight() / 2f);
+    else {
+      this.thing.setPos(this.owner.getCX() - this.thing.getWidth() / 2,
+        this.owner.getY() - this.thing.getHeight() / 2);
+    }
   }
 }
 
@@ -43,17 +32,16 @@ class CopterCharge extends Thing {
     images = new BoundedImage[MAX_SIZE];
     for (int i=0; i<MAX_SIZE; i++) {
       int size = 2 * i + 12;
-      BufferedImage img = ImageTools.makeImage(size, size);
-      Graphics g = img.createGraphics();
+      var img = makeImage(size, size);
+      var ctx = context2d(img);
       int bright = 127 + 128 * i / (MAX_SIZE - 1);
-      for (int j=size; j>0; j--) {
-        int l = (size - j) / 2;
+      for (var j=size; j>0; j--) {
+        var l = (size - j) / 2;
         //int r = (size + j) / 2;
-        int q = bright * (size - j) / size;
-        g.setColor(new Color(q, q, q, q));
-        g.fillOval(l, l, j, j);
+        var q = bright * (size - j) / size;
+        ctx.fillColor = color(q, q, q, q);
+        ctx.fillOval(l, l, j, j);
       }
-      g.dispose();
       images[i] = new BoundedImage(img);
       images[i].addBox(new BoundingBox(1, 1, 1, 1));
     }
@@ -79,15 +67,13 @@ class CopterCharge extends Thing {
     return true;
   }
 
-  public void launch() { ((ChargeMovement) move).launch(); }
+  launch() { this.move.launch(); }
 
-  public void setHP(int hp) {
-    if (hp > maxhp) hp = maxhp;
-    this.hp = hp;
-    setPower(hp);
-    size = hp - 1;
-    if (size < 0) size = 0;
-    setImageIndex(size);
+  setHP(hp) {
+    this.hp = Math.min(hp, this.maxhp);
+    setPower(this.hp);
+    var size = Math.max(hp - 1, 0);
+    this.activateImage(size);
   }
 }
 

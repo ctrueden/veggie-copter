@@ -140,12 +140,9 @@ class GeorgeEnemy extends EnemyHead {
       game.loadImage("george2.png"),
       game.loadImage("george3.png"));
     // CTR TODO set proper bounding box and offsets here
-    BoundedImage normal = getBoundedImage(0);
-    normal.addBox(new BoundingBox());
-    BoundedImage attacking = getBoundedImage(1);
-    attacking.addBox(new BoundingBox());
-    BoundedImage hurting = getBoundedImage(2);
-    hurting.addBox(new BoundingBox());
+    this.normalImage.addBox(new BoundingBox());
+    this.attackImage.addBox(new BoundingBox());
+    this.hurtImage.addBox(new BoundingBox());
     setMovement(new GeorgeMovement(this));
     setAttack(new GeorgeAttack(this));
   }
@@ -170,12 +167,9 @@ class GeorgeBoss extends BossHead {
       game.loadImage("george-boss2.png"),
       game.loadImage("george-boss3.png"));
     // CTR TODO set proper bounding box and offsets here
-    BoundedImage normal = getBoundedImage(0);
-    normal.addBox(new BoundingBox());
-    BoundedImage attacking = getBoundedImage(1);
-    attacking.addBox(new BoundingBox());
-    BoundedImage hurting = getBoundedImage(2);
-    hurting.addBox(new BoundingBox());
+    this.normalImage.addBox(new BoundingBox());
+    this.attackImage.addBox(new BoundingBox());
+    this.hurtImage.addBox(new BoundingBox());
     setMovement(new GeorgeMovement(this));
     setAttack(new GeorgeAttack(this));
   }

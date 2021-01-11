@@ -7,11 +7,8 @@ class Game {
     this.canvas = canvas;                                 // Canvas onto which the game is drawn.
     this.canvas.width = this.width;
     this.canvas.height = this.height + this.statusHeight;
-
-    this.offscreen = document.createElement('canvas');    // Offscreen canvas, for double buffering.
-    this.offscreen.width = this.canvas.width;
-    this.offscreen.height = this.canvas.height;
-
+    this.offscreen = makeImage(this.canvas.width,         // Offscreen canvas, for double buffering.
+                               this.canvas.height);
     this.ctx = this.canvas.getContext('2d');              // Original canvas context.
     this.buf = this.offscreen.getContext('2d');           // Offscreen canvas context.
 
@@ -148,7 +145,7 @@ class Game {
       var red = Math.trunc(255 * (1 - q));
       var green = Math.trunc(255 * q);
       this.buf.beginPath();
-      this.buf.strokeStyle = "rgb(" + red + ", " + green + ", 0)";
+      this.buf.strokeStyle = color(red, green, 0);
       this.buf.moveTo(x + 2 + i, this.height + 4);
       this.buf.lineTo(x + 2 + i, this.height + 20);
       this.buf.stroke();

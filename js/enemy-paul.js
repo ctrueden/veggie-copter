@@ -140,14 +140,11 @@ class PaulEnemy extends EnemyHead {
       game.loadImage("paul2.png"),
       game.loadImage("paul3.png"));
     // CTR TODO set proper bounding box and offsets here
-    BoundedImage normal = getBoundedImage(0);
-    normal.addBox(new BoundingBox(1, 5, 1, 10));
-    normal.addBox(new BoundingBox(8, 1, 8, 1));
-    BoundedImage attacking = getBoundedImage(1);
-    attacking.addBox(new BoundingBox(1, 5, 1, 10));
-    attacking.addBox(new BoundingBox(8, 1, 8, 1));
-    BoundedImage hurting = getBoundedImage(2);
-    hurting.addBox(new BoundingBox());
+    this.normalImage.addBox(new BoundingBox(1, 5, 1, 10));
+    this.normalImage.addBox(new BoundingBox(8, 1, 8, 1));
+    this.attackImage.addBox(new BoundingBox(1, 5, 1, 10));
+    this.attackImage.addBox(new BoundingBox(8, 1, 8, 1));
+    this.hurtImage.addBox(new BoundingBox());
     setMovement(new PaulMovement(this));
     setAttack(new PaulAttack(this));
   }
@@ -172,12 +169,9 @@ class PaulBoss extends BossHead {
       game.loadImage("paul-boss2.png"),
       game.loadImage("paul-boss3.png"));
     // CTR TODO set proper bounding box and offsets here
-    BoundedImage normal = getBoundedImage(0);
-    normal.addBox(new BoundingBox());
-    BoundedImage attacking = getBoundedImage(1);
-    attacking.addBox(new BoundingBox());
-    BoundedImage hurting = getBoundedImage(2);
-    hurting.addBox(new BoundingBox());
+    this.normalImage.addBox(new BoundingBox());
+    this.attackImage.addBox(new BoundingBox());
+    this.hurtImage.addBox(new BoundingBox());
     setMovement(new PaulMovement(this));
     setAttack(new PaulAttack(this));
   }

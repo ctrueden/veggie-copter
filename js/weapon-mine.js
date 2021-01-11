@@ -46,13 +46,12 @@ class MineShard extends Thing {
   static {
     images = new BoundedImage[LIFE];
     for (var i=0; i<LIFE; i++) {
-      BufferedImage img = ImageTools.makeImage(SIZE, SIZE);
-      Graphics g = img.createGraphics();
+      var img = makeImage(SIZE, SIZE);
+      var ctx = context2d(img);
       var alpha = 255 * (LIFE - i) / LIFE;
-      g.setColor(new Color(Color.gray.getRed(),
-        Color.gray.getGreen(), Color.gray.getBlue(), alpha));
-      g.fillRoundRect(0, 0, SIZE, SIZE, SIZE / 2, SIZE / 2);
-      g.dispose();
+      ctx.fillStyle = color(Color.gray.getRed(),
+        Color.gray.getGreen(), Color.gray.getBlue(), alpha);
+      ctx.fillRoundRect(0, 0, SIZE, SIZE, SIZE / 2, SIZE / 2);
       images[i] = new BoundedImage(img);
       images[i].addBox(new BoundingBox());
     }
@@ -194,14 +193,13 @@ class CopterMine extends Thing {
     images = new BoundedImage[MAX_SIZE];
     for (var i=0; i<MAX_SIZE; i++) {
       var size = i + 10;
-      BufferedImage img = ImageTools.makeImage(size, size);
-      Graphics g = img.createGraphics();
-      g.setColor(Color.gray);
-      g.fillOval(0, 0, size, size);
-      g.setColor(Color.red);
+      var img = makeImage(size, size);
+      var ctx = context2d(img);
+      ctx.fillStyle = "gray";
+      ctx.fillOval(0, 0, size, size);
+      ctx.fillStyle = "red";
       var q = size / 3 + 1;
-      g.fillOval(q, q, q, q);
-      g.dispose();
+      ctx.fillOval(q, q, q, q);
       images[i] = new BoundedImage(img);
       images[i].addBox(new BoundingBox());
     }

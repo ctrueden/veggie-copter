@@ -12,7 +12,6 @@ class AlexAttack extends AttackStyle {
     if (Math.random() >= 1.0 / (60 - this.frequency)) return null;
     return [new EnemyBullet(thing, null, null)];
   }
-
 }
 
 class AlexMovement extends MovementStyle {
@@ -33,7 +32,7 @@ class AlexMovement extends MovementStyle {
     var r = Math.random();
     if (r < 1.0 / 3) {
       // appear from top
-      var xpad = X_STEPS / 2;
+      var xpad = this.xSteps / 2;
       xpos = (w - xpad) * Math.random() + xpad;
       ypos = 0;
       this.xdir = Math.random() < 0.5;
@@ -41,7 +40,7 @@ class AlexMovement extends MovementStyle {
     }
     else if (r < 2.0 / 3) {
       // appear from left
-      var ypad = Y_STEPS / 2;
+      var ypad = this.ySteps / 2;
       xpos = 0;
       ypos = (h / 2 - ypad) * Math.random() + ypad;
       this.xdir = true;
@@ -49,7 +48,7 @@ class AlexMovement extends MovementStyle {
     }
     else {
       // appear from right
-      var ypad = Y_STEPS / 2;
+      var ypad = this.ySteps / 2;
       xpos = w - 1;
       ypos = (h / 2 - ypad) * Math.random() + ypad;
       this.xdir = false;
@@ -59,8 +58,8 @@ class AlexMovement extends MovementStyle {
     // compute random starting trajectory
     this.xstart = xpos;
     this.ystart = ypos;
-    this.xlen = this.thing.getWidth() * Math.random() + 2 * X_STEPS;
-    this.ylen = this.thing.getHeight() * Math.random() + 2 * Y_STEPS;
+    this.xlen = this.thing.getWidth() * Math.random() + 2 * this.xSteps;
+    this.ylen = this.thing.getHeight() * Math.random() + 2 * this.ySteps;
     this.xinc = 0;
     this.yinc = 0;
 
@@ -88,7 +87,7 @@ class AlexMovement extends MovementStyle {
     ticks++;
     if (ticks % LUNGE_RATE == 0) {
       // lunge toward ship
-      lunging = true;
+      this.lunging = true;
       var hero = game.getCopter();
 
       xstart = xpos;
@@ -104,24 +103,24 @@ class AlexMovement extends MovementStyle {
       yinc = 0;
     }
 
-    var xp = smooth((double) xinc++ / X_STEPS);
-    if (xdir) xpos = (float) (xstart + xp * xlen / SPEED);
-    else xpos = (float) (xstart - xp * xlen / SPEED);
+    var xp = smooth((double) xinc++ / this.xSteps);
+    if (xdir) xpos = (float) (xstart + xp * xlen / this.speed);
+    else xpos = (float) (xstart - xp * xlen / this.speed);
 
-    var yp = smooth((double) yinc++ / Y_STEPS);
-    if (ydir) ypos = (float) (ystart + yp * ylen / SPEED);
-    else ypos = (float) (ystart - yp * ylen / SPEED);
+    var yp = smooth((double) yinc++ / this.ySteps);
+    if (ydir) ypos = (float) (ystart + yp * ylen / this.speed);
+    else ypos = (float) (ystart - yp * ylen / this.speed);
 
-    if (thing.isHit() && !running) this.needsToRun = true;
+    if (thing.isHit() && !this.running) this.needsToRun = true;
     var w = game.getWindowWidth();
     var h = game.getWindowHeight();
     var width = thing.getWidth();
     var height = thing.getHeight();
 
-    if (xinc == X_STEPS) {
+    if (xinc == this.xSteps) {
       if (this.needsToRun) {
         // run away when being shot
-        running = true;
+        this.running = true;
         xstart = xpos;
         xdir = thing.getCX() < w / 2;
         xlen = 2 * (xdir ? w - width - xpos : xpos) - 10;
@@ -130,20 +129,20 @@ class AlexMovement extends MovementStyle {
       else {
         xstart = xpos;
         xdir = !xdir;
-        xlen = (float) (width * Math.random()) + X_STEPS;
+        xlen = (float) (width * Math.random()) + this.xSteps;
         xinc = 0;
-        running = false;
+        this.running = false;
       }
       this.needsToRun = false;
-      lunging = false;
+      this.lunging = false;
     }
 
-    if (yinc == Y_STEPS) {
+    if (yinc == this.ySteps) {
       ystart = ypos;
       ydir = !ydir;
-      ylen = (float) (height * Math.random()) + Y_STEPS;
+      ylen = (float) (height * Math.random()) + this.ySteps;
       yinc = 0;
-      lunging = false;
+      this.lunging = false;
     }
 
     if (xpos < -width) xpos = -width;
@@ -173,15 +172,13 @@ class AlexEnemy extends EnemyHead {
       game.loadImage("alex2.png"),
       game.loadImage("alex3.png"));
     // CTR TODO set proper bounding box and offsets here
-    var normal = getBoundedImage(0);
+    var normal = this.normalImage();
     normal.addBox(new BoundingBox(30, 1, 30, 20));
     normal.addBox(new BoundingBox(25, 5, 25, 25));
-    var attacking = getBoundedImage(1);
-    attacking.addBox(new BoundingBox(28, 1, 28, 13));
-    attacking.addBox(new BoundingBox(23, 5, 23, 17));
-    var hurting = getBoundedImage(2);
-    hurting.addBox(new BoundingBox(32, 1, 27, 13));
-    hurting.addBox(new BoundingBox(27, 5, 22, 17));
+    this.attackImage.addBox(new BoundingBox(28, 1, 28, 13));
+    this.attackImage.addBox(new BoundingBox(23, 5, 23, 17));
+    this.hurtImage.addBox(new BoundingBox(32, 1, 27, 13));
+    this.hurtImage.addBox(new BoundingBox(27, 5, 22, 17));
     setMovement(new AlexMovement(this));
     setAttack(new AlexAttack(this));
   }
@@ -192,9 +189,9 @@ class AlexEnemy extends EnemyHead {
     super.move();
 
     // set proper expression
-    if (this.isHit() || this.move.isRunning()) this.setImageIndex(HURTING);
-    else if (this.isShooting() || this.move.isLunging()) this.setImageIndex(ATTACKING);
-    else this.setImageIndex(NORMAL);
+    if (this.isHit() || this.move.isRunning()) this.activateImage('hurting');
+    else if (this.isShooting() || this.move.isLunging()) this.activateImage('attacking');
+    else this.activateImage('normal');
 
     // regen
     if (this.game.getTicks() % 6 == 0 && hp < maxhp) hp++;
@@ -209,22 +206,20 @@ class AlexBoss extends BossHead {
       game.loadImage("../assets/alex-boss2.png"),
       game.loadImage("../assets/alex-boss3.png"));
     // CTR TODO set proper bounding box and offsets here
-    var normal = getBoundedImage(0);
+    var normal = this.normalImage();
     normal.addBox(new BoundingBox(95, 3, 100, 60));
     normal.addBox(new BoundingBox(78, 18, 80, 85));
-    var attacking = getBoundedImage(1);
-    attacking.addBox(new BoundingBox(84, 3, 84, 39));
-    attacking.addBox(new BoundingBox(69, 15, 69, 51));
-    var hurting = getBoundedImage(2);
-    hurting.addBox(new BoundingBox(96, 3, 81, 39));
-    hurting.addBox(new BoundingBox(81, 15, 66, 51));
+    this.attackImage.addBox(new BoundingBox(84, 3, 84, 39));
+    this.attackImage.addBox(new BoundingBox(69, 15, 69, 51));
+    this.hurtImage.addBox(new BoundingBox(96, 3, 81, 39));
+    this.hurtImage.addBox(new BoundingBox(81, 15, 66, 51));
     setMovement(new AlexMovement(this));
     setAttack(new AlexAttack(this));
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */
   getWeapon() {
-    return new EnergyAttack(game.getCopter(), 0, 0);
+    return new EnergyAttack(this.game.getCopter(), 0, 0);
   }
 
   getScore() { return 30 * super.getScore(); }
@@ -233,13 +228,12 @@ class AlexBoss extends BossHead {
     super.move();
 
     // set proper expression
-    var am = (AlexMovement) move;
-    if (isHit() || am.isRunning()) setImageIndex(HURTING);
-    else if (isShooting() || am.isLunging()) setImageIndex(ATTACKING);
-    else setImageIndex(NORMAL);
+    if (this.isHit() || this.move.isRunning()) this.activateImage('hurting');
+    else if (this.isShooting() || this.move.isLunging()) this.activateImage('attacking');
+    else this.activateImage('normal');
 
     // regen
-    if (game.getTicks() % 20 == 0 && hp < maxhp) hp++;
+    if (this.game.getTicks() % 20 == 0 && this.hp < this.maxhp) this.hp++;
   }
 
 }

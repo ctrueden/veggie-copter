@@ -18,18 +18,15 @@ class TestBoss extends BossHead {
       game.loadImage("../assets/test-boss2.png"),
       game.loadImage("../assets/test-boss2.png"),
       game.loadImage("../assets/test-boss2.png"));
-    var normal = this.getBoundedImage(0);
-    normal.addBox(new BoundingBox(30, 0, 30, 0));
-    normal.addBox(new BoundingBox(3, 30, 3, 50));
-    normal.addBox(new BoundingBox(15, 10, 15, 15));
-    var attacking = this.getBoundedImage(1);
-    attacking.addBox(new BoundingBox(30, 0, 30, 0));
-    attacking.addBox(new BoundingBox(3, 30, 3, 50));
-    attacking.addBox(new BoundingBox(15, 10, 15, 15));
-    var hurting = this.getBoundedImage(2);
-    hurting.addBox(new BoundingBox(30, 0, 30, 0));
-    hurting.addBox(new BoundingBox(3, 30, 3, 50));
-    hurting.addBox(new BoundingBox(15, 10, 15, 15));
+    this.normalImage.addBox(new BoundingBox(30, 0, 30, 0));
+    this.normalImage.addBox(new BoundingBox(3, 30, 3, 50));
+    this.normalImage.addBox(new BoundingBox(15, 10, 15, 15));
+    this.attackImage.addBox(new BoundingBox(30, 0, 30, 0));
+    this.attackImage.addBox(new BoundingBox(3, 30, 3, 50));
+    this.attackImage.addBox(new BoundingBox(15, 10, 15, 15));
+    this.hurtImage.addBox(new BoundingBox(30, 0, 30, 0));
+    this.hurtImage.addBox(new BoundingBox(3, 30, 3, 50));
+    this.hurtImage.addBox(new BoundingBox(15, 10, 15, 15));
 
     var x = 0, y = 0;
     if (args.length >= 1) {

@@ -17,7 +17,7 @@ class RegenMovement extends MovementStyle {
 
   /** Moves the given thing according to the regen movement style. */
   move() {
-    syncPos();
+    this.syncPos();
     ticks++;
 
     var regenRate = 20 - thing.getPower();
@@ -62,15 +62,14 @@ class CopterRegen extends Thing {
     images = new BoundedImage[MAX_SIZE];
     for (var i=0; i<MAX_SIZE; i++) {
       var width = i + 18;
-      BufferedImage img = ImageTools.makeImage(width, 2 * width);
-      Graphics g = img.createGraphics();
+      var img = makeImage(width, 2 * width);
+      var ctx = context2d(img);
       var median = width / 2;
-      for (int rad=median; rad>=1; rad--) {
-        var q = (double) (median - rad) / median;
-        g.setColor(new Color(red, green, blue, (int) (128 * q)));
-        g.fillOval(median - rad, 2 * (median - rad), 2 * rad, 4 * rad);
+      for (var rad=median; rad>=1; rad--) {
+        var q = (median - rad) / median;
+        ctx.fillStyle = color(red, green, blue, Math.trunc(128 * q));
+        ctx.fillOval(median - rad, 2 * (median - rad), 2 * rad, 4 * rad);
       }
-      g.dispose();
       images[i] = new BoundedImage(img);
       images[i].addBox(new BoundingBox(5, 5, 5, 5));
     }

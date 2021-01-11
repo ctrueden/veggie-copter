@@ -6,11 +6,10 @@ class CopterSpread extends Thing {
 
   static {
     var size = 9;
-    BufferedImage img = ImageTools.makeImage(size, size);
-    Graphics g = img.createGraphics();
-    g.setColor(Color.blue);
-    g.fillRoundRect(0, 0, size, size, size / 2, size / 2);
-    g.dispose();
+    var img = makeImage(size, size);
+    var ctx = context2d(img);
+    ctx.fillStyle = "blue";
+    ctx.fillRoundRect(0, 0, size, size, size / 2, size / 2);
     image = new BoundedImage(img);
     image.addBox(new BoundingBox());
   }

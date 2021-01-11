@@ -26,11 +26,10 @@ class CopterSplitter extends Thing {
     images = new BoundedImage[MAX_SIZE];
     for (var i=0; i<MAX_SIZE; i++) {
       var size = i + 4;
-      BufferedImage img = ImageTools.makeImage(size, size);
-      Graphics g = img.createGraphics();
-      g.setColor(Color.yellow);
-      g.fillRoundRect(0, 0, size, size, size / 2, size / 2);
-      g.dispose();
+      var img = makeImage(size, size);
+      var ctx = context2d(img);
+      ctx.fillStyle = "yellow";
+      ctx.fillRoundRect(0, 0, size, size, size / 2, size / 2);
       images[i] = new BoundedImage(img);
       images[i].addBox(new BoundingBox());
     }
