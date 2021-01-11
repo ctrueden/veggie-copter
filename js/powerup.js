@@ -86,7 +86,7 @@ class PowerUp extends Thing {
     this.setSprites(sprites, 0);
 
     this.setPos(cx - size / 2, cy - size / 2);
-    this.move = new PowerUpMovement(this, this.xpos, this.ypos, this.att != null);
+    this.movement = new PowerUpMovement(this, this.xpos, this.ypos, this.att != null);
   }
 
   /** Gets attack style granted by this power-up, if any. */

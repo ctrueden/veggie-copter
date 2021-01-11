@@ -87,7 +87,7 @@ class CopterRegen extends Thing {
     if (size < 0) size = 0;
     else if (size >= MAX_SIZE) size = MAX_SIZE - 1;
     activateSprite(size);
-    this.move.syncPos();
+    this.movement.syncPos();
   }
 }
 

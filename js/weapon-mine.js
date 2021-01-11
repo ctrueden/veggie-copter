@@ -207,7 +207,7 @@ class CopterMine extends Thing {
     super(thing.game);
     this.type = GOOD_BULLET;
     this.power = power;
-    this.move = new MineMovement(this);
+    this.movement = new MineMovement(this);
     this.attack = new MineExplode(this);
     setCPos(thing.cx, thing.cy);
   }

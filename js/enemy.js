@@ -92,7 +92,7 @@ class EnemyBullet extends Thing {
 
     var x = t.cx - this.width / 2;
     var y = t.cy - this.height / 2;
-    this.move = new BulletMovement(this, x, y, x2, y2);
+    this.movement = new BulletMovement(this, x, y, x2, y2);
     //this.attack = new RandomBulletAttack(this); // MWAHAHA!
   }
 }
@@ -176,7 +176,7 @@ class Enemy extends EnemyHead {
     this.attackImage.addBox(new BoundingBox());
     this.hurtImage.addBox(new BoundingBox());
 
-    this.move = new EnemyMovement(this, args.slice(2));
+    this.movement = new EnemyMovement(this, args.slice(2));
     this.attack = new RandomBulletAttack(this);
   }
 

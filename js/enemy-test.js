@@ -38,7 +38,7 @@ class TestBoss extends BossHead {
       catch (err) { y = 0; }
     }
 
-    this.move = new TestMovement(this, x, y);
+    this.movement = new TestMovement(this, x, y);
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */
@@ -56,12 +56,12 @@ class TestBoss extends BossHead {
 
   /** Hits this object for the given amount of damage. */
   hit(damage) {
-    if (damage > 0) this.move.startTimer();
+    if (damage > 0) this.movement.startTimer();
     super.hit(damage);
   }
 
   getScore() {
-    this.move.printStats();
+    this.movement.printStats();
     return 0;
   }
 }

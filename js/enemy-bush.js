@@ -112,7 +112,7 @@ class BushEnemy extends EnemyHead {
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
     this.hurtImage.addBox(new BoundingBox());
-    this.move = new BushMovement(this);
+    this.movement = new BushMovement(this);
     this.attack = new BushAttack(this);
   }
 
@@ -120,6 +120,6 @@ class BushEnemy extends EnemyHead {
 
   move() {
     super.move();
-    if (this.move.isTurning()) this.hp++; // regen
+    if (this.movement.isTurning()) this.hp++; // regen
   }
 }

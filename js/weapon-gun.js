@@ -20,7 +20,7 @@ class CopterGun extends Thing {
     this.type = ThingTypes.GOOD_BULLET;
     setSprite(this.image);
     this.power = power;
-    this.move = new BulletMovement(this, x, y + HEIGHT, x, -100, SPEED);
+    this.movement = new BulletMovement(this, x, y + HEIGHT, x, -100, SPEED);
   }
 }
 

@@ -152,7 +152,7 @@ class Copter extends Thing {
     var sprite = game.sprite("copter.gif");
     sprite.addBox(new BoundingBox(2, 6, 2, 5));
     this.setSprite(sprite);
-    this.move = new CopterMovement(this);
+    this.movement = new CopterMovement(this);
 
     var copterAttack = new CopterAttack(this);
     /*
@@ -176,7 +176,7 @@ class Copter extends Thing {
     this.type = ThingTypes.GOOD;
   }
 
-  reset() { this.move.reset(); }
+  reset() { this.movement.reset(); }
 
   drawWeaponStatus(ctx, x, y) {
     this.attack.drawWeaponStatus(ctx, x, y);

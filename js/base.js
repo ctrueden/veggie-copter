@@ -102,7 +102,7 @@ var ThingTypes = {
 class Thing {
   constructor(game) {
     this.game = game;            // Game to which this object belongs.
-    this.move = null;            // Object's movement style.
+    this.movement = null;        // Object's movement style.
     this.attack = null;          // Object's attack style.
     this.xpos = this.ypos = 0;   // Position of the object.
     this.sprites = {};           // Collection of sprites representing the object.
@@ -180,7 +180,7 @@ class Thing {
   move() {
     if (this.isDead()) return;
     if (this.isHit()) this.hit--;
-    if (this.move) this.move.move();
+    if (this.movement) this.movement.move();
   }
 
   /** Instructs the object to attack according to its attack style. */
@@ -250,12 +250,12 @@ class Thing {
   }
 
   keyPressed(e) {
-    if (this.move) this.move.keyPressed(e);
+    if (this.movement) this.movement.keyPressed(e);
     if (this.attack) this.attack.keyPressed(e);
   }
 
   keyReleased(e) {
-    if (this.move) this.move.keyReleased(e);
+    if (this.movement) this.movement.keyReleased(e);
     if (this.attack) this.attack.keyReleased(e);
   }
 

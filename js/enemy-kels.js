@@ -83,7 +83,7 @@ class KelsEnemy extends EnemyHead {
     }
     if (args.length >= 2) dir = args[1].equals("true");
 
-    this.move = new KelsMovement(this, y, dir);
+    this.movement = new KelsMovement(this, y, dir);
     this.attack = new KelsAttack(this);
   }
 
@@ -112,7 +112,7 @@ class KelsBoss extends BossHead {
     }
     if (args.length >= 2) dir = args[1].equals("true");
 
-    this.move = new KelsMovement(this, y, dir);
+    this.movement = new KelsMovement(this, y, dir);
     this.attack = new KelsAttack(this);
   }
 

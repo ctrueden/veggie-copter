@@ -138,7 +138,7 @@ class GeorgeEnemy extends EnemyHead {
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
     this.hurtImage.addBox(new BoundingBox());
-    this.move = new GeorgeMovement(this);
+    this.movement = new GeorgeMovement(this);
     this.attack = new GeorgeAttack(this);
   }
 
@@ -165,7 +165,7 @@ class GeorgeBoss extends BossHead {
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
     this.hurtImage.addBox(new BoundingBox());
-    this.move = new GeorgeMovement(this);
+    this.movement = new GeorgeMovement(this);
     this.attack = new GeorgeAttack(this);
   }
 

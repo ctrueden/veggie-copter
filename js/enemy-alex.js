@@ -179,7 +179,7 @@ class AlexEnemy extends EnemyHead {
     this.attackImage.addBox(new BoundingBox(23, 5, 23, 17));
     this.hurtImage.addBox(new BoundingBox(32, 1, 27, 13));
     this.hurtImage.addBox(new BoundingBox(27, 5, 22, 17));
-    this.move = new AlexMovement(this);
+    this.movement = new AlexMovement(this);
     this.attack =snew AlexAttack(this);
   }
 
@@ -189,8 +189,8 @@ class AlexEnemy extends EnemyHead {
     super.move();
 
     // set proper expression
-    if (this.isHit() || this.move.isRunning()) this.activateImage('hurting');
-    else if (this.isShooting() || this.move.isLunging()) this.activateImage('attacking');
+    if (this.isHit() || this.movement.isRunning()) this.activateImage('hurting');
+    else if (this.isShooting() || this.movement.isLunging()) this.activateImage('attacking');
     else this.activateImage('normal');
 
     // regen
@@ -213,7 +213,7 @@ class AlexBoss extends BossHead {
     this.attackImage.addBox(new BoundingBox(69, 15, 69, 51));
     this.hurtImage.addBox(new BoundingBox(96, 3, 81, 39));
     this.hurtImage.addBox(new BoundingBox(81, 15, 66, 51));
-    this.move = new AlexMovement(this);
+    this.movement = new AlexMovement(this);
     this.attack = new AlexAttack(this);
   }
 
@@ -228,8 +228,8 @@ class AlexBoss extends BossHead {
     super.move();
 
     // set proper expression
-    if (this.isHit() || this.move.isRunning()) this.activateImage('hurting');
-    else if (this.isShooting() || this.move.isLunging()) this.activateImage('attacking');
+    if (this.isHit() || this.movement.isRunning()) this.activateImage('hurting');
+    else if (this.isShooting() || this.movement.isLunging()) this.activateImage('attacking');
     else this.activateImage('normal');
 
     // regen

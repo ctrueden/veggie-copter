@@ -83,7 +83,7 @@ class JamesEnemy extends EnemyHead {
     }
     if (args.length >= 2) dir = args[1].equals("true");
 
-    this.move = new JamesMovement(this, y, dir);
+    this.movement = new JamesMovement(this, y, dir);
     this.attack = new JamesAttack(this);
   }
 
@@ -112,7 +112,7 @@ class JamesBoss extends BossHead {
     }
     if (args.length >= 2) dir = args[1].equals("true");
 
-    this.move = new JamesMovement(this, y, dir);
+    this.movement = new JamesMovement(this, y, dir);
     this.attack = new JamesAttack(this);
   }
 

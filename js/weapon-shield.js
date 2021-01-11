@@ -63,7 +63,7 @@ class CopterShield extends Thing {
   }
 
   setExtended(extended) {
-    this.move.setExtended(extended);
+    this.movement.setExtended(extended);
   }
 
   /** Shields cannot be destroyed. */

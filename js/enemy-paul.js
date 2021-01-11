@@ -139,7 +139,7 @@ class PaulEnemy extends EnemyHead {
     this.attackImage.addBox(new BoundingBox(1, 5, 1, 10));
     this.attackImage.addBox(new BoundingBox(8, 1, 8, 1));
     this.hurtImage.addBox(new BoundingBox());
-    this.move = new PaulMovement(this);
+    this.movement = new PaulMovement(this);
     this.attack = new PaulAttack(this);
   }
 
@@ -166,7 +166,7 @@ class PaulBoss extends BossHead {
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
     this.hurtImage.addBox(new BoundingBox());
-    this.move = new PaulMovement(this);
+    this.movement = new PaulMovement(this);
     this.attack = new PaulAttack(this);
   }
 

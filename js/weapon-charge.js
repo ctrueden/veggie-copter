@@ -67,7 +67,7 @@ class CopterCharge extends Thing {
     return true;
   }
 
-  launch() { this.move.launch(); }
+  launch() { this.movement.launch(); }
 
   setHP(hp) {
     this.hp = Math.min(hp, this.maxHP);
