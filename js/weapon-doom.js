@@ -5,7 +5,7 @@ class DoomWeapon extends Weapon {
   CopterDoom doom;
 
   DoomAttack(t) {
-    super(t, "black", t.game.sprite("icon-doom").image);
+    super(t, "black", t.game.loadSprite("icon-doom").image);
   }
 
   clear() {

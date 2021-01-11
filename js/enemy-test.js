@@ -15,9 +15,9 @@ class TestMovement extends MovementStyle {
 class TestBoss extends BossHead {
   constructor(game, args) {
     super(game, 1000,
-      game.sprite("test-boss2"),
-      game.sprite("test-boss2"),
-      game.sprite("test-boss2"));
+      game.loadSprite("test-boss2"),
+      game.loadSprite("test-boss2"),
+      game.loadSprite("test-boss2"));
     this.normalImage.addBox(new BoundingBox(30, 0, 30, 0));
     this.normalImage.addBox(new BoundingBox(3, 30, 3, 50));
     this.normalImage.addBox(new BoundingBox(15, 10, 15, 15));

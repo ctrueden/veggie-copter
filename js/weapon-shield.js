@@ -51,10 +51,10 @@ class CopterShield extends Thing {
     move = new ShieldMovement(this, thing, angle);
     if (images == null) {
       images = new Sprite[] {
-        game.sprite("james-spade"),
-        game.sprite("james-heart"),
-        game.sprite("james-diamond"),
-        game.sprite("james-club")
+        game.loadSprite("james-spade"),
+        game.loadSprite("james-heart"),
+        game.loadSprite("james-diamond"),
+        game.loadSprite("james-club")
       };
       for (var i=0; i<images.length; i++) images[i].addBox(new BoundingBox());
     }
@@ -80,7 +80,7 @@ class ShieldWeapon extends Weapon {
   boolean extended;
 
   ShieldAttack(t) {
-    super(t, PURPLE, t.game.sprite("icon-shield.png").image);
+    super(t, PURPLE, t.game.loadSprite("icon-shield").image);
   }
 
   setExtended(extended) {

@@ -67,9 +67,9 @@ class KelsEnemy extends EnemyHead {
   KelsEnemy(game, args) {
     // CTR TODO parse args and initialize Kels with proper parameters
     super(game, 25,
-      game.sprite("kels1"),
-      game.sprite("kels2"),
-      game.sprite("kels3"));
+      game.loadSprite("kels1"),
+      game.loadSprite("kels2"),
+      game.loadSprite("kels3"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
@@ -96,9 +96,9 @@ class KelsBoss extends BossHead {
   KelsBoss(game, args) {
     // CTR TODO parse args and initialize Kels with proper parameters
     super(game, 250,
-      game.sprite("kels-boss1"),
-      game.sprite("kels-boss2"),
-      game.sprite("kels-boss3"));
+      game.loadSprite("kels-boss1"),
+      game.loadSprite("kels-boss2"),
+      game.loadSprite("kels-boss3"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());

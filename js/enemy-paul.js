@@ -130,9 +130,9 @@ class PaulEnemy extends EnemyHead {
   PaulEnemy(game, args) {
     // CTR TODO parse args and initialize Paul with proper parameters
     super(game, 80 + (int) (Math.random() * 20),
-      game.sprite("paul1"),
-      game.sprite("paul2"),
-      game.sprite("paul3"));
+      game.loadSprite("paul1"),
+      game.loadSprite("paul2"),
+      game.loadSprite("paul3"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox(1, 5, 1, 10));
     this.normalImage.addBox(new BoundingBox(8, 1, 8, 1));
@@ -159,9 +159,9 @@ class PaulBoss extends BossHead {
   PaulBoss(game, args) {
     // CTR TODO parse args and initialize Paul with proper parameters
     super(game, 800 + (int) (Math.random() * 200),
-      game.sprite("paul-boss1"),
-      game.sprite("paul-boss2"),
-      game.sprite("paul-boss3"));
+      game.loadSprite("paul-boss1"),
+      game.loadSprite("paul-boss2"),
+      game.loadSprite("paul-boss3"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());

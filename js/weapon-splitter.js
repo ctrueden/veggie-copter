@@ -70,7 +70,7 @@ class SplitterAttack extends Weapon {
   SplitterAttack(t) { this(t, 0, 0, 0); }
 
   SplitterAttack(t, xdir, ydir, count) {
-    super(t, "yellow", t.game.sprite("icon-split").image);
+    super(t, "yellow", t.game.loadSprite("icon-split").image);
     if (xdir == 0 && ydir == 0) {
       this.xdir = SPEED;
       this.ydir = 0;

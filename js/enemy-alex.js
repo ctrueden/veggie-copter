@@ -168,9 +168,9 @@ class AlexEnemy extends EnemyHead {
   AlexEnemy(game, args) {
     // CTR TODO parse args and initialize Alex with proper parameters
     super(game, 25,
-      game.sprite("alex1"),
-      game.sprite("alex2"),
-      game.sprite("alex3"));
+      game.loadSprite("alex1"),
+      game.loadSprite("alex2"),
+      game.loadSprite("alex3"));
     // CTR TODO set proper bounding box and offsets here
     var normal = this.normalImage();
     normal.addBox(new BoundingBox(30, 1, 30, 20));
@@ -202,9 +202,9 @@ class AlexBoss extends BossHead {
   constructor(game, args) {
     // CTR TODO parse args and initialize Alex with proper parameters
     super(game, 250,
-      game.sprite("alex-boss1"),
-      game.sprite("alex-boss2"),
-      game.sprite("alex-boss3"));
+      game.loadSprite("alex-boss1"),
+      game.loadSprite("alex-boss2"),
+      game.loadSprite("alex-boss3"));
     // CTR TODO set proper bounding box and offsets here
     var normal = this.normalImage();
     normal.addBox(new BoundingBox(95, 3, 100, 60));

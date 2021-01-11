@@ -94,7 +94,7 @@ class CopterRegen extends Thing {
 /** Defines veggie copter regen "attack" style. */
 class RegenWeapon extends Weapon {
   RegenAttack(t) {
-    super(t, "pink", t.game.sprite("icon-regen").image);
+    super(t, "pink", t.game.loadSprite("icon-regen").image);
     clear();
   }
 

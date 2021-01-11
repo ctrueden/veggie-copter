@@ -30,7 +30,7 @@ class GunWeapon extends Weapon {
   var fired;
 
   GunAttack(t) {
-    super(t, "brown", t.game.sprite("icon-gun").image);
+    super(t, "brown", t.game.loadSprite("icon-gun").image);
     this.space = false;
     this.fired = 0;
     this.recharge = 2;

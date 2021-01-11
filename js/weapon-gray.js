@@ -3,7 +3,7 @@ class GrayWeapon extends Weapon {
 
   GrayAttack(t) {
     this.space = false;
-    super(t, "lightgray", t.game.sprite("icon-gray").image);
+    super(t, "lightgray", t.game.loadSprite("icon-gray").image);
   }
 
   clear() { this.space = false; }

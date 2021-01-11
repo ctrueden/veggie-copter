@@ -242,7 +242,7 @@ class MineAttack extends Weapon {
   var fired;
 
   MineAttack(t) {
-    super(t, "darkgray", t.game.sprite("icon-mine").image);
+    super(t, "darkgray", t.game.loadSprite("icon-mine").image);
   }
 
   clear() { space = false; }

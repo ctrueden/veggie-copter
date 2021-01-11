@@ -105,9 +105,9 @@ class BushEnemy extends EnemyHead {
   constructor(game, args) {
     // CTR TODO parse args and initialize Bush with proper parameters
     super(game, 80 + (int) (Math.random() * 20),
-      game.sprite("bush1"),
-      game.sprite("bush2"),
-      game.sprite("bush3"));
+      game.loadSprite("bush1"),
+      game.loadSprite("bush2"),
+      game.loadSprite("bush3"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());

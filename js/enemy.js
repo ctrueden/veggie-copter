@@ -169,9 +169,9 @@ class Enemy extends EnemyHead {
    */
   constructor(game, args) {
     super(game, parseInt(args[0]),
-      game.sprite(`${args[1]}1`),
-      game.sprite(`${args[1]}2`),
-      game.sprite(`${args[1]}3`));
+      game.loadSprite(`${args[1]}1`),
+      game.loadSprite(`${args[1]}2`),
+      game.loadSprite(`${args[1]}3`));
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
     this.hurtImage.addBox(new BoundingBox());

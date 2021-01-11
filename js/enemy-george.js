@@ -131,9 +131,9 @@ class GeorgeEnemy extends EnemyHead {
   GeorgeEnemy(game, args) {
     // CTR TODO parse args and initialize George with proper parameters
     super(game, 80 + (int) (Math.random() * 20),
-      game.sprite("george1"),
-      game.sprite("george2"),
-      game.sprite("george3"));
+      game.loadSprite("george1"),
+      game.loadSprite("george2"),
+      game.loadSprite("george3"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
@@ -158,9 +158,9 @@ class GeorgeBoss extends BossHead {
   GeorgeBoss(game, args) {
     // CTR TODO parse args and initialize George with proper parameters
     super(game, 800 + (int) (Math.random() * 200),
-      game.sprite("george-boss1.png"),
-      game.sprite("george-boss2.png"),
-      game.sprite("george-boss3.png"));
+      game.loadSprite("george-boss1"),
+      game.loadSprite("george-boss2"),
+      game.loadSprite("george-boss3"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());

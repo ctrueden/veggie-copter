@@ -16,7 +16,7 @@ class LitWeapon extends Weapon {
   int[][] paths;
 
   LitAttack(t) {
-    super(t, "cyan", t.game.sprite("icon-lit").image);
+    super(t, "cyan", t.game.loadSprite("icon-lit").image);
 
     paths = new int[1000][];
     generatePath(0);

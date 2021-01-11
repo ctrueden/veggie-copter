@@ -67,9 +67,9 @@ class JamesEnemy extends EnemyHead {
   JamesEnemy(game, args) {
     // CTR TODO parse args and initialize James with proper parameters
     super(game, 25,
-      game.sprite("james1"),
-      game.sprite("james2"),
-      game.sprite("james3"));
+      game.loadSprite("james1"),
+      game.loadSprite("james2"),
+      game.loadSprite("james3"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());
@@ -96,9 +96,9 @@ class JamesBoss extends BossHead {
   JamesBoss(game, args) {
     // CTR TODO parse args and initialize James with proper parameters
     super(game, 250,
-      game.sprite("james-boss1.png"),
-      game.sprite("james-boss2.png"),
-      game.sprite("james-boss3.png"));
+      game.loadSprite("james-boss1"),
+      game.loadSprite("james-boss2"),
+      game.loadSprite("james-boss3"));
     // CTR TODO set proper bounding box and offsets here
     this.normalImage.addBox(new BoundingBox());
     this.attackImage.addBox(new BoundingBox());

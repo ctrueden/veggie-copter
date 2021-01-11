@@ -36,7 +36,7 @@ class SpreadWeapon extends Weapon {
   var fired;
 
   constructor(t) {
-    super(t, "blue", t.game.sprite("icon-spread").image);
+    super(t, "blue", t.game.loadSprite("icon-spread").image);
   }
 
   clear() { space = false; }

@@ -32,10 +32,11 @@ class Game {
   }
 
   /**
-   * Loads the given sprite image from disk, using the
-   * specified bounding box insets for collision detection.
+   * Loads the given sprite image from an external source, using
+   * the specified bounding box insets for collision detection.
+   * Images are loaded once and then cached for subsequent access.
    */
-  sprite(name, xoff, yoff, boxes) {
+  loadSprite(name, xoff, yoff, boxes) {
     if (name.indexOf('.') < 0) name += '.png';
     var path = `../assets/${name}`;
     if (xoff == null) xoff = 0;
