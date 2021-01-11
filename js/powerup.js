@@ -85,10 +85,10 @@ class PowerUp extends Thing {
     }
     this.setImages(imgs, 0);
 
-    setPos(cx - size / 2, cy - size / 2);
-    setMovement(new PowerUpMovement(this, this.xpos, this.ypos, this.att != null));
+    this.setPos(cx - size / 2, cy - size / 2);
+    this.setMovement(new PowerUpMovement(this, this.xpos, this.ypos, this.att != null));
   }
 
   /** Gets attack style granted by this power-up, if any. */
-  getGrantedAttack() { return att; }
+  getGrantedAttack() { return this.att; }
 }

@@ -15,9 +15,9 @@ class CopterGun extends Thing {
     CopterGun.prototype.image.addBox(new BoundingBox());
   }
 
-  CopterGun(thing, x, y, power) {
+  constructor(thing, x, y, power) {
     super(thing.getGame());
-    this.type = GOOD_BULLET;
+    this.type = ThingTypes.GOOD_BULLET;
     setImage(this.image);
     setPower(power);
     this.move = new BulletMovement(this, x, y + HEIGHT, x, -100, SPEED);
@@ -26,15 +26,15 @@ class CopterGun extends Thing {
 
 /** Defines veggie copter gun attack. */
 class GunWeapon extends Weapon {
-
-  RECHARGE = 2;
-
   boolean space = false;
   var fired;
 
   GunAttack(t) {
     super(t, "brown",
-      t.getGame().loadImage("icon-gun.png").getImage());
+      t.getGame().loadImage("../assets/icon-gun.png").getImage());
+    this.space = false;
+    this.fired = 0;
+    this.recharge = 2;
   }
 
   clear() { space = false; }
