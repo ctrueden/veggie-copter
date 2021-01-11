@@ -49,15 +49,11 @@ class ImageLoader {
   }
 
   image(path) {
-    if (path in this.images) return this.images[path];
-    var image = this.loadImage(path);
-    this.images[path] = image;
-    return image;
-  }
-
-  loadImage(path) {
-    var image = new Image();
-    image.src = path;
-    return image;
+    if (!(path in this.images)) {
+      var image = new Image();
+      image.src = path;
+      this.images[path] = image;
+    }
+    return this.images[path];
   }
 }
