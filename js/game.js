@@ -175,8 +175,8 @@ class Game {
 
     // allow things the chance to attack
     things.forEach(thing => {
-      this.things.concat(thing.shoot());
-      this.things.concat(thing.trigger());
+      append(this.things, thing.shoot());
+      append(this.things, thing.trigger());
     });
 
     // purge dead things

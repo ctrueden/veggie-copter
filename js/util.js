@@ -1,5 +1,13 @@
 // Utility functions and classes.
 
+/**
+ * Appends all elements of data to the given array.
+ * Like array.concat(data), but mutating in place.
+ */
+function append(array, data) {
+  data.forEach(element => array.push(element));
+}
+
 function clone(obj) {
   return Object.assign({}, obj);
 }

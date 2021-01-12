@@ -99,7 +99,7 @@ class CopterAttack extends AttackStyle {
     if (this.weapon) return this.weapon.shoot();
     // all weapons
     var shots = [];
-    this.weapons.forEach(weapon => shots.concat(weapon.shoot()));
+    this.weapons.forEach(weapon => append(shots, weapon.shoot()));
     return shots;
   }
 
@@ -107,7 +107,7 @@ class CopterAttack extends AttackStyle {
     if (this.weapon) return this.weapon.trigger();
     // all weapons
     var triggers = [];
-    this.weapons.forEach(weapon => triggers.concat(weapon.trigger()));
+    this.weapons.forEach(weapon => append(triggers, weapon.trigger()));
     return triggers;
   }
 
