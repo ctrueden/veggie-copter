@@ -135,9 +135,9 @@ class GeorgeEnemy extends EnemyHead {
       game.loadSprite("george2"),
       game.loadSprite("george3"));
     // CTR TODO set proper bounding box and offsets here
-    this.normalImage.addBox(new BoundingBox());
-    this.attackImage.addBox(new BoundingBox());
-    this.hurtImage.addBox(new BoundingBox());
+    this.normalImage.addBox(new BoxInsets());
+    this.attackImage.addBox(new BoxInsets());
+    this.hurtImage.addBox(new BoxInsets());
     this.movement = new GeorgeMovement(this);
     this.attack = new GeorgeAttack(this);
   }
@@ -162,9 +162,9 @@ class GeorgeBoss extends BossHead {
       game.loadSprite("george-boss2"),
       game.loadSprite("george-boss3"));
     // CTR TODO set proper bounding box and offsets here
-    this.normalImage.addBox(new BoundingBox());
-    this.attackImage.addBox(new BoundingBox());
-    this.hurtImage.addBox(new BoundingBox());
+    this.normalImage.addBox(new BoxInsets());
+    this.attackImage.addBox(new BoxInsets());
+    this.hurtImage.addBox(new BoxInsets());
     this.movement = new GeorgeMovement(this);
     this.attack = new GeorgeAttack(this);
   }

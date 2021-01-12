@@ -80,7 +80,7 @@ class PowerUp extends Thing {
         ctx.fillOval(median - rad, median - rad, 2 * rad, 2 * rad);
       }
       var sprite = new Sprite(image);
-      sprite.addBox(new BoundingBox(1, 1, 1, 1));
+      sprite.addBox(new BoxInsets(1, 1, 1, 1));
       sprites[i] = sprite;
     }
     this.setSprites(sprites, 0);

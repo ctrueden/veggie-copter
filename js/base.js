@@ -1,24 +1,26 @@
 // Base data structures.
 
-/** A rectangle in space. */
-class BoundingBox {
-  constructor(x1, y1, x2, y2) {
-    this.x1 = x1 == null ? 0 : x1;
-    this.y1 = y1 == null ? 0 : y1;
-    this.x2 = x2 == null ? 0 : x2;
-    this.y2 = y2 == null ? 0 : y2;
+/**
+ * Insets in space. The four coordinates are pixel distances from the
+ * left, top, right, and bottom of some unspecified rectangle. As such,
+ * this object has no intrinsic width and height of its own.
+ */
+class BoxInsets {
+  constructor(left, upper, right, lower) {
+    this.left = left == null ? 0 : left;
+    this.upper = upper == null ? 0 : upper;
+    this.right = right == null ? 0 : right;
+    this.lower = lower == null ? 0 : lower;
   }
 
-  get width() { return this.x2 - this.x1 + 1; }
-  get height() { return this.y2 - this.y1 + 1; }
-
-  /** Gets bounding box given the coordinates, width and height. */
-  getBox(x, y, width, height) {
-    var w = width - this.x1 - this.x2 - 1;
-    var h = height - this.y1 - this.y2 - 1;
-    if (w < 1) w = 1;
-    if (h < 1) h = 1;
-    return {x: x + this.x1, y: y + this.y1, width: w, height: h};
+  /** Gets rectangle bounds given XY coordinates plus width and height. */
+  rect(x, y, width, height) {
+    return {
+      x: x + this.left,
+      y: y + this.upper,
+      width: Math.max(1, width - this.left - this.right - 1),
+      height: Math.max(1, height - this.upper - this.lower - 1)
+    };
   }
 }
 
@@ -30,24 +32,15 @@ class Sprite {
     this.height = height == null ? image.height : height; // Image height.
     this.xoff = xoff == null ? 0 : xoff;                  // X offset.
     this.yoff = yoff == null ? 0 : yoff;                  // Y offset.
-    this.boxes = [];                                      // Bounding boxes.
+    this.boxes = [];                                      // Bounding box insets.
   }
 
   /** Adds a bounding box to the image. */
   addBox(box) { this.boxes.push(box); }
 
-  /** Removes the last bounding box from the image. */
-  removeBox() {
-    boxes.pop();
-  }
-
-  /** Gets bounding boxes given the image's top left coordinate. */
-  getBoxes(x, y) {
-    var r = [];
-    for (var i=0; i<this.boxes.length; i++) {
-      r.push(this.boxes[i].getBox(x, y, this.width, this.height));
-    }
-    return r;
+  /** Gets bounding rectangles relative to the given top left coordinate. */
+  bounds(x, y) {
+    return this.boxes.map(box => box.rect(x, y, this.width, this.height));
   }
 }
 
@@ -224,10 +217,9 @@ class Thing {
     return sprite == null ? -1 : sprite.height;
   }
 
-  /** Gets bounding boxes of the object's active sprite. */
-  get boxes() {
-    var sprite = this.sprite();
-    return sprite == null ? null : sprite.getBoxes(this.xpos, this.ypos);
+  /** Gets bounding rectangles of the object's active sprite. */
+  get bounds() {
+    return this.sprite() == null ? [] : this.sprite().bounds(this.xpos, this.ypos);
   }
 
   /** Gets whether object has been hit. */

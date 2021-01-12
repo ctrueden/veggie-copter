@@ -18,15 +18,15 @@ class TestBoss extends BossHead {
       game.loadSprite("test-boss2"),
       game.loadSprite("test-boss2"),
       game.loadSprite("test-boss2"));
-    this.normalImage.addBox(new BoundingBox(30, 0, 30, 0));
-    this.normalImage.addBox(new BoundingBox(3, 30, 3, 50));
-    this.normalImage.addBox(new BoundingBox(15, 10, 15, 15));
-    this.attackImage.addBox(new BoundingBox(30, 0, 30, 0));
-    this.attackImage.addBox(new BoundingBox(3, 30, 3, 50));
-    this.attackImage.addBox(new BoundingBox(15, 10, 15, 15));
-    this.hurtImage.addBox(new BoundingBox(30, 0, 30, 0));
-    this.hurtImage.addBox(new BoundingBox(3, 30, 3, 50));
-    this.hurtImage.addBox(new BoundingBox(15, 10, 15, 15));
+    this.normalImage.addBox(new BoxInsets(30, 0, 30, 0));
+    this.normalImage.addBox(new BoxInsets(3, 30, 3, 50));
+    this.normalImage.addBox(new BoxInsets(15, 10, 15, 15));
+    this.attackImage.addBox(new BoxInsets(30, 0, 30, 0));
+    this.attackImage.addBox(new BoxInsets(3, 30, 3, 50));
+    this.attackImage.addBox(new BoxInsets(15, 10, 15, 15));
+    this.hurtImage.addBox(new BoxInsets(30, 0, 30, 0));
+    this.hurtImage.addBox(new BoxInsets(3, 30, 3, 50));
+    this.hurtImage.addBox(new BoxInsets(15, 10, 15, 15));
 
     var x = 0, y = 0;
     if (args.length >= 1) {

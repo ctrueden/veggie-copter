@@ -43,7 +43,7 @@ class CopterCharge extends Thing {
         ctx.fillOval(l, l, j, j);
       }
       sprites[i] = new Sprite(img);
-      sprites[i].addBox(new BoundingBox(1, 1, 1, 1));
+      sprites[i].addBox(new BoxInsets(1, 1, 1, 1));
     }
   }
 

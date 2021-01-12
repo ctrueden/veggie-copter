@@ -80,7 +80,7 @@ class EnemyBullet extends Thing {
       ctx.fillStyle = "red";
       ctx.fillRoundRect(0, 0, size, size, size / 2, size / 2);
       var sprite = new Sprite(image);
-      sprite.addBox(new BoundingBox());
+      sprite.addBox(new BoxInsets());
       return sprite;
     }));
     this.power = 10 * t.power;
@@ -167,9 +167,9 @@ class Enemy extends EnemyHead {
       game.loadSprite(`${args[1]}1`),
       game.loadSprite(`${args[1]}2`),
       game.loadSprite(`${args[1]}3`));
-    this.normalImage.addBox(new BoundingBox());
-    this.attackImage.addBox(new BoundingBox());
-    this.hurtImage.addBox(new BoundingBox());
+    this.normalImage.addBox(new BoxInsets());
+    this.attackImage.addBox(new BoxInsets());
+    this.hurtImage.addBox(new BoxInsets());
 
     this.movement = new EnemyMovement(this, args.slice(2));
     this.attack = new RandomBulletAttack(this);

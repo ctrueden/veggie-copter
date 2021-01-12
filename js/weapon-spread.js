@@ -11,7 +11,7 @@ class CopterSpread extends Thing {
     ctx.fillStyle = "blue";
     ctx.fillRoundRect(0, 0, size, size, size / 2, size / 2);
     image = new Sprite(img);
-    image.addBox(new BoundingBox());
+    image.addBox(new BoxInsets());
   }
 
   CopterSpread(thing, angle) {

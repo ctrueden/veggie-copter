@@ -14,7 +14,7 @@ class GunBullet extends Thing {
       ctx.lineTo(0, len);
       ctx.stroke();
       var sprite = new Sprite(img, 1, len);
-      sprite.addBox(new BoundingBox());
+      sprite.addBox(new BoxInsets());
       return sprite;
     }));
     this.power = power;

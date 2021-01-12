@@ -134,11 +134,11 @@ class PaulEnemy extends EnemyHead {
       game.loadSprite("paul2"),
       game.loadSprite("paul3"));
     // CTR TODO set proper bounding box and offsets here
-    this.normalImage.addBox(new BoundingBox(1, 5, 1, 10));
-    this.normalImage.addBox(new BoundingBox(8, 1, 8, 1));
-    this.attackImage.addBox(new BoundingBox(1, 5, 1, 10));
-    this.attackImage.addBox(new BoundingBox(8, 1, 8, 1));
-    this.hurtImage.addBox(new BoundingBox());
+    this.normalImage.addBox(new BoxInsets(1, 5, 1, 10));
+    this.normalImage.addBox(new BoxInsets(8, 1, 8, 1));
+    this.attackImage.addBox(new BoxInsets(1, 5, 1, 10));
+    this.attackImage.addBox(new BoxInsets(8, 1, 8, 1));
+    this.hurtImage.addBox(new BoxInsets());
     this.movement = new PaulMovement(this);
     this.attack = new PaulAttack(this);
   }
@@ -163,9 +163,9 @@ class PaulBoss extends BossHead {
       game.loadSprite("paul-boss2"),
       game.loadSprite("paul-boss3"));
     // CTR TODO set proper bounding box and offsets here
-    this.normalImage.addBox(new BoundingBox());
-    this.attackImage.addBox(new BoundingBox());
-    this.hurtImage.addBox(new BoundingBox());
+    this.normalImage.addBox(new BoxInsets());
+    this.attackImage.addBox(new BoxInsets());
+    this.hurtImage.addBox(new BoxInsets());
     this.movement = new PaulMovement(this);
     this.attack = new PaulAttack(this);
   }

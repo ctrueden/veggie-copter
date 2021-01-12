@@ -70,7 +70,7 @@ class CopterRegen extends Thing {
         ctx.fillOval(median - rad, 2 * (median - rad), 2 * rad, 4 * rad);
       }
       images[i] = new Sprite(img);
-      images[i].addBox(new BoundingBox(5, 5, 5, 5));
+      images[i].addBox(new BoxInsets(5, 5, 5, 5));
     }
   }
 

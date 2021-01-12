@@ -78,7 +78,7 @@ class BoxEditor extends JFrame
         }
         if (c == 4) {
           var w = sprite.width, h = sprite.height;
-          sprite.addBox(new BoundingBox(coords[0], coords[1],
+          sprite.addBox(new BoxInsets(coords[0], coords[1],
             coords[2], coords[3]));
         }
       }
@@ -164,7 +164,7 @@ class BoxEditor extends JFrame
     var my = e.getY();
     var x1 = mx - x, y1 = my - y;
     var x2 = w - x1 - 1, y2 = h - y1 - 1;
-    bb = new BoundingBox(x1, y1, x2, y2);
+    bb = new BoxInsets(x1, y1, x2, y2);
     sprite.addBox(bb);
     repaint();
   }

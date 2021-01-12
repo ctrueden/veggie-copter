@@ -142,7 +142,7 @@ class Copter extends Thing {
   constructor(game) {
     super(game);
     var sprite = game.loadSprite("copter.gif");
-    sprite.addBox(new BoundingBox(2, 6, 2, 5));
+    sprite.addBox(new BoxInsets(2, 6, 2, 5));
     this.setSprite(sprite);
     this.movement = new CopterMovement(this);
 

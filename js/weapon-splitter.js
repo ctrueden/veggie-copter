@@ -30,7 +30,7 @@ class CopterSplitter extends Thing {
       ctx.fillStyle = "yellow";
       ctx.fillRoundRect(0, 0, size, size, size / 2, size / 2);
       images[i] = new Sprite(img);
-      images[i].addBox(new BoundingBox());
+      images[i].addBox(new BoxInsets());
     }
   }
 

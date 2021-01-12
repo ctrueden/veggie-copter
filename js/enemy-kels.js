@@ -71,9 +71,9 @@ class KelsEnemy extends EnemyHead {
       game.loadSprite("kels2"),
       game.loadSprite("kels3"));
     // CTR TODO set proper bounding box and offsets here
-    this.normalImage.addBox(new BoundingBox());
-    this.attackImage.addBox(new BoundingBox());
-    this.hurtImage.addBox(new BoundingBox());
+    this.normalImage.addBox(new BoxInsets());
+    this.attackImage.addBox(new BoxInsets());
+    this.hurtImage.addBox(new BoxInsets());
 
     var y = 0;
     boolean dir = false;
@@ -100,9 +100,9 @@ class KelsBoss extends BossHead {
       game.loadSprite("kels-boss2"),
       game.loadSprite("kels-boss3"));
     // CTR TODO set proper bounding box and offsets here
-    this.normalImage.addBox(new BoundingBox());
-    this.attackImage.addBox(new BoundingBox());
-    this.hurtImage.addBox(new BoundingBox());
+    this.normalImage.addBox(new BoxInsets());
+    this.attackImage.addBox(new BoxInsets());
+    this.hurtImage.addBox(new BoxInsets());
 
     var y = 0;
     boolean dir = false;

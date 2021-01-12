@@ -56,7 +56,7 @@ class CopterShield extends Thing {
         game.loadSprite("james-diamond"),
         game.loadSprite("james-club")
       };
-      for (var i=0; i<images.length; i++) images[i].addBox(new BoundingBox());
+      for (var i=0; i<images.length; i++) images[i].addBox(new BoxInsets());
     }
     setSprite(images[count % images.length]);
     count++;

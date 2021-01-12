@@ -173,12 +173,12 @@ class AlexEnemy extends EnemyHead {
       game.loadSprite("alex3"));
     // CTR TODO set proper bounding box and offsets here
     var normal = this.normalImage();
-    normal.addBox(new BoundingBox(30, 1, 30, 20));
-    normal.addBox(new BoundingBox(25, 5, 25, 25));
-    this.attackImage.addBox(new BoundingBox(28, 1, 28, 13));
-    this.attackImage.addBox(new BoundingBox(23, 5, 23, 17));
-    this.hurtImage.addBox(new BoundingBox(32, 1, 27, 13));
-    this.hurtImage.addBox(new BoundingBox(27, 5, 22, 17));
+    normal.addBox(new BoxInsets(30, 1, 30, 20));
+    normal.addBox(new BoxInsets(25, 5, 25, 25));
+    this.attackImage.addBox(new BoxInsets(28, 1, 28, 13));
+    this.attackImage.addBox(new BoxInsets(23, 5, 23, 17));
+    this.hurtImage.addBox(new BoxInsets(32, 1, 27, 13));
+    this.hurtImage.addBox(new BoxInsets(27, 5, 22, 17));
     this.movement = new AlexMovement(this);
     this.attack =snew AlexAttack(this);
   }
@@ -207,12 +207,12 @@ class AlexBoss extends BossHead {
       game.loadSprite("alex-boss3"));
     // CTR TODO set proper bounding box and offsets here
     var normal = this.normalImage();
-    normal.addBox(new BoundingBox(95, 3, 100, 60));
-    normal.addBox(new BoundingBox(78, 18, 80, 85));
-    this.attackImage.addBox(new BoundingBox(84, 3, 84, 39));
-    this.attackImage.addBox(new BoundingBox(69, 15, 69, 51));
-    this.hurtImage.addBox(new BoundingBox(96, 3, 81, 39));
-    this.hurtImage.addBox(new BoundingBox(81, 15, 66, 51));
+    normal.addBox(new BoxInsets(95, 3, 100, 60));
+    normal.addBox(new BoxInsets(78, 18, 80, 85));
+    this.attackImage.addBox(new BoxInsets(84, 3, 84, 39));
+    this.attackImage.addBox(new BoxInsets(69, 15, 69, 51));
+    this.hurtImage.addBox(new BoxInsets(96, 3, 81, 39));
+    this.hurtImage.addBox(new BoxInsets(81, 15, 66, 51));
     this.movement = new AlexMovement(this);
     this.attack = new AlexAttack(this);
   }

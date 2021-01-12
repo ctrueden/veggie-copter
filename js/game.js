@@ -99,9 +99,9 @@ class Game {
       this.things.forEach(thing => {
         // draw bounding box
         this.buf.strokeStyle = "red";
-        thing.boxes.forEach(box => {
+        thing.bounds.forEach(rect => {
           this.buf.beginPath();
-          this.buf.rect(box.x, box.y, box.width, box.height);
+          this.buf.rect(rect.x, rect.y, rect.width, rect.height);
           this.buf.stroke();
         });
 

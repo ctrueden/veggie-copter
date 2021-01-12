@@ -52,7 +52,7 @@ class MineShard extends Thing {
       ctx.fillStyle = color(128, 128, 128, alpha);
       ctx.fillRoundRect(0, 0, SIZE, SIZE, SIZE / 2, SIZE / 2);
       images[i] = new Sprite(img);
-      images[i].addBox(new BoundingBox());
+      images[i].addBox(new BoxInsets());
     }
   }
 
@@ -199,7 +199,7 @@ class CopterMine extends Thing {
       var q = size / 3 + 1;
       ctx.fillOval(q, q, q, q);
       images[i] = new Sprite(img);
-      images[i].addBox(new BoundingBox());
+      images[i].addBox(new BoxInsets());
     }
   }
 
