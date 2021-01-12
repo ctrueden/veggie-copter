@@ -213,6 +213,7 @@ class Game {
   keyPressed(e) {
     if (!this.keys.has(e.keyCode)) {
       this.keys.add(e.keyCode);
+      if (this.debug) console.info(`key pressed: ${e.keyCode}`);
       this.things.slice().forEach(thing => thing.keyPressed(e));
 
       if (Keys.SHOOT.includes(e.keyCode)) {
@@ -245,6 +246,7 @@ class Game {
   /** Handles key releases. */
   keyReleased(e) {
     this.keys.delete(e.keyCode);
+    if (this.debug) console.info(`key released: ${e.keyCode}`);
     this.things.slice().forEach(thing => thing.keyReleased(e));
     if (Keys.FAST_FORWARD.includes(e.keyCode)) this.fast = false;
   }
