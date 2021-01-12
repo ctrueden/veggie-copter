@@ -54,7 +54,7 @@ class CopterAttack extends AttackStyle {
   }
 
   /** Gets the active weapon. */
-  get activeWeapon() {
+  get weapon() {
     return this.weaponIndex == null ? null : this.weapons[this.weaponIndex];
   }
 
@@ -67,10 +67,10 @@ class CopterAttack extends AttackStyle {
   /** Sets attack style to the given list index. */
   activate(index) {
     if (index >= this.weapons.length) return; // out of bounds
-    if (this.activeWeapon) this.activeWeapon.clear();
+    if (this.weapon) this.weapon.clear();
     else this.weapons.forEach(weapon => weapon.clear());
     this.weaponIndex = index;
-    if (this.activeWeapon) this.activeWeapon.activate();
+    if (this.weapon) this.weapon.activate();
     else this.weapons.forEach(weapon => weapon.activate());
   }
 
@@ -85,7 +85,7 @@ class CopterAttack extends AttackStyle {
   }
 
   shoot() {
-    if (this.activeWeapon) return this.activeWeapon.shoot();
+    if (this.weapon) return this.weapon.shoot();
     // all weapons
     var shots = [];
     this.weapons.forEach(weapon => shots.concat(weapon.shoot()));
@@ -93,7 +93,7 @@ class CopterAttack extends AttackStyle {
   }
 
   trigger() {
-    if (this.activeWeapon) return this.activeWeapon.trigger();
+    if (this.weapon) return this.weapon.trigger();
     // all weapons
     var triggers = [];
     this.weapons.forEach(weapon => triggers.concat(weapon.trigger()));
@@ -101,12 +101,12 @@ class CopterAttack extends AttackStyle {
   }
 
   set power(power) {
-    if (this.activeWeapon) this.activeWeapon.power = power;
+    if (this.weapon) this.weapon.power = power;
     else if (this.weapons) this.weapons.forEach(attack => attack.power = power);
   }
 
   get power() {
-    return this.activeWeapon ? this.activeWeapon.power : this.weapons[0].power;
+    return this.weapon ? this.weapon.power : this.weapons[0].power;
   }
 
   keyPressed(e) {
@@ -122,7 +122,7 @@ class CopterAttack extends AttackStyle {
       var index = Keys.WEAPONS.indexOf(e.keyCode);
       if (index >= 0) this.activate(index);
       else {
-        if (this.activeWeapon) this.activeWeapon.keyPressed(e);
+        if (this.weapon) this.weapon.keyPressed(e);
         else this.weapons.forEach(attack => attack.keyPressed(e));
       }
     }
