@@ -43,8 +43,7 @@ class TestBoss extends BossHead {
 
   /** Gets the attack form left behind by this boss upon defeat. */
   getWeapon() {
-    //return new GunWeapon(this.game.copter);
-    return new Weapon();
+    return new GunWeapon(this.game.copter);
   }
 
   /** Draws the object onscreen. */

@@ -45,12 +45,15 @@ class CopterMovement extends MovementStyle {
   }
 }
 
-/** Defines veggie copter attack. */
+/**
+ * The veggie copter attack style. It consists of a bundle of weapons,
+ * only one of which is active at a time.
+ */
 class CopterAttack extends AttackStyle {
   constructor(t) {
     super(t);
-    this.weapons = [];
-    this.weaponIndex = 0;
+    this.weapons = [];    // the list of available weapons
+    this.weaponIndex = 0; // index of the active weapon
   }
 
   /** Gets the active weapon. */
@@ -70,16 +73,24 @@ class CopterAttack extends AttackStyle {
     if (this.weapon) this.weapon.clear();
     else this.weapons.forEach(weapon => weapon.clear());
     this.weaponIndex = index;
-    if (this.weapon) this.weapon.activate();
-    else this.weapons.forEach(weapon => weapon.activate());
+    if (this.weapon) {
+      if (this.thing.game.debug) {
+        console.info(`Activating ${this.weapon.constructor.name}`);
+      }
+      this.weapon.activate();
+    }
+    else {
+      if (this.thing.game.debug) console.info(`Activating ALL WEAPONS MODE!`);
+      this.weapons.forEach(weapon => weapon.activate());
+    }
   }
 
   reactivate() { this.activate(this.weaponIndex); }
 
   drawWeaponStatus(ctx, x, y) {
-    var size = this.weapons.length;
-    for (var i=0; i<size; i++) {
-      this.weapons[i].drawIcon(ctx, x, y, this.weaponIndex == null || i == this.weaponIndex);
+    for (var i=0; i<this.weapons.length; i++) {
+      var active = this.weaponIndex == i || this.weaponIndex == null;
+      this.weapons[i].drawIcon(ctx, x, y, active);
       x += this.weapons[i].iconSize - 1; // one pixel overlap
     }
   }
@@ -102,7 +113,7 @@ class CopterAttack extends AttackStyle {
 
   set power(power) {
     if (this.weapon) this.weapon.power = power;
-    else if (this.weapons) this.weapons.forEach(attack => attack.power = power);
+    else if (this.weapons) this.weapons.forEach(weapon => weapon.power = power);
   }
 
   get power() {
@@ -123,7 +134,7 @@ class CopterAttack extends AttackStyle {
       if (index >= 0) this.activate(index);
       else {
         if (this.weapon) this.weapon.keyPressed(e);
-        else this.weapons.forEach(attack => attack.keyPressed(e));
+        else this.weapons.forEach(weapon => weapon.keyPressed(e));
       }
     }
   }
@@ -131,7 +142,7 @@ class CopterAttack extends AttackStyle {
   keyReleased(e) {
     var attack = this.attackStyle;
     if (attack == null) { // all weapons
-      this.weapons.forEach(attack => attack.keyReleased(e));
+      this.weapons.forEach(weapon => weapon.keyReleased(e));
     }
     else attack.keyReleased(e);
   }
@@ -147,8 +158,8 @@ class Copter extends Thing {
     this.movement = new CopterMovement(this);
 
     this.attack = new CopterAttack(this);
-    /*
     this.attack.addWeapon(new GunWeapon(this)); // brown
+    /*
     this.attack.addWeapon(new EnergyWeapon(this)); // orange
     this.attack.addWeapon(new SplitterWeapon(this)); // yellow
     this.attack.addWeapon(new LaserWeapon(this)); // green
