@@ -25,14 +25,14 @@ class EnergyWeapon extends Weapon {
     var cx1 = copter.xpos;
     var cx2 = cx1 + copter.width;
     var cy = copter.ypos;
-    var t = game.getThings();
     var ndx = -1;
     var dist = Integer.MAX_VALUE;
-    for (var i=0; i<t.length; i++) {
-      if (t[i].type != ThingTypes.EVIL) continue;
-      var x1 = t[i].xpos;
-      var x2 = x1 + t[i].width;
-      var y = t[i].cy;
+    for (var i=0; i<this.things.length; i++) {
+      var thing = things[i];
+      if (thing.type != ThingTypes.EVIL) continue;
+      var x1 = thing.xpos;
+      var x2 = x1 + thing.width;
+      var y = thing.cy;
       if (y >= cy || cx2 < x1 || cx1 > x2) continue;
       var ndist = cy - y;
       if (dist < ndist) continue;

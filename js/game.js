@@ -65,8 +65,8 @@ class Game {
   /** Whether there are any enemies currently onscreen. */
   isClear() {
     for (var i=0; i<this.things.length; i++) {
-      var t = this.things[i];
-      if (t.type != ThingTypes.GOOD && t.type != ThingTypes.GOOD_BULLET) {
+      var type = this.things[i].type;
+      if (type != ThingTypes.GOOD && type != ThingTypes.GOOD_BULLET) {
         return false;
       }
     }
@@ -93,24 +93,23 @@ class Game {
     this.stars.drawStars(this.buf);
 
     // redraw things
-    this.things.forEach(t => t.draw(this.buf));
+    this.things.forEach(thing => thing.draw(this.buf));
 
     if (this.debug) {
-      this.things.forEach(t => {
+      this.things.forEach(thing => {
         // draw bounding box
         this.buf.strokeStyle = "red";
-        var r = t.boxes;
-        for (var j=0; j<r.length; j++) {
+        thing.boxes.forEach(box => {
           this.buf.beginPath();
-          this.buf.rect(r[j].x, r[j].y, r[j].width, r[j].height);
+          this.buf.rect(box.x, box.y, box.width, box.height);
           this.buf.stroke();
-        }
+        });
 
         // draw power level
         this.buf.strokeStyle = "white";
-        var xint = Math.trunc(t.cx) - 3;
-        var yint = Math.trunc(t.cy) + 6;
-        this.buf.fillText("" + t.power, xint, yint);
+        var xint = Math.trunc(thing.cx) - 3;
+        var yint = Math.trunc(thing.cy) + 6;
+        this.buf.fillText("" + thing.power, xint, yint);
       });
     }
 
@@ -173,7 +172,7 @@ class Game {
     this.stars.moveStars();
 
     // move things
-    things.forEach(t => t.move());
+    things.forEach(thing => thing.move());
 
     // update text messages
     this.messages.slice().forEach(m => {
@@ -181,9 +180,9 @@ class Game {
     });
 
     // allow things the chance to attack
-    things.forEach(t => {
-      this.things.concat(t.shoot());
-      this.things.concat(t.trigger());
+    things.forEach(thing => {
+      this.things.concat(thing.shoot());
+      this.things.concat(thing.trigger());
     });
 
     // purge dead things
@@ -220,7 +219,7 @@ class Game {
   keyPressed(e) {
     if (!this.keys.has(e.keyCode)) {
       this.keys.add(e.keyCode);
-      this.things.slice().forEach(t => t.keyPressed(e));
+      this.things.slice().forEach(thing => thing.keyPressed(e));
 
       if (Keys.SHOOT.includes(e.keyCode)) {
         if (this.stage == null) {
@@ -252,7 +251,7 @@ class Game {
   /** Handles key releases. */
   keyReleased(e) {
     this.keys.delete(e.keyCode);
-    this.things.slice().forEach(t => t.keyReleased(e));
+    this.things.slice().forEach(thing => thing.keyReleased(e));
     if (Keys.FAST_FORWARD.includes(e.keyCode)) this.fast = false;
   }
 

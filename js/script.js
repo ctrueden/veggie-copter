@@ -98,8 +98,8 @@ class GameScript {
         this.game.things.push(new TestBoss(this.game, p)); // TEMP
       else console.error("ALKJHFLKSDJHDSF " + className); // TEMP
       // NB: Instantiate object of the given class.
-      //var t = window[className](this.game, p);
-      //this.game.things.push(t);
+      //var thing = window[className](this.game, p);
+      //this.game.things.push(thing);
     }
     catch (err) {
       console.error(err);
