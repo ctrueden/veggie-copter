@@ -84,7 +84,7 @@ class Game {
     this.buf.fillRect(0, 0, this.offscreen.width, this.offscreen.height);
 
     // star field
-    this.stars.drawStars(this.buf);
+    this.stars.draw(this.buf);
 
     // redraw things
     this.things.forEach(thing => thing.draw(this.buf));
@@ -163,7 +163,7 @@ class Game {
     this.checkAllCollisions(things);
 
     // update star field
-    this.stars.moveStars();
+    this.stars.move();
 
     // move things
     things.forEach(thing => thing.move());
