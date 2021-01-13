@@ -73,6 +73,26 @@ function drawOutlinedRect(ctx, color, x, y, width, height) {
   ctx.stroke();
 }
 
+class Rectangle {
+  constructor(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+
+  get x2() { return this.x + this.width - 1; }
+  get y2() { return this.y + this.height - 1; }
+
+  intersects(that) {
+    // Credit: https://stackoverflow.com/a/2752369/1207769
+    return this.x <= that.x2 &&
+           that.x <= this.x2 &&
+           this.y <= that.y2 &&
+           that.y <= this.y2;
+  }
+}
+
 /** Helper class for loading and caching images from external sources. */
 class ImageLoader {
   constructor() {

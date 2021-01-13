@@ -15,12 +15,9 @@ class BoxInsets {
 
   /** Gets rectangle bounds given XY coordinates plus width and height. */
   rect(x, y, width, height) {
-    return {
-      x: x + this.left,
-      y: y + this.upper,
-      width: Math.max(1, width - this.left - this.right - 1),
-      height: Math.max(1, height - this.upper - this.lower - 1)
-    };
+    var w = Math.max(1, width - this.left - this.right - 1);
+    var h = Math.max(1, height - this.upper - this.lower - 1);
+    return new Rectangle(x + this.left, y + this.upper, w, h);
   }
 }
 

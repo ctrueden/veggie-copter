@@ -160,7 +160,7 @@ class Game {
     var things = this.things.slice(); // NB: Make a copy!
 
     // collision detection
-    this.checkAllCollisions(things);
+    this.checkCollisions(things);
 
     // update star field
     this.stars.move();
@@ -251,107 +251,76 @@ class Game {
     if (Keys.FAST_FORWARD.includes(e.keyCode)) this.fast = false;
   }
 
-  /** Does collision detection between the given objects. */
-  checkAllCollisions(t) {
-    /*
-    // divide things into types, and build rectangle lists
-    var tt = new Thing[ThingTypes.length][];
-    var counts = new int[ThingTypes.length];
-    for (var i=0; i<t.length; i++) {
-      var type = t[i].type;
-      counts[type]++;
-    }
-    var boxes = new Rectangle[ThingTypes.length][][];
-    for (var i=0; i<counts.length; i++) {
-      tt[i] = new Thing[counts[i]];
-      boxes[i] = new Rectangle[counts[i]][];
-    }
-    for (var i=0; i<t.length; i++) {
-      var type = t[i].type;
-      var ndx = --counts[type];
-      tt[type][ndx] = t[i];
-      boxes[type][ndx] = t[i].boxes;
-    }
+  /** Does collision detection between the given things. */
+  checkCollisions(things) {
+    // sort things into types
+    var tt = {};
+    Object.values(ThingTypes).forEach(type => tt[type] = []);
+    things.forEach(thing => tt[thing.type].push(thing));
 
     // do collision detection between copter and power-ups
-    var rcop = this.copter.boxes;
-    var rups = boxes[ThingTypes.POWER_UP];
-    for (var i=0; i<rups.length; i++) {
-      if (rups[i] == null) continue;
-      boolean collision = false;
-      for (int k=0; k<rups[i].length; k++) {
-        for (int l=0; l<rcop.length; l++) {
-          if (rups[i][k].intersects(rcop[l])) {
-            collision = true;
-            break;
-          }
-        }
-        if (collision) break;
-      }
-      if (collision) {
-        var powerup = tt[ThingTypes.POWER_UP][i];
-        var attack = powerup.getGrantedAttack();
-        if (attack == null) {
-          // increase power of selected attack style by one
-          if (this.copter.attack.power < 10) this.copter.attack.power++;
-        }
-        else {
-          // grant new attack style to copter
-          this.copter.attack.addAttackStyle(attack);
-        }
-        tt[ThingTypes.POWER_UP][i].setHP(0);
-        rups[i] = null;
-      }
-    }
+    this.doCollisions([this.copter], tt[ThingTypes.POWER_UP], this.applyPowerUp);
 
     // do collision detection between good and evil objects
-    checkCollisions(tt[ThingTypes.GOOD], boxes[ThingTypes.GOOD],
-      tt[ThingTypes.EVIL], boxes[ThingTypes.EVIL]);
-    checkCollisions(tt[ThingTypes.GOOD_BULLET], boxes[ThingTypes.GOOD_BULLET],
-      tt[ThingTypes.EVIL], boxes[ThingTypes.EVIL]);
-    checkCollisions(tt[ThingTypes.GOOD], boxes[ThingTypes.GOOD],
-      tt[ThingTypes.EVIL_BULLET], boxes[ThingTypes.EVIL_BULLET]);
-    */
+    this.doCollisions(tt[ThingTypes.GOOD], tt[ThingTypes.EVIL], this.crash);
+    this.doCollisions(tt[ThingTypes.GOOD_BULLET], tt[ThingTypes.EVIL], this.crash);
+    this.doCollisions(tt[ThingTypes.GOOD], tt[ThingTypes.EVIL_BULLET], this.crash);
   }
 
-  /** Does collision detection between the given objects. */
-  checkCollisions(t1, r1, t2, r2) {
-    /*
-    for (var i=0; i<r1.length; i++) {
-      for (var j=0; j<r2.length; j++) {
-        if (r1[i] == null) break;
-        if (r2[j] == null) continue;
-        boolean collision = false;
-        for (int k=0; k<r1[i].length; k++) {
-          for (int l=0; l<r2[j].length; l++) {
-            if (r1[i][k].intersects(r2[j][l])) {
-              collision = true;
-              break;
-            }
-          }
-          if (collision) break;
-        }
-        if (collision) {
-          boolean hurt1 = t2[j].harms(t1[i]);
-          boolean hurt2 = t1[i].harms(t2[j]);
-          if (hurt1 && smack(t2[j], t1[i])) r1[i] = null;
-          if (hurt2 && smack(t1[i], t2[j])) r2[j] = null;
-        }
+  /**
+   * Executes collisions between two lists of things. The given collide
+   * function is invoked with each pair of intersecting things.
+   */
+  doCollisions(aThings, bThings, collide) {
+    for (var a=0; a<aThings.length; a++) {
+      var aThing = aThings[a];
+      for (var b=0; b<bThings.length; b++) {
+        var bThing = bThings[b];
+        if (aThing.isDead()) break; // go to next aThing
+        if (bThing.isDead()) continue; // go to the next bThing
+        if (this.intersects(aThing.bounds, bThing.bounds)) collide(aThing, bThing);
       }
     }
-    */
+  }
+
+  /** Checks whether any rectangle of A intersects with any rectangle of B. */
+  intersects(aBounds, bBounds) {
+    for (var a=0; a<aBounds.length; a++) {
+      for (var b=0; b<bBounds.length; b++) {
+        if (aBounds[a].intersects(bBounds[b])) return true;
+      }
+    }
+    return false;
+  }
+
+  applyPowerUp(hero, powerup) {
+    var attack = powerup.getGrantedAttack();
+    if (attack == null) {
+      // increase power of selected attack style by one
+      if (hero.attack.power < 10) hero.attack.power++;
+    }
+    else {
+      // grant new attack style to copter
+      hero.attack.addAttackStyle(attack);
+    }
+    powerup.setHP(0);
+  }
+
+  /**
+   * Calculates the effect of two things crashing into each other.
+   * Each thing might take damage, depending on their type.
+   */
+  crash(aThing, bThing) {
+    var aHurts = bThing.harms(aThing);
+    var bHurts = aThing.harms(bThing);
+    if (aHurts) this.smack(bThing, aThing);
+    if (bHurts) this.smack(aThing, bThing);
   }
 
   /** Instructs the given attacker to damage the specified defender. */
   smack(attacker, defender) {
-    /*
     defender.hit(attacker.power);
-    if (defender.isDead()) {
-      if (defender.type == ThingTypes.EVIL) score += defender.getScore();
-      return true;
-    }
-    */
-    return false;
+    if (defender.isDead() && defender.type == ThingTypes.EVIL) this.score += defender.score;
   }
 }
 
