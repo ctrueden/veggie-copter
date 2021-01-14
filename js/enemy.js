@@ -131,9 +131,9 @@ class EnemyHead extends Thing {
     else this.normalActivate();
   }
 
-  get normalImage() { return this.sprite('normal'); }
-  get attackImage() { return this.sprite('attacking'); }
-  get hurtImage() { return this.sprite('hurting'); }
+  get normalSprite() { return this.sprite('normal'); }
+  get attackSprite() { return this.sprite('attacking'); }
+  get hurtSprite() { return this.sprite('hurting'); }
 
   normalActivate() { this.activateSprite('normal'); }
   attackingActivate() { this.activateSprite('attacking'); }
@@ -167,9 +167,9 @@ class Enemy extends EnemyHead {
       game.loadSprite(`${args[1]}1`),
       game.loadSprite(`${args[1]}2`),
       game.loadSprite(`${args[1]}3`));
-    this.normalImage.addBox(new BoxInsets());
-    this.attackImage.addBox(new BoxInsets());
-    this.hurtImage.addBox(new BoxInsets());
+    this.normalSprite.addBox(new BoxInsets());
+    this.attackSprite.addBox(new BoxInsets());
+    this.hurtSprite.addBox(new BoxInsets());
 
     this.movement = new EnemyMovement(this, args.slice(2));
     this.attack = new RandomBulletAttack(this);

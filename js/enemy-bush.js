@@ -109,9 +109,9 @@ class BushEnemy extends EnemyHead {
       game.loadSprite("bush2"),
       game.loadSprite("bush3"));
     // CTR TODO set proper bounding box and offsets here
-    this.normalImage.addBox(new BoxInsets());
-    this.attackImage.addBox(new BoxInsets());
-    this.hurtImage.addBox(new BoxInsets());
+    this.normalSprite.addBox(new BoxInsets());
+    this.attackSprite.addBox(new BoxInsets());
+    this.hurtSprite.addBox(new BoxInsets());
     this.movement = new BushMovement(this);
     this.attack = new BushAttack(this);
   }
