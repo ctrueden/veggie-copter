@@ -12,5 +12,4 @@ class AnnaAttack extends AttackStyle {
     if (Math.random() >= 1.0 / (60 - this.frequency)) return [];
     return [new EnemyBullet(thing, null, null)];
   }
-
 }

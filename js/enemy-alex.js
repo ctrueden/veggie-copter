@@ -183,7 +183,7 @@ class AlexEnemy extends EnemyHead {
     this.attack =snew AlexAttack(this);
   }
 
-  getScore() { return 3 * super.getScore(); }
+  get score() { return 3 * super.score; }
 
   move() {
     super.move();
@@ -215,14 +215,8 @@ class AlexBoss extends BossHead {
     this.hurtSprite.addBox(new BoxInsets(81, 15, 66, 51));
     this.movement = new AlexMovement(this);
     this.attack = new AlexAttack(this);
+    this.weapon = new EnergyWeapon(game.copter, 0, 0);
   }
-
-  /** Gets the attack form left behind by this boss upon defeat. */
-  getWeapon() {
-    return new EnergyAttack(this.game.copter, 0, 0);
-  }
-
-  getScore() { return 30 * super.getScore(); }
 
   move() {
     super.move();

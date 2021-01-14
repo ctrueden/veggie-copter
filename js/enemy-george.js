@@ -142,7 +142,7 @@ class GeorgeEnemy extends EnemyHead {
     this.attack = new GeorgeAttack(this);
   }
 
-  var getScore() { return 5 * super.getScore(); }
+  get score() { return 5 * super.score; }
 
   move() {
     super.move();
@@ -167,14 +167,8 @@ class GeorgeBoss extends BossHead {
     this.hurtSprite.addBox(new BoxInsets());
     this.movement = new GeorgeMovement(this);
     this.attack = new GeorgeAttack(this);
+    this.weapon = new SpreadWeapon(game.copter);
   }
-
-  /** Gets the attack form left behind by this boss upon defeat. */
-  Weapon getWeapon() {
-    return new SpreadAttack(game.copter);
-  }
-
-  var getScore() { return 50 * super.getScore(); }
 
   move() {
     super.move();
@@ -182,5 +176,4 @@ class GeorgeBoss extends BossHead {
     // regen
     if (((GeorgeMovement) move).isTurning()) hp++;
   }
-
 }

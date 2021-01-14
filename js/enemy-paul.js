@@ -143,7 +143,7 @@ class PaulEnemy extends EnemyHead {
     this.attack = new PaulAttack(this);
   }
 
-  var getScore() { return 5 * super.getScore(); }
+  get score() { return 5 * super.score; }
 
   move() {
     super.move();
@@ -151,11 +151,9 @@ class PaulEnemy extends EnemyHead {
     // regen
     if (((PaulMovement) move).isTurning()) hp++;
   }
-
 }
 
 class PaulBoss extends BossHead {
-
   PaulBoss(game, args) {
     // CTR TODO parse args and initialize Paul with proper parameters
     super(game, 800 + (int) (Math.random() * 200),
@@ -168,14 +166,8 @@ class PaulBoss extends BossHead {
     this.hurtSprite.addBox(new BoxInsets());
     this.movement = new PaulMovement(this);
     this.attack = new PaulAttack(this);
+    this.weapon = new SpreadAttack(game.copter);
   }
-
-  /** Gets the attack form left behind by this boss upon defeat. */
-  Weapon getWeapon() {
-    return new SpreadAttack(game.copter);
-  }
-
-  var getScore() { return 50 * super.getScore(); }
 
   move() {
     super.move();
@@ -183,5 +175,4 @@ class PaulBoss extends BossHead {
     // regen
     if (((PaulMovement) move).isTurning()) hp++;
   }
-
 }

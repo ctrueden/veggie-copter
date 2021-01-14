@@ -178,6 +178,8 @@ class BossHead extends EnemyHead {
     super(game, max, normal, attacking, hurting);
   }
 
+  get score() { return 30 * super.score; }
+
   /** Gets the attack form left behind by this boss upon defeat. */
   get weapon() { return null; }
 

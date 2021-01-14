@@ -39,11 +39,7 @@ class TestBoss extends BossHead {
     }
 
     this.movement = new TestMovement(this, x, y);
-  }
-
-  /** Gets the attack form left behind by this boss upon defeat. */
-  getWeapon() {
-    return new GunWeapon(this.game.copter);
+    this.weapon = new GunWeapon(this.game.copter);
   }
 
   /** Draws the object onscreen. */
@@ -59,7 +55,7 @@ class TestBoss extends BossHead {
     super.hit(damage);
   }
 
-  getScore() {
+  get score() {
     this.movement.printStats();
     return 0;
   }

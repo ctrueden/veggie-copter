@@ -15,7 +15,6 @@ class JamesAttack extends AttackStyle {
 }
 
 class JamesMovement extends MovementStyle {
-
   RADIUS2 = 200;
   SPEED = 2;
 
@@ -59,7 +58,6 @@ class JamesMovement extends MovementStyle {
 
     thing.setCPos(xpos, ypos);
   }
-
 }
 
 class JamesEnemy extends EnemyHead {
@@ -87,12 +85,10 @@ class JamesEnemy extends EnemyHead {
     this.attack = new JamesAttack(this);
   }
 
-  var getScore() { return 3 * super.getScore(); }
-
+  get score() { return 3 * super.score; }
 }
 
 class JamesBoss extends BossHead {
-
   JamesBoss(game, args) {
     // CTR TODO parse args and initialize James with proper parameters
     super(game, 250,
@@ -114,13 +110,6 @@ class JamesBoss extends BossHead {
 
     this.movement = new JamesMovement(this, y, dir);
     this.attack = new JamesAttack(this);
+    this.weapon = new SplitterAttack(game.copter);
   }
-
-  /** Gets the attack form left behind by this boss upon defeat. */
-  Weapon getWeapon() {
-    return new SplitterAttack(game.copter);
-  }
-
-  var getScore() { return 30 * super.getScore(); }
-
 }

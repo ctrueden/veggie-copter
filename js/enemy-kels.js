@@ -63,7 +63,6 @@ class KelsMovement extends MovementStyle {
 }
 
 class KelsEnemy extends EnemyHead {
-
   KelsEnemy(game, args) {
     // CTR TODO parse args and initialize Kels with proper parameters
     super(game, 25,
@@ -87,12 +86,10 @@ class KelsEnemy extends EnemyHead {
     this.attack = new KelsAttack(this);
   }
 
-  var getScore() { return 3 * super.getScore(); }
-
+  get score() { return 3 * super.score; }
 }
 
 class KelsBoss extends BossHead {
-
   KelsBoss(game, args) {
     // CTR TODO parse args and initialize Kels with proper parameters
     super(game, 250,
@@ -114,13 +111,6 @@ class KelsBoss extends BossHead {
 
     this.movement = new KelsMovement(this, y, dir);
     this.attack = new KelsAttack(this);
+    this.weapon = new SplitterAttack(game.copter);
   }
-
-  /** Gets the attack form left behind by this boss upon defeat. */
-  Weapon getWeapon() {
-    return new SplitterAttack(game.copter);
-  }
-
-  var getScore() { return 30 * super.getScore(); }
-
 }

@@ -116,7 +116,7 @@ class BushEnemy extends EnemyHead {
     this.attack = new BushAttack(this);
   }
 
-  getScore() { return 5 * super.getScore(); }
+  get score() { return 5 * super.score; }
 
   move() {
     super.move();
