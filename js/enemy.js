@@ -121,8 +121,8 @@ class EnemyHead extends Thing {
 
   move() {
     super.move();
-    if (this.isHit()) this.hurtingActivate();
-    else if (this.isShooting()) this.attackingActivate();
+    if (this.isHit()) this.hurtActivate();
+    else if (this.isShooting()) this.attackActivate();
     else this.normalActivate();
   }
 
@@ -131,8 +131,8 @@ class EnemyHead extends Thing {
   get hurtSprite() { return this.sprite('hurting'); }
 
   normalActivate() { this.activateSprite('normal'); }
-  attackingActivate() { this.activateSprite('attacking'); }
-  hurtingActivate() { this.activateSprite('hurting'); }
+  attackActivate() { this.activateSprite('attacking'); }
+  hurtActivate() { this.activateSprite('hurting'); }
 
   shoot() {
     var shots = super.shoot();

@@ -189,8 +189,8 @@ class AlexEnemy extends EnemyHead {
     super.move();
 
     // set proper expression
-    if (this.isHit() || this.movement.isRunning()) this.hurtingActivate();
-    else if (this.isShooting() || this.movement.isLunging()) this.attackingActivate();
+    if (this.isHit() || this.movement.isRunning()) this.hurtActivate();
+    else if (this.isShooting() || this.movement.isLunging()) this.attackActivate();
     else this.normalActivate();
 
     // regen
@@ -228,8 +228,8 @@ class AlexBoss extends BossHead {
     super.move();
 
     // set proper expression
-    if (this.isHit() || this.movement.isRunning()) this.hurtingActivate();
-    else if (this.isShooting() || this.movement.isLunging()) this.attackingActivate();
+    if (this.isHit() || this.movement.isRunning()) this.hurtActivate();
+    else if (this.isShooting() || this.movement.isLunging()) this.attackActivate();
     else this.normalActivate();
 
     // regen
