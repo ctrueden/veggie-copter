@@ -180,20 +180,18 @@ class Game {
     });
 
     // purge dead things
-    for (var i=0; i<this.things.length; i++) {
-      var thing = this.things[i];
-      if (thing.isDead()) {
-        this.things.splice(i, 1);
-        if (thing == this.copter) {
-          this.printMessage(new Message("Game Over",
-            (this.width - 250) / 2, (this.height - 30) / 2 + 30,
-            48, "red", Infinity));
-          this.printMessage(new Message("Press space to play again",
-            (this.width - 170) / 2, (this.height - 30) / 2 + 50,
-            16, "gray", Infinity));
-        }
+    things.filter(thing => thing.isDead()).forEach(thing => {
+      var index = this.things.indexOf(thing);
+      if (index >= 0) this.things.splice(index, 1);
+      if (thing == this.copter) {
+        this.printMessage(new Message("Game Over",
+          (this.width - 250) / 2, (this.height - 30) / 2 + 30,
+          48, "red", Infinity));
+        this.printMessage(new Message("Press space to play again",
+          (this.width - 170) / 2, (this.height - 30) / 2 + 50,
+          16, "gray", Infinity));
       }
-    }
+    });
 
     if (this.stage && !this.copter.isDead()) {
       var done = this.stage.executeScript();
