@@ -194,9 +194,11 @@ class CopterMine extends Thing {
       var img = makeImage(size, size);
       var ctx = context2d(img);
       ctx.fillStyle = Colors.Gray;
+      // FIXME: ctx.fillOval(l,t,r,b) -> ctx.ellipse(cx,cy,rx,ry) + ctx.fill()
       ctx.fillOval(0, 0, size, size);
       ctx.fillStyle = Colors.Red;
       var q = size / 3 + 1;
+      // FIXME: ctx.fillOval(l,t,r,b) -> ctx.ellipse(cx,cy,rx,ry) + ctx.fill()
       ctx.fillOval(q, q, q, q);
       images[i] = new Sprite(img);
       images[i].addBox(new BoxInsets());

@@ -67,6 +67,7 @@ class CopterRegen extends Thing {
       for (var rad=median; rad>=1; rad--) {
         var q = (median - rad) / median;
         ctx.fillStyle = color(r, g, b, 0.5 * q);
+        // FIXME: ctx.fillOval(l,t,r,b) -> ctx.ellipse(cx,cy,rx,ry) + ctx.fill()
         ctx.fillOval(median - rad, 2 * (median - rad), 2 * rad, 4 * rad);
       }
       images[i] = new Sprite(img);

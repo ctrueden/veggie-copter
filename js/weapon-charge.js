@@ -40,6 +40,7 @@ class CopterCharge extends Thing {
         //int r = (size + j) / 2;
         var q = bright * (size - j) / size;
         ctx.fillColor = color(q, q, q, q / 255);
+        // FIXME: ctx.fillOval(l,t,r,b) -> ctx.ellipse(cx,cy,rx,ry) + ctx.fill()
         ctx.fillOval(l, l, j, j);
       }
       sprites[i] = new Sprite(img);

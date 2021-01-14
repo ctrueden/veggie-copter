@@ -77,7 +77,8 @@ class PowerUp extends Thing {
       for (var rad=median; rad>=1; rad--) {
         var a = (median - rad) / median;
         ctx.fillStyle = color(r, g, b, a);
-        ctx.fillOval(median - rad, median - rad, 2 * rad, 2 * rad);
+        ctx.ellipse(median, median, rad, rad, 0, 0, 2 * Math.PI);
+        ctx.fill();
       }
       var sprite = new Sprite(image);
       sprite.addBox(new BoxInsets(1, 1, 1, 1));
