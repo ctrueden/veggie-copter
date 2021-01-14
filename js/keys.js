@@ -130,9 +130,9 @@ var Keys = {
   TOGGLE_MUTE: [KeyEvent.DOM_VK_M],
   TOGGLE_DEBUG: [KeyEvent.DOM_VK_BACK_SLASH],
   PAUSE: [KeyEvent.DOM_VK_P],
-  POWER_UP: [KeyEvent.DOM_VK_Q],
-  POWER_DOWN: [KeyEvent.DOM_VK_A],
-  WEAPON_CYCLE: [KeyEvent.DOM_VK_Z],
+  POWER_UP: [KeyEvent.DOM_VK_PAGE_UP, KeyEvent.DOM_VK_ADD],
+  POWER_DOWN: [KeyEvent.DOM_VK_PAGE_DOWN, KeyEvent.DOM_VK_SUBTRACT],
+  WEAPON_CYCLE: [KeyEvent.DOM_VK_Z, KeyEvent.DOM_VK_TAB],
   WEAPONS: [
     KeyEvent.DOM_VK_1, KeyEvent.DOM_VK_2, KeyEvent.DOM_VK_3, KeyEvent.DOM_VK_4,
     KeyEvent.DOM_VK_5, KeyEvent.DOM_VK_6, KeyEvent.DOM_VK_7, KeyEvent.DOM_VK_8,
