@@ -20,14 +20,14 @@ class PowerUpMovement extends MovementStyle {
       }
       else {
         index++;
-        if (index == this.thing.images.length - 1) this.dir = !this.dir;
+        if (index == this.thing.sprites.length - 1) this.dir = !this.dir;
       }
       this.thing.activateSprite(index);
     }
 
     var cx = this.thing.cx;
     var cy = this.thing.cy;
-    if (center) {
+    if (this.center) {
       var game = this.thing.game;
       var w2 = game.width / 2;
       var h2 = game.height / 2;

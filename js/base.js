@@ -140,7 +140,7 @@ class Thing {
 
   /** Assigns object's position (coordinates). */
   setCPos(cx, cy) {
-    setPos(cx - this.width / 2, cy - this.height / 2);
+    this.setPos(cx - this.width / 2, cy - this.height / 2);
   }
 
   /** Gets the object's current hit points. */
