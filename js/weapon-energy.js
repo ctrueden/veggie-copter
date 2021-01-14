@@ -48,7 +48,7 @@ class EnergyMovement extends MovementStyle {
   }
 }
 
-class CopterEnergy extends Thing {
+class EnergyShot extends Thing {
   protected static final int MAX_SIZE = 10 + EnergyMovement.FLUX_RADIUS;
 
   protected static BoundedImage[] images;
@@ -75,10 +75,10 @@ class CopterEnergy extends Thing {
     }
   }
 
-  public CopterEnergy(Thing thing) {
+  public EnergyShot(Thing thing) {
     super(thing.getGame());
     setImageList(images);
-    type = GOOD_BULLET;
+    type = GOOD_SHOT;
     move = new EnergyMovement(this, thing);
     maxhp = hp = Integer.MAX_VALUE;
   }
@@ -116,11 +116,10 @@ class CopterEnergy extends Thing {
 
 /** Defines veggie copter energy field attack style. */
 class EnergyWeapon extends Weapon {
-
   space, fired;
-  CopterEnergy energy;
+  EnergyShot energy;
 
-  EnergyAttack(t) {
+  constructor(t) {
     super(t, "Orange", t.game.loadSprite("icon-energy").image);
   }
 
@@ -156,7 +155,7 @@ class EnergyWeapon extends Weapon {
       ndx = i;
     }
     if (ndx < 0) return [];
-    energy = new CopterEnergy(t[ndx]);
+    energy = new EnergyShot(t[ndx]);
     energy.power = power;
     return [energy];
   }
@@ -173,5 +172,4 @@ class EnergyWeapon extends Weapon {
   keyReleased(e) {
     if (Keys.SHOOT.includes(e.keyCode)) clear();
   }
-
 }

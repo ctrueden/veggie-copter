@@ -1,3 +1,5 @@
+// A *bullet* is a shot that moves in a straight line at a constant speed.
+
 class BulletMovement extends MovementStyle {
   constructor(t, x, y, xtarget, ytarget, speed) {
     super(t);

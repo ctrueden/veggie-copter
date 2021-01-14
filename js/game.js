@@ -60,7 +60,7 @@ class Game {
   isClear() {
     for (var i=0; i<this.things.length; i++) {
       var type = this.things[i].type;
-      if (type != ThingTypes.GOOD && type != ThingTypes.GOOD_BULLET) {
+      if (type != ThingTypes.GOOD && type != ThingTypes.GOOD_SHOT) {
         return false;
       }
     }
@@ -262,8 +262,8 @@ class Game {
 
     // do collision detection between good and evil objects
     this.doCollisions(tt[ThingTypes.GOOD], tt[ThingTypes.EVIL], this.crash);
-    this.doCollisions(tt[ThingTypes.GOOD_BULLET], tt[ThingTypes.EVIL], this.crash);
-    this.doCollisions(tt[ThingTypes.GOOD], tt[ThingTypes.EVIL_BULLET], this.crash);
+    this.doCollisions(tt[ThingTypes.GOOD_SHOT], tt[ThingTypes.EVIL], this.crash);
+    this.doCollisions(tt[ThingTypes.GOOD], tt[ThingTypes.EVIL_SHOT], this.crash);
   }
 
   /**

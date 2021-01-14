@@ -2,7 +2,7 @@ class RegenMovement extends MovementStyle {
   FLUX_RADIUS = 5;
   FLUX_RATE = 4;
 
-  RegenMovement(t, owner) {
+  constructor(t, owner) {
     super(t);
     this.owner = owner;
     this.ticks = 0;
@@ -45,10 +45,9 @@ class RegenMovement extends MovementStyle {
       thing.activateSprite(ndx);
     }
   }
-
 }
 
-class CopterRegen extends Thing {
+class RegenField extends Thing {
   MAX_SIZE = 10 + RegenMovement.FLUX_RADIUS;
 
   static Sprite[] images;
@@ -75,10 +74,10 @@ class CopterRegen extends Thing {
     }
   }
 
-  CopterRegen(thing) {
+  constructor(thing) {
     super(thing.game);
     setSprites(images);
-    type = GOOD_BULLET;
+    type = GOOD_SHOT;
     move = new RegenMovement(this, thing);
   }
 
@@ -94,7 +93,7 @@ class CopterRegen extends Thing {
 
 /** Defines veggie copter regen "attack" style. */
 class RegenWeapon extends Weapon {
-  RegenAttack(t) {
+  constructor(t) {
     super(t, Colors.Pink, t.game.loadSprite("icon-regen").image);
     clear();
   }
@@ -108,7 +107,7 @@ class RegenWeapon extends Weapon {
   /** Begins regeneration if space bar is pressed. */
   shoot() {
     if (!this.space || this.regen) return [];
-    this.regen = new CopterRegen(this.thing);
+    this.regen = new RegenField(this.thing);
     this.regen.power = this.power;
     //SoundPlayer.playSound("../assets/laser4.wav");
     return [this.regen];

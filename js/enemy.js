@@ -72,7 +72,7 @@ class EnemyMovement extends MovementStyle {
 class EnemyBullet extends Thing {
   constructor(t, x2, y2) {
     super(t.game);
-    this.type = ThingTypes.EVIL_BULLET;
+    this.type = ThingTypes.EVIL_SHOT;
     this.setSprite(this.game.retrieve('enemy-bullet', this, obj => {
       var size = 7;
       var image = makeImage(size, size);

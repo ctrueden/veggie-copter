@@ -1,7 +1,6 @@
 /** Defines veggie copter gray attack style. */
 class GrayWeapon extends Weapon {
-
-  GrayAttack(t) {
+  constructor(t) {
     this.space = false;
     super(t, Colors.LightGray, t.game.loadSprite("icon-gray").image);
   }
@@ -21,5 +20,4 @@ class GrayWeapon extends Weapon {
   keyReleased(e) {
     if (Keys.SHOOT.includes(e.keyCode)) this.space = false;
   }
-
 }

@@ -22,7 +22,7 @@ class ChargeMovement extends MovementStyle {
   }
 }
 
-class CopterCharge extends Thing {
+class ChargeShot extends Thing {
   private static final int GROWTH_RATE = 10;
   private static final int MAX_SIZE = 20;
 
@@ -50,10 +50,10 @@ class CopterCharge extends Thing {
 
   protected int size;
 
-  public CopterCharge(Thing thing) {
+  constructor(Thing thing) {
     super(thing.game);
     setSprites(sprites);
-    type = GOOD_BULLET;
+    type = GOOD_SHOT;
     size = -1;
     grow();
     float x = thing.cx - width, y = thing.getY();
@@ -106,7 +106,7 @@ class ChargeWeapon extends Weapon {
 
     if (this.charge == null) {
       this.ticks = 0;
-      this.charge = new CopterCharge(thing);
+      this.charge = new ChargeShot(thing);
       return [this.charge];
     }
     this.ticks++;

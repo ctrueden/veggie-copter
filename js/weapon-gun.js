@@ -1,7 +1,7 @@
 class GunBullet extends Thing {
   constructor(thing, x, y, power) {
     super(thing.game);
-    this.type = ThingTypes.GOOD_BULLET;
+    this.type = ThingTypes.GOOD_SHOT;
     this.speed = 5;
     this.tallness = 7;
     this.setSprite(this.game.retrieve('gun-bullet', this, obj => {

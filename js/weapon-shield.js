@@ -1,5 +1,4 @@
 class ShieldMovement extends MovementStyle {
-
   const var SPEED = 0.1f;
   MIN_RADIUS = 30;
   MAX_RADIUS = 63;
@@ -10,7 +9,7 @@ class ShieldMovement extends MovementStyle {
   var radius;
   boolean extended;
 
-  ShieldMovement(t, owner, angle) {
+  constructor(t, owner, angle) {
     super(t);
     this.owner = owner;
     this.angle = angle;
@@ -22,7 +21,6 @@ class ShieldMovement extends MovementStyle {
 
   setExtended(extended) { this.extended = extended; }
 
-  /** Moves the given thing according to the bullet movement style. */
   move() {
     var speed = SPEED - thing.power * SPEED / 20;
     if (speed < 0) speed = 0;
@@ -35,17 +33,15 @@ class ShieldMovement extends MovementStyle {
     var ypos = owner.cy + radius * (float) Math.sin(angle);
     thing.setCPos(xpos, ypos);
   }
-
 }
 
-class CopterShield extends Thing {
-
+class Shield extends Thing {
   SIZE = 7;
 
   static Sprite[] images;
   static var count = 0;
 
-  CopterShield(thing, angle) {
+  constructor(thing, angle) {
     super(thing.game);
     type = GOOD;
     move = new ShieldMovement(this, thing, angle);
@@ -68,15 +64,14 @@ class CopterShield extends Thing {
 
   /** Shields cannot be destroyed. */
   hit(damage) { }
-
 }
 
 /** Defines veggie copter shield attack style. */
 class ShieldWeapon extends Weapon {
-  CopterShield[] shields;
+  Shield[] shields;
   boolean extended;
 
-  ShieldAttack(t) {
+  constructor(t) {
     super(t, Colors.Purple, t.game.loadSprite("icon-shield").image);
   }
 
@@ -89,10 +84,10 @@ class ShieldWeapon extends Weapon {
 
   activate() {
     var num = power + 1;
-    shields = new CopterShield[num];
+    shields = new Shield[num];
     VeggieCopter game = thing.game;
     for (var i=0; i<num; i++) {
-      shields[i] = new CopterShield(thing, (float) (2 * Math.PI * i / num));
+      shields[i] = new Shield(thing, (float) (2 * Math.PI * i / num));
       shields[i].power = 1;
       game.things.push(shields[i]);
     }

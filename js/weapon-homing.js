@@ -10,7 +10,7 @@ class HomingMovement extends MovementStyle {
   protected Thing target;
   protected float velX, velY;
 
-  public HomingMovement(Thing t, float x, float y) {
+  constructor(Thing t, float x, float y) {
     super(t);
     velX = 0; velY = -SPEED;
     thing.setPos(x, y);
@@ -65,7 +65,7 @@ class HomingMovement extends MovementStyle {
   }
 }
 
-class CopterHoming extends Thing {
+class HomingShot extends Thing {
   protected static BoundedImage image;
 
   static {
@@ -78,10 +78,10 @@ class CopterHoming extends Thing {
     image.addBox(new BoundingBox());
   }
 
-  public CopterHoming(Thing thing) {
+  constructor(Thing thing) {
     super(thing.getGame());
     setImage(image);
-    type = GOOD_BULLET;
+    type = GOOD_SHOT;
     setPower(2);
     maxhp = 5;
     float x = thing.getCX() - getWidth() / 2f, y = thing.getY() - getHeight();
@@ -91,13 +91,12 @@ class CopterHoming extends Thing {
 
 /** Defines veggie copter homing missile attack style. */
 class HomingWeapon extends Weapon {
-
   RECHARGE = 12;
 
   boolean space = false;
   var fired;
 
-  HomingAttack(t) {
+  constructor(t) {
     super(t, Colors.Magenta, t.game.loadSprite("icon-homing").image);
   }
 
@@ -113,7 +112,7 @@ class HomingWeapon extends Weapon {
     var pow = this.power;
     fired = RECHARGE - pow;
 
-    CopterHoming homing = new CopterHoming(thing);
+    HomingShot homing = new HomingShot(thing);
     homing.power = 8;
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return new Thing[] {homing};
@@ -126,5 +125,4 @@ class HomingWeapon extends Weapon {
   keyReleased(e) {
     if (Keys.SHOOT.includes(e.keyCode)) space = false;
   }
-
 }

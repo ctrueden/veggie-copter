@@ -83,8 +83,8 @@ class AttackStyle {
 var ThingTypes = {
   EVIL: 0,        // evil entity
   GOOD: 1,        // good entity
-  EVIL_BULLET: 2, // evil bullet
-  GOOD_BULLET: 3, // good bullet
+  EVIL_SHOT: 2,   // a shot with evil alignment
+  GOOD_SHOT: 3,   // a shot with good alignment
   POWER_UP: 4,    // power-up
 };
 
@@ -233,12 +233,12 @@ class Thing {
 
   /** Returns true if this object can harm the given one. */
   harms(t) {
-    return (this.type == ThingTypes.GOOD        && t.type == ThingTypes.EVIL) ||
-           (this.type == ThingTypes.EVIL        && t.type == ThingTypes.GOOD) ||
-           (this.type == ThingTypes.GOOD_BULLET && t.type == ThingTypes.EVIL) ||
-           (this.type == ThingTypes.EVIL        && t.type == ThingTypes.GOOD_BULLET) ||
-           (this.type == ThingTypes.GOOD        && t.type == ThingTypes.EVIL_BULLET) ||
-           (this.type == ThingTypes.EVIL_BULLET && t.type == ThingTypes.GOOD);
+    return (this.type == ThingTypes.GOOD      && t.type == ThingTypes.EVIL) ||
+           (this.type == ThingTypes.EVIL      && t.type == ThingTypes.GOOD) ||
+           (this.type == ThingTypes.GOOD_SHOT && t.type == ThingTypes.EVIL) ||
+           (this.type == ThingTypes.EVIL      && t.type == ThingTypes.GOOD_SHOT) ||
+           (this.type == ThingTypes.GOOD      && t.type == ThingTypes.EVIL_SHOT) ||
+           (this.type == ThingTypes.EVIL_SHOT && t.type == ThingTypes.GOOD);
   }
 
   keyPressed(e) {

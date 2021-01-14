@@ -31,7 +31,6 @@ class MineShardMovement extends MovementStyle {
 }
 
 class MineShard extends Thing {
-
   /** Size of shard. */
   SIZE = 7;
 
@@ -56,9 +55,9 @@ class MineShard extends Thing {
     }
   }
 
-  MineShard(t, angle, sx, sy) {
+  constructor(t, angle, sx, sy) {
     super(t.game);
-    this.type = GOOD_BULLET;
+    this.type = GOOD_SHOT;
     setSprites(images);
     this.power = LIFE / POWER + 1;
     var tx = (float) (sx + 10 * Math.sin(angle));
@@ -73,7 +72,6 @@ class MineShard extends Thing {
       super.activateSprite(index);
     }
   }
-
 }
 
 /** Defines veggie copter gravity mine explosion behavior. */
@@ -180,7 +178,7 @@ class MineMovement extends MovementStyle {
 
 }
 
-class CopterMine extends Thing {
+class Mine extends Thing {
 
   POWER_MULTIPLIER = 10;
   MAX_SIZE = 11;
@@ -207,7 +205,7 @@ class CopterMine extends Thing {
 
   constructor(thing, power) {
     super(thing.game);
-    this.type = GOOD_BULLET;
+    this.type = GOOD_SHOT;
     this.power = power;
     this.movement = new MineMovement(this);
     this.attack = new MineExplode(this);
@@ -258,7 +256,7 @@ class MineAttack extends Weapon {
     if (!space) return [];
     fired = RECHARGE - power / 2;
 
-    var mine = new CopterMine(thing, power);
+    var mine = new Mine(thing, power);
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return [mine];
   }
@@ -270,5 +268,4 @@ class MineAttack extends Weapon {
   keyReleased(e) {
     if (Keys.SHOOT.includes(e.keyCode)) space = false;
   }
-
 }

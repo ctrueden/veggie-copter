@@ -1,5 +1,5 @@
 class LaserMovement extends MovementStyle {
-  public LaserMovement(Thing t, float x, float y) {
+  constructor(Thing t, float x, float y) {
     super(t);
     thing.setPos(x, y);
   }
@@ -12,7 +12,7 @@ class LaserMovement extends MovementStyle {
   }
 }
 
-class CopterLaser extends Thing {
+class LaserShot extends Thing {
   protected static final int MAX_SIZE = 11;
 
   protected static BoundedImage[] images;
@@ -36,9 +36,9 @@ class CopterLaser extends Thing {
     }
   }
 
-  public CopterLaser(Thing thing, int size) {
+  public LaserShot(Thing thing, int size) {
     super(thing.getGame());
-    type = GOOD_BULLET;
+    type = GOOD_SHOT;
     if (size < 0) size = 0;
     else if (size >= MAX_SIZE) size = MAX_SIZE - 1;
     setImage(images[size]);
@@ -49,14 +49,13 @@ class CopterLaser extends Thing {
 
 /** Defines veggie copter laser attack style. */
 class LaserWeapon extends Weapon {
-
   const int[] FLUX =
     {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1};
 
   boolean space;
   var flux;
 
-  LaserAttack(t) {
+  constructor(t) {
     super(t, Colors.Green, t.game.loadSprite("icon-laser").image);
   }
 
@@ -66,10 +65,10 @@ class LaserWeapon extends Weapon {
   Thing[] shoot() {
     if (!space) return [];
     var size = power - 1;
-    if (size > CopterLaser.MAX_SIZE - 3) size = CopterLaser.MAX_SIZE - 3;
+    if (size > LaserShot.MAX_SIZE - 3) size = LaserShot.MAX_SIZE - 3;
     flux = (flux + 1) % FLUX.length;
     size += FLUX[flux];
-    CopterLaser laser = new CopterLaser(thing, size);
+    LaserShot laser = new LaserShot(thing, size);
     laser.power = power;
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return new Thing[] {laser};
@@ -82,5 +81,4 @@ class LaserWeapon extends Weapon {
   keyReleased(e) {
     if (Keys.SHOOT.includes(e.keyCode)) space = false;
   }
-
 }

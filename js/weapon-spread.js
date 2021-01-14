@@ -1,5 +1,4 @@
-class CopterSpread extends Thing {
-
+class SpreadBullet extends Thing {
   const var SPREAD_SPEED = 10;
 
   static Sprite image;
@@ -14,21 +13,19 @@ class CopterSpread extends Thing {
     image.addBox(new BoxInsets());
   }
 
-  CopterSpread(thing, angle) {
+  constructor(thing, angle) {
     super(thing.game);
-    type = GOOD_BULLET;
+    type = GOOD_SHOT;
     setSprite(image);
     var x = thing.cx - width / 2, y = thing.getY();
     var xd = -(float) (100 * Math.cos(angle)) + x;
     var yd = -(float) (100 * Math.sin(angle)) + y;
     move = new BulletMovement(this, x, y, xd, yd, SPREAD_SPEED);
   }
-
 }
 
 /** Defines veggie copter spread attack. */
 class SpreadWeapon extends Weapon {
-
   RECHARGE = 10;
   POWER = 3;
 
@@ -77,5 +74,4 @@ class SpreadWeapon extends Weapon {
   keyReleased(e) {
     if (Keys.SHOOT.includes(e.keyCode)) space = false;
   }
-
 }

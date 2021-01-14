@@ -70,7 +70,7 @@ class LitShot extends Thing {
     }
     this.setSprites(sprites, this.angle);
 
-    this.type = ThingTypes.GOOD_BULLET;
+    this.type = ThingTypes.GOOD_SHOT;
     var x = thing.cx - this.width / 2;
     var y = thing.ypos - this.height;
     this.movement = new LitMovement(this, x, y, path);

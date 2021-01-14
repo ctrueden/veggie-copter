@@ -20,7 +20,7 @@ class DoomMovement extends MovementStyle {
   }
 }
 
-class CopterDoom extends Thing {
+class DoomField extends Thing {
   private static final int FLUX_BOTTOM = 72;
   private static final int FLUX_RATE = 3;
   private static final int FLUX_COUNT = 6;
@@ -28,9 +28,9 @@ class CopterDoom extends Thing {
   private int flux = FLUX_BOTTOM;
   private boolean fluxDir = true;
 
-  public CopterDoom(Thing thing) {
+  constructor(Thing thing) {
     super(thing.getGame());
-    type = GOOD_BULLET;
+    type = GOOD_SHOT;
     move = new DoomMovement(this, thing);
     maxhp = hp = Integer.MAX_VALUE;
   }
@@ -67,7 +67,7 @@ class CopterDoom extends Thing {
 class DoomWeapon extends Weapon {
 
   boolean space;
-  CopterDoom doom;
+  DoomField doom;
 
   DoomAttack(t) {
     super(t, "Black", t.game.loadSprite("icon-doom").image);
@@ -82,7 +82,7 @@ class DoomWeapon extends Weapon {
   /** Fires a shot if space bar is pressed. */
   shoot() {
     if (!this.space || this.doom || this.thing.hp == 1) return [];
-    var doom = new CopterDoom(thing);
+    var doom = new DoomField(thing);
     doom.power = power;
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return [doom];
