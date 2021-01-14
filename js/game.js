@@ -322,7 +322,7 @@ class Game {
 
   /** Instructs the given attacker to damage the specified defender. */
   smack(attacker, defender) {
-    defender.hit(attacker.power);
+    defender.damage(attacker.power);
     if (defender.isDead() && defender.type == ThingTypes.EVIL) this.score += defender.score;
   }
 }

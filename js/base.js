@@ -161,9 +161,9 @@ class Thing {
   }
 
   /** Hits this object for the given amount of damage. */
-  hit(damage) {
-    setHP(this.hp - damage);
-    this.hit = 2 * damage;
+  damage(amount) {
+    this.hp -= amount;
+    this.hit = 2 * amount;
   }
 
   /** Moves the object according to its movement style. */
