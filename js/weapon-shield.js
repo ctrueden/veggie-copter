@@ -104,7 +104,7 @@ class ShieldWeapon extends Weapon {
 
   clear() {
     if (shields) {
-      for (var i=0; i<shields.length; i++) shields[i].setHP(0);
+      for (var i=0; i<shields.length; i++) shields[i].hp = 0;
       shields = null;
       extended = false;
     }
@@ -113,7 +113,7 @@ class ShieldWeapon extends Weapon {
   set power(power) {
     super.power = power;
     if (shields) {
-      for (var i=0; i<shields.length; i++) shields[i].setHP(0);
+      for (var i=0; i<shields.length; i++) shields[i].hp = 0;
     }
     activate();
   }

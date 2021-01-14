@@ -27,7 +27,7 @@ class RegenMovement extends MovementStyle {
       var hero = thing.game.copter;
       var hp = hero.hp;
       var max = hero.maxHP;
-      if (hp < max) hero.setHP(hp + 1);
+      if (hp < max) hero.hp++;
     }
 
     if (ticks % FLUX_RATE == 0) {
@@ -100,7 +100,7 @@ class RegenWeapon extends Weapon {
 
   clear() {
     this.space = false;
-    if (this.regen) this.regen.setHP(0);
+    if (this.regen) this.regen.hp = 0;
     this.regen = null;
   }
 

@@ -63,15 +63,15 @@ class CopterCharge extends Thing {
     if (size == MAX_SIZE - 11 + GROWTH_RATE) return false;
     size++;
     maxHP = size + 1;
-    setHP(maxHP);
+    this.hp = this.maxHP;
     return true;
   }
 
   launch() { this.movement.launch(); }
 
-  setHP(hp) {
-    this.hp = Math.min(hp, this.maxHP);
-    this.power = this.hp;
+  set hp(hp) {
+    this._hp = Math.min(hp, this.maxHP);
+    this.power = this._hp;
     var size = Math.max(hp - 1, 0);
     this.activateSprite(size);
   }

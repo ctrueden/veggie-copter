@@ -303,7 +303,7 @@ class Game {
       // grant new attack style to copter
       hero.attack.addAttackStyle(attack);
     }
-    powerup.setHP(0);
+    powerup.hp = 0;
   }
 
   /**

@@ -11,7 +11,7 @@ class EnergyWeapon extends Weapon {
   clear() {
     space = false;
     fired = false;
-    if (energy) energy.setHP(0);
+    if (energy) energy.hp = 0;
     energy = null;
   }
 

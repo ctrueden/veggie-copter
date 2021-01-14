@@ -10,7 +10,7 @@ class DoomWeapon extends Weapon {
 
   clear() {
     space = false;
-    if (doom) doom.setHP(0);
+    if (doom) doom.hp = 0;
     doom = null;
   }
 

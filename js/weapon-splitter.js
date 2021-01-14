@@ -104,7 +104,7 @@ class SplitterAttack extends Weapon {
   Thing[] trigger() {
     if (!trigger) return [];
     if (count == 0 || power <= 2 * MULTIPLIER) return [];
-    thing.setHP(0);
+    thing.hp = 0;
 
     VeggieCopter game = thing.game;
     var x = thing.cx, y = thing.cy;

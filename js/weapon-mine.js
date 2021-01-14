@@ -67,7 +67,7 @@ class MineShard extends Thing {
   }
 
   activateSprite(index) {
-    if (index == LIFE) setHP(0); // shards die when they fade away
+    if (index == LIFE) this.hp = 0; // shards die when they fade away
     else {
       power = (LIFE - index) / POWER + 1;
       super.activateSprite(index);
@@ -101,7 +101,7 @@ class MineExplode extends AttackStyle {
       shards.push(new MineShard(this.thing, angle, cx, cy));
     }
     //SoundPlayer.playSound(getClass().getResource("explode.wav"));
-    this.thing.setHP(0);
+    this.thing.hp = 0;
     return shards;
   }
 

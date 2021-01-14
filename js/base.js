@@ -97,7 +97,7 @@ class Thing {
     this.xpos = this.ypos = 0;   // Position of the object.
     this.sprites = {};           // Collection of sprites representing the object.
     this.activeSpriteKey = null; // Name key of object's active sprite.
-    this._hp = this.maxHP = 1;   // Hit points.
+    this.hp = this.maxHP = 1;    // Hit points.
     this.power = 1;              // Amount of damage the object inflicts.
     this.type = ThingTypes.EVIL; // The type of this object.
     this.hit = 0;                // Number of times the object has been hit.
@@ -142,6 +142,9 @@ class Thing {
   setCPos(cx, cy) {
     setPos(cx - this.width / 2, cy - this.height / 2);
   }
+
+  /** Gets the object's current hit points. */
+  get hp() { return this._hp; }
 
   /** Assigns object's hit points. */
   set hp(hp) {
