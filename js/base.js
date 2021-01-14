@@ -152,6 +152,9 @@ class Thing {
     this._hp = hp;
   }
 
+  /** Gets object's power. */
+  get power() { return this._power; }
+
   /** Assigns object's power. */
   set power(power) { this._power = power; }
 
