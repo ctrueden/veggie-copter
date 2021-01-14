@@ -147,10 +147,7 @@ class Thing {
   get hp() { return this._hp; }
 
   /** Assigns object's hit points. */
-  set hp(hp) {
-    if (hp > this.maxHP) hp = this.maxHP;
-    this._hp = hp;
-  }
+  set hp(hp) { this._hp = Math.min(hp, this.maxHP); }
 
   /** Gets object's power. */
   get power() { return this._power; }
