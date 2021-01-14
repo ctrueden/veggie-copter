@@ -174,7 +174,6 @@ class Enemy extends EnemyHead {
 }
 
 class BossHead extends EnemyHead {
-
   constructor(game, max, normal, attacking, hurting) {
     super(game, max, normal, attacking, hurting);
   }
@@ -185,5 +184,4 @@ class BossHead extends EnemyHead {
   get powerup() {
     return [new PowerUp(this.game, this.cx, this.cy, 50, this.weapon)];
   }
-
 }
