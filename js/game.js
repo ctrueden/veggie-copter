@@ -313,8 +313,11 @@ class Game {
   crash(aThing, bThing) {
     var aHurts = bThing.harms(aThing);
     var bHurts = aThing.harms(bThing);
-    if (aHurts) this.smack(bThing, aThing);
-    if (bHurts) this.smack(aThing, bThing);
+    // NB: We cannot use `this` for the game here, because the crash method
+    // is passed to the doCollisions method as a function, and apparently
+    // that results in some scoping difference where `this` is not defined.
+    if (aHurts) bThing.game.smack(bThing, aThing);
+    if (bHurts) aThing.game.smack(aThing, bThing);
   }
 
   /** Instructs the given attacker to damage the specified defender. */
