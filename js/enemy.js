@@ -108,17 +108,12 @@ class RandomBulletAttack extends AttackStyle {
 }
 
 class EnemyHead extends Thing {
-  NORMAL = 0;
-  ATTACKING = 1;
-  HURTING = 2;
-
-  SHOT_DELAY = 18;
-
   constructor(game, max, normal, attacking, hurting) {
     super(game);
     this.setSprites({normal: normal, attacking: attacking, hurting: hurting});
     this.maxHP = this.hp = max;
     this.shooting = 0;
+    this.shotDelay = 18;
     //this.power = 10;
   }
 
@@ -141,7 +136,7 @@ class EnemyHead extends Thing {
 
   shoot() {
     var shots = super.shoot();
-    if (shots.length > 0) this.shooting = SHOT_DELAY;
+    if (shots.length > 0) this.shooting = this.shotDelay;
     else if (this.shooting > 0) this.shooting--;
     if (this.isDead()) {
       // dead head drops a power-up
