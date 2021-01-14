@@ -7,7 +7,7 @@ class HomingWeapon extends Weapon {
   var fired;
 
   HomingAttack(t) {
-    super(t, "magenta", t.game.loadSprite("icon-homing").image);
+    super(t, Colors.Magenta, t.game.loadSprite("icon-homing").image);
   }
 
   clear() { space = false; }

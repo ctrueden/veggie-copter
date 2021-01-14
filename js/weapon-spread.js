@@ -8,7 +8,7 @@ class CopterSpread extends Thing {
     var size = 9;
     var img = makeImage(size, size);
     var ctx = context2d(img);
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = Colors.Blue;
     ctx.fillRoundRect(0, 0, size, size, size / 2, size / 2);
     image = new Sprite(img);
     image.addBox(new BoxInsets());
@@ -36,7 +36,7 @@ class SpreadWeapon extends Weapon {
   var fired;
 
   constructor(t) {
-    super(t, "blue", t.game.loadSprite("icon-spread").image);
+    super(t, Colors.Blue, t.game.loadSprite("icon-spread").image);
   }
 
   clear() { space = false; }

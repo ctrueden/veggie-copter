@@ -19,7 +19,7 @@ class StarField {
     for (var i=0; i<this.count; i++) {
       var x = i * this.width / this.count;
       ctx.beginPath();
-      ctx.strokeStyle = 'gray';
+      ctx.strokeStyle = Colors.Gray;
       ctx.moveTo(x, this.starY[i]);
       ctx.lineTo(x, this.starY[i] - 2 * this.starV[i]);
       ctx.stroke();

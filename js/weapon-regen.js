@@ -54,9 +54,9 @@ class CopterRegen extends Thing {
   static Sprite[] images;
 
   static {
-    var red = Color.pink.getRed();
-    var green = Color.pink.getGreen();
-    var blue = Color.pink.getBlue();
+    var r = red(Colors.Pink);
+    var g = green(Colors.Pink);
+    var b = blue(Color.Pink);
 
     images = new Sprite[MAX_SIZE];
     for (var i=0; i<MAX_SIZE; i++) {
@@ -66,7 +66,7 @@ class CopterRegen extends Thing {
       var median = width / 2;
       for (var rad=median; rad>=1; rad--) {
         var q = (median - rad) / median;
-        ctx.fillStyle = color(red, green, blue, 0.5 * q);
+        ctx.fillStyle = color(r, g, b, 0.5 * q);
         ctx.fillOval(median - rad, 2 * (median - rad), 2 * rad, 4 * rad);
       }
       images[i] = new Sprite(img);
@@ -94,7 +94,7 @@ class CopterRegen extends Thing {
 /** Defines veggie copter regen "attack" style. */
 class RegenWeapon extends Weapon {
   RegenAttack(t) {
-    super(t, "pink", t.game.loadSprite("icon-regen").image);
+    super(t, Colors.Pink, t.game.loadSprite("icon-regen").image);
     clear();
   }
 

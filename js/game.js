@@ -80,7 +80,7 @@ class Game {
 
   /** Draws the veggie copter graphics to the linked canvas. */
   draw() {
-    this.buf.fillStyle = 'black';
+    this.buf.fillStyle = Colors.Black;
     this.buf.fillRect(0, 0, this.offscreen.width, this.offscreen.height);
 
     // star field
@@ -92,7 +92,7 @@ class Game {
     if (this.debug) {
       this.things.forEach(thing => {
         // draw bounding box
-        this.buf.strokeStyle = "red";
+        this.buf.strokeStyle = Colors.Red;
         thing.bounds.forEach(rect => {
           this.buf.beginPath();
           this.buf.rect(rect.x, rect.y, rect.width, rect.height);
@@ -100,7 +100,7 @@ class Game {
         });
 
         // draw power level
-        this.buf.strokeStyle = "white";
+        this.buf.strokeStyle = Colors.White;
         var xint = Math.trunc(thing.cx) - 3;
         var yint = Math.trunc(thing.cy) + 6;
         this.buf.fillText("" + thing.power, xint, yint);
@@ -115,10 +115,10 @@ class Game {
     if (this.stage == null) this.selector.draw(this.buf);
 
     // draw status bar
-    this.buf.fillStyle = "darkgray";
+    this.buf.fillStyle = Colors.DarkGray;
     this.buf.fillRect(0, this.height + 1, this.width, 24);
     this.buf.beginPath();
-    this.buf.strokeStyle = "white";
+    this.buf.strokeStyle = Colors.White;
     this.buf.moveTo(0, this.height);
     this.buf.lineTo(this.width, this.height);
     this.buf.stroke();
@@ -128,14 +128,14 @@ class Game {
     this.buf.beginPath();
     this.buf.rect(x, this.height + 2, 103, 20);
     this.buf.stroke();
-    this.buf.strokeStyle = "black";
+    this.buf.strokeStyle = Colors.Black;
     this.buf.fillRect(x + 1, this.height + 3, 102, 19);
     for (var i=0; i<this.copter.hp; i++) {
       var q = i / 99;
-      var red = Math.trunc(255 * (1 - q));
-      var green = Math.trunc(255 * q);
+      var r = Math.trunc(255 * (1 - q));
+      var g = Math.trunc(255 * q);
       this.buf.beginPath();
-      this.buf.strokeStyle = color(red, green, 0);
+      this.buf.strokeStyle = color(r, g, 0);
       this.buf.moveTo(x + 2 + i, this.height + 4);
       this.buf.lineTo(x + 2 + i, this.height + 20);
       this.buf.stroke();
@@ -183,13 +183,14 @@ class Game {
     things.filter(thing => thing.isDead()).forEach(thing => {
       var index = this.things.indexOf(thing);
       if (index >= 0) this.things.splice(index, 1);
+      console.info(`Purging dead thing: ${thing.constructor.name} -- index ${index}`);
       if (thing == this.copter) {
         this.printMessage(new Message("Game Over",
           (this.width - 250) / 2, (this.height - 30) / 2 + 30,
-          48, "red", Infinity));
+          48, Colors.Red, Infinity));
         this.printMessage(new Message("Press space to play again",
           (this.width - 170) / 2, (this.height - 30) / 2 + 50,
-          16, "gray", Infinity));
+          16, Colors.Gray, Infinity));
       }
     });
 
@@ -292,14 +293,13 @@ class Game {
   }
 
   applyPowerUp(hero, powerup) {
-    var attack = powerup.getGrantedAttack();
-    if (attack == null) {
-      // increase power of selected attack style by one
+    if (powerup.weapon == null) {
+      // increase power of selected weapon by one
       if (hero.attack.power < 10) hero.attack.power++;
     }
     else {
-      // grant new attack style to copter
-      hero.attack.addAttackStyle(attack);
+      // grant new weapon to copter
+      hero.attack.addWeapon(powerup.weapon);
     }
     powerup.hp = 0;
   }
@@ -314,13 +314,16 @@ class Game {
     // NB: We cannot use `this` for the game here, because the crash method
     // is passed to the doCollisions method as a function, and apparently
     // that results in some scoping difference where `this` is not defined.
+    console.info(`crash: aThing=${aThing.constructor.name}, bThing=${bThing.constructor.name}, aHurts=${aHurts}, bHurts=${bHurts}`);
     if (aHurts) bThing.game.smack(bThing, aThing);
     if (bHurts) aThing.game.smack(aThing, bThing);
   }
 
   /** Instructs the given attacker to damage the specified defender. */
   smack(attacker, defender) {
+    var beforeHP = defender.hp;
     defender.damage(attacker.power);
+    console.info(`smack: ${attacker.constructor.name} smacks ${defender.constructor.name} for ${attacker.power} damage! Defender HP ${defender.beforeHP} -> ${defender.hp} (dead? ${defender.isDead()}`);
     if (defender.isDead() && defender.type == ThingTypes.EVIL) this.score += defender.score;
   }
 }

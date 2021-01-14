@@ -82,7 +82,7 @@ class ChargeWeapon extends Weapon {
   GROW_SPEED = 11;
 
   constructor(t) {
-    super(t, "white", t.game.loadSprite("icon-charge").image);
+    super(t, "White", t.game.loadSprite("icon-charge").image);
     this.charge = null;
     this.space = false;
     this.ticks = 0;

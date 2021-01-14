@@ -5,7 +5,7 @@ class EnergyWeapon extends Weapon {
   CopterEnergy energy;
 
   EnergyAttack(t) {
-    super(t, "orange", t.game.loadSprite("icon-energy").image);
+    super(t, "Orange", t.game.loadSprite("icon-energy").image);
   }
 
   clear() {

@@ -21,18 +21,18 @@ class Stage {
 
   /** Draws a descriptive screen for use during stage select. */
   drawSelectScreen(ctx) {
-    drawOutlinedRect(ctx, "darkred",
+    drawOutlinedRect(ctx, Colors.DarkRed,
       this.topLeft, this.topLeft, this.imageSize, this.imageSize);
     var gameWidth = this.game.width;
     var textHeight = 14 * this.description.length + 10;
-    drawOutlinedRect(ctx, "darkgray", this.topLeft + this.imageSize + 10,
+    drawOutlinedRect(ctx, Colors.DarkGray, this.topLeft + this.imageSize + 10,
       this.topLeft + 45, gameWidth - this.topLeft - this.imageSize - 20, textHeight);
 
     var cx = this.topLeft + 1 + (this.imageSize - 2 - this.image.width) / 2;
     var cy = this.topLeft + 1 + (this.imageSize - 2 - this.image.height) / 2;
     ctx.drawImage(this.image, cx, cy);
     ctx.font = this.bigFont;
-    ctx.fillStyle = "white";
+    ctx.fillStyle = Colors.White;
     ctx.fillText(this.name, this.imageSize + this.topLeft + 10, this.topLeft + 35);
     ctx.font = this.smallFont;
     for (var i=0; i<this.description.length; i++) {
@@ -43,7 +43,7 @@ class Stage {
 
   /** Draws the icon for this stage at the given position. */
   drawIcon(ctx, x, y, selected) {
-    var color = this.completed ? "gray" : (selected ? "red" : "darkred");
+    var color = this.completed ? Colors.Gray : (selected ? Colors.Red : Colors.DarkRed);
     drawOutlinedRect(ctx, color, x, y, this.iconSize, this.iconSize);
     var cx = x + 2 + (this.iconSize - 2 - this.icon.width) / 2;
     var cy = y + 2 + (this.iconSize - 2 - this.icon.height) / 2;

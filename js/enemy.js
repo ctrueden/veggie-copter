@@ -77,7 +77,7 @@ class EnemyBullet extends Thing {
       var size = 7;
       var image = makeImage(size, size);
       var ctx = context2d(image);
-      ctx.fillStyle = "red";
+      ctx.fillStyle = Colors.Red;
       ctx.fillRoundRect(0, 0, size, size, size / 2, size / 2);
       var sprite = new Sprite(image);
       sprite.addBox(new BoxInsets());

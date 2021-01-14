@@ -27,7 +27,7 @@ class CopterSplitter extends Thing {
       var size = i + 4;
       var img = makeImage(size, size);
       var ctx = context2d(img);
-      ctx.fillStyle = "yellow";
+      ctx.fillStyle = Colors.Yellow;
       ctx.fillRoundRect(0, 0, size, size, size / 2, size / 2);
       images[i] = new Sprite(img);
       images[i].addBox(new BoxInsets());
@@ -70,7 +70,7 @@ class SplitterAttack extends Weapon {
   SplitterAttack(t) { this(t, 0, 0, 0); }
 
   SplitterAttack(t, xdir, ydir, count) {
-    super(t, "yellow", t.game.loadSprite("icon-split").image);
+    super(t, Colors.Yellow, t.game.loadSprite("icon-split").image);
     if (xdir == 0 && ydir == 0) {
       this.xdir = SPEED;
       this.ydir = 0;

@@ -49,7 +49,7 @@ class TestBoss extends BossHead {
   /** Draws the object onscreen. */
   draw(ctx) {
     super.draw(ctx);
-    ctx.fillColor = "yellow";
+    ctx.fillColor = Colors.Yellow;
     ctx.fillText(`${this.hp}`, Math.trunc(this.cx) - 15, Math.trunc(this.cy) + 20);
   }
 

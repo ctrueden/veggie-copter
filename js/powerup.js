@@ -55,28 +55,28 @@ class PowerUpMovement extends MovementStyle {
 
 /** Power-up object increases copter's weapon power. */
 class PowerUp extends Thing {
-  constructor(game, cx, cy, size, attack) {
+  constructor(game, cx, cy, size, weapon) {
     super(game);
     this.type = ThingTypes.POWER_UP;
-    this.att = attack;
+    this.weapon = weapon;
 
     // create power-up images
     var sprites = {};
     var pulse = 10; // Number of ticks of pulsation.
-    var color = this.att == null ? "white" : this.att.getColor();
-    var r2 = color.getRed() / 2;
-    var g2 = color.getGreen() / 2;
-    var b2 = color.getBlue() / 2;
+    var col = this.weapon == null ? Colors.White : this.weapon.color;
+    var rHalf = red(col) / 2;
+    var gHalf = green(col) / 2;
+    var bHalf = blue(col) / 2;
     for (var i=0; i<pulse; i++) {
-      var red = r2 + r2 * (i + 1) / pulse;
-      var green = g2 + g2 * (i + 1) / pulse;
-      var blue = b2 + b2 * (i + 1) / pulse;
+      var r = rHalf + rHalf * (i + 1) / pulse;
+      var g = gHalf + gHalf * (i + 1) / pulse;
+      var b = bHalf + bHalf * (i + 1) / pulse;
       var image = makeImage(size, size);
       var ctx = context2d(image);
       var median = size / 2;
       for (var rad=median; rad>=1; rad--) {
-        var alpha = (median - rad) / median;
-        ctx.fillStyle = color(red, green, blue, alpha);
+        var a = (median - rad) / median;
+        ctx.fillStyle = color(r, g, b, a);
         ctx.fillOval(median - rad, median - rad, 2 * rad, 2 * rad);
       }
       var sprite = new Sprite(image);
@@ -89,6 +89,6 @@ class PowerUp extends Thing {
     this.movement = new PowerUpMovement(this, this.xpos, this.ypos, this.att != null);
   }
 
-  /** Gets attack style granted by this power-up, if any. */
-  getGrantedAttack() { return this.att; }
+  /** Gets weapon granted by this power-up, if any. */
+  getGrantedWeapon() { return this.weapon; }
 }

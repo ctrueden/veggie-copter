@@ -8,7 +8,7 @@ class LaserWeapon extends Weapon {
   var flux;
 
   LaserAttack(t) {
-    super(t, "green", t.game.loadSprite("icon-laser").image);
+    super(t, Colors.Green, t.game.loadSprite("icon-laser").image);
   }
 
   clear() { space = false; }

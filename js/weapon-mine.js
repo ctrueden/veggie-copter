@@ -193,9 +193,9 @@ class CopterMine extends Thing {
       var size = i + 10;
       var img = makeImage(size, size);
       var ctx = context2d(img);
-      ctx.fillStyle = "gray";
+      ctx.fillStyle = Colors.Gray;
       ctx.fillOval(0, 0, size, size);
-      ctx.fillStyle = "red";
+      ctx.fillStyle = Colors.Red;
       var q = size / 3 + 1;
       ctx.fillOval(q, q, q, q);
       images[i] = new Sprite(img);
@@ -242,7 +242,7 @@ class MineAttack extends Weapon {
   var fired;
 
   MineAttack(t) {
-    super(t, "darkgray", t.game.loadSprite("icon-mine").image);
+    super(t, Colors.DarkGray, t.game.loadSprite("icon-mine").image);
   }
 
   clear() { space = false; }

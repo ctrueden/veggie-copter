@@ -73,14 +73,11 @@ class CopterShield extends Thing {
 
 /** Defines veggie copter shield attack style. */
 class ShieldWeapon extends Weapon {
-
-  const Color PURPLE = new Color(0.7f, 0, 0.7f);
-
   CopterShield[] shields;
   boolean extended;
 
   ShieldAttack(t) {
-    super(t, PURPLE, t.game.loadSprite("icon-shield").image);
+    super(t, Colors.Purple, t.game.loadSprite("icon-shield").image);
   }
 
   setExtended(extended) {
@@ -125,5 +122,4 @@ class ShieldWeapon extends Weapon {
   keyReleased(e) {
     if (Keys.SHOOT.includes(e.keyCode)) setExtended(false);
   }
-
 }
