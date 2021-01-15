@@ -183,7 +183,6 @@ class Game {
     things.filter(thing => thing.isDead()).forEach(thing => {
       var index = this.things.indexOf(thing);
       if (index >= 0) this.things.splice(index, 1);
-      console.info(`Purging dead thing: ${thing.constructor.name} -- index ${index}`);
       if (thing == this.copter) {
         this.printMessage(new Message("Game Over",
           (this.width - 250) / 2, (this.height - 30) / 2 + 30,
@@ -314,7 +313,6 @@ class Game {
     // NB: We cannot use `this` for the game here, because the crash method
     // is passed to the doCollisions method as a function, and apparently
     // that results in some scoping difference where `this` is not defined.
-    console.info(`crash: aThing=${aThing.constructor.name}, bThing=${bThing.constructor.name}, aHurts=${aHurts}, bHurts=${bHurts}`);
     if (aHurts) bThing.game.smack(bThing, aThing);
     if (bHurts) aThing.game.smack(aThing, bThing);
   }
@@ -323,7 +321,6 @@ class Game {
   smack(attacker, defender) {
     var beforeHP = defender.hp;
     defender.damage(attacker.power);
-    console.info(`smack: ${attacker.constructor.name} smacks ${defender.constructor.name} for ${attacker.power} damage! Defender HP ${defender.beforeHP} -> ${defender.hp} (dead? ${defender.isDead()}`);
     if (defender.isDead() && defender.type == ThingTypes.EVIL) this.score += defender.score;
   }
 }
