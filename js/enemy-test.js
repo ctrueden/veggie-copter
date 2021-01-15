@@ -50,9 +50,9 @@ class TestBoss extends BossHead {
   }
 
   /** Hits this object for the given amount of damage. */
-  hit(damage) {
-    if (damage > 0) this.movement.startTimer();
-    super.hit(damage);
+  damage(amount) {
+    if (amount > 0) this.movement.startTimer();
+    super.damage(amount);
   }
 
   get score() {

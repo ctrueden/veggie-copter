@@ -230,7 +230,7 @@ class Mine extends Thing {
   get power() { return 0; }
 
   /** Mines cannot be destroyed. */
-  hit(damage) { }
+  damage(amount) { }
 }
 
 /** Defines veggie copter gravity mine attack style. */

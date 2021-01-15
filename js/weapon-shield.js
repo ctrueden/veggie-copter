@@ -63,7 +63,7 @@ class Shield extends Thing {
   }
 
   /** Shields cannot be destroyed. */
-  hit(damage) { }
+  damage(amount) { }
 }
 
 /** Defines veggie copter shield attack style. */
