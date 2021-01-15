@@ -175,7 +175,7 @@ class Copter extends Thing {
     this.attack.addWeapon(new DoomWeapon(this)); // black
     */
 
-    this.maxHP = this.hp = 100;
+    this.hp = this.maxHP = 100;
     this.type = ThingTypes.GOOD;
   }
 
