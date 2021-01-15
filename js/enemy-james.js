@@ -1,16 +1,3 @@
-class JamesAttack extends AttackStyle {
-  /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-  FREQUENCY = 1;
-
-  JamesAttack(t) { super(t); }
-
-  /** Fires a shot randomly. */
-  shoot() {
-    if (Math.random() >= 1.0 / (60 - FREQUENCY)) return [];
-    return [new EnemyBullet(thing, null, null)];
-  }
-}
-
 class JamesMovement extends MovementStyle {
   RADIUS2 = 200;
   SPEED = 2;
@@ -78,7 +65,7 @@ class JamesEnemy extends EnemyHead {
     if (args.length >= 2) dir = args[1].equals("true");
 
     this.movement = new JamesMovement(this, y, dir);
-    this.attack = new JamesAttack(this);
+    this.attack = new RandomBulletAttack(this, 1);
   }
 
   get score() { return 3 * super.score; }
@@ -105,7 +92,7 @@ class JamesBoss extends BossHead {
     if (args.length >= 2) dir = args[1].equals("true");
 
     this.movement = new JamesMovement(this, y, dir);
-    this.attack = new JamesAttack(this);
+    this.attack = new RandomBulletAttack(this, 1);
     this.weapon = new SplitterAttack(game.copter);
   }
 }

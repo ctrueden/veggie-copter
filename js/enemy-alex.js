@@ -1,18 +1,3 @@
-class AlexAttack extends AttackStyle {
-  constructor(t) {
-    super(t);
-
-    /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-    this.frequency = 1;
-  }
-
-  /** Fires a shot randomly. */
-  shoot() {
-    if (Math.random() >= 1.0 / (60 - this.frequency)) return [];
-    return [new EnemyBullet(thing, null, null)];
-  }
-}
-
 class AlexMovement extends MovementStyle {
   constructor(t) {
     super(t);
@@ -174,7 +159,7 @@ class AlexEnemy extends EnemyHead {
     this.hurtSprite.addBox(new BoxInsets(32, 1, 27, 13));
     this.hurtSprite.addBox(new BoxInsets(27, 5, 22, 17));
     this.movement = new AlexMovement(this);
-    this.attack =snew AlexAttack(this);
+    this.attack = new RandomBulletAttack(this, 1);
   }
 
   get score() { return 3 * super.score; }
@@ -208,7 +193,7 @@ class AlexBoss extends BossHead {
     this.hurtSprite.addBox(new BoxInsets(96, 3, 81, 39));
     this.hurtSprite.addBox(new BoxInsets(81, 15, 66, 51));
     this.movement = new AlexMovement(this);
-    this.attack = new AlexAttack(this);
+    this.attack = new RandomBulletAttack(this, 1);
     this.weapon = new EnergyWeapon(game.copter, 0, 0);
   }
 

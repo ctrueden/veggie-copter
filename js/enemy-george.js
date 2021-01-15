@@ -38,7 +38,7 @@ class GeorgeAttack extends AttackStyle {
     if (this.toFire.length == 0) return [];
     var p = this.toFire[0];
     this.toFire.removeElementAt(0); // FIXME
-    return [new EnemyBullet(this.thing, p.x, p.y)];
+    return [new EvilBullet(this.thing, p.x, p.y)];
   }
 }
 

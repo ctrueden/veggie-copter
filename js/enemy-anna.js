@@ -1,18 +1,3 @@
-class AnnaAttack extends AttackStyle {
-  constructor(t) {
-    super(t);
-
-    /** Probability that this thing will fire a bullet (1=rare, 60=always). */
-    this.frequency = 1;
-  }
-
-  /** Fires a shot randomly. */
-  shoot() {
-    if (Math.random() >= 1.0 / (60 - this.frequency)) return [];
-    return [new EnemyBullet(thing, null, null)];
-  }
-}
-
 class AnnaMovement extends MovementStyle {
   constructor(t, y, dir) {
     super(t);
@@ -70,7 +55,7 @@ public class AnnaEnemy extends EnemyHead {
     if (args.length >= 2) dir = args[1].equals("true");
 
     setMovement(new AnnaMovement(this, y, dir));
-    setAttack(new AnnaAttack(this));
+    setAttack(new RandomBulletAttack(this, 1));
   }
 
   public int getScore() { return 100 * super.getScore(); }
@@ -98,8 +83,8 @@ public class AnnaBoss extends BossHead {
     }
     if (args.length >= 2) dir = args[1].equals("true");
 
-    setMovement(new AnnaMovement(this, y, dir));
-    setAttack(new AnnaAttack(this));
+    this.movement = new AnnaMovement(this, y, dir);
+    this.attack = new RandomBulletAttack(this, 1);
   }
 
   /** Gets the attack form left behind by this boss upon defeat. */

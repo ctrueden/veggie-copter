@@ -45,7 +45,7 @@ class PaulAttack extends AttackStyle {
     if (toFire.isEmpty()) return [];
     var p = toFire[0];
     toFire.removeElementAt(0);
-    return [new EnemyBullet(thing, p.x, p.y)];
+    return [new EvilBullet(thing, p.x, p.y)];
   }
 }
 
