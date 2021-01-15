@@ -1,7 +1,4 @@
 class SplitterMovement extends MovementStyle {
-
-  xdir, ydir;
-
   constructor(t, x, y, xdir, ydir) {
     super(t);
     thing.setPos(x, y);
@@ -9,15 +6,12 @@ class SplitterMovement extends MovementStyle {
     this.ydir = ydir;
   }
 
-  /** Moves the given thing according to the splitter movement style. */
   move() {
     thing.setPos(thing.xpos + xdir, thing.ypos + ydir);
   }
 }
 
 class SplitterShot extends Thing {
-  MAX_SIZE = 12;
-
   static Sprite[] images;
 
   static {
@@ -35,13 +29,15 @@ class SplitterShot extends Thing {
 
   constructor(game, x, y, xdir, ydir, count, size) {
     super(game);
-    type = GOOD_SHOT;
-    if (size < 0) size = 0;
-    else if (size >= MAX_SIZE) size = MAX_SIZE - 1;
+    this.type = ThingTypes.GOOD_SHOT;
+    this.maxSize = 12;
+    this.size = Math.min(this.maxSize, Math.max(0, size));
+
     setSprite(images[size]);
-    if (count == 1) y -= height;
-    move = new SplitterMovement(this, x - width / 2f, y, xdir, ydir);
-    attack = new SplitterAttack(this, xdir, ydir, count);
+
+    if (count == 1) y -= this.height;
+    this.movement = new SplitterMovement(this, x - width / 2, y, xdir, ydir);
+    this.attack = new SplitterAttack(this, xdir, ydir, count);
   }
 
   /** Assigns object's power. */
@@ -88,14 +84,14 @@ class SplitterAttack extends Weapon {
     if (count != 0) return [];
     fired = RECHARGE;
 
-    SplitterShot splitter = new SplitterShot(thing.game,
+    var splitter = new SplitterShot(thing.game,
       thing.cx, thing.ypos, 0, -SPEED, 1, power + 1);
     splitter.power = MULTIPLIER * (power + 2);
     return [splitter];
   }
 
   /** Splits existing splitter shots. */
-  Thing[] trigger() {
+  trigger() {
     if (!trigger) return [];
     if (count == 0 || power <= 2 * MULTIPLIER) return [];
     thing.hp = 0;
@@ -105,7 +101,7 @@ class SplitterAttack extends Weapon {
     var xd = ydir, yd = xdir;
     var size = power / MULTIPLIER - 3;
 
-    SplitterShot[] cs = {
+    var cs = [
       new SplitterShot(game, x, y, xd, yd, count + 1, size),
       new SplitterShot(game, x, y, -xd, -yd, count + 1, size),
       // MWAHAHA!
@@ -115,7 +111,7 @@ class SplitterAttack extends Weapon {
       //new SplitterShot(game, x, y, -SPEED, -SPEED, count + 1, size),
       //new SplitterShot(game, x, y, -SPEED, SPEED, count + 1, size),
       //new SplitterShot(game, x, y, SPEED, -SPEED, count + 1, size)
-    };
+    ];
     for (var i=0; i<cs.length; i++) cs[i].power = power - 2 * MULTIPLIER;
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return cs;
