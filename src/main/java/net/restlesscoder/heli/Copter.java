@@ -58,14 +58,18 @@ public class Copter extends Thing {
   /** Handles keyboard presses. */
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
+    boolean shift = e.getModifiers() != 0;
     if (code == Keys.POWER_UP) {
       int pow = attack.getPower();
-      pow++;
+      if (shift) pow = 1000;
+      else pow++;
       attack.setPower(pow);
     }
     else if (code == Keys.POWER_DOWN) {
       int pow = attack.getPower();
-      if (pow > 1) pow--;
+      if (shift) pow = 1;
+      else pow--;
+      if (pow < 1) pow = 1;
       attack.setPower(pow);
     }
     super.keyPressed(e);
