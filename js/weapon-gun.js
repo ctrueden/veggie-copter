@@ -9,7 +9,7 @@ class GunBullet extends Thing {
       var img = makeImage(1, len);
       var ctx = context2d(img);
       ctx.beginPath();
-      ctx.strokeStyle = Colors.Brown;
+      ctx.strokeStyle = Colors.RosyBrown;
       ctx.moveTo(0, 0);
       ctx.lineTo(0, len);
       ctx.stroke();
@@ -26,7 +26,7 @@ class GunBullet extends Thing {
 /** Defines veggie copter gun attack. */
 class GunWeapon extends Weapon {
   constructor(t) {
-    super(t, Colors.Brown, t.game.loadSprite("icon-gun").image);
+    super(t, Colors.RosyBrown, t.game.loadSprite("icon-gun").image);
     this.space = false;
     this.fired = 0;
     this.recharge = 2;
