@@ -132,8 +132,9 @@ class LitWeapon extends Weapon {
       else if (q >= haltTick) continue;
 
       if (!this.paths[i]) continue;
-      shots.push(new LitShot(this.thing, this.paths[i]));
-      shots[i].power = this.power;
+      var shot = new LitShot(this.thing, this.paths[i]);
+      shot.power = pow;
+      shots.push(shot);
     }
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return shots;
