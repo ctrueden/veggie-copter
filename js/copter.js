@@ -67,7 +67,7 @@ class CopterAttack extends AttackStyle {
     this.weapons.push(weapon);
   }
 
-  /** Sets attack style to the given list index. */
+  /** Sets weapon to the given list index. */
   activate(index) {
     if (index >= this.weapons.length) return; // out of bounds
     if (this.weapon) this.weapon.clear();
@@ -140,11 +140,10 @@ class CopterAttack extends AttackStyle {
   }
 
   keyReleased(e) {
-    var attack = this.attackStyle;
-    if (attack == null) { // all weapons
+    if (this.weapon) this.weapon.keyReleased(e);
+    else { // all weapons
       this.weapons.forEach(weapon => weapon.keyReleased(e));
     }
-    else attack.keyReleased(e);
   }
 }
 

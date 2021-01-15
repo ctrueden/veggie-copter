@@ -180,9 +180,6 @@ class BossHead extends EnemyHead {
 
   get score() { return 30 * super.score; }
 
-  /** Gets the attack form left behind by this boss upon defeat. */
-  get weapon() { return null; }
-
   get powerup() {
     return [new PowerUp(this.game, this.cx, this.cy, 50, this.weapon)];
   }
