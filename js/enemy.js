@@ -111,7 +111,7 @@ class EnemyHead extends Thing {
   constructor(game, max, normal, attacking, hurting) {
     super(game);
     this.setSprites({normal: normal, attacking: attacking, hurting: hurting});
-    this.maxHP = this.hp = max;
+    this.hp = this.maxHP = max;
     this.shooting = 0;
     this.shotDelay = 18;
     //this.power = 10;
