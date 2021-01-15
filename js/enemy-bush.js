@@ -19,7 +19,6 @@ class BushMovement extends MovementStyle {
     thing.setPos(xpos, ypos);
   }
 
-  /** Moves the given thing according to the Bush movement style. */
   move() {
     if (isFrantic()) return;
 
@@ -54,7 +53,6 @@ class BushMovement extends MovementStyle {
   }
 }
 
-/** Defines Bush's attack style. */
 class BushAttack extends AttackStyle {
   constructor(t) {
     super(t);
@@ -98,7 +96,6 @@ class BushAttack extends AttackStyle {
     toFire.removeElementAt(0);
     return [new EnemyBullet(thing, p.x, p.y)];
   }
-
 }
 
 class BushEnemy extends EnemyHead {

@@ -1,6 +1,4 @@
-/** Defines Jamesey's attack style. */
 class JamesAttack extends AttackStyle {
-
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
   FREQUENCY = 1;
 
@@ -11,14 +9,13 @@ class JamesAttack extends AttackStyle {
     if (Math.random() >= 1.0 / (60 - FREQUENCY)) return [];
     return [new EnemyBullet(thing, null, null)];
   }
-
 }
 
 class JamesMovement extends MovementStyle {
   RADIUS2 = 200;
   SPEED = 2;
 
-  JamesMovement(t, y, dir) {
+  constructor(t, y, dir) {
     super(t);
     VeggieCopter game = thing.game;
 
@@ -61,8 +58,7 @@ class JamesMovement extends MovementStyle {
 }
 
 class JamesEnemy extends EnemyHead {
-
-  JamesEnemy(game, args) {
+  constructor(game, args) {
     // CTR TODO parse args and initialize James with proper parameters
     super(game, 25,
       game.loadSprite("james1"),
@@ -89,7 +85,7 @@ class JamesEnemy extends EnemyHead {
 }
 
 class JamesBoss extends BossHead {
-  JamesBoss(game, args) {
+  constructor(game, args) {
     // CTR TODO parse args and initialize James with proper parameters
     super(game, 250,
       game.loadSprite("james-boss1"),

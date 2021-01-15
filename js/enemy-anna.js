@@ -13,15 +13,12 @@ class AnnaAttack extends AttackStyle {
   }
 }
 
-public class AnnaMovement extends MovementStyle {
-  protected static final int SPEED = 2;
-
-  protected boolean dir;
-
-  constructor(Thing t, int y, boolean dir) {
+class AnnaMovement extends MovementStyle {
+  constructor(t, y, dir) {
     super(t);
     this.dir = dir;
-    VeggieCopter game = thing.getGame();
+    this.speed = 2;
+    var game = this.thing.game;
 
     // compute starting position
     int xpos, ypos;
@@ -43,19 +40,19 @@ public class AnnaMovement extends MovementStyle {
 
   /** Moves the given thing according to the bonus movement style. */
   public void move() {
-    float xpos = thing.getX(), ypos = thing.getY();
+    float xpos = this.thing.xpos, ypos = this.thing.ypos;
 
-    xpos += dir ? -SPEED : SPEED;
+    xpos += dir ? -this.speed : this.speed;
     thing.setPos(xpos, ypos);
   }
 }
 
 public class AnnaEnemy extends EnemyHead {
-  public constructor(VeggieCopter game, String[] args) {
+  constructor(game, args) {
     super(game, 20,
-      game.loadImage("anna1.png"),
-      game.loadImage("anna2.png"),
-      game.loadImage("anna3.png"));
+      game.loadSprite("anna1.png"),
+      game.loadSprite("anna2.png"),
+      game.loadSprite("anna3.png"));
     // CTR TODO set proper bounding box and offsets here
     BoundedImage normal = getBoundedImage(0);
     normal.addBox(new BoundingBox());
@@ -82,9 +79,9 @@ public class AnnaEnemy extends EnemyHead {
 public class AnnaBoss extends BossHead {
   constructor(VeggieCopter game, String[] args) {
     super(game, 200,
-      game.loadImage("anna-boss1.png"),
-      game.loadImage("anna-boss2.png"),
-      game.loadImage("anna-boss3.png"));
+      game.loadSprite("anna-boss1.png"),
+      game.loadSprite("anna-boss2.png"),
+      game.loadSprite("anna-boss3.png"));
     // CTR TODO set proper bounding box and offsets here
     BoundedImage normal = getBoundedImage(0);
     normal.addBox(new BoundingBox());

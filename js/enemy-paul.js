@@ -1,6 +1,4 @@
-/** Defines Paul's attack style. */
 class PaulAttack extends AttackStyle {
-
   /** Number of bullets to fire per spread. */
   BULLETS = 5;
 
@@ -16,7 +14,7 @@ class PaulAttack extends AttackStyle {
   /** Frames to wait until adding another bullet (frantic mode only). */
   var waitTicks = FRANTIC_RATE;
 
-  PaulAttack(t) { super(t); }
+  constructor(t) { super(t); }
 
   /** Fires a shot according to Paul's attack pattern. */
   shoot() {
@@ -49,11 +47,9 @@ class PaulAttack extends AttackStyle {
     toFire.removeElementAt(0);
     return [new EnemyBullet(thing, p.x, p.y)];
   }
-
 }
 
 class PaulMovement extends MovementStyle {
-
   /** Movement speed per frame. */
   SPEED = 1;
 
@@ -64,7 +60,7 @@ class PaulMovement extends MovementStyle {
   boolean dir;
   boolean turning;
 
-  PaulMovement(t) {
+  constructor(t) {
     super(t);
     VeggieCopter game = thing.game;
     var w = game.getWindowWidth();
@@ -122,12 +118,10 @@ class PaulMovement extends MovementStyle {
     this.target = this.dir ? hero.cy : hero.cx;
     this.turning = true;
   }
-
 }
 
 class PaulEnemy extends EnemyHead {
-
-  PaulEnemy(game, args) {
+  constructor(game, args) {
     // CTR TODO parse args and initialize Paul with proper parameters
     super(game, 80 + (int) (Math.random() * 20),
       game.loadSprite("paul1"),
@@ -154,7 +148,7 @@ class PaulEnemy extends EnemyHead {
 }
 
 class PaulBoss extends BossHead {
-  PaulBoss(game, args) {
+  constructor(game, args) {
     // CTR TODO parse args and initialize Paul with proper parameters
     super(game, 800 + (int) (Math.random() * 200),
       game.loadSprite("paul-boss1"),

@@ -1,4 +1,3 @@
-/** Defines random enemy bullet attack. */
 class AlexAttack extends AttackStyle {
   constructor(t) {
     super(t);
@@ -160,8 +159,7 @@ class AlexMovement extends MovementStyle {
 }
 
 class AlexEnemy extends EnemyHead {
-
-  AlexEnemy(game, args) {
+  constructor(game, args) {
     // CTR TODO parse args and initialize Alex with proper parameters
     super(game, 25,
       game.loadSprite("alex1"),

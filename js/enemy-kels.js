@@ -1,25 +1,21 @@
-/** Defines Kelsey's attack style. */
 class KelsAttack extends AttackStyle {
-
   /** Probability that this thing will fire a bullet (1=rare, 60=always). */
   FREQUENCY = 1;
 
-  KelsAttack(t) { super(t); }
+  constructor(t) { super(t); }
 
   /** Fires a shot randomly. */
   shoot() {
     if (Math.random() >= 1.0 / (60 - FREQUENCY)) return [];
     return [new EnemyBullet(thing, null, null)];
   }
-
 }
 
 class KelsMovement extends MovementStyle {
-
   RADIUS2 = 200;
   SPEED = 2;
 
-  KelsMovement(t, y, dir) {
+  constructor(t, y, dir) {
     super(t);
     VeggieCopter game = thing.game;
 
@@ -59,11 +55,10 @@ class KelsMovement extends MovementStyle {
 
     thing.setCPos(xpos, ypos);
   }
-
 }
 
 class KelsEnemy extends EnemyHead {
-  KelsEnemy(game, args) {
+  constructor(game, args) {
     // CTR TODO parse args and initialize Kels with proper parameters
     super(game, 25,
       game.loadSprite("kels1"),
@@ -90,7 +85,7 @@ class KelsEnemy extends EnemyHead {
 }
 
 class KelsBoss extends BossHead {
-  KelsBoss(game, args) {
+  constructor(game, args) {
     // CTR TODO parse args and initialize Kels with proper parameters
     super(game, 250,
       game.loadSprite("kels-boss1"),
