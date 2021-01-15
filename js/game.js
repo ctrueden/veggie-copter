@@ -276,7 +276,9 @@ class Game {
         var bThing = bThings[b];
         if (aThing.isDead()) break; // go to next aThing
         if (bThing.isDead()) continue; // go to the next bThing
-        if (this.intersects(aThing.bounds, bThing.bounds)) collide(aThing, bThing);
+        if (this.intersects(aThing.bounds, bThing.bounds)) {
+          collide(aThing, bThing);
+        }
       }
     }
   }
@@ -321,7 +323,9 @@ class Game {
   smack(attacker, defender) {
     var beforeHP = defender.hp;
     defender.damage(attacker.power);
-    if (defender.isDead() && defender.type == ThingTypes.EVIL) this.score += defender.score;
+    if (defender.isDead() && defender.type == ThingTypes.EVIL) {
+      this.score += defender.score;
+    }
   }
 }
 
