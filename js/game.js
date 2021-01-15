@@ -294,13 +294,13 @@ class Game {
   }
 
   applyPowerUp(hero, powerup) {
-    if (powerup.weapon == null) {
-      // increase power of selected weapon by one
-      if (hero.attack.power < 10) hero.attack.power++;
-    }
-    else {
+    if (powerup.weapon) {
       // grant new weapon to copter
       hero.attack.addWeapon(powerup.weapon);
+    }
+    else {
+      // increase power of selected weapon by one
+      if (hero.attack.power < 10) hero.attack.power++;
     }
     powerup.hp = 0;
   }

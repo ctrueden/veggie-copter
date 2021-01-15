@@ -71,10 +71,6 @@ class AlexMovement extends MovementStyle {
     this.thing.setPos(xpos, ypos);
   }
 
-  boolean isRunning() { return this.running; }
-
-  boolean isLunging() { return this.lunging; }
-
   /** Moves the given thing according to the bouncing movement style. */
   move() {
     var xpos = thing.xpos, ypos = thing.ypos;
@@ -189,8 +185,8 @@ class AlexEnemy extends EnemyHead {
     super.move();
 
     // set proper expression
-    if (this.isHit() || this.movement.isRunning()) this.hurtActivate();
-    else if (this.isShooting() || this.movement.isLunging()) this.attackActivate();
+    if (this.isHit() || this.movement.running) this.hurtActivate();
+    else if (this.isShooting() || this.movement.lunging) this.attackActivate();
     else this.normalActivate();
 
     // regen
@@ -222,8 +218,8 @@ class AlexBoss extends BossHead {
     super.move();
 
     // set proper expression
-    if (this.isHit() || this.movement.isRunning()) this.hurtActivate();
-    else if (this.isShooting() || this.movement.isLunging()) this.attackActivate();
+    if (this.isHit() || this.movement.running) this.hurtActivate();
+    else if (this.isShooting() || this.movement.lunging) this.attackActivate();
     else this.normalActivate();
 
     // regen

@@ -90,7 +90,4 @@ class PowerUp extends Thing {
     this.movement = new PowerUpMovement(this,
       this.xpos, this.ypos, this.weapon != null);
   }
-
-  /** Gets weapon granted by this power-up, if any. */
-  getGrantedWeapon() { return this.weapon; }
 }
