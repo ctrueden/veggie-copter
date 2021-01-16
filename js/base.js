@@ -178,9 +178,7 @@ class Thing {
 
   /** Instructs the object to attack according to its attack style. */
   shoot() {
-    if (this.isDead()) return [];
-    if (this.attack == null) return [];
-    return this.attack.shoot();
+    return this.attack && !this.isDead() ? this.attack.shoot() : [];
   }
 
   /**
@@ -188,9 +186,7 @@ class Thing {
    * attack according to its attack style.
    */
   trigger() {
-    if (this.isDead()) return [];
-    if (this.attack == null) return [];
-    return this.attack.trigger();
+    return this.attack && !this.isDead() ? this.attack.trigger() : [];
   }
 
   /** Gets object's centered X coordinate. */
