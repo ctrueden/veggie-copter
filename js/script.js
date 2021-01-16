@@ -96,10 +96,16 @@ class GameScript {
     try {
       if (equalsIgnoreCase(className, "TestBoss")) // TEMP
         this.game.things.push(new TestBoss(this.game, p)); // TEMP
+      else if (equalsIgnoreCase(className, "Enemy")) // TEMP
+        this.game.things.push(new Enemy(this.game, p)); // TEMP
       else if (equalsIgnoreCase(className, "AlexEnemy")) // TEMP
         this.game.things.push(new AlexEnemy(this.game, p)); // TEMP
       else if (equalsIgnoreCase(className, "AlexBoss")) // TEMP
         this.game.things.push(new AlexBoss(this.game, p)); // TEMP
+      else if (equalsIgnoreCase(className, "PaulEnemy")) // TEMP
+        this.game.things.push(new PaulEnemy(this.game, p)); // TEMP
+      else if (equalsIgnoreCase(className, "PaulBoss")) // TEMP
+        this.game.things.push(new PaulBoss(this.game, p)); // TEMP
       else console.error("ALKJHFLKSDJHDSF " + className); // TEMP
       // NB: Instantiate object of the given class.
       //var thing = window[className](this.game, p);

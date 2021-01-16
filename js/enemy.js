@@ -26,8 +26,8 @@ class EnemyMovement extends MovementStyle {
     else if (equalsIgnoreCase(params[0], "wave")) this.style = WAVE;
 
     // set starting position
-    var xpos = Float.parseFloat(params[1]);
-    var ypos = Float.parseFloat(params[2]);
+    var xpos = parseFloat(params[1]);
+    var ypos = parseFloat(params[2]);
 
     // prepare additional parameters
     this.params = [];
@@ -48,7 +48,7 @@ class EnemyMovement extends MovementStyle {
     if (this.style == ZIGZAG) {
       // tick1, xmod1, ymod1, tick2, xmod2, ymod2, ...
       for (var i=0; i<this.params.length-2; i+=3) {
-        if (this.params[i] == ticks) {
+        if (this.params[i] == this.ticks) {
           this.xmod = this.params[i + 1];
           this.ymod = this.params[i + 2];
         }
