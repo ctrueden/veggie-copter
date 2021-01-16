@@ -332,9 +332,14 @@ class Game {
 var game = null;
 
 function animate() {
-  requestAnimationFrame(animate);
-  game.update();
-  game.draw();
+  try {
+    game.update();
+    game.draw();
+    requestAnimationFrame(animate);
+  }
+  catch (error) {
+    console.error(error);
+  }
 }
 
 window.onload = function() {
