@@ -100,7 +100,11 @@ class Game {
         });
 
         // draw power level
-        this.buf.strokeStyle = Colors.White;
+        var fontSize = Math.min(thing.width, thing.height) / 4;
+        if (fontSize < 6) fontSize = 6;
+        if (fontSize > 100) fontSize = 100;
+        this.buf.font = `${fontSize}px SansSerif`;
+        this.buf.fillStyle = Colors.OrangeRed;
         var xint = Math.trunc(thing.cx) - 3;
         var yint = Math.trunc(thing.cy) + 6;
         this.buf.fillText("" + thing.power, xint, yint);
