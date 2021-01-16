@@ -147,8 +147,6 @@ class GeorgeBoss extends BossHead {
 
   move() {
     super.move();
-
-    // regen
-    if (movement.turning) hp++;
+    if (movement.turning) hp++; // regen
   }
 }

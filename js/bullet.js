@@ -34,7 +34,7 @@ class EvilBullet extends Thing {
       var image = makeImage(size, size);
       var ctx = context2d(image);
       ctx.fillStyle = Colors.Red;
-      ctx.fillRoundRect(0, 0, size, size, size / 2, size / 2);
+      roundRect(ctx, 0, 0, size, size, size / 2);
       var sprite = new Sprite(image);
       sprite.addBox(new BoxInsets());
       return sprite;
@@ -57,6 +57,6 @@ class RandomBulletAttack extends AttackStyle {
 
   shoot() {
     if (Math.random() >= 1.0 / (60 - this.frequency)) return [];
-    return [new EvilBullet(thing)];
+    return [new EvilBullet(this.thing)];
   }
 }

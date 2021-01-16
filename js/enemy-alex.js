@@ -7,11 +7,11 @@ class AlexMovement extends MovementStyle {
     this.speed = 2;
     this.lungeRate = 300;
 
-    var game = thing.game;
+    var game = this.thing.game;
 
     // compute starting position
     var xpos, ypos;
-    var w = game.getWindowWidth(), h = game.getWindowHeight();
+    var w = game.width, h = game.height;
 
     var r = Math.random();
     if (r < 1.0 / 3) {
@@ -51,77 +51,78 @@ class AlexMovement extends MovementStyle {
     this.needsToRun = false;
     this.running = false;
     this.lunging = false;
-    this.lastX = xpos; this.lastY = ypos;
+    this.lastX = xpos;
+    this.lastY = ypos;
     this.thing.setPos(xpos, ypos);
   }
 
   /** Moves the given thing according to the bouncing movement style. */
   move() {
-    var xpos = thing.xpos, ypos = thing.ypos;
-    var game = thing.game;
+    var xpos = this.thing.xpos, ypos = this.thing.ypos;
+    var game = this.thing.game;
 
     // adjust for external movement
-    xstart = xstart - lastX + xpos;
-    ystart = ystart - lastY + ypos;
+    this.xstart = this.xstart - this.lastX + xpos;
+    this.ystart = this.ystart - this.lastY + ypos;
 
-    ticks++;
-    if (ticks % LUNGE_RATE == 0) {
+    this.ticks++;
+    if (this.ticks % this.lungeRate == 0) {
       // lunge toward ship
       this.lunging = true;
       var hero = game.copter;
 
-      xstart = xpos;
+      this.xstart = xpos;
       var sx = hero.xpos;
-      xdir = sx > xpos;
-      xlen = 3 * (xdir ? sx - xpos : xpos - sx) / 2;
-      xinc = 0;
+      this.xdir = sx > xpos;
+      this.xlen = 3 * (this.xdir ? sx - xpos : xpos - sx) / 2;
+      this.xinc = 0;
 
-      ystart = ypos;
+      this.ystart = ypos;
       var sy = hero.ypos;
-      ydir = sy > ypos;
-      ylen = 3 * (ydir ? sy - ypos : ypos - sy) / 2;
-      yinc = 0;
+      this.ydir = sy > ypos;
+      this.ylen = 3 * (this.ydir ? sy - ypos : ypos - sy) / 2;
+      this.yinc = 0;
     }
 
-    var xp = smooth((double) xinc++ / this.xSteps);
-    if (xdir) xpos = (float) (xstart + xp * xlen / this.speed);
-    else xpos = (float) (xstart - xp * xlen / this.speed);
+    var xp = this.smooth(this.xinc++ / this.xSteps);
+    if (this.xdir) xpos = (this.xstart + xp * this.xlen / this.speed);
+    else xpos = (this.xstart - xp * this.xlen / this.speed);
 
-    var yp = smooth((double) yinc++ / this.ySteps);
-    if (ydir) ypos = (float) (ystart + yp * ylen / this.speed);
-    else ypos = (float) (ystart - yp * ylen / this.speed);
+    var yp = this.smooth(this.yinc++ / this.ySteps);
+    if (this.ydir) ypos = this.ystart + yp * this.ylen / this.speed;
+    else ypos = this.ystart - yp * this.ylen / this.speed;
 
-    if (thing.isHit() && !this.running) this.needsToRun = true;
-    var w = game.getWindowWidth();
-    var h = game.getWindowHeight();
-    var width = thing.width;
-    var height = thing.height;
+    if (this.thing.isHit() && !this.running) this.needsToRun = true;
+    var w = game.width;
+    var h = game.height;
+    var width = this.thing.width;
+    var height = this.thing.height;
 
-    if (xinc == this.xSteps) {
+    if (this.xinc == this.xSteps) {
       if (this.needsToRun) {
         // run away when being shot
         this.running = true;
-        xstart = xpos;
-        xdir = thing.cx < w / 2;
-        xlen = 2 * (xdir ? w - width - xpos : xpos) - 10;
-        xinc = 0;
+        this.xstart = xpos;
+        this.xdir = this.thing.cx < w / 2;
+        this.xlen = 2 * (this.xdir ? w - width - xpos : xpos) - 10;
+        this.xinc = 0;
       }
       else {
-        xstart = xpos;
-        xdir = !xdir;
-        xlen = (float) (width * Math.random()) + this.xSteps;
-        xinc = 0;
+        this.xstart = xpos;
+        this.xdir = !this.xdir;
+        this.xlen = width * Math.random() + this.xSteps;
+        this.xinc = 0;
         this.running = false;
       }
       this.needsToRun = false;
       this.lunging = false;
     }
 
-    if (yinc == this.ySteps) {
-      ystart = ypos;
-      ydir = !ydir;
-      ylen = (float) (height * Math.random()) + this.ySteps;
-      yinc = 0;
+    if (this.yinc == this.ySteps) {
+      this.ystart = ypos;
+      this.ydir = !this.ydir;
+      this.ylen = height * Math.random() + this.ySteps;
+      this.yinc = 0;
       this.lunging = false;
     }
 
@@ -129,18 +130,18 @@ class AlexMovement extends MovementStyle {
     if (ypos < -height) ypos = -height;
     if (xpos > w + width) xpos = w + width;
     if (ypos > h + height) ypos = h + height;
-    lastX = xpos; lastY = ypos;
-    thing.setPos(xpos, ypos);
+    this.lastX = xpos;
+    this.lastY = ypos;
+    this.thing.setPos(xpos, ypos);
   }
 
   /** Converts linear movement into curved movement with a sine function. */
-  var smooth(p) {
+  smooth(p) {
     p = Math.PI * (p - 0.5); // [0, 1] -> [-PI/2, PI/2]
     p = Math.sin(p); // [-PI/2, PI/2] -> [-1, 1] smooth sine
     p = (p + 1) / 2; // [-1, 1] -> [0, 1]
     return p;
   }
-
 }
 
 class AlexEnemy extends EnemyHead {
@@ -151,9 +152,8 @@ class AlexEnemy extends EnemyHead {
       game.loadSprite("alex2"),
       game.loadSprite("alex3"));
     // CTR TODO set proper bounding box and offsets here
-    var normal = this.normalSprite();
-    normal.addBox(new BoxInsets(30, 1, 30, 20));
-    normal.addBox(new BoxInsets(25, 5, 25, 25));
+    this.normalSprite.addBox(new BoxInsets(30, 1, 30, 20));
+    this.normalSprite.addBox(new BoxInsets(25, 5, 25, 25));
     this.attackSprite.addBox(new BoxInsets(28, 1, 28, 13));
     this.attackSprite.addBox(new BoxInsets(23, 5, 23, 17));
     this.hurtSprite.addBox(new BoxInsets(32, 1, 27, 13));
@@ -161,8 +161,6 @@ class AlexEnemy extends EnemyHead {
     this.movement = new AlexMovement(this);
     this.attack = new RandomBulletAttack(this, 1);
   }
-
-  get score() { return 3 * super.score; }
 
   move() {
     super.move();
@@ -173,7 +171,7 @@ class AlexEnemy extends EnemyHead {
     else this.normalActivate();
 
     // regen
-    if (this.game.ticks % 6 == 0 && this.hp < this.maxHP) this.hp++;
+    if (this.game.ticks % 6 == 0) this.hp++;
   }
 }
 
@@ -185,9 +183,8 @@ class AlexBoss extends BossHead {
       game.loadSprite("alex-boss2"),
       game.loadSprite("alex-boss3"));
     // CTR TODO set proper bounding box and offsets here
-    var normal = this.normalSprite();
-    normal.addBox(new BoxInsets(95, 3, 100, 60));
-    normal.addBox(new BoxInsets(78, 18, 80, 85));
+    this.normalSprite.addBox(new BoxInsets(95, 3, 100, 60));
+    this.normalSprite.addBox(new BoxInsets(78, 18, 80, 85));
     this.attackSprite.addBox(new BoxInsets(84, 3, 84, 39));
     this.attackSprite.addBox(new BoxInsets(69, 15, 69, 51));
     this.hurtSprite.addBox(new BoxInsets(96, 3, 81, 39));

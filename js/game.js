@@ -170,7 +170,7 @@ class Game {
 
     // update text messages
     this.messages.slice().forEach(m => {
-      if (m.checkFinished()) this.messages.remove(m);
+      if (m.checkFinished()) remove(this.messages, m);
     });
 
     // allow things the chance to attack
@@ -181,8 +181,7 @@ class Game {
 
     // purge dead things
     things.filter(thing => thing.isDead()).forEach(thing => {
-      var index = this.things.indexOf(thing);
-      if (index >= 0) this.things.splice(index, 1);
+      remove(this.things, thing);
       if (thing == this.copter) {
         this.printMessage(new Message("Game Over",
           (this.width - 250) / 2, (this.height - 30) / 2 + 30,

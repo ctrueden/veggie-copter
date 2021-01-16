@@ -96,6 +96,10 @@ class GameScript {
     try {
       if (equalsIgnoreCase(className, "TestBoss")) // TEMP
         this.game.things.push(new TestBoss(this.game, p)); // TEMP
+      else if (equalsIgnoreCase(className, "AlexEnemy")) // TEMP
+        this.game.things.push(new AlexEnemy(this.game, p)); // TEMP
+      else if (equalsIgnoreCase(className, "AlexBoss")) // TEMP
+        this.game.things.push(new AlexBoss(this.game, p)); // TEMP
       else console.error("ALKJHFLKSDJHDSF " + className); // TEMP
       // NB: Instantiate object of the given class.
       //var thing = window[className](this.game, p);
@@ -129,7 +133,7 @@ class GameScript {
     }
     var msg = "";
     for (var i=7; i<args.length; i++) msg += args[i] + " ";
-    game.printMessage(new Message(msg, x, y, size, new Color(r, g, b), time));
+    game.printMessage(new Message(msg, x, y, size, color(r, g, b), time));
   }
 
   wait(args) {
