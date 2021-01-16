@@ -5,13 +5,13 @@ class BulletMovement extends MovementStyle {
     super(t);
 
     this.thing.setPos(x, y);
-    if (xtarget == null) xtarget = t.game.copter.xpos;
-    if (ytarget == null) ytarget = t.game.copter.ypos;
+    if (xtarget == null) xtarget = t.game.copter.cx;
+    if (ytarget == null) ytarget = t.game.copter.cy;
     this.speed = speed == null ? 2.2 : speed;
     this.xstart = x; this.ystart = y;
     var xx = xtarget - x;
     var yy = ytarget - y;
-    var c = Math.sqrt((xx * xx + yy * yy) / (speed * speed));
+    var c = Math.sqrt((xx * xx + yy * yy) / (this.speed * this.speed));
     this.xtraj = xx / c;
     this.ytraj = yy / c;
     this.tick = 0;
@@ -26,24 +26,26 @@ class BulletMovement extends MovementStyle {
 }
 
 class EvilBullet extends Thing {
-  constructor(t, x2, y2) {
-    super(t.game);
+  constructor(shooter, xtarget, ytarget) {
+    super(shooter.game);
     this.type = ThingTypes.EVIL_SHOT;
     this.setSprite(this.game.retrieve('evil-bullet', this, obj => {
-      var size = 7;
+      var size = 9;
       var image = makeImage(size, size);
       var ctx = context2d(image);
       ctx.fillStyle = Colors.Red;
-      roundRect(ctx, 0, 0, size, size, size / 2);
+      roundRect(ctx, 0, 0, size, size, size / 2, 2, true, true);
       var sprite = new Sprite(image);
       sprite.addBox(new BoxInsets());
       return sprite;
     }));
-    this.power = 10 * t.power;
+    this.power = 10 * shooter.power;
 
-    var x = t.cx - this.width / 2;
-    var y = t.cy - this.height / 2;
-    this.movement = new BulletMovement(this, x, y, x2, y2);
+    // Align the bullet's center with the shooter's center.
+    var x = this.xpos = shooter.cx - this.width / 2;
+    var y = this.ypos = shooter.cy - this.height / 2;
+
+    this.movement = new BulletMovement(this, x, y, xtarget, ytarget);
     //this.attack = new RandomBulletAttack(this); // MWAHAHA!
   }
 }
