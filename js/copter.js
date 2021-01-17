@@ -163,6 +163,7 @@ class Copter extends Thing {
     this.attack.addWeapon(new SplitterWeapon(this)); // yellow
     this.attack.addWeapon(new LaserWeapon(this)); // green
     */
+    this.attack.addWeapon(new TornadoWeapon(this)); // spring green
     this.attack.addWeapon(new LitWeapon(this)); // cyan
     /*
     this.attack.addWeapon(new SpreadWeapon(this)); // blue
