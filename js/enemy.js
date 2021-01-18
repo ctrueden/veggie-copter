@@ -136,6 +136,7 @@ class Enemy extends EnemyHead {
 
   get powerup() { return []; }
 }
+Plugins.enemies.Enemy = Enemy;
 
 class BossHead extends EnemyHead {
   constructor(game, max, normal, attacking, hurting) {
