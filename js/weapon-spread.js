@@ -1,51 +1,45 @@
 class SpreadBullet extends Thing {
-  const var SPREAD_SPEED = 10;
-
-  static Sprite image;
-
-  static {
-    var size = 9;
-    var img = makeImage(size, size);
-    var ctx = context2d(img);
-    ctx.fillStyle = Colors.Blue;
-    ctx.fillRoundRect(0, 0, size, size, size / 2, size / 2);
-    image = new Sprite(img);
-    image.addBox(new BoxInsets());
-  }
-
   constructor(thing, angle) {
     super(thing.game);
-    type = GOOD_SHOT;
-    setSprite(image);
-    var x = thing.cx - width / 2, y = thing.getY();
-    var xd = -(float) (100 * Math.cos(angle)) + x;
-    var yd = -(float) (100 * Math.sin(angle)) + y;
-    move = new BulletMovement(this, x, y, xd, yd, SPREAD_SPEED);
+    this.speed = 10;
+    this.type = ThingTypes.GOOD_SHOT;
+
+    this.setSprite(this.game.retrieve('spread-bullet', this, obj => {
+      var size = 9;
+      var img = makeImage(size, size);
+      var ctx = context2d(img);
+      ctx.fillStyle = Colors.Blue;
+      roundRect(ctx, 0, 0, size, size, size / 2, true);
+      var sprite = new Sprite(img);
+      sprite.addBox(new BoxInsets());
+      return sprite;
+    }));
+
+    var x = thing.cx - this.width / 2, y = thing.ypos;
+    var xd = -100 * Math.cos(angle) + x;
+    var yd = -100 * Math.sin(angle) + y;
+    this.movement = new BulletMovement(this, x, y, xd, yd, this.speed);
   }
 }
 
-/** Defines veggie copter spread attack. */
 class SpreadWeapon extends Weapon {
-  RECHARGE = 10;
-  POWER = 3;
-
-  boolean space = false;
-  var fired;
-
   constructor(t) {
     super(t, Colors.Blue, t.game.loadSprite("icon-spread").image);
+    this.recharge = 10;
+    this.bulletPower = 3;
+    this.space = false;
+    this.fired = 0;
   }
 
-  clear() { space = false; }
+  clear() { this.space = false; }
 
-  /** Fires a shot if space bar is pressed. */
-  Thing[] shoot() {
-    if (fired > 0) {
-      fired--;
+  shoot() {
+    if (this.fired > 0) {
+      this.fired--;
       return [];
     }
-    if (!space) return [];
-    fired = RECHARGE;
+    if (!this.space) return [];
+    this.fired = this.recharge;
     var pow = this.power;
     var num = pow + 2;
 
@@ -58,21 +52,22 @@ class SpreadWeapon extends Weapon {
     var endRad = Math.PI * endDeg / 180;
     var inc = (endRad - startRad) / (num - 1);
 
-    CopterSpread[] shots = new CopterSpread[num];
-    for (int s=0; s<num; s++) {
-      shots[s] = new CopterSpread(thing, startRad + inc * s);
-      shots[s].power = POWER;
+    var shots = [];
+    for (var s=0; s<num; s++) {
+      var shot = new SpreadBullet(this.thing, startRad + inc * s);
+      shot.power = this.bulletPower;
+      shots.push(shot);
     }
     //SoundPlayer.playSound(getClass().getResource("laser4.wav"));
     return shots;
   }
 
   keyPressed(e) {
-    if (Keys.SHOOT.includes(e.keyCode)) space = true;
+    if (Keys.SHOOT.includes(e.keyCode)) this.space = true;
   }
 
   keyReleased(e) {
-    if (Keys.SHOOT.includes(e.keyCode)) space = false;
+    if (Keys.SHOOT.includes(e.keyCode)) this.space = false;
   }
 }
 Plugins.weapons.push(SpreadWeapon);
