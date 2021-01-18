@@ -8,7 +8,7 @@ class JamesMovement extends MovementStyle {
 
     // compute starting position
     xpos, ypos;
-    var w = game.getWindowWidth(), h = game.getWindowHeight();
+    var w = game.width, h = game.height;
 
     if (dir) {
       // appear from right

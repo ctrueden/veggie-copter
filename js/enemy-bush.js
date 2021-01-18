@@ -9,7 +9,7 @@ class BushMovement extends MovementStyle {
     this.turning = false;
 
     var game = thing.game;
-    var w = game.getWindowWidth();
+    var w = game.width;
 
     // compute starting position
     var width = thing.width;

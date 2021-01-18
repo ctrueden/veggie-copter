@@ -7,7 +7,7 @@ class AnnaMovement extends MovementStyle {
 
     // compute starting position
     int xpos, ypos;
-    int w = game.getWindowWidth(), h = game.getWindowHeight();
+    int w = game.width, h = game.height;
 
     if (dir) {
       // appear from right

@@ -9,7 +9,7 @@ class BounceMovement extends MovementStyle {
 
     // compute starting position
     var xpos, ypos;
-    var w = game.getWindowWidth(), h = game.getWindowHeight();
+    var w = game.width, h = game.height;
 
     var r = Math.random();
     if (r < 1.0 / 3) {

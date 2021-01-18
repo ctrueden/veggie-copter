@@ -53,7 +53,7 @@ class GeorgeMovement extends MovementStyle {
     this.lowHP = 30;      // Number of HP considered low enough to enter frantic mode.
 
     var game = this.thing.game;
-    var w = game.getWindowWidth();
+    var w = game.width;
 
     // compute starting position
     var width = this.thing.width;
