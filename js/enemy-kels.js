@@ -1,19 +1,16 @@
 class KelsMovement extends MovementStyle {
-  RADIUS2 = 200;
-  SPEED = 2;
-
   constructor(t, y, dir) {
     super(t);
-    VeggieCopter game = thing.game;
+    var game = this.thing.game;
 
     // compute starting position
-    xpos, ypos;
-    var w = game.getWindowWidth(), h = game.getWindowHeight();
+    this.xpos = this.ypos = 0;
+    var w = game.width, h = game.height;
 
     if (dir) {
       // appear from right
-      xpos = w - thing.width;
-      ypos = y;
+      this.xpos = w - this.thing.width;
+      this.ypos = y;
     }
     else {
       // appear from left
@@ -21,26 +18,21 @@ class KelsMovement extends MovementStyle {
       ypos = y;
     }
 
-    thing.setPos(xpos, ypos);
+    this.thing.setPos(xpos, ypos);
   }
 
-  /** Moves the given thing according to the bouncing movement style. */
   move() {
-    var xpos = thing.cx, ypos = thing.cy;
-
-    Copter hero = thing.game.copter;
-    var cxpos = hero.cx, cypos = hero.cy;
-
-    var xdist = xpos - cxpos;
-    var ydist = ypos - cypos;
+    var cx = this.thing.cx, cy = this.thing.cy;
+    var hero = this.thing.game.copter;
+    var xdist = cx - hero.cx;
+    var ydist = cy - hero.cy;
     var dist2 = xdist * xdist + ydist * ydist;
-    var dist = (float) Math.sqrt(dist2);
+    var dist = Math.sqrt(dist2);
     var xd = xdist / dist;
     var yd = ydist / dist;
-    xpos -= xd;
-    ypos -= yd;
-
-    thing.setCPos(xpos, ypos);
+    cx -= xd;
+    cy -= yd;
+    this.thing.setCPos(cx, cy);
   }
 }
 
@@ -57,7 +49,7 @@ class KelsEnemy extends EnemyHead {
     this.hurtSprite.addBox(new BoxInsets());
 
     var y = 0;
-    boolean dir = false;
+    var dir = false;
     if (args.length >= 1) {
       try { y = parseInt(args[0]); }
       catch (exc) { y = 0; }
@@ -84,7 +76,7 @@ class KelsBoss extends BossHead {
     this.hurtSprite.addBox(new BoxInsets());
 
     var y = 0;
-    boolean dir = false;
+    var dir = false;
     if (args.length >= 1) {
       try { y = parseInt(args[0]); }
       catch (exc) { y = 0; }
@@ -93,6 +85,6 @@ class KelsBoss extends BossHead {
 
     this.movement = new KelsMovement(this, y, dir);
     this.attack = new RandomBulletAttack(this, 1);
-    this.weapon = new SplitterAttack(game.copter);
+    this.weapon = new SplitterWeapon(game.copter);
   }
 }
