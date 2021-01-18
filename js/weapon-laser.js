@@ -82,3 +82,4 @@ class LaserWeapon extends Weapon {
     if (Keys.SHOOT.includes(e.keyCode)) space = false;
   }
 }
+Plugins.weapons.push(LaserWeapon);

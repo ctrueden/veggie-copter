@@ -97,3 +97,4 @@ class DoomWeapon extends Weapon {
   }
 
 }
+Plugins.weapons.push(DoomWeapon);

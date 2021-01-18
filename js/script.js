@@ -91,22 +91,17 @@ class GameScript {
       this.ignoreCommand("add", args);
       return;
     }
-    var className = args[0];
+    var name = args[0];
     var p = args.slice(1);
     try {
-      if (equalsIgnoreCase(className, "TestBoss")) // TEMP
-        this.game.things.push(new TestBoss(this.game, p)); // TEMP
-      else if (equalsIgnoreCase(className, "Enemy")) // TEMP
-        this.game.things.push(new Enemy(this.game, p)); // TEMP
-      else if (equalsIgnoreCase(className, "AlexEnemy")) // TEMP
-        this.game.things.push(new AlexEnemy(this.game, p)); // TEMP
-      else if (equalsIgnoreCase(className, "AlexBoss")) // TEMP
-        this.game.things.push(new AlexBoss(this.game, p)); // TEMP
-      else if (equalsIgnoreCase(className, "PaulEnemy")) // TEMP
-        this.game.things.push(new PaulEnemy(this.game, p)); // TEMP
-      else if (equalsIgnoreCase(className, "PaulBoss")) // TEMP
-        this.game.things.push(new PaulBoss(this.game, p)); // TEMP
-      else console.error("ALKJHFLKSDJHDSF " + className); // TEMP
+      if (name in Plugins.enemies) {
+        var EnemyClass = Plugins.enemies[name];
+        this.game.things.push(new EnemyClass(this.game, p));
+      }
+      else {
+        console.error(`Unknown enemy class: ${name}`);
+        this.ignoreCommand("add", args);
+      }
       // NB: Instantiate object of the given class.
       //var thing = window[className](this.game, p);
       //this.game.things.push(thing);

@@ -179,7 +179,6 @@ class MineMovement extends MovementStyle {
 }
 
 class Mine extends Thing {
-
   POWER_MULTIPLIER = 10;
   MAX_SIZE = 11;
 
@@ -233,9 +232,7 @@ class Mine extends Thing {
   damage(amount) { }
 }
 
-/** Defines veggie copter gravity mine attack style. */
-class MineAttack extends Weapon {
-
+class MineWeapon extends Weapon {
   RECHARGE = 24;
 
   boolean space;
@@ -269,3 +266,4 @@ class MineAttack extends Weapon {
     if (Keys.SHOOT.includes(e.keyCode)) space = false;
   }
 }
+Plugins.weapons.push(MineWeapon);

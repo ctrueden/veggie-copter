@@ -126,3 +126,4 @@ class RegenWeapon extends Weapon {
     if (Keys.SHOOT.includes(e.keyCode)) clear();
   }
 }
+Plugins.weapons.push(RegenWeapon);

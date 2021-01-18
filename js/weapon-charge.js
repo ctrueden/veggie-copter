@@ -126,3 +126,4 @@ class ChargeWeapon extends Weapon {
     if (Keys.SHOOT.includes(e.keyCode)) clear();
   }
 }
+Plugins.weapons.push(ChargeWeapon);

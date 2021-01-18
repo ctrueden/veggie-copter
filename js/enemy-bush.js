@@ -120,3 +120,4 @@ class BushEnemy extends EnemyHead {
     if (this.movement.isTurning()) this.hp++; // regen
   }
 }
+Plugins.enemies.BushEnemy = BushEnemy;

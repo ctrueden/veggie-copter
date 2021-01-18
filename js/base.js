@@ -80,6 +80,8 @@ class AttackStyle {
   keyReleased(e) { }
 }
 
+var Plugins = {};
+
 var ThingTypes = {
   EVIL: 0,        // evil entity
   GOOD: 1,        // good entity

@@ -21,3 +21,4 @@ class GrayWeapon extends Weapon {
     if (Keys.SHOOT.includes(e.keyCode)) this.space = false;
   }
 }
+Plugins.weapons.push(GrayWeapon);

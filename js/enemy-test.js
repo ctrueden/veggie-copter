@@ -60,3 +60,4 @@ class TestBoss extends BossHead {
     return 0;
   }
 }
+Plugins.enemies.TestBoss = TestBoss;

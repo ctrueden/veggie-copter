@@ -174,6 +174,7 @@ class AlexEnemy extends EnemyHead {
     if (this.game.ticks % 6 == 0) this.hp++;
   }
 }
+Plugins.enemies.AlexEnemy = AlexEnemy;
 
 class AlexBoss extends BossHead {
   constructor(game, args) {
@@ -206,3 +207,4 @@ class AlexBoss extends BossHead {
     if (this.game.ticks % 20 == 0 && this.hp < this.maxHP) this.hp++;
   }
 }
+Plugins.enemies.AlexBoss = AlexBoss;

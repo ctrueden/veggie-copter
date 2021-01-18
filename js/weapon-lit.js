@@ -161,3 +161,4 @@ class LitWeapon extends Weapon {
     }
   }
 }
+Plugins.weapons.push(LitWeapon);

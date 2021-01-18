@@ -157,21 +157,9 @@ class Copter extends Thing {
     this.movement = new CopterMovement(this);
 
     this.attack = new CopterAttack(this);
-    this.attack.addWeapon(new GunWeapon(this)); // brown
-    //this.attack.addWeapon(new EnergyWeapon(this)); // orange
-    //this.attack.addWeapon(new SplitterWeapon(this)); // yellow
-    //this.attack.addWeapon(new LaserWeapon(this)); // green
-    this.attack.addWeapon(new TornadoWeapon(this)); // spring green
-    this.attack.addWeapon(new LitWeapon(this)); // cyan
-    //this.attack.addWeapon(new SpreadWeapon(this)); // blue
-    //this.attack.addWeapon(new ShieldWeapon(this)); // purple
-    //this.attack.addWeapon(new HomingWeapon(this)); // magenta
-    //this.attack.addWeapon(new RegenWeapon(this)); // pink
-    //this.attack.addWeapon(new ChargeWeapon(this)); // white
-    this.attack.addWeapon(new RailWeapon(this)); // white
-    //this.attack.addWeapon(new GrayWeapon(this)); // gray
-    //this.attack.addWeapon(new MineWeapon(this)); // dark gray
-    //this.attack.addWeapon(new DoomWeapon(this)); // black
+    Plugins.weapons.forEach(weaponPlugin => {
+      this.attack.addWeapon(new weaponPlugin(this));
+    });
 
     this.hp = this.maxHP = 100;
     this.type = ThingTypes.GOOD;

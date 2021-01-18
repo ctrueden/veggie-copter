@@ -60,6 +60,7 @@ public class AnnaEnemy extends EnemyHead {
 
   public int getScore() { return 100 * super.getScore(); }
 }
+Plugins.enemies.AnnaEnemy = AnnaEnemy;
 
 public class AnnaBoss extends BossHead {
   constructor(VeggieCopter game, String[] args) {
@@ -94,3 +95,4 @@ public class AnnaBoss extends BossHead {
 
   public int getScore() { return 1000 * super.getScore(); }
 }
+Plugins.enemies.AnnaBoss = AnnaBoss;

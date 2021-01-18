@@ -62,6 +62,7 @@ class KelsEnemy extends EnemyHead {
 
   get score() { return 3 * super.score; }
 }
+Plugins.enemies.KelsEnemy = KelsEnemy;
 
 class KelsBoss extends BossHead {
   constructor(game, args) {
@@ -88,3 +89,4 @@ class KelsBoss extends BossHead {
     this.weapon = new SplitterWeapon(game.copter);
   }
 }
+Plugins.enemies.KelsBoss = KelsBoss;

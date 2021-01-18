@@ -118,3 +118,4 @@ class ShieldWeapon extends Weapon {
     if (Keys.SHOOT.includes(e.keyCode)) setExtended(false);
   }
 }
+Plugins.weapons.push(ShieldWeapon);

@@ -47,8 +47,7 @@ class SplitterShot extends Thing {
   }
 }
 
-/** Defines splitter attack. */
-class SplitterAttack extends Weapon {
+class SplitterWeapon extends Weapon {
   RECHARGE = 10;
   MAX_SPLIT = 6;
   SPEED = 5;
@@ -127,3 +126,4 @@ class SplitterAttack extends Weapon {
     else if (Keys.TRIGGER.includes(e.keyCode)) trigger = false;
   }
 }
+Plugins.weapons.push(SplitterWeapon);

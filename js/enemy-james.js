@@ -70,6 +70,7 @@ class JamesEnemy extends EnemyHead {
 
   get score() { return 3 * super.score; }
 }
+Plugins.enemies.JamesEnemy = JamesEnemy;
 
 class JamesBoss extends BossHead {
   constructor(game, args) {
@@ -96,3 +97,4 @@ class JamesBoss extends BossHead {
     this.weapon = new SplitterAttack(game.copter);
   }
 }
+Plugins.enemies.JamesBoss = JamesBoss;

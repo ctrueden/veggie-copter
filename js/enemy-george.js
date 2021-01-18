@@ -128,6 +128,7 @@ class GeorgeEnemy extends EnemyHead {
     if (this.movement.turning) hp++; // regen
   }
 }
+Plugins.enemies.GeorgeEnemy = GeorgeEnemy;
 
 class GeorgeBoss extends BossHead {
   constructor(game, args) {
@@ -150,3 +151,4 @@ class GeorgeBoss extends BossHead {
     if (movement.turning) hp++; // regen
   }
 }
+Plugins.enemies.GeorgeBoss = GeorgeBoss;

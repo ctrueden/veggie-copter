@@ -3,6 +3,8 @@ const ZIGZAG = 1;
 const SPIRAL = 2;
 const WAVE = 3;
 
+Plugins.enemies = {};
+
 class EnemyMovement extends MovementStyle {
   /**
    * Constructs a new enemy movement handler.

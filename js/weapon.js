@@ -1,3 +1,5 @@
+Plugins.weapons = [];
+
 /** A copter weapon style. */
 class Weapon extends AttackStyle {
   constructor(t, c, img) {
