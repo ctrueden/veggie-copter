@@ -135,7 +135,7 @@ Plugins.enemies.PaulEnemy = PaulEnemy;
 class PaulBoss extends BossHead {
   constructor(game, args) {
     // CTR TODO parse args and initialize Paul with proper parameters
-    super(game, 800 + (int) (Math.random() * 200),
+    super(game, 800 + Math.random() * 200,
       game.loadSprite("paul-boss1"),
       game.loadSprite("paul-boss2"),
       game.loadSprite("paul-boss3"));
@@ -145,7 +145,7 @@ class PaulBoss extends BossHead {
     this.hurtSprite.addBox(new BoxInsets());
     this.movement = new PaulMovement(this);
     this.attack = new PaulAttack(this);
-    this.weapon = new SpreadAttack(game.copter);
+    this.weapon = new SpreadWeapon(game.copter);
   }
 
   move() {
